@@ -1,0 +1,17 @@
+{
+  "_doc": "Registro de experimentos. Cada vez que se cambia un input de scalp_command.pine en TradingView, se añade una entrada aqui con la fecha del cambio. analyze.py mide antes/despues por segmento y pone 'verdict' cuando afterN>=40 y beforeN>=20. El agente lo revisa cada semana: confirma, rechaza o revierte.",
+  "experiments": [
+    {
+      "id": "example-0000",
+      "status": "template",
+      "hypothesis": "Ejemplo. Subir sc_min_rr de 1.0 a 1.3 sube E[R] en 1m/RETEST porque elimina las señales con TP1 mas cerca que el SL.",
+      "param": "sc_min_rr",
+      "from": 1.0,
+      "to": 1.3,
+      "changeDate": null,
+      "segment": {"tf": "1", "kind": "RETEST"},
+      "targetMetric": "expR",
+      "minAfterN": 40
+    }
+  ]
+}
