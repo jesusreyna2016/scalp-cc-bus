@@ -60,6 +60,14 @@ Si hay < 5 pares resueltos (excl. `TEST-`): sólo corre `analyze.py`, commitea
 5. **Contrafactual de gestión** (`counterfactual`): compara la gestión actual
    (TP al siguiente nivel) contra RR fijo 1/1.5/2/3R y SL alterno. Si un RR fijo
    supera al siguiente-nivel de forma estable, es candidato de propuesta.
+5b. **Modelo gestionado vs ingenuo** (`managed_vs_naive`, sólo con outcomes v4):
+   INGENUO = 1 contrato, mercado al cierre, primer toque (`rMultiple`).
+   GESTIONADO = escalera de 3 límites en la zona iFVG + parciales +1R/+2R/+3R +
+   SL a BE tras +1R + trail a +1R tras +2R (`rManaged`). Mira `delta` (managed −
+   naive) por segmento, `fill_t3plus_pct` / `fill_full_pct` (cuántas veces
+   consigues de verdad la entrada profunda vs te la pierdes), y `m1/m2/m3_rate`.
+   La config de la escalera (pesos, alcance) es FIJA; sólo cambia vía
+   `experiments.json` con validación fuera de muestra. No la tunees a ojo.
 6. **Modelo P(TP1)** (`model`): cuando `fitted=true`, interpreta signos y
    magnitudes de los coeficientes en palabras y mira la calibración (deciles:
    `pred` vs `actual`). El modelo es interno; **no es verdad fuera de muestra**

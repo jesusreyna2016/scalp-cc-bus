@@ -127,6 +127,15 @@ def build_pairs():
             "bars15R": _i(oraw, "bars15R"), "bars2R": _i(oraw, "bars2R"),
             "revAfterSL": _i(oraw, "revAfterSL"), "revBars": _i(oraw, "revBars"),
             "ambiguous": _i(oraw, "ambiguous"),
+            # modelo gestionado (v4): escalera de entrada + parciales
+            "rManaged": _f(oraw, "rManaged"),
+            "avgEntry": _f(oraw, "avgEntry"), "avgOffTk": _f(oraw, "avgOffTk"),
+            "slAvgTk": _f(oraw, "slAvgTk"),
+            "tranches": oraw.get("tranches"), "contracts": _f(oraw, "contracts"),
+            "m1Hit": _i(oraw, "m1Hit"), "m2Hit": _i(oraw, "m2Hit"), "m3Hit": _i(oraw, "m3Hit"),
+            "m1Bars": _i(oraw, "m1Bars"), "m2Bars": _i(oraw, "m2Bars"), "m3Bars": _i(oraw, "m3Bars"),
+            "beAfterM1": _i(oraw, "beAfterM1"), "trailAfterM2": _i(oraw, "trailAfterM2"),
+            "t1": _f(raw, "t1"), "t2": _f(raw, "t2"), "t3": _f(raw, "t3"),
         }
         pairs.append(rec)
 
@@ -422,7 +431,45 @@ def sa_context():
 
 # ================================================================= RIGOR
 def r_has_v3(rows):
-    return any(r.get("ver") == "v3" for r in rows)
+    return any(r.get("ver") in ("v3", "v4") for r in rows)
+
+# ------------------------------------------- modelo gestionado (v4) vs ingenuo
+def managed_vs_naive(pairs):
+    """Compara el modelo INGENUO (1 contrato, mercado al cierre, primer toque =
+    rMultiple) contra el GESTIONADO (escalera de entrada en la zona + parciales
+    +1R/+2R/+3R + BE tras +1R + trail = rManaged). Por segmento tf/kind/side."""
+    res = [r for r in pairs if r["resolved"] and r["result"] and r.get("rManaged") is not None]
+    if len(res) < 5:
+        return {"n": len(res), "note": "sin outcomes v4 con rManaged todavia"}
+
+    def blk(rows):
+        naive = [r["rMultiple"] for r in rows if r["rMultiple"] is not None]
+        mgd = [r["rManaged"] for r in rows if r["rManaged"] is not None]
+        off = [r["avgOffTk"] for r in rows if r.get("avgOffTk") is not None]
+        full = sum(1 for r in rows if r.get("tranches") == "1111")
+        t3p = sum(1 for r in rows if r.get("tranches") in ("1110", "1111"))
+        return {
+            "n": len(rows),
+            "naive_expR": round(st.mean(naive), 3) if naive else None,
+            "managed_expR": round(st.mean(mgd), 3) if mgd else None,
+            "delta": round(st.mean(mgd) - st.mean(naive), 3) if (naive and mgd) else None,
+            "avgEntryBetterTk_p50": _pct(off, .5),
+            "fill_t3plus_pct": round(100 * t3p / len(rows), 1),
+            "fill_full_pct": round(100 * full / len(rows), 1),
+            "m1_rate": round(100 * sum(1 for r in rows if r.get("m1Hit") == 1) / len(rows), 1),
+            "m2_rate": round(100 * sum(1 for r in rows if r.get("m2Hit") == 1) / len(rows), 1),
+            "m3_rate": round(100 * sum(1 for r in rows if r.get("m3Hit") == 1) / len(rows), 1),
+            "beAfterM1_rate": round(100 * sum(1 for r in rows if r.get("beAfterM1") == 1) / len(rows), 1),
+        }
+
+    out = {"overall": blk(res), "by_tf_kind_side": {}}
+    g = defaultdict(list)
+    for r in res:
+        g[f"{r['tf']}m/{r['kind']}/{r['side']}"].append(r)
+    for k, rs in sorted(g.items()):
+        if len(rs) >= 3:
+            out["by_tf_kind_side"][k] = blk(rs)
+    return out
 
 def bootstrap_er_ci(rows, iters=2000, seed=12345):
     import random
@@ -594,16 +641,7 @@ def news_context(pairs, sa):
     except Exception:
         pass
     mkt = (sa or {}).get("market") or {}
-    news_field = mkt.get("news")
-    if isinstance(news_field, dict):
-        sa_events = news_field.get("events") or []
-    elif isinstance(news_field, list):
-        sa_events = news_field
-    else:
-        sa_events = mkt.get("events") or []
-    for e in sa_events:
-        if not isinstance(e, dict):
-            continue
+    for e in (mkt.get("news") or mkt.get("events") or []):
         ts = e.get("ts") or e.get("timestamp")
         if ts and (e.get("impact") in ("high", "High", "HIGH") or e.get("importance") == 3):
             events.append({"ts": int(ts), "name": e.get("name") or e.get("title") or "?"})
@@ -697,6 +735,11 @@ def material_alerts(rep):
     g = rep.get("gate", {})
     if g.get("readyForLive"):
         a.append("GATE: el segmento objetivo cumple el gate de ejecucion. Revisar escalera.")
+    mv = (rep.get("managed_vs_naive", {}) or {}).get("overall", {})
+    if mv.get("n", 0) >= 30 and mv.get("delta") is not None and abs(mv["delta"]) >= 0.15:
+        verbo = "bate a" if mv["delta"] > 0 else "pierde contra"
+        a.append(f"GESTION: el modelo escalera+parciales {verbo} el ingenuo "
+                 f"({mv.get('managed_expR')} vs {mv.get('naive_expR')} E[R], n {mv['n']}).")
     return a
 
 def exec_gate(rep):
@@ -740,6 +783,7 @@ def main():
         "cross_instrument": cross_instrument(pairs),
         "prediction_scoreboard": prediction_scoreboard(pairs),
         "expR_ci_overall": bootstrap_er_ci(pairs),
+        "managed_vs_naive": managed_vs_naive(pairs),
     }
     sa = sa_context()
     report["session_analyst"] = sa
@@ -779,6 +823,7 @@ def main():
     state["decay_weekly"] = report["decay_weekly"]
     state["walk_forward"] = report["walk_forward"]
     state["gate"] = report["gate"]
+    state["managed_vs_naive"] = report["managed_vs_naive"]
     state["alerts"] = report["alerts"]
     state["prediction_scoreboard"] = {k: v for k, v in report["prediction_scoreboard"].items() if k != "detail"}
     state.setdefault("recommendedParams", {"note": "lo mantiene el agente en la revision semanal"})
@@ -815,6 +860,8 @@ def main():
              + ", ".join(f"{k}×{v}" for k, v in causes.items()) + "\n")
     L.append("\n## Contrafactual de gestion\n```json\n"
              + json.dumps(report["counterfactual"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Modelo GESTIONADO (escalera + parciales) vs INGENUO\n```json\n"
+             + json.dumps(report["managed_vs_naive"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Decaimiento semanal\n```json\n"
              + json.dumps(report["decay_weekly"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Modelo P(TP1) (in-sample)\n```json\n"
