@@ -1,26 +1,22 @@
 {
-  "updatedAt": "2026-09-01T20:17:26Z",
+  "updatedAt": "2026-09-01T20:34:13.613599+00:00",
   "status": "accumulating",
-  "note": "Menos de 5 pares señal+outcome resueltos (excl. TEST-). Aún no hay muestra suficiente para métricas, autopsia de SL, playbook o revisión semanal. Solo se refrescan contadores.",
+  "note": "6 pares resueltos (>=5, umbral cruzado), pero n por segmento sigue en 1-3. Insuficiente para metricas fiables, autopsia de SL, contrafactual o cambios de input (todo exige n>=20, y 40+ post-cambio para experimentos). Se narra lo que hay pero no se proponen cambios de Pine todavia.",
   "counts": {
-    "totalSignalsIngested": 5,
-    "totalOutcomesIngested": 4,
+    "totalSignalsIngested": 10,
+    "totalOutcomesIngested": 7,
     "orphanOutcomes": 1,
     "orphanOutcomeIds": [
       "YM-1-22637-S"
     ],
-    "pendingSignalsNoOutcomeYet": 2,
-    "pendingSignalIds": [
-      "NQ-1-23402-S",
-      "NQ-2-22054-L"
-    ],
-    "resolvedPairs": 3,
+    "pendingSignalsNoOutcomeYet": 4,
+    "resolvedPairs": 6,
     "byTfKind": {
       "1_RETEST_SHORT": {
-        "n": 1,
+        "n": 3,
         "TP1": 0,
         "TP2": 0,
-        "SL": 1,
+        "SL": 3,
         "TIMEOUT": 0
       },
       "1_RETEST_LONG": {
@@ -29,17 +25,18 @@
         "TP2": 0,
         "SL": 0,
         "TIMEOUT": 0
+      },
+      "2_RETEST_LONG": {
+        "n": 1,
+        "TP1": 1,
+        "TP2": 0,
+        "SL": 0,
+        "TIMEOUT": 0
       }
     }
   },
-  "metrics": {
-    "byTfKind": {}
-  },
-  "slCauses": {
-    "byTfKind": {}
-  },
   "recommendedParams": {
-    "note": "vacio hasta la primera revision semanal con n suficiente",
+    "note": "vacio hasta que algun segmento tenga n>=20 (revision semanal)",
     "sc_min_rr": null,
     "sc_slbuf": null,
     "sc_floor_atr5": null,
@@ -50,5 +47,73 @@
   "executionGate": {
     "phase": "advisor",
     "readyForLive": false
+  },
+  "totals": {
+    "signals": 10,
+    "outcomes": 7,
+    "pairs_resolved": 6,
+    "pending": 4,
+    "orphan_outcomes": 1
+  },
+  "metrics_by_tf_kind_side": {
+    "1m/RETEST/LONG": {
+      "n": 2,
+      "wrTP1": 100.0,
+      "nSL": 0,
+      "nTO": 0,
+      "expR": 0.645,
+      "pf": 99.0,
+      "mfe_p25": 17.75,
+      "mfe_p50": 18.5,
+      "mfe_p75": 19.25,
+      "winnerMAE_p75": 5.25,
+      "winnerMAE_p90": 6.3,
+      "loserMFEbeforeSL_p50": null,
+      "bars_win_p50": 0.0,
+      "bars_loss_p50": null,
+      "entryZoneTk_p50": null,
+      "revAfterSL_rate": null
+    },
+    "1m/RETEST/SHORT": {
+      "n": 3,
+      "wrTP1": 0.0,
+      "nSL": 3,
+      "nTO": 0,
+      "expR": -1.0,
+      "pf": 0.0,
+      "mfe_p25": 5.0,
+      "mfe_p50": 9.0,
+      "mfe_p75": 15.5,
+      "winnerMAE_p75": null,
+      "winnerMAE_p90": null,
+      "loserMFEbeforeSL_p50": 9.0,
+      "bars_win_p50": null,
+      "bars_loss_p50": 5.0,
+      "entryZoneTk_p50": null,
+      "revAfterSL_rate": 0.0
+    },
+    "2m/RETEST/LONG": {
+      "n": 1,
+      "wrTP1": 100.0,
+      "nSL": 0,
+      "nTO": 0,
+      "expR": 0.7,
+      "pf": 99.0,
+      "mfe_p25": 54.0,
+      "mfe_p50": 54.0,
+      "mfe_p75": 54.0,
+      "winnerMAE_p75": 34.0,
+      "winnerMAE_p90": 34.0,
+      "loserMFEbeforeSL_p50": null,
+      "bars_win_p50": 3.0,
+      "bars_loss_p50": null,
+      "entryZoneTk_p50": null,
+      "revAfterSL_rate": null
+    }
+  },
+  "sl_causes": {
+    "chop": 1,
+    "RR-bajo": 1,
+    "sin-causa-clara": 1
   }
 }

@@ -3,32 +3,37 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: _pendiente_ · n: 0)
+## Sección viva  (última revisión: 2026-09-01 · n: 3)
 
 ### Veredicto global
-_pendiente_ — TOMAR / TOMAR-FILTRADA / EVITAR, con WR TP1, E[R], PF por TF (1m / 2m / 5m).
+**MUESTRA INSUFICIENTE — no accionable todavía.** n=3 (2× 1m/RETEST/LONG,
+1× 2m/RETEST/LONG), todas GC, mismo día. WR TP1 = 100%, E[R] = 0.645 (1m) /
+0.7 (2m), 3/3 ganadoras. Resultado perfecto con n=3 no es señal, es azar
+favorable — no lo trates como edge real. 5m: sin datos aún.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Cada regla con: condición, n, WR/E[R] dentro vs fuera, confianza.
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | _pendiente_ | _pendiente_ | 0 | | |
+| 1 | _pendiente_ (n<20 en todos los cortes) | _pendiente_ | 3 | ninguno fiable aún | muy baja |
 
 ### Entrada
-- Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`; ver `entryZoneTk` de ganadores vs perdedores)
+- Óptima: _pendiente_ — datos insuficientes (`entryZoneTk` no disponible en n=3).
 
 ### Gestión
-- SL óptimo (ticks / múltiplo de ATR5m): _pendiente_ (percentil 75-90 del `maeTk` de ganadores + colchón)
-- Objetivo: _pendiente_ (siguiente nivel vs RR fijo 1.5/2/3 — ver contrafactual)
-- Parcial 1: _pendiente_ (mediana del `mfeTk`; cruzar con `mfe5`/`mfe10`)
-- ¿Trailing tras +1R?: _pendiente_ (curva MFE de ganadores que siguieron corriendo)
+- SL óptimo: winnerMAE p75/p90 = 5.25/6.3 ticks (1m), 34.0 ticks (2m) — solo
+  referencia descriptiva de esta muestra, no una regla.
+- Objetivo: _pendiente_ (contrafactual n=0 todavía, sin outcomes v3).
+- Parcial 1: mediana MFE 18.5 ticks (1m), 54.0 ticks (2m) — descriptivo, no regla.
+- ¿Trailing tras +1R?: _pendiente_ (muestra insuficiente para ver curva de MFE).
 
 ### Contextos a evitar
-_pendiente_ (causas de SL dominantes para este tipo)
+_pendiente_ — 0 pérdidas en esta muestra, no hay causas de SL que analizar todavía.
 
 ### Decaimiento
-_pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
+_pendiente_ — solo una semana de datos (2026-W36), sin semana previa para comparar.
 
 ## Histórico de cambios
-_(vacío)_
+- 2026-09-01: primera escritura con datos reales (n=3, todas GC, mismo día,
+  3/3 TP1). Marcado explícitamente como no accionable por tamaño de muestra.

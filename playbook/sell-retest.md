@@ -3,32 +3,47 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: _pendiente_ · n: 0)
+## Sección viva  (última revisión: 2026-09-01 · n: 3)
 
 ### Veredicto global
-_pendiente_ — TOMAR / TOMAR-FILTRADA / EVITAR, con WR TP1, E[R], PF por TF (1m / 2m / 5m).
+**MUESTRA INSUFICIENTE — no accionable todavía.** n=3, todas GC 1m/RETEST/SHORT,
+todas mismo día. WR TP1 = 0%, E[R] = -1.0, PF = 0.0 (3/3 SL). No se puede
+distinguir señal de ruido con n=3; no toques inputs de Pine por esto. Se
+reporta para dejar rastro, no como veredicto real. 2m y 5m: sin datos aún.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Cada regla con: condición, n, WR/E[R] dentro vs fuera, confianza.
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | _pendiente_ | _pendiente_ | 0 | | |
+| 1 | _pendiente_ (n<20 en todos los cortes; ver nota abajo) | _pendiente_ | 3 | ninguno fiable aún | muy baja |
+
+Nota: las 3 pérdidas ocurrieron en GC el mismo día que el Session Analyst
+marcó GC en `WAIT`/`AVOID` para el corto (esperando rechazo confirmado en
+4402-4423, sin perseguir). Es la hipótesis de cruce del §8 de
+`agent-instructions.md` (señal de scalp contra veredicto SA rinde peor) —
+consistente con n=3, pero **no cuantificable con esta muestra**. Vigilar.
 
 ### Entrada
-- Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`; ver `entryZoneTk` de ganadores vs perdedores)
+- Óptima: _pendiente_ — datos insuficientes (`entryZoneTk` no disponible en n=3).
 
 ### Gestión
-- SL óptimo (ticks / múltiplo de ATR5m): _pendiente_ (percentil 75-90 del `maeTk` de ganadores + colchón)
-- Objetivo: _pendiente_ (siguiente nivel vs RR fijo 1.5/2/3 — ver contrafactual)
-- Parcial 1: _pendiente_ (mediana del `mfeTk`; cruzar con `mfe5`/`mfe10`)
-- ¿Trailing tras +1R?: _pendiente_ (curva MFE de ganadores que siguieron corriendo)
+- SL óptimo: _pendiente_ — todas las 3 tocaron SL, `loserMFEbeforeSL_p50`=9.0 ticks (referencia, no regla).
+- Objetivo: _pendiente_ (contrafactual n=0 todavía, sin outcomes v3).
+- Parcial 1: _pendiente_.
+- ¿Trailing tras +1R?: _pendiente_ (0 ganadores en esta muestra).
 
 ### Contextos a evitar
-_pendiente_ (causas de SL dominantes para este tipo)
+Provisional, solo como hipótesis a verificar (n=3): 1m/RETEST/SHORT en GC
+cuando el Session Analyst tiene el símbolo en AVOID/WAIT para el corto sin
+rechazo confirmado. Causas de SL vistas: chop×1, RR-bajo×1, sin-causa-clara×1
+— sin causa dominante clara con n=3.
 
 ### Decaimiento
-_pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
+_pendiente_ — solo una semana de datos (2026-W36), sin semana previa para comparar.
 
 ## Histórico de cambios
-_(vacío)_
+- 2026-09-01: primera escritura con datos reales (n=3, todas GC 1m SHORT
+  mismo día, 3/3 SL). Marcado explícitamente como no accionable por tamaño
+  de muestra; se deja constancia de la posible correlación con el veredicto
+  del Session Analyst para verificar cuando crezca la muestra.
