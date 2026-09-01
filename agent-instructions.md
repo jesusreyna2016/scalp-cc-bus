@@ -17,6 +17,18 @@ En cada corrida:
    pasando, decidir qué proponer, y **detectar lo raro** (un segmento que se
    desploma, una causa de SL nueva, un feature que el modelo pondera fuerte y no
    tiene sentido, contradicción con el Session Analyst).
+   - **Empieza tu salida final con `report.alerts`** (si hay). El script también
+     escribe `alerts/<fecha>.md`. Son los cambios que Jesús debe ver.
+   - **El número que cuenta es el de `walk_forward` (fuera de muestra).** El
+     modelo P(TP1) y el contrafactual in-sample sirven para generar hipótesis,
+     no para decidir. No bendigas nada que no sobreviva OOS.
+   - `segment_significance`: sólo trata como real un segmento con
+     `survives_fdr10=true` y CI90 de E[R] que no cruce 0.
+   - `regime_clusters`, `cross_instrument`, `news_context`: úsalos para reglas
+     condicionales. Una regla que sólo funciona en un símbolo (`cross_instrument`
+     verdict `instrument-specific`) se marca como tal, no se generaliza.
+   - `dataset.jsonl` (lo escribe el script): fuente plana y tipada, 1 línea por
+     par resuelto. Úsala tú y cualquier análisis nuevo en vez de re-parsear raw.
 4. Nunca recalcules a mano lo que `analyze.py` ya da. Si necesitas un corte que no
    está, **añádelo a `analyze.py`** y commitéalo (mejora permanente).
 
@@ -83,17 +95,35 @@ Escribe `reviews/<YYYY>-week-<NN>.md`:
 - las 3 causas de SL más frecuentes de la semana + evidencia (sigIds)
 - estado de cada experimento abierto
 - **propuestas concretas** de cambio de inputs de `scalp_command.pine`, cada una con:
-  el input, from→to, el segmento, el efecto esperado sobre WR/E[R] estimado desde
-  la muestra o el contrafactual, y el n de la evidencia.
+  el input, from→to, el segmento, el efecto esperado sobre WR/E[R] **del walk-forward
+  (no in-sample)**, y el n de la evidencia.
   Candidatos: `sc_min_rr`, `sc_aplus_rr`, `sc_slbuf`, `sc_floor_atr5`,
   `sc_cap_atr5`, `sc_cap_adr`, `alert_cooldown`, `sc_cooldown`, `min_score_buy`,
   `min_score_sell`, `anchor_5m`, `enable_retest_signals`, `sc_trigger_mode`,
   `chop_up`, `stretch_mult_extreme`, `sc_use_struct`, `sc_grey_asia`, toggles de
   proximidad (`3B`).
-- **un solo "cambio del mes"** si hay señal fuerte y estable.
-- Nunca propongas cambio en un segmento con n < 20. Marca `experimental` hasta
-  40+ muestras post-cambio. Recuerda: si pruebas 20 tweaks, uno parece bueno por
-  azar — exige consistencia semana a semana, no un único pico.
+- Por cada propuesta, **añade una línea a `predictions.jsonl`**:
+  `{"week":"<YYYY-Wnn>","param":"...","from":X,"to":Y,"segment":{"tf":"1","kind":"RETEST"},"appliedDate":null,"predictedDeltaER":0.00,"rationale":"..."}`.
+  Cuando Jesús aplique el cambio pon `appliedDate`. El script puntúa
+  |real - predicho| y lleva `prediction_scoreboard` (tu MAE y tu tasa de acierto
+  de dirección = tu propia calificación; si empeoran, sé más conservador).
+- **un solo "cambio del mes"** si hay señal fuerte y estable (sobrevive FDR + OOS).
+- Nunca propongas cambio en un segmento con n < 20 o que no aparezca con
+  `survives_fdr10=true` en `segment_significance`. Marca `experimental` hasta 40+
+  muestras post-cambio y 2 semanas consecutivas en la misma dirección.
+
+## Dashboard
+
+`https://tradedadlog.com/scalp.html` lee `report.json` + `state.json` + las
+señales/outcomes recientes del bus. Mantén `report.json` completo y `report.alerts`
+al día: es lo que ve Jesús. No hace falta que hagas nada extra para el dashboard,
+sólo que `analyze.py` corra y commitees su salida.
+
+## calendar.json
+
+Eventos económicos de alto impacto (`{"events":[{"ts":<ms UTC>,"impact":"high","name":"CPI"}]}`).
+`analyze.py` separa señales near-news (<=30 min) vs away. Manténlo al día tú o
+deja que lo alimente el feed del Session Analyst (`market.json`).
 
 ## Modo sombra (cuando el playbook tenga reglas condicionales estables)
 

@@ -420,6 +420,287 @@ def sa_context():
         pass
     return out
 
+# ================================================================= RIGOR
+def r_has_v3(rows):
+    return any(r.get("ver") == "v3" for r in rows)
+
+def bootstrap_er_ci(rows, iters=2000, seed=12345):
+    import random
+    rs = [r["rMultiple"] for r in rows if r["resolved"] and r["rMultiple"] is not None]
+    if len(rs) < 8:
+        return None
+    rnd = random.Random(seed); n = len(rs); means = []
+    for _ in range(iters):
+        means.append(sum(rs[rnd.randrange(n)] for _ in range(n)) / n)
+    means.sort()
+    return {"expR": round(st.mean(rs), 3),
+            "ci90": [round(means[int(.05 * iters)], 3), round(means[int(.95 * iters)], 3)],
+            "p_mean_le_0": round(sum(1 for m in means if m <= 0) / iters, 3), "n": n}
+
+def fdr_bh(pvals, q=0.10):
+    """Benjamini-Hochberg. keep[i]=True si se rechaza H0 con FDR<=q."""
+    m = len(pvals)
+    if m == 0:
+        return []
+    order = sorted(range(m), key=lambda i: pvals[i])
+    thresh = 0
+    for rank, i in enumerate(order, 1):
+        if pvals[i] <= (rank / m) * q:
+            thresh = rank
+    keep = [False] * m
+    for rank, i in enumerate(order, 1):
+        if rank <= thresh:
+            keep[i] = True
+    return keep
+
+def _wk(dt):
+    try:
+        y, w, _ = dt.isocalendar(); return f"{y}-W{w:02d}"
+    except Exception:
+        return "?"
+
+def walk_forward(pairs, test_weeks=2):
+    """Split temporal honesto: entrena con todo menos las ultimas test_weeks
+    semanas, evalua en esas. El E[R] fuera de muestra es el numero que cuenta."""
+    res = sorted([r for r in pairs if r["resolved"] and r["result"]], key=lambda r: r["recvDt"])
+    if len(res) < 60:
+        return {"ready": False, "n": len(res), "need": 60}
+    weeks = sorted({_wk(r["recvDt"]) for r in res})
+    if len(weeks) < test_weeks + 2:
+        return {"ready": False, "reason": "pocas semanas", "weeks": len(weeks)}
+    cut = set(weeks[-test_weeks:])
+    train = [r for r in res if _wk(r["recvDt"]) not in cut]
+    test = [r for r in res if _wk(r["recvDt"]) in cut]
+    out = {"ready": True, "trainN": len(train), "testN": len(test), "testWeeks": sorted(cut)}
+    mdl = logistic_model(train, min_n=80)
+    if mdl.get("fitted"):
+        stats = _stdz(train)
+        def vec(r):
+            return [((r[f] - stats[f][0]) / stats[f][1]) if r[f] is not None else 0.0 for f in FEATURES]
+        w = {c["feature"]: c["weight"] for c in mdl["coefficients"]}
+        wl = [w[f] for f in FEATURES]; b = mdl["bias"]; preds = []
+        for r in test:
+            z = b + sum(wj * xj for wj, xj in zip(wl, vec(r)))
+            p = 1.0 / (1.0 + math.exp(-max(-30, min(30, z))))
+            preds.append((p, 1.0 if r["result"] in ("TP1", "TP2") else 0.0))
+        if preds:
+            out["model_oos_brier"] = round(st.mean((p - y) ** 2 for p, y in preds), 4)
+            out["model_oos_n"] = len(preds)
+    if r_has_v3(train) and r_has_v3(test):
+        sch = {
+            "nextLevel": lambda r: r["rMultiple"],
+            "fixed_1_5R": lambda r: 1.5 if r["hit15R"] == 1 else (-1.0 if r["result"] == "SL" else (r["rMultiple"] or 0.0)),
+            "fixed_2R": lambda r: 2.0 if r["hit2R"] == 1 else (-1.0 if r["result"] == "SL" else (r["rMultiple"] or 0.0)),
+        }
+        def mer(rows, fn):
+            xs = [fn(r) for r in rows if fn(r) is not None]
+            return st.mean(xs) if xs else None
+        trs = {k: mer(train, fn) for k, fn in sch.items()}
+        cand = [k for k in trs if trs[k] is not None]
+        if cand:
+            best = max(cand, key=lambda k: trs[k])
+            oos = mer(test, sch[best])
+            out["best_scheme_in_sample"] = {"scheme": best, "trainExpR": round(trs[best], 3)}
+            out["best_scheme_oos_expR"] = round(oos, 3) if oos is not None else None
+    return out
+
+def per_segment_significance(pairs):
+    """Bootstrap p-value (mean R <= 0) por segmento + FDR sobre todos ellos."""
+    segs = defaultdict(list)
+    for r in pairs:
+        if r["resolved"] and r["result"]:
+            segs[f"{r['tf']}m/{r['kind']}/{r['side']}"].append(r)
+    rows = []
+    for k, rs in sorted(segs.items()):
+        ci = bootstrap_er_ci(rs)
+        if ci:
+            rows.append((k, ci))
+    if not rows:
+        return {}
+    keep = fdr_bh([c["p_mean_le_0"] for _, c in rows], q=0.10)
+    return {k: {**c, "survives_fdr10": bool(kp)} for (k, c), kp in zip(rows, keep)}
+
+# ----------------------------------------------------------- regime clusters
+def _kmeans(V, k, iters=60, seed=7):
+    import random
+    rnd = random.Random(seed)
+    C = [V[i][:] for i in rnd.sample(range(len(V)), k)]
+    assign = [0] * len(V)
+    for _ in range(iters):
+        changed = False
+        for i, v in enumerate(V):
+            d = [sum((a - b) ** 2 for a, b in zip(v, c)) for c in C]
+            a = d.index(min(d))
+            if a != assign[i]:
+                assign[i] = a; changed = True
+        for j in range(k):
+            pts = [V[i] for i in range(len(V)) if assign[i] == j]
+            if pts:
+                C[j] = [sum(col) / len(col) for col in zip(*pts)]
+        if not changed:
+            break
+    return assign, C
+
+def regime_clusters(pairs, k=4, min_n=60):
+    res = [r for r in pairs if r["resolved"] and r["result"]]
+    if len(res) < min_n:
+        return {"ready": False, "n": len(res), "need": min_n}
+    stats = _stdz(res)
+    V = [[((r[f] - stats[f][0]) / stats[f][1]) if r[f] is not None else 0.0 for f in FEATURES] for r in res]
+    assign, C = _kmeans(V, k)
+    out = {"ready": True, "k": k, "clusters": []}
+    for j in range(k):
+        members = [res[i] for i in range(len(res)) if assign[i] == j]
+        if not members:
+            continue
+        m = seg_metrics(members)
+        centroid = {FEATURES[fi]: round(C[j][fi], 2) for fi in range(len(FEATURES))}
+        top = sorted(centroid.items(), key=lambda t: -abs(t[1]))[:4]
+        out["clusters"].append({"id": j, "n": m["n"], "wrTP1": m.get("wrTP1"),
+                                "expR": m.get("expR"), "pf": m.get("pf"),
+                                "defining_features": {kk: vv for kk, vv in top}})
+    out["clusters"].sort(key=lambda c: -(c["expR"] or -9))
+    return out
+
+# --------------------------------------------- consistencia entre instrumentos
+def cross_instrument(pairs):
+    key = lambda r: f"{r['tf']}m/{r['kind']}/{r['side']}"
+    grp = defaultdict(lambda: defaultdict(list))
+    for r in pairs:
+        if r["resolved"] and r["result"]:
+            grp[key(r)][r["sigId"].split("-")[0]].append(r)
+    out = {}
+    for seg, bysym in sorted(grp.items()):
+        parts = {s: seg_metrics(rs) for s, rs in bysym.items() if seg_metrics(rs)["n"] >= 3}
+        if len(parts) < 2:
+            continue
+        ers = [m["expR"] for m in parts.values() if m.get("expR") is not None]
+        spread = round(max(ers) - min(ers), 3) if len(ers) >= 2 else None
+        out[seg] = {"symbols": {s: {"n": m["n"], "wrTP1": m.get("wrTP1"), "expR": m.get("expR")}
+                                for s, m in parts.items()},
+                    "expR_spread": spread,
+                    "verdict": "universal" if (spread is not None and spread < 0.4)
+                               else "instrument-specific" if spread is not None else "n/d"}
+    return out
+
+# -------------------------------------------------------------- news context
+def news_context(pairs, sa):
+    """Marca minsToNews usando calendar.json local y/o el feed del Session Analyst.
+    calendar.json: {"events":[{"ts":<ms UTC>,"impact":"high","name":"CPI"}, ...]}"""
+    events = []
+    try:
+        with open(os.path.join(ROOT, "calendar.json"), encoding="utf-8") as f:
+            events += [e for e in json.load(f).get("events", []) if e.get("impact") == "high"]
+    except Exception:
+        pass
+    mkt = (sa or {}).get("market") or {}
+    for e in (mkt.get("news") or mkt.get("events") or []):
+        ts = e.get("ts") or e.get("timestamp")
+        if ts and (e.get("impact") in ("high", "High", "HIGH") or e.get("importance") == 3):
+            events.append({"ts": int(ts), "name": e.get("name") or e.get("title") or "?"})
+    if not events:
+        return {"available": False}
+    near, far = [], []
+    for r in pairs:
+        if not (r["resolved"] and r["result"]):
+            continue
+        ts = None
+        try:
+            ts = int(r["recvDt"].timestamp() * 1000)
+        except Exception:
+            pass
+        if ts is None:
+            continue
+        dmin = min(abs(ts - e["ts"]) / 60000.0 for e in events)
+        (near if dmin <= 30 else far).append(r)
+    return {"available": True, "n_events": len(events),
+            "near_news_30m": seg_metrics(near), "away_from_news": seg_metrics(far)}
+
+# ------------------------------------------------------ prediction scoreboard
+def prediction_scoreboard(pairs):
+    """predictions.jsonl: una linea por propuesta semanal aplicada.
+    {week, param, from, to, segment:{...}, appliedDate, predictedDeltaER}
+    Se puntua el error |real - predicho| para las que tienen 20+ post-muestras."""
+    path = os.path.join(ROOT, "predictions.jsonl")
+    preds = _load_jsonl(path)
+    if not preds:
+        return {"n": 0, "note": "sin predictions.jsonl todavia"}
+    scored = []
+    for p in preds:
+        seg = p.get("segment", {})
+        ad = p.get("appliedDate")
+        if not ad:
+            scored.append({**p, "status": "pending-apply"}); continue
+        def match(r):
+            return all(str(r.get(k)) == str(v) for k, v in seg.items())
+        before = [r for r in pairs if r["resolved"] and r["result"] and match(r) and r["recvDate"] < ad]
+        after = [r for r in pairs if r["resolved"] and r["result"] and match(r) and r["recvDate"] >= ad]
+        mb, ma = seg_metrics(before), seg_metrics(after)
+        if ma["n"] >= 20 and mb["n"] >= 10 and mb.get("expR") is not None and ma.get("expR") is not None:
+            real = round(ma["expR"] - mb["expR"], 3)
+            err = round(abs(real - (p.get("predictedDeltaER") or 0)), 3)
+            scored.append({**p, "status": "scored", "realDeltaER": real, "absError": err,
+                           "afterN": ma["n"]})
+        else:
+            scored.append({**p, "status": "accruing", "afterN": ma["n"]})
+    done = [s for s in scored if s["status"] == "scored"]
+    return {"n": len(preds), "scored": len(done),
+            "mae_deltaER": round(st.mean(s["absError"] for s in done), 3) if done else None,
+            "hit_direction_rate": round(100 * sum(1 for s in done
+                                        if (s["realDeltaER"] > 0) == ((s.get("predictedDeltaER") or 0) > 0))
+                                        / len(done), 1) if done else None,
+            "detail": scored}
+
+# --------------------------------------------------------------- dataset + alerts
+def dataset_rows(pairs):
+    keep = ["sigId", "tf", "kind", "side", "tier", "kz", "ver", "recvDate", "resolved",
+            "result", "rMultiple", "barsToResolve", "mfeTk", "maeTk", "mfeBeforeSLTk",
+            "maxRbeforeSL", "entry", "slTk", "tp1Tk", "rr1", "entryZoneTk", "biasScore",
+            "aligned", "chopIdx", "chop", "trend", "nearEdge", "nearTk", "stretchAtr",
+            "structDir", "emaStack", "rvol", "atrPctUsed", "remTk", "hourNY", "dow",
+            "atr1m", "atr5m", "adr", "hit1R", "hit15R", "hit2R", "hit3R", "revAfterSL"]
+    return [{k: r.get(k) for k in keep} for r in pairs if r["resolved"] and r["result"]]
+
+def material_alerts(rep):
+    """Cambios que merecen que Jesus se entere. El agente los pone al frente."""
+    a = []
+    t = rep["totals"]
+    if t["orphan_outcomes"] >= 5:
+        a.append(f"ORFANOS: {t['orphan_outcomes']} outcomes sin señal. Revisar pipeline Pine/ingest.")
+    dw = rep.get("decay_weekly", {})
+    wk = sorted(dw)
+    if len(wk) >= 4:
+        recent = dw[wk[-1]].get("wrTP1")
+        base = st.mean([dw[w].get("wrTP1") for w in wk[-4:-1] if dw[w].get("wrTP1") is not None] or [0])
+        if recent is not None and base and recent < base - 15:
+            a.append(f"DECAIMIENTO: WR TP1 semana {wk[-1]} = {recent}% vs media previa {round(base,1)}% (-{round(base-recent,1)} pts).")
+    for e in rep.get("experiments", []):
+        if e.get("verdict") == "confirmed":
+            a.append(f"EXPERIMENTO CONFIRMADO: {e.get('param')} {e.get('from')}->{e.get('to')} ({e.get('id')}).")
+        if e.get("verdict") == "rejected":
+            a.append(f"EXPERIMENTO RECHAZADO (revertir): {e.get('param')} {e.get('from')}->{e.get('to')} ({e.get('id')}).")
+    wf = rep.get("walk_forward", {})
+    if wf.get("ready") and wf.get("best_scheme_oos_expR") is not None:
+        base = (rep.get("counterfactual", {}) or {}).get("baseline_nextLevel_expR")
+        if base is not None and wf["best_scheme_oos_expR"] > base + 0.1:
+            a.append(f"GESTION: '{wf['best_scheme_in_sample']['scheme']}' bate al siguiente-nivel fuera de muestra "
+                     f"({wf['best_scheme_oos_expR']} vs {base}).")
+    g = rep.get("gate", {})
+    if g.get("readyForLive"):
+        a.append("GATE: el segmento objetivo cumple el gate de ejecucion. Revisar escalera.")
+    return a
+
+def exec_gate(rep):
+    """Evalua el gate de ejecucion sobre el mejor segmento (tf/kind/side)."""
+    best = None
+    for k, m in rep["by_tf_kind_side"].items():
+        if m["n"] >= 100 and (m.get("expR") or -9) > 0 and (m.get("pf") or 0) >= 1.3 and (m.get("wrTP1") or 0) >= 50:
+            if not best or m["expR"] > rep["by_tf_kind_side"][best]["expR"]:
+                best = k
+    return {"readyForLive": bool(best), "segment": best,
+            "note": "n>=100 & E[R]>0 & PF>=1.3 & WR>=50 en un segmento tf/kind/side. Falta ademas: "
+                    "estabilidad 3 semanas + causa de SL dominante mitigada (lo valida el agente)."}
+
 # ---------------------------------------------------------------------- main
 def main():
     pairs, orphan_out, n_sig, n_out = build_pairs()
@@ -436,20 +717,44 @@ def main():
         "by_nearEdge": by(pairs, lambda r: f"edge={r['nearEdge']}"),
         "by_aligned": by(pairs, lambda r: f"aligned={r['aligned']}"),
         "by_emaStack": by(pairs, lambda r: f"emaStack={r['emaStack']}"),
+        "by_symbol": by(pairs, lambda r: r["sigId"].split("-")[0]),
         "overall": seg_metrics(pairs),
         "sl_post_mortem": None,
         "counterfactual": counterfactual(pairs),
         "decay_weekly": decay(pairs),
         "model": logistic_model(pairs),
         "experiments": eval_experiments(pairs),
-        "session_analyst": sa_context(),
+        "session_analyst": None,
+        "walk_forward": walk_forward(pairs),
+        "segment_significance": per_segment_significance(pairs),
+        "regime_clusters": regime_clusters(pairs),
+        "cross_instrument": cross_instrument(pairs),
+        "prediction_scoreboard": prediction_scoreboard(pairs),
+        "expR_ci_overall": bootstrap_er_ci(pairs),
     }
+    sa = sa_context()
+    report["session_analyst"] = sa
+    report["news_context"] = news_context(pairs, sa)
+    report["gate"] = exec_gate(report)
     causes, detail = sl_causes(pairs)
     report["sl_post_mortem"] = {"causes": causes, "n_losses": sum(1 for r in resolved if r["result"] == "SL"),
                                 "detail": detail[:60]}
+    report["alerts"] = material_alerts(report)
 
     with open(os.path.join(ROOT, "report.json"), "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
+
+    # dataset.jsonl: una linea plana y tipada por par resuelto (training set / dashboard)
+    with open(os.path.join(ROOT, "dataset.jsonl"), "w", encoding="utf-8") as f:
+        for row in dataset_rows(pairs):
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+    # alerts/<fecha>.md si hay cambios materiales
+    if report["alerts"]:
+        os.makedirs(os.path.join(ROOT, "alerts"), exist_ok=True)
+        day = report["generatedAt"][:10]
+        with open(os.path.join(ROOT, "alerts", f"{day}.md"), "w", encoding="utf-8") as f:
+            f.write(f"# Alertas {day}\n\n" + "\n".join(f"- {a}" for a in report["alerts"]) + "\n")
 
     # state.json (contadores + espacio para recommendedParams que mantiene el agente)
     try:
@@ -460,9 +765,16 @@ def main():
     state["updatedAt"] = report["generatedAt"]
     state["totals"] = report["totals"]
     state["metrics_by_tf_kind_side"] = report["by_tf_kind_side"]
+    state["metrics_by_symbol"] = report["by_symbol"]
     state["sl_causes"] = causes
+    state["decay_weekly"] = report["decay_weekly"]
+    state["walk_forward"] = report["walk_forward"]
+    state["gate"] = report["gate"]
+    state["alerts"] = report["alerts"]
+    state["prediction_scoreboard"] = {k: v for k, v in report["prediction_scoreboard"].items() if k != "detail"}
     state.setdefault("recommendedParams", {"note": "lo mantiene el agente en la revision semanal"})
     state.setdefault("executionGate", {"phase": "advisor", "readyForLive": False})
+    state["executionGate"]["readyForLive"] = report["gate"]["readyForLive"]
     with open(os.path.join(ROOT, "state.json"), "w", encoding="utf-8") as f:
         json.dump(state, f, indent=2, ensure_ascii=False)
 
@@ -472,6 +784,12 @@ def main():
     L.append(f"# Scalp CC · report {report['generatedAt'][:16]}Z\n")
     L.append(f"- signals={t['signals']} outcomes={t['outcomes']} pares_resueltos={t['pairs_resolved']} "
              f"pendientes={t['pending']} huerfanos={t['orphan_outcomes']}\n")
+    if report["alerts"]:
+        L.append("\n## ⚠ ALERTAS (llevar al frente del resumen)\n")
+        for a in report["alerts"]:
+            L.append(f"- {a}\n")
+    L.append(f"\n- E[R] global: {json.dumps(report['expR_ci_overall'], ensure_ascii=False)}\n")
+    L.append(f"- gate ejecucion: {json.dumps(report['gate'], ensure_ascii=False)}\n")
     def tbl(title, d):
         L.append(f"\n## {title}\n")
         L.append("| seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |\n|---|--|--|--|--|--|--|--|--|\n")
@@ -490,8 +808,21 @@ def main():
              + json.dumps(report["counterfactual"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Decaimiento semanal\n```json\n"
              + json.dumps(report["decay_weekly"], indent=2, ensure_ascii=False) + "\n```\n")
-    L.append("\n## Modelo P(TP1)\n```json\n"
+    L.append("\n## Modelo P(TP1) (in-sample)\n```json\n"
              + json.dumps(report["model"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Walk-forward (fuera de muestra = el numero que cuenta)\n```json\n"
+             + json.dumps(report["walk_forward"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Significancia por segmento (bootstrap + FDR 10%)\n```json\n"
+             + json.dumps(report["segment_significance"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Clusters de regimen\n```json\n"
+             + json.dumps(report["regime_clusters"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Consistencia entre instrumentos\n```json\n"
+             + json.dumps(report["cross_instrument"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Contexto de noticias\n```json\n"
+             + json.dumps(report["news_context"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Scoreboard de predicciones\n```json\n"
+             + json.dumps({k: v for k, v in report["prediction_scoreboard"].items() if k != "detail"},
+                          indent=2, ensure_ascii=False) + "\n```\n")
     if report["experiments"]:
         L.append("\n## Experimentos\n```json\n"
                  + json.dumps(report["experiments"], indent=2, ensure_ascii=False) + "\n```\n")
