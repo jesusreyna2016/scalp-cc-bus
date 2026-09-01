@@ -1,38 +1,42 @@
-# Scalp CC · report 2026-09-01T20:34Z
-- signals=10 outcomes=7 pares_resueltos=6 pendientes=4 huerfanos=1
+# Scalp CC · report 2026-09-01T20:56Z
+- signals=18 outcomes=12 pares_resueltos=11 pendientes=7 huerfanos=1
+
+- E[R] global: {"expR": -0.001, "ci90": [-0.444, 0.423], "p_mean_le_0": 0.513, "n": 11}
+- gate ejecucion: {"readyForLive": false, "segment": null, "note": "n>=100 & E[R]>0 & PF>=1.3 & WR>=50 en un segmento tf/kind/side. Falta ademas: estabilidad 3 semanas + causa de SL dominante mitigada (lo valida el agente)."}
 
 ## Por tf / kind / side
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| 1m/RETEST/LONG | 2 | 100.0 | 0.645 | 99.0 | 0 | 18.5 | 5.25 | None |
-| 1m/RETEST/SHORT | 3 | 0.0 | -1.0 | 0.0 | 3 | 9.0 | None | 0.0 |
-| 2m/RETEST/LONG | 1 | 100.0 | 0.7 | 99.0 | 0 | 54.0 | 34.0 | None |
+| 1m/RETEST/LONG | 4 | 75.0 | 0.335 | 2.34 | 1 | 15.5 | 4.0 | 0.0 |
+| 1m/RETEST/SHORT | 5 | 20.0 | -0.532 | 0.26 | 3 | 13.0 | 6.0 | 0.0 |
+| 2m/RETEST/LONG | 2 | 100.0 | 0.655 | 99.0 | 0 | 70.0 | 29.0 | None |
 
 ## Por tier
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| B | 1 | 0.0 | -1.0 | 0.0 | 1 | 9.0 | None | 0.0 |
-| C | 5 | 60.0 | -0.002 | 0.99 | 2 | 20.0 | 20.5 | 0.0 |
+| B | 2 | 50.0 | -0.025 | 0.95 | 1 | 11.0 | 6.0 | 0.0 |
+| C | 9 | 55.6 | 0.004 | 1.01 | 3 | 20.0 | 14.0 | 0.0 |
 
 ## Por killzone
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| Sin KZ | 6 | 50.0 | -0.168 | 0.66 | 3 | 18.5 | 20.5 | 0.0 |
+| Sin KZ | 11 | 54.5 | -0.001 | 1.0 | 4 | 17.0 | 12.25 | 0.0 |
 
 ## Por nearEdge
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| edge=-1 | 4 | 75.0 | 0.247 | 1.99 | 1 | 18.5 | 20.5 | 0.0 |
-| edge=0 | 2 | 0.0 | -1.0 | 0.0 | 2 | 11.5 | None | 0.0 |
+| edge=-1 | 7 | 71.4 | 0.236 | 1.82 | 2 | 17.0 | 14.0 | 0.0 |
+| edge=0 | 3 | 0.0 | -0.87 | 0.0 | 2 | 22.0 | None | 0.0 |
+| edge=1 | 1 | 100.0 | 0.95 | 99.0 | 0 | 13.0 | 6.0 | None |
 
 ## Por aligned
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| aligned=0 | 3 | 100.0 | 0.663 | 99.0 | 0 | 20.0 | 20.5 | None |
-| aligned=1 | 3 | 0.0 | -1.0 | 0.0 | 3 | 9.0 | None | 0.0 |
+| aligned=0 | 6 | 83.3 | 0.442 | 3.65 | 1 | 18.5 | 14.0 | 0.0 |
+| aligned=1 | 5 | 20.0 | -0.532 | 0.26 | 3 | 13.0 | 6.0 | 0.0 |
 
 ## Autopsia de SL
-n_losses=3  causas: chop×1, RR-bajo×1, sin-causa-clara×1
+n_losses=4  causas: RR-bajo×2, chop×1, sin-causa-clara×1, contra-sesgo×1
 
 ## Contrafactual de gestion
 ```json
@@ -46,19 +50,84 @@ n_losses=3  causas: chop×1, RR-bajo×1, sin-causa-clara×1
 ```json
 {
   "2026-W36": {
-    "n": 6,
-    "wrTP1": 50.0,
-    "expR": -0.168
+    "n": 11,
+    "wrTP1": 54.5,
+    "expR": -0.001
   }
 }
 ```
 
-## Modelo P(TP1)
+## Modelo P(TP1) (in-sample)
 ```json
 {
   "fitted": false,
-  "n": 6,
+  "n": 10,
   "need": 120
+}
+```
+
+## Walk-forward (fuera de muestra = el numero que cuenta)
+```json
+{
+  "ready": false,
+  "n": 11,
+  "need": 60
+}
+```
+
+## Significancia por segmento (bootstrap + FDR 10%)
+```json
+{}
+```
+
+## Clusters de regimen
+```json
+{
+  "ready": false,
+  "n": 11,
+  "need": 60
+}
+```
+
+## Consistencia entre instrumentos
+```json
+{}
+```
+
+## Contexto de noticias
+```json
+{
+  "available": true,
+  "n_events": 16,
+  "near_news_30m": {
+    "n": 0
+  },
+  "away_from_news": {
+    "n": 11,
+    "wrTP1": 54.5,
+    "nSL": 4,
+    "nTO": 1,
+    "expR": -0.001,
+    "pf": 1.0,
+    "mfe_p25": 11.0,
+    "mfe_p50": 17.0,
+    "mfe_p75": 25.5,
+    "winnerMAE_p75": 12.25,
+    "winnerMAE_p90": 24.0,
+    "loserMFEbeforeSL_p50": 7.0,
+    "bars_win_p50": 0.5,
+    "bars_loss_p50": 6.5,
+    "entryZoneTk_p50": null,
+    "revAfterSL_rate": 0.0
+  }
+}
+```
+
+## Scoreboard de predicciones
+```json
+{
+  "n": 0,
+  "note": "sin predictions.jsonl todavia"
 }
 ```
 

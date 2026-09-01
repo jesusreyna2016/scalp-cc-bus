@@ -594,7 +594,16 @@ def news_context(pairs, sa):
     except Exception:
         pass
     mkt = (sa or {}).get("market") or {}
-    for e in (mkt.get("news") or mkt.get("events") or []):
+    news_field = mkt.get("news")
+    if isinstance(news_field, dict):
+        sa_events = news_field.get("events") or []
+    elif isinstance(news_field, list):
+        sa_events = news_field
+    else:
+        sa_events = mkt.get("events") or []
+    for e in sa_events:
+        if not isinstance(e, dict):
+            continue
         ts = e.get("ts") or e.get("timestamp")
         if ts and (e.get("impact") in ("high", "High", "HIGH") or e.get("importance") == 3):
             events.append({"ts": int(ts), "name": e.get("name") or e.get("title") or "?"})
