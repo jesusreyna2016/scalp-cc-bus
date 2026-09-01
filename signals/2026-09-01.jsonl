@@ -1,0 +1,1 @@
+{"evt":"signal","sym":"NQ","tf":"5","sigId":"TEST-1","ver":"v1","ts":"1","raw":{"ver":"v1","src":"scalpcc","evt":"signal","sym":"NQ","tf":"5","ts":"1","sigId":"TEST-1","kind":"RETEST","side":"LONG","entry":"20000","sl":"19990","slTk":"40","tp1":"20015","rr1":"1.5","tier":"B"},"receivedAt":"2026-09-01T19:50:28.184Z"}
