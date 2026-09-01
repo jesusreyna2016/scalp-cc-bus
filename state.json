@@ -1,7 +1,36 @@
 {
-  "updatedAt": null,
+  "updatedAt": "2026-09-01T20:17:26Z",
+  "status": "accumulating",
+  "note": "Menos de 5 pares señal+outcome resueltos (excl. TEST-). Aún no hay muestra suficiente para métricas, autopsia de SL, playbook o revisión semanal. Solo se refrescan contadores.",
   "counts": {
-    "byTfKind": {}
+    "totalSignalsIngested": 5,
+    "totalOutcomesIngested": 4,
+    "orphanOutcomes": 1,
+    "orphanOutcomeIds": [
+      "YM-1-22637-S"
+    ],
+    "pendingSignalsNoOutcomeYet": 2,
+    "pendingSignalIds": [
+      "NQ-1-23402-S",
+      "NQ-2-22054-L"
+    ],
+    "resolvedPairs": 3,
+    "byTfKind": {
+      "1_RETEST_SHORT": {
+        "n": 1,
+        "TP1": 0,
+        "TP2": 0,
+        "SL": 1,
+        "TIMEOUT": 0
+      },
+      "1_RETEST_LONG": {
+        "n": 2,
+        "TP1": 2,
+        "TP2": 0,
+        "SL": 0,
+        "TIMEOUT": 0
+      }
+    }
   },
   "metrics": {
     "byTfKind": {}
