@@ -1,0 +1,25 @@
+{
+  "updatedAt": null,
+  "counts": {
+    "byTfKind": {}
+  },
+  "metrics": {
+    "byTfKind": {}
+  },
+  "slCauses": {
+    "byTfKind": {}
+  },
+  "recommendedParams": {
+    "note": "vacio hasta la primera revision semanal con n suficiente",
+    "sc_min_rr": null,
+    "sc_slbuf": null,
+    "sc_floor_atr5": null,
+    "alert_cooldown": null,
+    "min_score_buy": null,
+    "min_score_sell": null
+  },
+  "executionGate": {
+    "phase": "advisor",
+    "readyForLive": false
+  }
+}
