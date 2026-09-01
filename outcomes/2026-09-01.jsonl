@@ -1,0 +1,1 @@
+{"evt":"outcome","sym":"NQ","tf":"5","sigId":"TEST-1","ver":"v1","ts":"2","raw":{"ver":"v1","src":"scalpcc","evt":"outcome","sym":"NQ","tf":"5","ts":"2","sigId":"TEST-1","kind":"RETEST","side":"LONG","result":"TP1","barsToResolve":"7","mfeTk":"61","maeTk":"12","mfeBeforeSLTk":"61","rMultiple":"1.5","exit":"20015","ambiguous":"0"},"receivedAt":"2026-09-01T19:48:02.104Z"}
