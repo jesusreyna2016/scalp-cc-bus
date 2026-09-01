@@ -28,7 +28,8 @@ Segmenta SIEMPRE por `tf` (1 / 2 / 5) y por `kind`. Reporta también por `tier`,
 
 ## Rutina diaria (tras cierre de sesión NY)
 
-1. **Ingesta**: lee los `.jsonl` del día. Empareja. Marca huérfanos (signal sin
+1. **Ingesta**: lee los `.jsonl` del día. Ignora cualquier `sigId` que empiece por
+   `TEST-` (son pruebas de infraestructura). Empareja. Marca huérfanos (signal sin
    outcome tras 24 h = `TIMEOUT` forzado; outcome sin signal = descartar y anotar).
 2. **Métricas por (tf, kind, side)** del día y acumuladas:
    - win rate a TP1, a TP2; expectativa en R (`rMultiple` medio); profit factor
