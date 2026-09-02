@@ -139,7 +139,9 @@ def build_pairs():
             # SL estructural. Medicion PARALELA, mismos TP, no cambia la gestion.
             # slBasis: candle1 (INV, vela 1 del FVG) | retestBar (RETEST, mecha de la vela del retest)
             "slOrigTk": _f(raw, "slOrigTk"),
-            "slBasis": raw.get("slBasis") or ("retestBar" if raw.get("kind") == "RETEST" else "candle1"),
+            # slBasis solo existe desde el build retestBar; sin el campo = build viejo
+            # (vela-1 o borde-iFVG) -> "legacy", NO lo metas en la comparacion buena.
+            "slBasis": raw.get("slBasis") or "legacy",
             "resOrig": oraw.get("resOrig"),
             "rOrig": _f(oraw, "rOrig"),
             "slOrigHit": _i(oraw, "slOrigHit"),
@@ -494,14 +496,21 @@ def sl_origin_vs_layer(pairs):
     Segmenta por `slBasis` (`by_basis`): son dos reglas distintas, no las mezcles."""
     cand = [r for r in pairs if r["resolved"] and r["result"] and r.get("rOrig") is not None]
     invalid = [r for r in cand if not r.get("slOrigTk") or r["slOrigTk"] <= 0]
-    res = [r for r in cand if r.get("slOrigTk") and r["slOrigTk"] > 0]
+    valid = [r for r in cand if r.get("slOrigTk") and r["slOrigTk"] > 0]
+    # 'legacy' = señales de antes del build retestBar (vela-1 / borde-iFVG). Se ven
+    # en by_basis para referencia pero NO cuentan en overall / by_tf_kind_side.
+    res = [r for r in valid if r.get("slBasis") != "legacy"]
     inv_by_kind = {}
     for r in invalid:
         k = f"{r['tf']}m/{r['kind']}/{r['side']}"
         inv_by_kind[k] = inv_by_kind.get(k, 0) + 1
     if len(res) < 5:
+        gb0 = defaultdict(list)
+        for r in valid:
+            gb0[r.get("slBasis") or "?"].append(r)
         return {"n": len(res), "invalid_geometry": len(invalid), "invalid_by_seg": inv_by_kind,
-                "note": "aun sin muestra util con SL estructural (>0 ticks); re-pegar Pine + recrear alertas."}
+                "by_basis_n": {k: len(v) for k, v in sorted(gb0.items())},
+                "note": "aun sin muestra util del build retestBar (>0 ticks, no legacy)."}
 
     def _boot(deltas, iters=2000, seed=999):
         if len(deltas) < 8:
@@ -546,10 +555,11 @@ def sl_origin_vs_layer(pairs):
             "orig_caused_SL": caused,
         }
 
-    out = {"overall": blk(res), "invalid_geometry": len(invalid),
-           "invalid_by_seg": inv_by_kind, "by_basis": {}, "by_tf_kind_side": {}}
+    out = {"overall": blk(res), "note": "overall/by_tf_kind_side = solo build retestBar (legacy excluido)",
+           "invalid_geometry": len(invalid), "invalid_by_seg": inv_by_kind,
+           "by_basis": {}, "by_tf_kind_side": {}}
     gb = defaultdict(list)
-    for r in res:
+    for r in valid:
         gb[r.get("slBasis") or "?"].append(r)
     for k, rs in sorted(gb.items()):
         out["by_basis"][k] = blk(rs) if len(rs) >= 5 else {"n": len(rs)}
