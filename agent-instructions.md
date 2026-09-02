@@ -70,14 +70,15 @@ Si hay < 5 pares resueltos (excl. `TEST-`): sólo corre `analyze.py`, commitea
    `experiments.json` con validación fuera de muestra. No la tunees a ojo.
 5c. **SL de 3 capas vs SL estructural** (`sl_origin_vs_layer`): medición PARALELA
    con misma entrada y mismos TP; `rMultiple` es en base al SL de 3 capas, `rOrig`
-   en base al SL estructural que pone el Pine: en INVERSIÓN = vela 1 (origen) del
-   FVG (long = su mínimo, short = su máximo); en RETEST = borde del iFVG re-tocado
-   (long = su piso, short = su techo). Crudo, sin piso/techo/pad. Mira
-   `delta_orig_minus_layer` y su `delta_ci90`: sólo trátalo como real si
-   `delta_beats_zero` o `delta_below_zero` (CI90 no cruza 0) con n>=30.
-   `orig_saved_from_SL` / `orig_caused_SL` = cuántos stops se evitan o se provocan
-   al mover el SL. `invalid_geometry` = filas con slOrigTk<=0 (precio cerró al otro
-   lado del borde), excluidas. Segmenta INV vs RETEST: son dos reglas distintas.
+   en base al SL estructural que pone el Pine (campo `slBasis`): `candle1` en
+   INVERSIÓN = vela 1 (origen) del FVG (long = su mínimo, short = su máximo);
+   `retestBar` en RETEST = mecha de la propia vela del retest (long = su mínimo,
+   short = su máximo). Crudo, mecha exacta, sin pad. Mira `delta_orig_minus_layer`
+   y su `delta_ci90`: sólo trátalo como real si `delta_beats_zero` o
+   `delta_below_zero` (CI90 no cruza 0) con n>=30. `orig_saved_from_SL` /
+   `orig_caused_SL` = cuántos stops se evitan o se provocan al mover el SL.
+   `invalid_geometry` = filas con slOrigTk<=0, excluidas. Usa `by_basis`:
+   `candle1` y `retestBar` son dos reglas distintas, no las mezcles.
    Este SL NO se aplica todavía: si gana de forma estable (FDR + walk-forward),
    pasa a `experiments.json` / propuesta de la revisión semanal, no antes.
 6. **Modelo P(TP1)** (`model`): cuando `fitted=true`, interpreta signos y

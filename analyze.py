@@ -136,9 +136,10 @@ def build_pairs():
             "m1Bars": _i(oraw, "m1Bars"), "m2Bars": _i(oraw, "m2Bars"), "m3Bars": _i(oraw, "m3Bars"),
             "beAfterM1": _i(oraw, "beAfterM1"), "trailAfterM2": _i(oraw, "trailAfterM2"),
             "t1": _f(raw, "t1"), "t2": _f(raw, "t2"), "t3": _f(raw, "t3"),
-            # SL alternativo = vela 1 (origen) del FVG. Medicion PARALELA, mismos TP,
-            # no cambia la gestion. long=min de esa vela, short=max. crudo, mecha exacta.
+            # SL estructural. Medicion PARALELA, mismos TP, no cambia la gestion.
+            # slBasis: candle1 (INV, vela 1 del FVG) | retestBar (RETEST, mecha de la vela del retest)
             "slOrigTk": _f(raw, "slOrigTk"),
+            "slBasis": raw.get("slBasis") or ("retestBar" if raw.get("kind") == "RETEST" else "candle1"),
             "resOrig": oraw.get("resOrig"),
             "rOrig": _f(oraw, "rOrig"),
             "slOrigHit": _i(oraw, "slOrigHit"),
@@ -484,12 +485,13 @@ def sl_origin_vs_layer(pairs):
     rOrig = base SL estructural. Nunca cambia la gestion, solo mide cual habria
     rendido mejor fuera de muestra.
 
-    SL estructural (lo pone el Pine): INVERSION -> vela 1 (origen) del FVG
-    (long=su minimo, short=su maximo); RETEST -> borde del iFVG re-tocado
-    (long=su piso, short=su techo). crudo, sin piso/techo/pad.
+    SL estructural (lo pone el Pine, campo `slBasis`):
+      candle1  (INVERSION) -> vela 1 (origen) del FVG: long=su minimo, short=su maximo
+      retestBar(RETEST)    -> mecha de la propia vela del retest: long=su minimo, short=su maximo
+    crudo, mecha exacta, sin pad.
 
-    Filas con slOrigTk <= 0 (geometria degenerada: precio cerro al otro lado del
-    borde) se cuentan en `invalid_geometry` y se excluyen de la comparacion."""
+    Filas con slOrigTk <= 0 se cuentan en `invalid_geometry` y se excluyen.
+    Segmenta por `slBasis` (`by_basis`): son dos reglas distintas, no las mezcles."""
     cand = [r for r in pairs if r["resolved"] and r["result"] and r.get("rOrig") is not None]
     invalid = [r for r in cand if not r.get("slOrigTk") or r["slOrigTk"] <= 0]
     res = [r for r in cand if r.get("slOrigTk") and r["slOrigTk"] > 0]
@@ -545,7 +547,12 @@ def sl_origin_vs_layer(pairs):
         }
 
     out = {"overall": blk(res), "invalid_geometry": len(invalid),
-           "invalid_by_seg": inv_by_kind, "by_tf_kind_side": {}}
+           "invalid_by_seg": inv_by_kind, "by_basis": {}, "by_tf_kind_side": {}}
+    gb = defaultdict(list)
+    for r in res:
+        gb[r.get("slBasis") or "?"].append(r)
+    for k, rs in sorted(gb.items()):
+        out["by_basis"][k] = blk(rs) if len(rs) >= 5 else {"n": len(rs)}
     g = defaultdict(list)
     for r in res:
         g[f"{r['tf']}m/{r['kind']}/{r['side']}"].append(r)
