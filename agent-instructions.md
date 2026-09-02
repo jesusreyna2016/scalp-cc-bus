@@ -71,9 +71,10 @@ Si hay < 5 pares resueltos (excl. `TEST-`): sólo corre `analyze.py`, commitea
 5c. **SL de 3 capas vs SL estructural** (`sl_origin_vs_layer`): medición PARALELA
    con misma entrada y mismos TP; `rMultiple` es en base al SL de 3 capas, `rOrig`
    en base al SL estructural que pone el Pine (campo `slBasis`): `candle1` en
-   INVERSIÓN = vela 1 (origen) del FVG (long = su mínimo, short = su máximo);
-   `retestBar` en RETEST = mecha de la propia vela del retest (long = su mínimo,
-   short = su máximo). Crudo, mecha exacta, sin pad. Mira `delta_orig_minus_layer`
+   INVERSIÓN = vela 1 (origen) del FVG; `retestBar` en RETEST 2m/5m = mecha de la
+   vela del retest; `retestBar2` en RETEST 1m SHORT = mecha más extrema de la vela
+   del retest Y la anterior (en 1m la vela sola daba ~1 tick). Long = mínimo,
+   short = máximo. Crudo, mecha exacta, sin pad. Mira `delta_orig_minus_layer`
    y su `delta_ci90`: sólo trátalo como real si `delta_beats_zero` o
    `delta_below_zero` (CI90 no cruza 0) con n>=30. `orig_saved_from_SL` /
    `orig_caused_SL` = cuántos stops se evitan o se provocan al mover el SL.

@@ -139,8 +139,8 @@ def build_pairs():
             # SL estructural. Medicion PARALELA, mismos TP, no cambia la gestion.
             # slBasis: candle1 (INV, vela 1 del FVG) | retestBar (RETEST, mecha de la vela del retest)
             "slOrigTk": _f(raw, "slOrigTk"),
-            # slBasis solo existe desde el build retestBar; sin el campo = build viejo
-            # (vela-1 o borde-iFVG) -> "legacy", NO lo metas en la comparacion buena.
+            # slBasis: candle1 (INV) | retestBar (RETEST 2m/5m) | retestBar2 (RETEST 1m SHORT,
+            # mecha de la vela del retest + la anterior). Sin el campo = build viejo -> "legacy".
             "slBasis": raw.get("slBasis") or "legacy",
             "resOrig": oraw.get("resOrig"),
             "rOrig": _f(oraw, "rOrig"),
@@ -488,12 +488,13 @@ def sl_origin_vs_layer(pairs):
     rendido mejor fuera de muestra.
 
     SL estructural (lo pone el Pine, campo `slBasis`):
-      candle1  (INVERSION) -> vela 1 (origen) del FVG: long=su minimo, short=su maximo
-      retestBar(RETEST)    -> mecha de la propia vela del retest: long=su minimo, short=su maximo
+      candle1    (INVERSION)      -> vela 1 (origen) del FVG: long=su minimo, short=su maximo
+      retestBar  (RETEST 2m/5m)   -> mecha de la vela del retest: long=su minimo, short=su maximo
+      retestBar2 (RETEST 1m SHORT)-> mecha mas extrema de la vela del retest Y la anterior
     crudo, mecha exacta, sin pad.
 
     Filas con slOrigTk <= 0 se cuentan en `invalid_geometry` y se excluyen.
-    Segmenta por `slBasis` (`by_basis`): son dos reglas distintas, no las mezcles."""
+    Mira `by_basis`: candle1 / retestBar / retestBar2 son reglas distintas, no las mezcles."""
     cand = [r for r in pairs if r["resolved"] and r["result"] and r.get("rOrig") is not None]
     invalid = [r for r in cand if not r.get("slOrigTk") or r["slOrigTk"] <= 0]
     valid = [r for r in cand if r.get("slOrigTk") and r["slOrigTk"] > 0]
