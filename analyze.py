@@ -136,6 +136,13 @@ def build_pairs():
             "m1Bars": _i(oraw, "m1Bars"), "m2Bars": _i(oraw, "m2Bars"), "m3Bars": _i(oraw, "m3Bars"),
             "beAfterM1": _i(oraw, "beAfterM1"), "trailAfterM2": _i(oraw, "trailAfterM2"),
             "t1": _f(raw, "t1"), "t2": _f(raw, "t2"), "t3": _f(raw, "t3"),
+            # SL alternativo = vela 1 (origen) del FVG. Medicion PARALELA, mismos TP,
+            # no cambia la gestion. long=min de esa vela, short=max. crudo, mecha exacta.
+            "slOrigTk": _f(raw, "slOrigTk"),
+            "resOrig": oraw.get("resOrig"),
+            "rOrig": _f(oraw, "rOrig"),
+            "slOrigHit": _i(oraw, "slOrigHit"),
+            "barsResolveOrig": _f(oraw, "barsResolveOrig"),
         }
         pairs.append(rec)
 
@@ -471,6 +478,68 @@ def managed_vs_naive(pairs):
             out["by_tf_kind_side"][k] = blk(rs)
     return out
 
+def sl_origin_vs_layer(pairs):
+    """SL de 3 capas (actual) vs SL = vela 1 (origen) del FVG. Medicion PARALELA:
+    misma entrada y mismos TP, solo cambia donde esta el stop. rMultiple es en base
+    al SL de 3 capas; rOrig es en base al SL de vela 1. Nunca cambia la gestion,
+    solo mide cual habria rendido mejor fuera de muestra."""
+    res = [r for r in pairs if r["resolved"] and r["result"]
+           and r.get("rOrig") is not None and r.get("slOrigTk")]
+    if len(res) < 5:
+        return {"n": len(res), "note": "sin outcomes con SL de vela 1 todavia (re-pegar Pine v4 + recrear alertas)"}
+
+    def _boot(deltas, iters=2000, seed=999):
+        if len(deltas) < 8:
+            return [None, None]
+        import random
+        rnd = random.Random(seed)
+        n = len(deltas)
+        ms = []
+        for _ in range(iters):
+            s = [deltas[rnd.randrange(n)] for _ in range(n)]
+            ms.append(sum(s) / n)
+        ms.sort()
+        return [round(ms[int(.05 * iters)], 3), round(ms[int(.95 * iters)], 3)]
+
+    def blk(rows):
+        layer = [r["rMultiple"] for r in rows if r["rMultiple"] is not None]
+        orig = [r["rOrig"] for r in rows if r["rOrig"] is not None]
+        paired = [(r["rMultiple"], r["rOrig"]) for r in rows
+                  if r["rMultiple"] is not None and r["rOrig"] is not None]
+        deltas = [o - l for l, o in paired]
+        slt = [r["slTk"] for r in rows if r.get("slTk")]
+        slot = [r["slOrigTk"] for r in rows if r.get("slOrigTk")]
+        wider = sum(1 for r in rows if r.get("slOrigTk") and r.get("slTk") and r["slOrigTk"] > r["slTk"])
+        win_layer = sum(1 for r in rows if r["result"] in ("TP1", "TP2"))
+        win_orig = sum(1 for r in rows if r.get("resOrig") in ("TP1", "TP2"))
+        saved = sum(1 for r in rows if r["result"] == "SL" and r.get("resOrig") in ("TP1", "TP2"))
+        caused = sum(1 for r in rows if r["result"] in ("TP1", "TP2") and r.get("resOrig") == "SL")
+        ci = _boot(deltas)
+        return {
+            "n": len(rows),
+            "layer_expR": round(st.mean(layer), 3) if layer else None,
+            "orig_expR": round(st.mean(orig), 3) if orig else None,
+            "delta_orig_minus_layer": round(st.mean(deltas), 3) if deltas else None,
+            "delta_ci90": ci,
+            "delta_beats_zero": (ci[0] is not None and ci[0] > 0),
+            "delta_below_zero": (ci[1] is not None and ci[1] < 0),
+            "layer_wrTP1": round(100 * win_layer / len(rows), 1),
+            "orig_wrTP1": round(100 * win_orig / len(rows), 1),
+            "slTk_p50": _pct(slt, .5), "slOrigTk_p50": _pct(slot, .5),
+            "orig_wider_pct": round(100 * wider / len(rows), 1),
+            "orig_saved_from_SL": saved,
+            "orig_caused_SL": caused,
+        }
+
+    out = {"overall": blk(res), "by_tf_kind_side": {}}
+    g = defaultdict(list)
+    for r in res:
+        g[f"{r['tf']}m/{r['kind']}/{r['side']}"].append(r)
+    for k, rs in sorted(g.items()):
+        if len(rs) >= 5:
+            out["by_tf_kind_side"][k] = blk(rs)
+    return out
+
 def bootstrap_er_ci(rows, iters=2000, seed=12345):
     import random
     rs = [r["rMultiple"] for r in rows if r["resolved"] and r["rMultiple"] is not None]
@@ -709,7 +778,8 @@ def dataset_rows(pairs):
             "maxRbeforeSL", "entry", "slTk", "tp1Tk", "rr1", "entryZoneTk", "biasScore",
             "aligned", "chopIdx", "chop", "trend", "nearEdge", "nearTk", "stretchAtr",
             "structDir", "emaStack", "rvol", "atrPctUsed", "remTk", "hourNY", "dow",
-            "atr1m", "atr5m", "adr", "hit1R", "hit15R", "hit2R", "hit3R", "revAfterSL"]
+            "atr1m", "atr5m", "adr", "hit1R", "hit15R", "hit2R", "hit3R", "revAfterSL",
+            "slOrigTk", "resOrig", "rOrig", "slOrigHit", "barsResolveOrig"]
     return [{k: r.get(k) for k in keep} for r in pairs if r["resolved"] and r["result"]]
 
 def material_alerts(rep, prev_state=None):
@@ -752,6 +822,15 @@ def material_alerts(rep, prev_state=None):
         verbo = "bate a" if mv["delta"] > 0 else "pierde contra"
         a.append(f"GESTION: el modelo escalera+parciales {verbo} el ingenuo "
                  f"({mv.get('managed_expR')} vs {mv.get('naive_expR')} E[R], n {mv['n']}).")
+    so = (rep.get("sl_origin_vs_layer", {}) or {}).get("overall", {})
+    if so.get("n", 0) >= 30 and so.get("delta_orig_minus_layer") is not None:
+        if so.get("delta_beats_zero"):
+            a.append(f"SL: el stop en la vela 1 del FVG bate al de 3 capas fuera de ruido "
+                     f"(E[R] {so.get('orig_expR')} vs {so.get('layer_expR')}, delta {so['delta_orig_minus_layer']} "
+                     f"CI90 {so.get('delta_ci90')}, n {so['n']}). Candidato a cambiar el SL de trabajo.")
+        elif so.get("delta_below_zero"):
+            a.append(f"SL: el stop en la vela 1 del FVG rinde PEOR que el de 3 capas "
+                     f"(delta {so['delta_orig_minus_layer']} CI90 {so.get('delta_ci90')}, n {so['n']}). Mantener el actual.")
     return a
 
 def exec_gate(rep):
@@ -799,6 +878,7 @@ def main():
         "prediction_scoreboard": prediction_scoreboard(pairs),
         "expR_ci_overall": bootstrap_er_ci(pairs),
         "managed_vs_naive": managed_vs_naive(pairs),
+        "sl_origin_vs_layer": sl_origin_vs_layer(pairs),
     }
     sa = sa_context()
     report["session_analyst"] = sa
@@ -847,6 +927,7 @@ def main():
     state["walk_forward"] = report["walk_forward"]
     state["gate"] = report["gate"]
     state["managed_vs_naive"] = report["managed_vs_naive"]
+    state["sl_origin_vs_layer"] = report["sl_origin_vs_layer"]
     state["alerts"] = report["alerts"]
     state["prediction_scoreboard"] = {k: v for k, v in report["prediction_scoreboard"].items() if k != "detail"}
     state.setdefault("recommendedParams", {"note": "lo mantiene el agente en la revision semanal"})
@@ -888,6 +969,8 @@ def main():
              + json.dumps(report["counterfactual"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Modelo GESTIONADO (escalera + parciales) vs INGENUO\n```json\n"
              + json.dumps(report["managed_vs_naive"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## SL de 3 capas vs SL = vela 1 del FVG (medicion paralela, mismos TP)\n```json\n"
+             + json.dumps(report["sl_origin_vs_layer"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Decaimiento semanal\n```json\n"
              + json.dumps(report["decay_weekly"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Modelo P(TP1) (in-sample)\n```json\n"
