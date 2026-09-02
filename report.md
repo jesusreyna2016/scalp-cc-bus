@@ -1,77 +1,77 @@
 # Scalp CC · report 2026-09-02T01:21Z
-- signals=178 outcomes=172 pares_resueltos=158 pendientes=20 huerfanos=14
+- signals=183 outcomes=179 pares_resueltos=165 pendientes=18 huerfanos=14
 
 ## ⚠ ALERTAS (llevar al frente del resumen)
 - ORFANOS: 14 outcomes sin señal. Revisar pipeline Pine/ingest.
 
-- E[R] global: {"expR": 0.015, "ci90": [-0.107, 0.145], "p_mean_le_0": 0.416, "n": 158}
+- E[R] global: {"expR": 0.079, "ci90": [-0.048, 0.213], "p_mean_le_0": 0.146, "n": 165}
 - gate ejecucion: {"readyForLive": false, "segment": null, "note": "n>=100 & E[R]>0 & PF>=1.3 & WR>=50 en un segmento tf/kind/side. Falta ademas: estabilidad 3 semanas + causa de SL dominante mitigada (lo valida el agente)."}
 
 ## Por tf / kind / side
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| 1m/INV/SHORT | 3 | 66.7 | -0.07 | 0.79 | 1 | 10.0 | 3.75 | 100.0 |
+| 1m/INV/SHORT | 6 | 83.3 | 0.552 | 4.31 | 1 | 18.5 | 11.0 | 100.0 |
 | 1m/RETEST/LONG | 18 | 44.4 | -0.283 | 0.49 | 10 | 9.0 | 1.25 | 90.0 |
-| 1m/RETEST/SHORT | 85 | 51.8 | 0.046 | 1.11 | 34 | 14.0 | 9.0 | 50.0 |
+| 1m/RETEST/SHORT | 88 | 53.4 | 0.104 | 1.25 | 34 | 13.5 | 8.5 | 50.0 |
 | 2m/RETEST/LONG | 13 | 61.5 | 0.159 | 1.41 | 5 | 12.0 | 13.25 | 100.0 |
 | 2m/RETEST/SHORT | 28 | 57.1 | -0.046 | 0.88 | 10 | 11.0 | 12.25 | 50.0 |
 | 5m/INV/SHORT | 1 | 100.0 | 0.52 | 99.0 | 0 | 79.0 | 74.0 | None |
-| 5m/RETEST/SHORT | 10 | 80.0 | 0.245 | 2.23 | 2 | 36.0 | 85.0 | 100.0 |
+| 5m/RETEST/SHORT | 11 | 81.8 | 0.396 | 3.18 | 2 | 29.0 | 83.0 | 100.0 |
 
 ## Por tier
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
 | A+ | 3 | 33.3 | 0.37 | 1.55 | 2 | 13.0 | 3.0 | 0.0 |
 | B | 62 | 62.9 | 0.222 | 1.67 | 20 | 14.0 | 9.0 | 65.0 |
-| C | 93 | 50.5 | -0.135 | 0.7 | 40 | 11.0 | 13.5 | 65.0 |
+| C | 100 | 54.0 | -0.018 | 0.96 | 40 | 12.0 | 12.75 | 65.0 |
 
 ## Por killzone
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| Asia | 137 | 53.3 | -0.005 | 0.99 | 56 | 12.0 | 9.0 | 66.1 |
+| Asia | 144 | 55.6 | 0.069 | 1.17 | 56 | 12.0 | 10.25 | 66.1 |
 | Sin KZ | 21 | 66.7 | 0.146 | 1.46 | 6 | 20.0 | 20.75 | 33.3 |
 
 ## Por nearEdge
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
 | edge=-1 | 26 | 50.0 | -0.008 | 0.98 | 11 | 17.0 | 14.0 | 63.6 |
-| edge=0 | 81 | 46.9 | -0.183 | 0.62 | 37 | 11.0 | 12.75 | 70.3 |
+| edge=0 | 88 | 51.1 | -0.047 | 0.89 | 37 | 11.0 | 12.0 | 70.3 |
 | edge=1 | 51 | 70.6 | 0.342 | 2.21 | 14 | 13.0 | 9.0 | 42.9 |
 
 ## Por aligned
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
 | aligned=0 | 7 | 85.7 | 0.459 | 4.21 | 1 | 20.0 | 12.25 | 0.0 |
-| aligned=1 | 151 | 53.6 | -0.006 | 0.99 | 61 | 12.0 | 10.0 | 63.9 |
+| aligned=1 | 158 | 55.7 | 0.062 | 1.15 | 61 | 12.0 | 11.0 | 63.9 |
 
 ## Por kind/side x nearEdge
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| INV/SHORT|edge=0 | 4 | 75.0 | 0.077 | 1.31 | 1 | 10.5 | 39.5 | 100.0 |
+| INV/SHORT|edge=0 | 7 | 85.7 | 0.547 | 4.83 | 1 | 26.0 | 58.25 | 100.0 |
 | RETEST/LONG|edge=-1 | 13 | 61.5 | 0.078 | 1.2 | 5 | 12.0 | 8.75 | 80.0 |
 | RETEST/LONG|edge=0 | 16 | 37.5 | -0.345 | 0.45 | 10 | 10.0 | 5.0 | 100.0 |
 | RETEST/LONG|edge=1 | 2 | 100.0 | 0.74 | 99.0 | 0 | 22.5 | 2.5 | None |
 | RETEST/SHORT|edge=-1 | 13 | 38.5 | -0.095 | 0.79 | 6 | 26.0 | 23.0 | 50.0 |
-| RETEST/SHORT|edge=0 | 61 | 47.5 | -0.158 | 0.66 | 26 | 13.0 | 20.0 | 57.7 |
+| RETEST/SHORT|edge=0 | 65 | 50.8 | -0.038 | 0.91 | 26 | 13.0 | 12.0 | 57.7 |
 | RETEST/SHORT|edge=1 | 49 | 69.4 | 0.326 | 2.11 | 14 | 13.0 | 9.0 | 42.9 |
 
 ## Por kind/side x aligned
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| INV/SHORT|aligned=1 | 4 | 75.0 | 0.077 | 1.31 | 1 | 10.5 | 39.5 | 100.0 |
+| INV/SHORT|aligned=1 | 7 | 85.7 | 0.547 | 4.83 | 1 | 26.0 | 58.25 | 100.0 |
 | RETEST/LONG|aligned=0 | 7 | 85.7 | 0.459 | 4.21 | 1 | 20.0 | 12.25 | 0.0 |
 | RETEST/LONG|aligned=1 | 24 | 41.7 | -0.26 | 0.56 | 14 | 10.0 | 3.0 | 100.0 |
-| RETEST/SHORT|aligned=1 | 123 | 55.3 | 0.041 | 1.1 | 46 | 14.0 | 12.25 | 52.2 |
+| RETEST/SHORT|aligned=1 | 127 | 56.7 | 0.097 | 1.25 | 46 | 14.0 | 11.25 | 52.2 |
 
 ## Por kind/side x tier
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| INV/SHORT|tier=C | 4 | 75.0 | 0.077 | 1.31 | 1 | 10.5 | 39.5 | 100.0 |
+| INV/SHORT|tier=C | 7 | 85.7 | 0.547 | 4.83 | 1 | 26.0 | 58.25 | 100.0 |
 | RETEST/LONG|tier=B | 8 | 50.0 | -0.091 | 0.82 | 4 | 11.0 | 3.0 | 100.0 |
 | RETEST/LONG|tier=C | 23 | 52.2 | -0.1 | 0.79 | 11 | 10.0 | 8.5 | 90.9 |
 | RETEST/SHORT|tier=A+ | 3 | 33.3 | 0.37 | 1.55 | 2 | 13.0 | 3.0 | 0.0 |
 | RETEST/SHORT|tier=B | 54 | 64.8 | 0.269 | 1.88 | 16 | 17.5 | 9.0 | 56.2 |
-| RETEST/SHORT|tier=C | 66 | 48.5 | -0.16 | 0.65 | 28 | 13.0 | 20.0 | 53.6 |
+| RETEST/SHORT|tier=C | 70 | 51.4 | -0.048 | 0.89 | 28 | 13.0 | 14.0 | 53.6 |
 
 ## Autopsia de SL
 n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, chop×18, sin-nivel-detras×17, killzone-Asia-largo×14, sin-causa-clara×8, estirado×2, SL-muy-pegado×2, contra-sesgo×1
@@ -113,29 +113,29 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
 ```json
 {
   "overall": {
-    "n": 143,
-    "naive_expR": 0.002,
-    "managed_expR": 0.076,
-    "delta": 0.074,
-    "avgEntryBetterTk_p50": 2.8,
-    "fill_t3plus_pct": 51.7,
-    "fill_full_pct": 30.8,
-    "m1_rate": 31.5,
-    "m2_rate": 14.0,
-    "m3_rate": 9.1,
-    "beAfterM1_rate": 18.9
+    "n": 150,
+    "naive_expR": 0.073,
+    "managed_expR": 0.131,
+    "delta": 0.058,
+    "avgEntryBetterTk_p50": 2.7,
+    "fill_t3plus_pct": 50.7,
+    "fill_full_pct": 30.0,
+    "m1_rate": 34.0,
+    "m2_rate": 16.7,
+    "m3_rate": 10.0,
+    "beAfterM1_rate": 18.7
   },
   "by_tf_kind_side": {
     "1m/INV/SHORT": {
-      "n": 3,
-      "naive_expR": -0.07,
-      "managed_expR": 0.109,
-      "delta": 0.179,
-      "avgEntryBetterTk_p50": 2.5,
+      "n": 6,
+      "naive_expR": 0.552,
+      "managed_expR": 0.765,
+      "delta": 0.213,
+      "avgEntryBetterTk_p50": 3.55,
       "fill_t3plus_pct": 33.3,
       "fill_full_pct": 33.3,
-      "m1_rate": 0.0,
-      "m2_rate": 0.0,
+      "m1_rate": 50.0,
+      "m2_rate": 50.0,
       "m3_rate": 0.0,
       "beAfterM1_rate": 0.0
     },
@@ -153,17 +153,17 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
       "beAfterM1_rate": 14.3
     },
     "1m/RETEST/SHORT": {
-      "n": 78,
-      "naive_expR": 0.072,
-      "managed_expR": 0.112,
-      "delta": 0.04,
-      "avgEntryBetterTk_p50": 3.45,
-      "fill_t3plus_pct": 51.3,
-      "fill_full_pct": 26.9,
-      "m1_rate": 35.9,
-      "m2_rate": 17.9,
-      "m3_rate": 11.5,
-      "beAfterM1_rate": 19.2
+      "n": 81,
+      "naive_expR": 0.134,
+      "managed_expR": 0.138,
+      "delta": 0.004,
+      "avgEntryBetterTk_p50": 3.4,
+      "fill_t3plus_pct": 49.4,
+      "fill_full_pct": 25.9,
+      "m1_rate": 37.0,
+      "m2_rate": 18.5,
+      "m3_rate": 12.3,
+      "beAfterM1_rate": 19.8
     },
     "2m/RETEST/LONG": {
       "n": 10,
@@ -192,17 +192,17 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
       "beAfterM1_rate": 17.9
     },
     "5m/RETEST/SHORT": {
-      "n": 9,
-      "naive_expR": 0.211,
-      "managed_expR": 0.515,
-      "delta": 0.304,
-      "avgEntryBetterTk_p50": 2.6,
-      "fill_t3plus_pct": 44.4,
-      "fill_full_pct": 11.1,
-      "m1_rate": 44.4,
-      "m2_rate": 11.1,
-      "m3_rate": 0.0,
-      "beAfterM1_rate": 33.3
+      "n": 10,
+      "naive_expR": 0.381,
+      "managed_expR": 0.664,
+      "delta": 0.283,
+      "avgEntryBetterTk_p50": 4.2,
+      "fill_t3plus_pct": 50.0,
+      "fill_full_pct": 10.0,
+      "m1_rate": 50.0,
+      "m2_rate": 20.0,
+      "m3_rate": 10.0,
+      "beAfterM1_rate": 30.0
     }
   }
 }
@@ -212,9 +212,9 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
 ```json
 {
   "2026-W36": {
-    "n": 158,
-    "wrTP1": 55.1,
-    "expR": 0.015
+    "n": 165,
+    "wrTP1": 57.0,
+    "expR": 0.079
   }
 }
 ```
@@ -223,123 +223,123 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
 ```json
 {
   "fitted": true,
-  "n": 149,
-  "brier": 0.1715,
-  "bias": 0.382,
+  "n": 156,
+  "brier": 0.1712,
+  "bias": 0.517,
   "coefficients": [
     {
       "feature": "rr1",
-      "weight": -0.889
-    },
-    {
-      "feature": "nearEdge",
-      "weight": 0.476
-    },
-    {
-      "feature": "aligned",
-      "weight": -0.459
+      "weight": -0.671
     },
     {
       "feature": "structDir",
-      "weight": 0.453
+      "weight": 0.504
+    },
+    {
+      "feature": "nearEdge",
+      "weight": 0.479
     },
     {
       "feature": "nearTk",
-      "weight": -0.396
+      "weight": -0.457
+    },
+    {
+      "feature": "aligned",
+      "weight": -0.446
     },
     {
       "feature": "chopIdx",
-      "weight": -0.393
-    },
-    {
-      "feature": "emaStack",
-      "weight": -0.247
+      "weight": -0.427
     },
     {
       "feature": "stretchAtr",
-      "weight": 0.228
-    },
-    {
-      "feature": "biasScore",
-      "weight": -0.134
-    },
-    {
-      "feature": "atrPctUsed",
-      "weight": 0.107
+      "weight": 0.315
     },
     {
       "feature": "hourNY",
-      "weight": 0.099
+      "weight": 0.251
+    },
+    {
+      "feature": "biasScore",
+      "weight": -0.179
+    },
+    {
+      "feature": "emaStack",
+      "weight": -0.168
+    },
+    {
+      "feature": "atrPctUsed",
+      "weight": 0.165
     },
     {
       "feature": "rvol",
-      "weight": -0.019
+      "weight": -0.102
     },
     {
       "feature": "entryZoneTk",
-      "weight": -0.008
+      "weight": -0.01
     }
   ],
   "calibration_deciles": [
     {
       "bin": 0,
-      "pred": 0.097,
-      "actual": 0.143,
-      "n": 14
+      "pred": 0.12,
+      "actual": 0.2,
+      "n": 15
     },
     {
       "bin": 1,
-      "pred": 0.227,
-      "actual": 0.267,
-      "n": 15
+      "pred": 0.262,
+      "actual": 0.312,
+      "n": 16
     },
     {
       "bin": 2,
-      "pred": 0.408,
-      "actual": 0.267,
-      "n": 15
-    },
-    {
-      "bin": 3,
-      "pred": 0.502,
+      "pred": 0.417,
       "actual": 0.4,
       "n": 15
     },
     {
+      "bin": 3,
+      "pred": 0.518,
+      "actual": 0.188,
+      "n": 16
+    },
+    {
       "bin": 4,
-      "pred": 0.592,
-      "actual": 0.6,
-      "n": 15
+      "pred": 0.611,
+      "actual": 0.688,
+      "n": 16
     },
     {
       "bin": 5,
-      "pred": 0.654,
+      "pred": 0.686,
       "actual": 0.733,
       "n": 15
     },
     {
       "bin": 6,
-      "pred": 0.744,
-      "actual": 0.8,
-      "n": 15
+      "pred": 0.771,
+      "actual": 0.875,
+      "n": 16
     },
     {
       "bin": 7,
-      "pred": 0.814,
-      "actual": 0.867,
+      "pred": 0.823,
+      "actual": 0.933,
       "n": 15
     },
     {
       "bin": 8,
-      "pred": 0.851,
-      "actual": 0.8,
-      "n": 15
+      "pred": 0.862,
+      "actual": 0.75,
+      "n": 16
     },
     {
       "bin": 9,
-      "pred": 0.921,
-      "actual": 0.933,
-      "n": 15
+      "pred": 0.929,
+      "actual": 0.938,
+      "n": 16
     }
   ],
   "note": "in-sample; interpretar signo/magnitud, no como verdad fuera de muestra hasta 200+"
@@ -369,13 +369,13 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
     "survives_fdr10": false
   },
   "1m/RETEST/SHORT": {
-    "expR": 0.046,
+    "expR": 0.104,
     "ci90": [
-      -0.131,
-      0.236
+      -0.086,
+      0.294
     ],
-    "p_mean_le_0": 0.353,
-    "n": 85,
+    "p_mean_le_0": 0.18,
+    "n": 88,
     "survives_fdr10": false
   },
   "2m/RETEST/LONG": {
@@ -399,13 +399,13 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
     "survives_fdr10": false
   },
   "5m/RETEST/SHORT": {
-    "expR": 0.245,
+    "expR": 0.396,
     "ci90": [
-      -0.128,
-      0.602
+      -0.005,
+      0.809
     ],
-    "p_mean_le_0": 0.137,
-    "n": 10,
+    "p_mean_le_0": 0.052,
+    "n": 11,
     "survives_fdr10": false
   }
 }
@@ -419,41 +419,41 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
   "clusters": [
     {
       "id": 3,
-      "n": 51,
-      "wrTP1": 68.6,
-      "expR": 0.277,
-      "pf": 2.17,
+      "n": 54,
+      "wrTP1": 68.5,
+      "expR": 0.272,
+      "pf": 2.13,
       "defining_features": {
-        "structDir": 0.73,
-        "stretchAtr": 0.68,
-        "hourNY": -0.58,
-        "nearEdge": 0.52
-      }
-    },
-    {
-      "id": 1,
-      "n": 29,
-      "wrTP1": 55.2,
-      "expR": -0.027,
-      "pf": 0.93,
-      "defining_features": {
-        "entryZoneTk": -1.19,
-        "nearTk": 0.88,
-        "emaStack": -0.65,
-        "chopIdx": 0.47
+        "structDir": 0.68,
+        "stretchAtr": 0.62,
+        "rvol": 0.56,
+        "hourNY": -0.56
       }
     },
     {
       "id": 2,
-      "n": 49,
-      "wrTP1": 46.9,
-      "expR": -0.088,
-      "pf": 0.83,
+      "n": 52,
+      "wrTP1": 51.9,
+      "expR": 0.102,
+      "pf": 1.22,
       "defining_features": {
-        "structDir": -0.78,
-        "hourNY": 0.65,
-        "biasScore": -0.58,
-        "emaStack": -0.58
+        "structDir": -0.7,
+        "hourNY": 0.69,
+        "rr1": 0.6,
+        "biasScore": -0.58
+      }
+    },
+    {
+      "id": 1,
+      "n": 30,
+      "wrTP1": 56.7,
+      "expR": -0.009,
+      "pf": 0.98,
+      "defining_features": {
+        "entryZoneTk": -1.17,
+        "nearTk": 0.9,
+        "emaStack": -0.62,
+        "chopIdx": 0.53
       }
     },
     {
@@ -463,10 +463,10 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
       "expR": -0.231,
       "pf": 0.58,
       "defining_features": {
-        "biasScore": 1.79,
-        "emaStack": 0.91,
+        "biasScore": 1.84,
+        "emaStack": 0.9,
         "nearEdge": -0.64,
-        "entryZoneTk": 0.56
+        "entryZoneTk": 0.57
       }
     }
   ]
@@ -494,13 +494,13 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
         "expR": 0.307
       },
       "ES": {
-        "n": 10,
-        "wrTP1": 40.0,
-        "expR": -0.398
+        "n": 13,
+        "wrTP1": 53.8,
+        "expR": 0.099
       }
     },
-    "expR_spread": 0.705,
-    "verdict": "instrument-specific"
+    "expR_spread": 0.345,
+    "verdict": "universal"
   },
   "2m/RETEST/LONG": {
     "symbols": {
@@ -552,12 +552,12 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
         "expR": 0.321
       },
       "ES": {
-        "n": 3,
-        "wrTP1": 66.7,
-        "expR": 0.067
+        "n": 4,
+        "wrTP1": 75.0,
+        "expR": 0.527
       }
     },
-    "expR_spread": 0.254,
+    "expR_spread": 0.206,
     "verdict": "universal"
   }
 }
@@ -569,35 +569,35 @@ n_losses=62  causas: RR-bajo×39, stop-en-el-minimo×39, contra-estructura×27, 
   "available": true,
   "n_events": 15,
   "near_news_30m": {
-    "n": 1,
+    "n": 5,
     "wrTP1": 100.0,
     "nSL": 0,
     "nTO": 0,
-    "expR": 0.62,
+    "expR": 1.176,
     "pf": 99.0,
-    "mfe_p25": 5.0,
-    "mfe_p50": 5.0,
-    "mfe_p75": 5.0,
-    "winnerMAE_p75": 0.0,
-    "winnerMAE_p90": 0.0,
+    "mfe_p25": 9.0,
+    "mfe_p50": 10.0,
+    "mfe_p75": 26.0,
+    "winnerMAE_p75": 4.0,
+    "winnerMAE_p90": 8.200000000000001,
     "loserMFEbeforeSL_p50": null,
-    "bars_win_p50": 1.0,
+    "bars_win_p50": 7.0,
     "bars_loss_p50": null,
-    "entryZoneTk_p50": -3.0,
+    "entryZoneTk_p50": -10.0,
     "revAfterSL_rate": null
   },
   "away_from_news": {
-    "n": 157,
-    "wrTP1": 54.8,
+    "n": 160,
+    "wrTP1": 55.6,
     "nSL": 62,
     "nTO": 9,
-    "expR": 0.011,
-    "pf": 1.03,
+    "expR": 0.045,
+    "pf": 1.11,
     "mfe_p25": 8.0,
     "mfe_p50": 13.0,
-    "mfe_p75": 27.0,
-    "winnerMAE_p75": 11.5,
-    "winnerMAE_p90": 29.0,
+    "mfe_p75": 28.0,
+    "winnerMAE_p75": 12.0,
+    "winnerMAE_p90": 31.200000000000003,
     "loserMFEbeforeSL_p50": 2.0,
     "bars_win_p50": 1.0,
     "bars_loss_p50": 3.5,

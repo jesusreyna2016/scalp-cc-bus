@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-02T01:21:31.329131+00:00",
+  "generatedAt": "2026-09-02T01:21:58.612854+00:00",
   "totals": {
-    "signals": 178,
-    "outcomes": 172,
-    "pairs_resolved": 158,
-    "pending": 20,
+    "signals": 183,
+    "outcomes": 179,
+    "pairs_resolved": 165,
+    "pending": 18,
     "orphan_outcomes": 14,
     "orphan_outcome_ids": [
       "YM-1-22637-S",
@@ -25,21 +25,21 @@
   },
   "by_tf_kind_side": {
     "1m/INV/SHORT": {
-      "n": 3,
-      "wrTP1": 66.7,
+      "n": 6,
+      "wrTP1": 83.3,
       "nSL": 1,
       "nTO": 0,
-      "expR": -0.07,
-      "pf": 0.79,
-      "mfe_p25": 8.5,
-      "mfe_p50": 10.0,
-      "mfe_p75": 10.5,
-      "winnerMAE_p75": 3.75,
-      "winnerMAE_p90": 4.5,
+      "expR": 0.552,
+      "pf": 4.31,
+      "mfe_p25": 10.25,
+      "mfe_p50": 18.5,
+      "mfe_p75": 26.75,
+      "winnerMAE_p75": 11.0,
+      "winnerMAE_p90": 57.20000000000001,
       "loserMFEbeforeSL_p50": 7.0,
-      "bars_win_p50": 3.0,
+      "bars_win_p50": 8.0,
       "bars_loss_p50": 4.0,
-      "entryZoneTk_p50": -7.0,
+      "entryZoneTk_p50": -10.5,
       "revAfterSL_rate": 100.0
     },
     "1m/RETEST/LONG": {
@@ -61,19 +61,19 @@
       "revAfterSL_rate": 90.0
     },
     "1m/RETEST/SHORT": {
-      "n": 85,
-      "wrTP1": 51.8,
+      "n": 88,
+      "wrTP1": 53.4,
       "nSL": 34,
       "nTO": 7,
-      "expR": 0.046,
-      "pf": 1.11,
+      "expR": 0.104,
+      "pf": 1.25,
       "mfe_p25": 8.0,
-      "mfe_p50": 14.0,
+      "mfe_p50": 13.5,
       "mfe_p75": 28.0,
-      "winnerMAE_p75": 9.0,
-      "winnerMAE_p90": 18.80000000000001,
+      "winnerMAE_p75": 8.5,
+      "winnerMAE_p90": 17.599999999999994,
       "loserMFEbeforeSL_p50": 6.0,
-      "bars_win_p50": 2.5,
+      "bars_win_p50": 3.0,
       "bars_loss_p50": 3.0,
       "entryZoneTk_p50": -10.0,
       "revAfterSL_rate": 50.0
@@ -133,21 +133,21 @@
       "revAfterSL_rate": null
     },
     "5m/RETEST/SHORT": {
-      "n": 10,
-      "wrTP1": 80.0,
+      "n": 11,
+      "wrTP1": 81.8,
       "nSL": 2,
       "nTO": 0,
-      "expR": 0.245,
-      "pf": 2.23,
-      "mfe_p25": 14.75,
-      "mfe_p50": 36.0,
-      "mfe_p75": 64.5,
-      "winnerMAE_p75": 85.0,
-      "winnerMAE_p90": 95.2,
+      "expR": 0.396,
+      "pf": 3.18,
+      "mfe_p25": 17.5,
+      "mfe_p50": 29.0,
+      "mfe_p75": 59.0,
+      "winnerMAE_p75": 83.0,
+      "winnerMAE_p90": 93.8,
       "loserMFEbeforeSL_p50": 7.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 15.0,
-      "entryZoneTk_p50": -63.0,
+      "entryZoneTk_p50": -46.5,
       "revAfterSL_rate": 100.0
     }
   },
@@ -189,19 +189,19 @@
       "revAfterSL_rate": 65.0
     },
     "C": {
-      "n": 93,
-      "wrTP1": 50.5,
+      "n": 100,
+      "wrTP1": 54.0,
       "nSL": 40,
       "nTO": 6,
-      "expR": -0.135,
-      "pf": 0.7,
-      "mfe_p25": 7.0,
-      "mfe_p50": 11.0,
-      "mfe_p75": 25.0,
-      "winnerMAE_p75": 13.5,
-      "winnerMAE_p90": 45.59999999999996,
+      "expR": -0.018,
+      "pf": 0.96,
+      "mfe_p25": 8.0,
+      "mfe_p50": 12.0,
+      "mfe_p75": 26.25,
+      "winnerMAE_p75": 12.75,
+      "winnerMAE_p90": 54.30000000000008,
       "loserMFEbeforeSL_p50": 1.0,
-      "bars_win_p50": 1.0,
+      "bars_win_p50": 2.0,
       "bars_loss_p50": 4.0,
       "entryZoneTk_p50": -10.0,
       "revAfterSL_rate": 65.0
@@ -209,19 +209,19 @@
   },
   "by_kz": {
     "Asia": {
-      "n": 137,
-      "wrTP1": 53.3,
+      "n": 144,
+      "wrTP1": 55.6,
       "nSL": 56,
       "nTO": 8,
-      "expR": -0.005,
-      "pf": 0.99,
+      "expR": 0.069,
+      "pf": 1.17,
       "mfe_p25": 8.0,
       "mfe_p50": 12.0,
-      "mfe_p75": 26.0,
-      "winnerMAE_p75": 9.0,
-      "winnerMAE_p90": 22.0,
+      "mfe_p75": 27.0,
+      "winnerMAE_p75": 10.25,
+      "winnerMAE_p90": 22.500000000000043,
       "loserMFEbeforeSL_p50": 2.0,
-      "bars_win_p50": 1.0,
+      "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
       "entryZoneTk_p50": -10.0,
       "revAfterSL_rate": 66.1
@@ -265,19 +265,19 @@
       "revAfterSL_rate": 63.6
     },
     "edge=0": {
-      "n": 81,
-      "wrTP1": 46.9,
+      "n": 88,
+      "wrTP1": 51.1,
       "nSL": 37,
       "nTO": 6,
-      "expR": -0.183,
-      "pf": 0.62,
-      "mfe_p25": 7.0,
+      "expR": -0.047,
+      "pf": 0.89,
+      "mfe_p25": 8.0,
       "mfe_p50": 11.0,
-      "mfe_p75": 25.0,
-      "winnerMAE_p75": 12.75,
-      "winnerMAE_p90": 66.30000000000004,
+      "mfe_p75": 27.0,
+      "winnerMAE_p75": 12.0,
+      "winnerMAE_p90": 69.60000000000002,
       "loserMFEbeforeSL_p50": 1.0,
-      "bars_win_p50": 2.0,
+      "bars_win_p50": 3.0,
       "bars_loss_p50": 4.0,
       "entryZoneTk_p50": -10.0,
       "revAfterSL_rate": 70.3
@@ -321,19 +321,19 @@
       "revAfterSL_rate": 0.0
     },
     "aligned=1": {
-      "n": 151,
-      "wrTP1": 53.6,
+      "n": 158,
+      "wrTP1": 55.7,
       "nSL": 61,
       "nTO": 9,
-      "expR": -0.006,
-      "pf": 0.99,
+      "expR": 0.062,
+      "pf": 1.15,
       "mfe_p25": 8.0,
       "mfe_p50": 12.0,
       "mfe_p75": 27.0,
-      "winnerMAE_p75": 10.0,
-      "winnerMAE_p90": 27.0,
+      "winnerMAE_p75": 11.0,
+      "winnerMAE_p90": 28.19999999999999,
       "loserMFEbeforeSL_p50": 2.0,
-      "bars_win_p50": 1.0,
+      "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
       "entryZoneTk_p50": -10.0,
       "revAfterSL_rate": 63.9
@@ -341,17 +341,17 @@
   },
   "by_emaStack": {
     "emaStack=-1": {
-      "n": 56,
-      "wrTP1": 58.9,
+      "n": 60,
+      "wrTP1": 61.7,
       "nSL": 23,
       "nTO": 0,
-      "expR": 0.088,
-      "pf": 1.21,
+      "expR": 0.17,
+      "pf": 1.44,
       "mfe_p25": 10.0,
       "mfe_p50": 14.5,
-      "mfe_p75": 30.25,
-      "winnerMAE_p75": 13.0,
-      "winnerMAE_p90": 22.8,
+      "mfe_p75": 28.25,
+      "winnerMAE_p75": 12.0,
+      "winnerMAE_p90": 22.4,
       "loserMFEbeforeSL_p50": 6.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
@@ -359,17 +359,17 @@
       "revAfterSL_rate": 73.9
     },
     "emaStack=0": {
-      "n": 67,
-      "wrTP1": 52.2,
+      "n": 68,
+      "wrTP1": 52.9,
       "nSL": 25,
       "nTO": 7,
-      "expR": -0.035,
-      "pf": 0.91,
+      "expR": -0.006,
+      "pf": 0.98,
       "mfe_p25": 6.0,
       "mfe_p50": 10.0,
-      "mfe_p75": 24.5,
+      "mfe_p75": 25.25,
       "winnerMAE_p75": 9.0,
-      "winnerMAE_p90": 18.400000000000006,
+      "winnerMAE_p90": 18.0,
       "loserMFEbeforeSL_p50": 1.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 5.0,
@@ -377,21 +377,21 @@
       "revAfterSL_rate": 60.0
     },
     "emaStack=1": {
-      "n": 22,
-      "wrTP1": 50.0,
+      "n": 24,
+      "wrTP1": 54.2,
       "nSL": 10,
       "nTO": 1,
-      "expR": -0.049,
-      "pf": 0.89,
+      "expR": 0.102,
+      "pf": 1.24,
       "mfe_p25": 8.0,
-      "mfe_p50": 10.5,
-      "mfe_p75": 28.5,
-      "winnerMAE_p75": 9.5,
-      "winnerMAE_p90": 31.0,
+      "mfe_p50": 11.0,
+      "mfe_p75": 32.0,
+      "winnerMAE_p75": 13.0,
+      "winnerMAE_p90": 56.60000000000002,
       "loserMFEbeforeSL_p50": 2.0,
-      "bars_win_p50": 3.0,
+      "bars_win_p50": 4.0,
       "bars_loss_p50": 4.5,
-      "entryZoneTk_p50": -9.0,
+      "entryZoneTk_p50": -9.5,
       "revAfterSL_rate": 70.0
     },
     "emaStack=None": {
@@ -415,21 +415,21 @@
   },
   "by_kindside_edge": {
     "INV/SHORT|edge=0": {
-      "n": 4,
-      "wrTP1": 75.0,
+      "n": 7,
+      "wrTP1": 85.7,
       "nSL": 1,
       "nTO": 0,
-      "expR": 0.077,
-      "pf": 1.31,
-      "mfe_p25": 9.25,
-      "mfe_p50": 10.5,
-      "mfe_p75": 28.0,
-      "winnerMAE_p75": 39.5,
-      "winnerMAE_p90": 60.2,
+      "expR": 0.547,
+      "pf": 4.83,
+      "mfe_p25": 10.5,
+      "mfe_p50": 26.0,
+      "mfe_p75": 53.0,
+      "winnerMAE_p75": 58.25,
+      "winnerMAE_p90": 81.0,
       "loserMFEbeforeSL_p50": 7.0,
-      "bars_win_p50": 5.0,
+      "bars_win_p50": 7.5,
       "bars_loss_p50": 4.0,
-      "entryZoneTk_p50": -7.0,
+      "entryZoneTk_p50": -10.5,
       "revAfterSL_rate": 100.0
     },
     "RETEST/LONG|edge=-1": {
@@ -505,17 +505,17 @@
       "revAfterSL_rate": 50.0
     },
     "RETEST/SHORT|edge=0": {
-      "n": 61,
-      "wrTP1": 47.5,
+      "n": 65,
+      "wrTP1": 50.8,
       "nSL": 26,
       "nTO": 6,
-      "expR": -0.158,
-      "pf": 0.66,
+      "expR": -0.038,
+      "pf": 0.91,
       "mfe_p25": 8.0,
       "mfe_p50": 13.0,
-      "mfe_p75": 28.0,
-      "winnerMAE_p75": 20.0,
-      "winnerMAE_p90": 66.99999999999999,
+      "mfe_p75": 29.0,
+      "winnerMAE_p75": 12.0,
+      "winnerMAE_p90": 56.800000000000026,
       "loserMFEbeforeSL_p50": 1.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 2.0,
@@ -543,21 +543,21 @@
   },
   "by_kindside_aligned": {
     "INV/SHORT|aligned=1": {
-      "n": 4,
-      "wrTP1": 75.0,
+      "n": 7,
+      "wrTP1": 85.7,
       "nSL": 1,
       "nTO": 0,
-      "expR": 0.077,
-      "pf": 1.31,
-      "mfe_p25": 9.25,
-      "mfe_p50": 10.5,
-      "mfe_p75": 28.0,
-      "winnerMAE_p75": 39.5,
-      "winnerMAE_p90": 60.2,
+      "expR": 0.547,
+      "pf": 4.83,
+      "mfe_p25": 10.5,
+      "mfe_p50": 26.0,
+      "mfe_p75": 53.0,
+      "winnerMAE_p75": 58.25,
+      "winnerMAE_p90": 81.0,
       "loserMFEbeforeSL_p50": 7.0,
-      "bars_win_p50": 5.0,
+      "bars_win_p50": 7.5,
       "bars_loss_p50": 4.0,
-      "entryZoneTk_p50": -7.0,
+      "entryZoneTk_p50": -10.5,
       "revAfterSL_rate": 100.0
     },
     "RETEST/LONG|aligned=0": {
@@ -597,41 +597,41 @@
       "revAfterSL_rate": 100.0
     },
     "RETEST/SHORT|aligned=1": {
-      "n": 123,
-      "wrTP1": 55.3,
+      "n": 127,
+      "wrTP1": 56.7,
       "nSL": 46,
       "nTO": 9,
-      "expR": 0.041,
-      "pf": 1.1,
+      "expR": 0.097,
+      "pf": 1.25,
       "mfe_p25": 8.0,
       "mfe_p50": 14.0,
-      "mfe_p75": 28.5,
-      "winnerMAE_p75": 12.25,
-      "winnerMAE_p90": 28.200000000000017,
+      "mfe_p75": 29.0,
+      "winnerMAE_p75": 11.25,
+      "winnerMAE_p90": 26.599999999999994,
       "loserMFEbeforeSL_p50": 3.0,
-      "bars_win_p50": 1.5,
+      "bars_win_p50": 2.0,
       "bars_loss_p50": 2.5,
-      "entryZoneTk_p50": -13.0,
+      "entryZoneTk_p50": -12.0,
       "revAfterSL_rate": 52.2
     }
   },
   "by_kindside_tier": {
     "INV/SHORT|tier=C": {
-      "n": 4,
-      "wrTP1": 75.0,
+      "n": 7,
+      "wrTP1": 85.7,
       "nSL": 1,
       "nTO": 0,
-      "expR": 0.077,
-      "pf": 1.31,
-      "mfe_p25": 9.25,
-      "mfe_p50": 10.5,
-      "mfe_p75": 28.0,
-      "winnerMAE_p75": 39.5,
-      "winnerMAE_p90": 60.2,
+      "expR": 0.547,
+      "pf": 4.83,
+      "mfe_p25": 10.5,
+      "mfe_p50": 26.0,
+      "mfe_p75": 53.0,
+      "winnerMAE_p75": 58.25,
+      "winnerMAE_p90": 81.0,
       "loserMFEbeforeSL_p50": 7.0,
-      "bars_win_p50": 5.0,
+      "bars_win_p50": 7.5,
       "bars_loss_p50": 4.0,
-      "entryZoneTk_p50": -7.0,
+      "entryZoneTk_p50": -10.5,
       "revAfterSL_rate": 100.0
     },
     "RETEST/LONG|tier=B": {
@@ -707,17 +707,17 @@
       "revAfterSL_rate": 56.2
     },
     "RETEST/SHORT|tier=C": {
-      "n": 66,
-      "wrTP1": 48.5,
+      "n": 70,
+      "wrTP1": 51.4,
       "nSL": 28,
       "nTO": 6,
-      "expR": -0.16,
-      "pf": 0.65,
-      "mfe_p25": 7.25,
+      "expR": -0.048,
+      "pf": 0.89,
+      "mfe_p25": 8.0,
       "mfe_p50": 13.0,
-      "mfe_p75": 26.75,
-      "winnerMAE_p75": 20.0,
-      "winnerMAE_p90": 59.90000000000006,
+      "mfe_p75": 27.75,
+      "winnerMAE_p75": 14.0,
+      "winnerMAE_p90": 47.5,
       "loserMFEbeforeSL_p50": 1.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 2.0,
@@ -745,21 +745,21 @@
       "revAfterSL_rate": 100.0
     },
     "ES": {
-      "n": 19,
-      "wrTP1": 47.4,
+      "n": 23,
+      "wrTP1": 56.5,
       "nSL": 8,
       "nTO": 2,
-      "expR": -0.202,
-      "pf": 0.54,
+      "expR": 0.146,
+      "pf": 1.41,
       "mfe_p25": 3.0,
-      "mfe_p50": 6.0,
-      "mfe_p75": 8.0,
+      "mfe_p50": 7.0,
+      "mfe_p75": 9.5,
       "winnerMAE_p75": 5.0,
-      "winnerMAE_p90": 5.800000000000001,
+      "winnerMAE_p90": 8.400000000000002,
       "loserMFEbeforeSL_p50": 1.0,
-      "bars_win_p50": 1.0,
+      "bars_win_p50": 4.0,
       "bars_loss_p50": 3.5,
-      "entryZoneTk_p50": -9.0,
+      "entryZoneTk_p50": -9.5,
       "revAfterSL_rate": 25.0
     },
     "GC": {
@@ -781,35 +781,35 @@
       "revAfterSL_rate": 47.1
     },
     "NQ": {
-      "n": 30,
-      "wrTP1": 63.3,
+      "n": 31,
+      "wrTP1": 64.5,
       "nSL": 10,
       "nTO": 1,
-      "expR": 0.113,
-      "pf": 1.32,
-      "mfe_p25": 27.25,
-      "mfe_p50": 51.0,
-      "mfe_p75": 63.75,
-      "winnerMAE_p75": 48.5,
-      "winnerMAE_p90": 84.6,
+      "expR": 0.127,
+      "pf": 1.37,
+      "mfe_p25": 27.5,
+      "mfe_p50": 54.0,
+      "mfe_p75": 64.0,
+      "winnerMAE_p75": 65.75,
+      "winnerMAE_p90": 88.30000000000001,
       "loserMFEbeforeSL_p50": 8.0,
-      "bars_win_p50": 2.0,
+      "bars_win_p50": 2.5,
       "bars_loss_p50": 2.5,
       "entryZoneTk_p50": -35.0,
       "revAfterSL_rate": 50.0
     },
     "YM": {
-      "n": 41,
-      "wrTP1": 58.5,
+      "n": 43,
+      "wrTP1": 60.5,
       "nSL": 13,
       "nTO": 4,
-      "expR": 0.19,
-      "pf": 1.53,
-      "mfe_p25": 7.0,
+      "expR": 0.251,
+      "pf": 1.73,
+      "mfe_p25": 7.5,
       "mfe_p50": 12.0,
-      "mfe_p75": 14.0,
-      "winnerMAE_p75": 6.25,
-      "winnerMAE_p90": 9.0,
+      "mfe_p75": 14.5,
+      "winnerMAE_p75": 6.75,
+      "winnerMAE_p90": 9.5,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 2.0,
@@ -818,19 +818,19 @@
     }
   },
   "overall": {
-    "n": 158,
-    "wrTP1": 55.1,
+    "n": 165,
+    "wrTP1": 57.0,
     "nSL": 62,
     "nTO": 9,
-    "expR": 0.015,
-    "pf": 1.04,
+    "expR": 0.079,
+    "pf": 1.2,
     "mfe_p25": 8.0,
-    "mfe_p50": 12.5,
-    "mfe_p75": 27.0,
+    "mfe_p50": 13.0,
+    "mfe_p75": 28.0,
     "winnerMAE_p75": 11.0,
-    "winnerMAE_p90": 28.600000000000023,
+    "winnerMAE_p90": 29.80000000000001,
     "loserMFEbeforeSL_p50": 2.0,
-    "bars_win_p50": 1.0,
+    "bars_win_p50": 2.0,
     "bars_loss_p50": 3.5,
     "entryZoneTk_p50": -10.0,
     "revAfterSL_rate": 62.9
@@ -1585,130 +1585,130 @@
   },
   "decay_weekly": {
     "2026-W36": {
-      "n": 158,
-      "wrTP1": 55.1,
-      "expR": 0.015
+      "n": 165,
+      "wrTP1": 57.0,
+      "expR": 0.079
     }
   },
   "model": {
     "fitted": true,
-    "n": 149,
-    "brier": 0.1715,
-    "bias": 0.382,
+    "n": 156,
+    "brier": 0.1712,
+    "bias": 0.517,
     "coefficients": [
       {
         "feature": "rr1",
-        "weight": -0.889
-      },
-      {
-        "feature": "nearEdge",
-        "weight": 0.476
-      },
-      {
-        "feature": "aligned",
-        "weight": -0.459
+        "weight": -0.671
       },
       {
         "feature": "structDir",
-        "weight": 0.453
+        "weight": 0.504
+      },
+      {
+        "feature": "nearEdge",
+        "weight": 0.479
       },
       {
         "feature": "nearTk",
-        "weight": -0.396
+        "weight": -0.457
+      },
+      {
+        "feature": "aligned",
+        "weight": -0.446
       },
       {
         "feature": "chopIdx",
-        "weight": -0.393
-      },
-      {
-        "feature": "emaStack",
-        "weight": -0.247
+        "weight": -0.427
       },
       {
         "feature": "stretchAtr",
-        "weight": 0.228
-      },
-      {
-        "feature": "biasScore",
-        "weight": -0.134
-      },
-      {
-        "feature": "atrPctUsed",
-        "weight": 0.107
+        "weight": 0.315
       },
       {
         "feature": "hourNY",
-        "weight": 0.099
+        "weight": 0.251
+      },
+      {
+        "feature": "biasScore",
+        "weight": -0.179
+      },
+      {
+        "feature": "emaStack",
+        "weight": -0.168
+      },
+      {
+        "feature": "atrPctUsed",
+        "weight": 0.165
       },
       {
         "feature": "rvol",
-        "weight": -0.019
+        "weight": -0.102
       },
       {
         "feature": "entryZoneTk",
-        "weight": -0.008
+        "weight": -0.01
       }
     ],
     "calibration_deciles": [
       {
         "bin": 0,
-        "pred": 0.097,
-        "actual": 0.143,
-        "n": 14
+        "pred": 0.12,
+        "actual": 0.2,
+        "n": 15
       },
       {
         "bin": 1,
-        "pred": 0.227,
-        "actual": 0.267,
-        "n": 15
+        "pred": 0.262,
+        "actual": 0.312,
+        "n": 16
       },
       {
         "bin": 2,
-        "pred": 0.408,
-        "actual": 0.267,
-        "n": 15
-      },
-      {
-        "bin": 3,
-        "pred": 0.502,
+        "pred": 0.417,
         "actual": 0.4,
         "n": 15
       },
       {
+        "bin": 3,
+        "pred": 0.518,
+        "actual": 0.188,
+        "n": 16
+      },
+      {
         "bin": 4,
-        "pred": 0.592,
-        "actual": 0.6,
-        "n": 15
+        "pred": 0.611,
+        "actual": 0.688,
+        "n": 16
       },
       {
         "bin": 5,
-        "pred": 0.654,
+        "pred": 0.686,
         "actual": 0.733,
         "n": 15
       },
       {
         "bin": 6,
-        "pred": 0.744,
-        "actual": 0.8,
-        "n": 15
+        "pred": 0.771,
+        "actual": 0.875,
+        "n": 16
       },
       {
         "bin": 7,
-        "pred": 0.814,
-        "actual": 0.867,
+        "pred": 0.823,
+        "actual": 0.933,
         "n": 15
       },
       {
         "bin": 8,
-        "pred": 0.851,
-        "actual": 0.8,
-        "n": 15
+        "pred": 0.862,
+        "actual": 0.75,
+        "n": 16
       },
       {
         "bin": 9,
-        "pred": 0.921,
-        "actual": 0.933,
-        "n": 15
+        "pred": 0.929,
+        "actual": 0.938,
+        "n": 16
       }
     ],
     "note": "in-sample; interpretar signo/magnitud, no como verdad fuera de muestra hasta 200+"
@@ -12817,13 +12817,13 @@
       "survives_fdr10": false
     },
     "1m/RETEST/SHORT": {
-      "expR": 0.046,
+      "expR": 0.104,
       "ci90": [
-        -0.131,
-        0.236
+        -0.086,
+        0.294
       ],
-      "p_mean_le_0": 0.353,
-      "n": 85,
+      "p_mean_le_0": 0.18,
+      "n": 88,
       "survives_fdr10": false
     },
     "2m/RETEST/LONG": {
@@ -12847,13 +12847,13 @@
       "survives_fdr10": false
     },
     "5m/RETEST/SHORT": {
-      "expR": 0.245,
+      "expR": 0.396,
       "ci90": [
-        -0.128,
-        0.602
+        -0.005,
+        0.809
       ],
-      "p_mean_le_0": 0.137,
-      "n": 10,
+      "p_mean_le_0": 0.052,
+      "n": 11,
       "survives_fdr10": false
     }
   },
@@ -12863,41 +12863,41 @@
     "clusters": [
       {
         "id": 3,
-        "n": 51,
-        "wrTP1": 68.6,
-        "expR": 0.277,
-        "pf": 2.17,
+        "n": 54,
+        "wrTP1": 68.5,
+        "expR": 0.272,
+        "pf": 2.13,
         "defining_features": {
-          "structDir": 0.73,
-          "stretchAtr": 0.68,
-          "hourNY": -0.58,
-          "nearEdge": 0.52
-        }
-      },
-      {
-        "id": 1,
-        "n": 29,
-        "wrTP1": 55.2,
-        "expR": -0.027,
-        "pf": 0.93,
-        "defining_features": {
-          "entryZoneTk": -1.19,
-          "nearTk": 0.88,
-          "emaStack": -0.65,
-          "chopIdx": 0.47
+          "structDir": 0.68,
+          "stretchAtr": 0.62,
+          "rvol": 0.56,
+          "hourNY": -0.56
         }
       },
       {
         "id": 2,
-        "n": 49,
-        "wrTP1": 46.9,
-        "expR": -0.088,
-        "pf": 0.83,
+        "n": 52,
+        "wrTP1": 51.9,
+        "expR": 0.102,
+        "pf": 1.22,
         "defining_features": {
-          "structDir": -0.78,
-          "hourNY": 0.65,
-          "biasScore": -0.58,
-          "emaStack": -0.58
+          "structDir": -0.7,
+          "hourNY": 0.69,
+          "rr1": 0.6,
+          "biasScore": -0.58
+        }
+      },
+      {
+        "id": 1,
+        "n": 30,
+        "wrTP1": 56.7,
+        "expR": -0.009,
+        "pf": 0.98,
+        "defining_features": {
+          "entryZoneTk": -1.17,
+          "nearTk": 0.9,
+          "emaStack": -0.62,
+          "chopIdx": 0.53
         }
       },
       {
@@ -12907,10 +12907,10 @@
         "expR": -0.231,
         "pf": 0.58,
         "defining_features": {
-          "biasScore": 1.79,
-          "emaStack": 0.91,
+          "biasScore": 1.84,
+          "emaStack": 0.9,
           "nearEdge": -0.64,
-          "entryZoneTk": 0.56
+          "entryZoneTk": 0.57
         }
       }
     ]
@@ -12934,13 +12934,13 @@
           "expR": 0.307
         },
         "ES": {
-          "n": 10,
-          "wrTP1": 40.0,
-          "expR": -0.398
+          "n": 13,
+          "wrTP1": 53.8,
+          "expR": 0.099
         }
       },
-      "expR_spread": 0.705,
-      "verdict": "instrument-specific"
+      "expR_spread": 0.345,
+      "verdict": "universal"
     },
     "2m/RETEST/LONG": {
       "symbols": {
@@ -12992,12 +12992,12 @@
           "expR": 0.321
         },
         "ES": {
-          "n": 3,
-          "wrTP1": 66.7,
-          "expR": 0.067
+          "n": 4,
+          "wrTP1": 75.0,
+          "expR": 0.527
         }
       },
-      "expR_spread": 0.254,
+      "expR_spread": 0.206,
       "verdict": "universal"
     }
   },
@@ -13006,39 +13006,39 @@
     "note": "sin predictions.jsonl todavia"
   },
   "expR_ci_overall": {
-    "expR": 0.015,
+    "expR": 0.079,
     "ci90": [
-      -0.107,
-      0.145
+      -0.048,
+      0.213
     ],
-    "p_mean_le_0": 0.416,
-    "n": 158
+    "p_mean_le_0": 0.146,
+    "n": 165
   },
   "managed_vs_naive": {
     "overall": {
-      "n": 143,
-      "naive_expR": 0.002,
-      "managed_expR": 0.076,
-      "delta": 0.074,
-      "avgEntryBetterTk_p50": 2.8,
-      "fill_t3plus_pct": 51.7,
-      "fill_full_pct": 30.8,
-      "m1_rate": 31.5,
-      "m2_rate": 14.0,
-      "m3_rate": 9.1,
-      "beAfterM1_rate": 18.9
+      "n": 150,
+      "naive_expR": 0.073,
+      "managed_expR": 0.131,
+      "delta": 0.058,
+      "avgEntryBetterTk_p50": 2.7,
+      "fill_t3plus_pct": 50.7,
+      "fill_full_pct": 30.0,
+      "m1_rate": 34.0,
+      "m2_rate": 16.7,
+      "m3_rate": 10.0,
+      "beAfterM1_rate": 18.7
     },
     "by_tf_kind_side": {
       "1m/INV/SHORT": {
-        "n": 3,
-        "naive_expR": -0.07,
-        "managed_expR": 0.109,
-        "delta": 0.179,
-        "avgEntryBetterTk_p50": 2.5,
+        "n": 6,
+        "naive_expR": 0.552,
+        "managed_expR": 0.765,
+        "delta": 0.213,
+        "avgEntryBetterTk_p50": 3.55,
         "fill_t3plus_pct": 33.3,
         "fill_full_pct": 33.3,
-        "m1_rate": 0.0,
-        "m2_rate": 0.0,
+        "m1_rate": 50.0,
+        "m2_rate": 50.0,
         "m3_rate": 0.0,
         "beAfterM1_rate": 0.0
       },
@@ -13056,17 +13056,17 @@
         "beAfterM1_rate": 14.3
       },
       "1m/RETEST/SHORT": {
-        "n": 78,
-        "naive_expR": 0.072,
-        "managed_expR": 0.112,
-        "delta": 0.04,
-        "avgEntryBetterTk_p50": 3.45,
-        "fill_t3plus_pct": 51.3,
-        "fill_full_pct": 26.9,
-        "m1_rate": 35.9,
-        "m2_rate": 17.9,
-        "m3_rate": 11.5,
-        "beAfterM1_rate": 19.2
+        "n": 81,
+        "naive_expR": 0.134,
+        "managed_expR": 0.138,
+        "delta": 0.004,
+        "avgEntryBetterTk_p50": 3.4,
+        "fill_t3plus_pct": 49.4,
+        "fill_full_pct": 25.9,
+        "m1_rate": 37.0,
+        "m2_rate": 18.5,
+        "m3_rate": 12.3,
+        "beAfterM1_rate": 19.8
       },
       "2m/RETEST/LONG": {
         "n": 10,
@@ -13095,17 +13095,17 @@
         "beAfterM1_rate": 17.9
       },
       "5m/RETEST/SHORT": {
-        "n": 9,
-        "naive_expR": 0.211,
-        "managed_expR": 0.515,
-        "delta": 0.304,
-        "avgEntryBetterTk_p50": 2.6,
-        "fill_t3plus_pct": 44.4,
-        "fill_full_pct": 11.1,
-        "m1_rate": 44.4,
-        "m2_rate": 11.1,
-        "m3_rate": 0.0,
-        "beAfterM1_rate": 33.3
+        "n": 10,
+        "naive_expR": 0.381,
+        "managed_expR": 0.664,
+        "delta": 0.283,
+        "avgEntryBetterTk_p50": 4.2,
+        "fill_t3plus_pct": 50.0,
+        "fill_full_pct": 10.0,
+        "m1_rate": 50.0,
+        "m2_rate": 20.0,
+        "m3_rate": 10.0,
+        "beAfterM1_rate": 30.0
       }
     }
   },
@@ -13113,35 +13113,35 @@
     "available": true,
     "n_events": 15,
     "near_news_30m": {
-      "n": 1,
+      "n": 5,
       "wrTP1": 100.0,
       "nSL": 0,
       "nTO": 0,
-      "expR": 0.62,
+      "expR": 1.176,
       "pf": 99.0,
-      "mfe_p25": 5.0,
-      "mfe_p50": 5.0,
-      "mfe_p75": 5.0,
-      "winnerMAE_p75": 0.0,
-      "winnerMAE_p90": 0.0,
+      "mfe_p25": 9.0,
+      "mfe_p50": 10.0,
+      "mfe_p75": 26.0,
+      "winnerMAE_p75": 4.0,
+      "winnerMAE_p90": 8.200000000000001,
       "loserMFEbeforeSL_p50": null,
-      "bars_win_p50": 1.0,
+      "bars_win_p50": 7.0,
       "bars_loss_p50": null,
-      "entryZoneTk_p50": -3.0,
+      "entryZoneTk_p50": -10.0,
       "revAfterSL_rate": null
     },
     "away_from_news": {
-      "n": 157,
-      "wrTP1": 54.8,
+      "n": 160,
+      "wrTP1": 55.6,
       "nSL": 62,
       "nTO": 9,
-      "expR": 0.011,
-      "pf": 1.03,
+      "expR": 0.045,
+      "pf": 1.11,
       "mfe_p25": 8.0,
       "mfe_p50": 13.0,
-      "mfe_p75": 27.0,
-      "winnerMAE_p75": 11.5,
-      "winnerMAE_p90": 29.0,
+      "mfe_p75": 28.0,
+      "winnerMAE_p75": 12.0,
+      "winnerMAE_p90": 31.200000000000003,
       "loserMFEbeforeSL_p50": 2.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 3.5,
