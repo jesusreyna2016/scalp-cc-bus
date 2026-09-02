@@ -482,11 +482,22 @@ def sl_origin_vs_layer(pairs):
     """SL de 3 capas (actual) vs SL = vela 1 (origen) del FVG. Medicion PARALELA:
     misma entrada y mismos TP, solo cambia donde esta el stop. rMultiple es en base
     al SL de 3 capas; rOrig es en base al SL de vela 1. Nunca cambia la gestion,
-    solo mide cual habria rendido mejor fuera de muestra."""
-    res = [r for r in pairs if r["resolved"] and r["result"]
-           and r.get("rOrig") is not None and r.get("slOrigTk")]
+    solo mide cual habria rendido mejor fuera de muestra.
+
+    Nota de geometria: en RETEST, la vela 1 del FVG original invertido suele quedar
+    justo donde entra el retest (o al otro lado) -> slOrigTk <= 0 o 1-3 ticks. Esas
+    filas se cuentan en `invalid_geometry` y se excluyen de la comparacion de E[R]."""
+    cand = [r for r in pairs if r["resolved"] and r["result"] and r.get("rOrig") is not None]
+    invalid = [r for r in cand if not r.get("slOrigTk") or r["slOrigTk"] <= 0]
+    res = [r for r in cand if r.get("slOrigTk") and r["slOrigTk"] > 0]
+    inv_by_kind = {}
+    for r in invalid:
+        k = f"{r['tf']}m/{r['kind']}/{r['side']}"
+        inv_by_kind[k] = inv_by_kind.get(k, 0) + 1
     if len(res) < 5:
-        return {"n": len(res), "note": "sin outcomes con SL de vela 1 todavia (re-pegar Pine v4 + recrear alertas)"}
+        return {"n": len(res), "invalid_geometry": len(invalid), "invalid_by_seg": inv_by_kind,
+                "note": "aun sin muestra util con SL de vela 1 (>0 ticks). "
+                        "RETEST suele dar slOrigTk<=0 por geometria; ver invalid_geometry."}
 
     def _boot(deltas, iters=2000, seed=999):
         if len(deltas) < 8:
@@ -531,7 +542,8 @@ def sl_origin_vs_layer(pairs):
             "orig_caused_SL": caused,
         }
 
-    out = {"overall": blk(res), "by_tf_kind_side": {}}
+    out = {"overall": blk(res), "invalid_geometry": len(invalid),
+           "invalid_by_seg": inv_by_kind, "by_tf_kind_side": {}}
     g = defaultdict(list)
     for r in res:
         g[f"{r['tf']}m/{r['kind']}/{r['side']}"].append(r)
