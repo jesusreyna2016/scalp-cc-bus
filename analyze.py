@@ -854,15 +854,20 @@ def material_alerts(rep, prev_state=None):
         verbo = "bate a" if mv["delta"] > 0 else "pierde contra"
         a.append(f"GESTION: el modelo escalera+parciales {verbo} el ingenuo "
                  f"({mv.get('managed_expR')} vs {mv.get('naive_expR')} E[R], n {mv['n']}).")
-    so = (rep.get("sl_origin_vs_layer", {}) or {}).get("overall", {})
-    if so.get("n", 0) >= 30 and so.get("delta_orig_minus_layer") is not None:
-        if so.get("delta_beats_zero"):
-            a.append(f"SL: el stop en la vela 1 del FVG bate al de 3 capas fuera de ruido "
-                     f"(E[R] {so.get('orig_expR')} vs {so.get('layer_expR')}, delta {so['delta_orig_minus_layer']} "
-                     f"CI90 {so.get('delta_ci90')}, n {so['n']}). Candidato a cambiar el SL de trabajo.")
-        elif so.get("delta_below_zero"):
-            a.append(f"SL: el stop en la vela 1 del FVG rinde PEOR que el de 3 capas "
-                     f"(delta {so['delta_orig_minus_layer']} CI90 {so.get('delta_ci90')}, n {so['n']}). Mantener el actual.")
+    _sl_label = {"retestBar": "SL en la mecha de la vela del retest (2m/5m)",
+                 "retestBar2": "SL en la mecha del retest + vela previa (1m short)",
+                 "candle1": "SL en la vela 1 del FVG (inversion)"}
+    for _bk, _bv in ((rep.get("sl_origin_vs_layer", {}) or {}).get("by_basis", {}) or {}).items():
+        if not isinstance(_bv, dict) or _bv.get("n", 0) < 30 or _bv.get("delta_orig_minus_layer") is None:
+            continue
+        _lab = _sl_label.get(_bk, _bk)
+        if _bv.get("delta_beats_zero"):
+            a.append(f"SL: {_lab} BATE al de 3 capas fuera de ruido "
+                     f"(E[R] {_bv.get('orig_expR')} vs {_bv.get('layer_expR')}, delta {_bv['delta_orig_minus_layer']} "
+                     f"CI90 {_bv.get('delta_ci90')}, n {_bv['n']}). Candidato para experiments.json + revision semanal.")
+        elif _bv.get("delta_below_zero"):
+            a.append(f"SL: {_lab} rinde PEOR que el de 3 capas "
+                     f"(delta {_bv['delta_orig_minus_layer']} CI90 {_bv.get('delta_ci90')}, n {_bv['n']}). Mantener el actual ahi.")
     return a
 
 def exec_gate(rep):
