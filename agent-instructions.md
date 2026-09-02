@@ -91,6 +91,18 @@ Si hay < 5 pares resueltos (excl. `TEST-`): sólo corre `analyze.py`, commitea
     changeDate = fecha del cambio, segment, targetMetric). El script mide
     antes/después y pone `verdict` cuando hay muestra (afterN>=40, beforeN>=20).
     Reporta confirmados / rechazados; recomienda revertir los rechazados.
+10b. **Resumen en lenguaje llano** (para Jesús, que no domina la jerga de stats).
+    Añade a `state.json` la clave `narrative` = `{"es": "...", "en": "..."}`, 150-250
+    palabras cada idioma, que explique el estado actual SIN jerga (o defínela al
+    vuelo). Cubre: cuántos trades se han medido; si el sistema gana o pierde en
+    promedio y qué significa el E[R] en palabras ("de media, por cada trade ganas
+    X veces lo que arriesgaste, o pierdes"); qué es el win rate y cuál es;
+    la razón principal por la que los trades tocan el stop; si el modelo con
+    escalera de entrada + parciales rinde mejor o peor que el simple; en qué
+    peldaño de la escalera de ejecución estamos y qué falta para subir; y UNA
+    frase de qué vigilar. Directo, honesto, sin adornos. `analyze.py` no borra
+    esta clave, así que la refrescas tú cada corrida.
+
 11. **Commit + push**: `git add -A && git commit -m "agent: daily review <fecha>
     (N pares, K nuevos)" && git push`. Si `git push` falla, imprime TODO el
     hallazgo en la salida para que no se pierda.
