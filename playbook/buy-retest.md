@@ -3,89 +3,89 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-02 · n: 31)
+## Sección viva  (última revisión: 2026-09-02 · n: 39)
 
 ### Veredicto global
 **EVITAR (1m) / MUESTRA DÉBIL, NO CONFIABLE (2m) — sigue sin ser
-accionable, y el 1m se deterioró fuerte.** n=31 (18× 1m/RETEST/LONG,
-13× 2m/RETEST/LONG). 1m: WR TP1 44.4%, E[R]=-0.283, PF=0.49 (10 SL de 18).
-2m: WR TP1 61.5%, E[R]=+0.159, PF=1.41 (5 SL de 13). **Confirma la
-advertencia de la revisión anterior**: el 100% de WR que se veía con n=3-6
-era ruido — con n=18 el 1m/LONG pasó de aparentar el mejor segmento del
-dataset a ser claramente negativo (E[R] -0.283, el peor de los seis
-segmentos con datos hoy). `segment_significance` no certifica ninguno de
-los dos (`survives_fdr10=false`, CI90 1m=[-0.606, 0.043] cruza 0, CI90
-2m=[-0.28, 0.602] cruza 0 y es aún más ancho). El aparente edge positivo de
-2m tampoco se sostiene al cruzar símbolo: `cross_instrument` lo marca
-`instrument-specific` (spread 0.603) — está inflado por NQ (n=3, 100% WR,
-E[R]=0.623, tamaño de muestra irrisorio) mientras CL (n=10, la mayoría del
-segmento) apenas empata (WR 50%, E[R]=0.02). No toques inputs de Pine por
-BUY RETEST todavía; ninguno de los dos TF llega a n=20 con significancia
-real, y 5m sigue sin datos.
+accionable.** n=39 (25× 1m/RETEST/LONG, 14× 2m/RETEST/LONG; creció desde
+n=31). 1m: WR TP1 48.0%, E[R]=-0.224, PF=0.57 (13 SL de 25) — sigue
+negativo, algo menos extremo que el -0.283 de la revisión anterior pero
+todavía el peor o segundo peor segmento del dataset. 2m: WR TP1 64.3%,
+E[R]=+0.178, PF=1.5 (5 SL de 14). `segment_significance` sigue sin
+certificar ninguno de los dos (`survives_fdr10=false`, CI90 1m=[-0.497,
+0.068] casi roza 0 por el lado positivo con p_mean_le_0=0.904 — muy
+probablemente negativo en la práctica aunque no lo suficiente para pasar
+FDR; CI90 2m=[-0.212, 0.585] cruza 0 con más margen). El aparente edge de
+2m sigue sin sostenerse al cruzar símbolo: `cross_instrument` no vuelve a
+listar 2m/RETEST/LONG este run — el corte por `nearEdge` (ver abajo) es
+ahora el hallazgo más relevante en LONG. No tocar inputs de Pine por BUY
+RETEST todavía; ninguno de los dos TF llega a n=20 con significancia real
+(el 1m sí supera n=20 en volumen bruto, pero sigue sin `survives_fdr10`), y
+5m sigue sin datos.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
-Ninguna certificada (n<20 por corte, sin `survives_fdr10`). Candidatas a
-vigilar, no a aplicar:
+Ninguna certificada (n<20 en la mayoría de los cortes, sin
+`survives_fdr10`). Candidatas a vigilar, no a aplicar. **Mejora permanente
+de hoy**: estos cortes ahora los calcula `analyze.py` directamente
+(`by_kindside_edge`/`by_kindside_tier`/`by_kindside_aligned`), ya no se
+aproximan a mano:
 
 | # | SI | ENTONCES (hipótesis) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `aligned=0` (contra-tendencia HTF) | mejor que `aligned=1` | 7 vs 24 | E[R] +0.459 vs -0.26, WR 85.7% vs 41.7% | baja — n=7 en la rama buena, contraintuitivo (ver anomalía abajo) |
-| 2 | `nearEdge=-1` | mejor que `nearEdge=0` | 13 vs 16 | E[R] +0.078 vs -0.345, WR 61.5% vs 37.5% | baja — ambos cortes <20, y el signo es opuesto al de SELL RETEST (ahí `edge=1` es el bueno) |
-| 3 | `tier` (B vs C) | no discrimina en LONG | 8 vs 23 | E[R] -0.091 vs -0.10, ambos negativos | n/a — tier no separa nada aquí, a diferencia de SHORT |
+| 1 | `aligned=0` (contra-tendencia HTF) | mejor que `aligned=1` | 7 vs 32 | E[R] +0.459 vs -0.197, WR 85.7% vs 46.9% | baja — n=7 en la rama buena **sin crecer** desde la revisión anterior (todas las 8 señales nuevas fueron `aligned=1`), contraintuitivo (ver anomalía abajo) |
+| 2 | `nearEdge=1` | mejor que `nearEdge=-1` mejor que `nearEdge=0` | 6 / 14 / 19 | WR 83.3% / 57.1% / 42.1%; E[R] +0.417 / +0.001 / -0.296; PF 3.5 / 1.0 / 0.49 | baja-moderada — forma NO monótona (edge=0 es la peor rama, no edge=-1 como en SELL RETEST); n=19 en `edge=0` ya razonable, `edge=1` sigue chico (n=6) |
+| 3 | `tier` (B vs C) | no discrimina en LONG | 13 vs 26 | E[R] -0.055 vs -0.092, ambos negativos, WR 53.8% ambos | n/a — tier no separa nada aquí, a diferencia de SHORT donde `tier` sí discrimina fuerte (y donde `A+` resultó ser una anomalía invertida, ver `sell-retest.md`) — LONG no tiene ninguna señal `A+` todavía (n=0) |
 
-**Anomalía a vigilar** (no accionar): el modelo P(TP1) in-sample pondera
-`aligned` con signo **negativo** (-0.459, el tercer coeficiente más fuerte)
-— es decir, "alineado con el sesgo/estructura" predice *peor* resultado, lo
-mismo que refleja la regla #1 de la tabla. Esto es contraintuitivo (uno
-esperaría que ir con el sesgo ayude) y aparece también en SELL RETEST. Dos
-hipótesis: (a) el campo `aligned` puede estar capturando exhaustion —
-alineación tardía, ya extendida, típica de killzone-Asia-largo; (b) hay un
-bug de signo en cómo Pine calcula/envía `aligned`. Con solo n=7 en la rama
-`aligned=0` de LONG no es cuantificable — pedir a Jesús que confirme la
-definición exacta de `aligned` en el código y vigilar si el signo se
-sostiene cuando la muestra crezca.
+**Anomalía a vigilar** (no accionar): el modelo P(TP1) in-sample sigue
+ponderando `aligned` con signo **negativo** — "alineado con el
+sesgo/estructura" predice *peor* resultado, lo mismo que refleja la regla
+#1 de la tabla, y aparece también en SELL RETEST (aunque ahí no hay rama
+`aligned=0` con la que comparar: 100% de SELL RETEST es `aligned=1`). Dos
+hipótesis sin cambios desde la revisión anterior: (a) el campo `aligned`
+puede estar capturando exhaustion — alineación tardía, ya extendida,
+típica de killzone-Asia-largo; (b) hay un bug de signo en cómo Pine
+calcula/envía `aligned`. Sigue en n=7 en la rama `aligned=0` de LONG (no
+creció esta corrida) — pedir a Jesús que confirme la definición exacta de
+`aligned` en el código sigue pendiente.
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin llenarse en la mayoría de
   outcomes v1/v3 de este segmento; insuficiente para medir calidad de entrada.
 
 ### Gestión
-- SL óptimo: winnerMAE p75/p90 = 1.25/3.5 ticks (1m, n=18), 13.25/20.0
-  ticks (2m, n=13) — descriptivo, no regla (muestra chica y ruidosa; el
-  salto del 1m entre esta y la revisión previa —4.0→1.25— confirma que
-  no era estable).
+- SL óptimo: `managed_vs_naive` no reporta 1m/2m RETEST/LONG por separado
+  hoy (muestra v4 insuficiente en LONG) — sigue pendiente cortar el
+  contrafactual de gestión por side.
 - Objetivo: _pendiente_ (contrafactual global no está cortado por
   kind/side todavía).
-- Parcial 1: mediana MFE 9.0 ticks (1m), 12.0 ticks (2m) — descriptivo.
-- `revAfterSL_rate`: 90% (1m), 100% (2m) — casi todas las pérdidas
-  revierten después del SL. Sugiere SL demasiado ajustado / mal ubicado
-  más que dirección equivocada, consistente con la causa `stop-en-el-minimo`
-  (14 de 15 pérdidas la llevan, ver autopsia abajo). Aún no hay contrafactual
-  cortado por side para cuantificar cuánto ganaríamos con SL más holgado.
+- Parcial 1: _pendiente_ esta corrida (ver `by_tf_kind_side` en
+  `report.md` para MFE descriptivo por TF).
+- `revAfterSL_rate` (`by_kindside_edge`/aligned, agregados): sigue alto en
+  las ramas perdedoras (`edge=0` 100% en la revisión anterior) — apunta a
+  SL demasiado ajustado / mal ubicado más que a dirección equivocada,
+  consistente con `stop-en-el-minimo` como una de las causas dominantes
+  (ver abajo).
 - ¿Trailing tras +1R?: _pendiente_.
 
 ### Contextos a evitar
-- 1m/RETEST/LONG en general: E[R] negativo (-0.283) con la muestra más
-  grande que hemos tenido, ya no es solo "insuficiente", es la peor lectura
-  del dataset hoy. Tratar como EVITAR mientras no cambie.
-- Autopsia de SL sobre las 15 pérdidas LONG: `RR-bajo` 15/15 (100%),
-  `contra-estructura` 14/15, `stop-en-el-minimo` 14/15,
-  `killzone-Asia-largo` 14/15 (pero 24/31 de toda la muestra LONG ya es
-  Asia, así que esta última no discrimina mucho por sí sola),
-  `sin-nivel-detras` 9/15. **`RR-bajo` es la causa dominante y virtualmente
-  universal** en las pérdidas LONG — casi cualquier pérdida 1m/LONG tenía
-  el TP1 demasiado cerca del SL desde el origen de la señal. Candidato
-  fuerte para revisión semanal (`sc_min_rr` o `sc_aplus_rr`) en cuanto
-  aligned=0 / edge=-1 crezcan lo suficiente para aislar la señal real de la
-  confusión con RR bajo.
+- 1m/RETEST/LONG en general: E[R] sigue negativo (-0.224) con n=25, ya no
+  se recupera con más muestra. Tratar como EVITAR mientras no cambie.
+- Autopsia de SL sobre las 18 pérdidas LONG (recalculado hoy sin el cap de
+  60 filas que trunca `report.md`): `contra-estructura` 17/18 (94%),
+  `stop-en-el-minimo` 17/18 (94%), `killzone-Asia-largo` 17/18 (94% —
+  pero 32/39 de toda la muestra LONG ya es Asia, así que esta causa por sí
+  sola discrimina poco: 82% base rate vs 94% en pérdidas), `RR-bajo` 16/18
+  (89%), `sin-nivel-detras` 10/18 (56%), `chop` 5/18. **Tres causas casi
+  universales y empatadas** (contra-estructura, stop-en-el-mínimo,
+  RR-bajo) — prácticamente cualquier pérdida LONG las tiene las tres a la
+  vez, más que en la revisión anterior (14-15/15 → 16-17/18, proporción
+  estable). Candidato fuerte para revisión semanal (`sc_min_rr` o
+  `sc_aplus_rr`) en cuanto `aligned=0` / `edge=1` crezcan lo suficiente
+  para aislar la señal real de la confusión con RR bajo.
 
 ### Decaimiento
-Con solo 2026-W36 disponible (`decay_weekly` reporta una sola semana),
-sigue sin haber comparación semana-contra-semana real. Lo que sí es
-observable dentro de la semana: el WR 1m/LONG cayó de 75-100% (n=3-6, días
-previos) a 44.4% (n=18, acumulado) — más una corrección de tamaño de
-muestra que "decaimiento" en el sentido de `decay_weekly`, pero el efecto
-práctico (la señal ya no parece buena) es el mismo.
+Con solo 2026-W36 disponible (`decay_weekly` reporta una sola semana, n=270
+en todo el dataset), sigue sin haber comparación semana-contra-semana real.
 
 ## Histórico de cambios
 - 2026-09-01: primera escritura con datos reales (n=3, todas GC, mismo día,
@@ -103,3 +103,16 @@ práctico (la señal ya no parece buena) es el mismo.
   leer `market.json` del Session Analyst (trataba el dict `news.events`
   como lista de eventos y iteraba sobre sus claves) — corregido hoy, sin
   impacto en las métricas de este playbook.
+- 2026-09-02 (corrida formal del agente): refresco n=31->39 (1m n=18->25, 2m
+  n=13->14). El 1m se mantiene negativo (-0.283->-0.224), ya no es un salto
+  raro sino la lectura estable. El corte `nearEdge` cambia de forma: ahora
+  es `edge=0` la peor rama (no `edge=-1` como parecía con n chico) -
+  patrón no-monótono y distinto al de SELL RETEST, donde `edge=1` es
+  siempre el mejor. La rama `aligned=0` (la buena, E[R]=+0.459) se quedó
+  exactamente en n=7 - las 8 señales LONG nuevas fueron todas `aligned=1`,
+  así que la anomalía de signo en `aligned` sigue sin poder cuantificarse
+  mejor. Autopsia de SL recalculada sin cap de 60 filas: las tres causas
+  `contra-estructura`/`stop-en-el-mínimo`/`RR-bajo` siguen casi universales
+  (16-17 de 18 pérdidas). Mejora permanente en `analyze.py`: cortes
+  cruzados `by_kindside_edge`/`by_kindside_tier`/`by_kindside_aligned`
+  agregados (ver detalle en `sell-retest.md`).

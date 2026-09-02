@@ -641,7 +641,11 @@ def news_context(pairs, sa):
     except Exception:
         pass
     mkt = (sa or {}).get("market") or {}
-    for e in (mkt.get("news") or mkt.get("events") or []):
+    news = mkt.get("news")
+    feed_events = (news.get("events") if isinstance(news, dict) else news) or mkt.get("events") or []
+    for e in feed_events:
+        if not isinstance(e, dict):
+            continue
         ts = e.get("ts") or e.get("timestamp")
         if ts and (e.get("impact") in ("high", "High", "HIGH") or e.get("importance") == 3):
             events.append({"ts": int(ts), "name": e.get("name") or e.get("title") or "?"})
@@ -777,6 +781,9 @@ def main():
         "by_nearEdge": by(pairs, lambda r: f"edge={r['nearEdge']}"),
         "by_aligned": by(pairs, lambda r: f"aligned={r['aligned']}"),
         "by_emaStack": by(pairs, lambda r: f"emaStack={r['emaStack']}"),
+        "by_kindside_edge": by(pairs, lambda r: f"{r['kind']}/{r['side']}|edge={r['nearEdge']}"),
+        "by_kindside_tier": by(pairs, lambda r: f"{r['kind']}/{r['side']}|tier={r['tier']}"),
+        "by_kindside_aligned": by(pairs, lambda r: f"{r['kind']}/{r['side']}|aligned={r['aligned']}"),
         "by_symbol": by(pairs, lambda r: r["sigId"].split("-")[0]),
         "overall": seg_metrics(pairs),
         "sl_post_mortem": None,
@@ -832,6 +839,9 @@ def main():
     state["totals"] = report["totals"]
     state["metrics_by_tf_kind_side"] = report["by_tf_kind_side"]
     state["metrics_by_symbol"] = report["by_symbol"]
+    state["metrics_by_kindside_edge"] = report["by_kindside_edge"]
+    state["metrics_by_kindside_tier"] = report["by_kindside_tier"]
+    state["metrics_by_kindside_aligned"] = report["by_kindside_aligned"]
     state["sl_causes"] = causes
     state["decay_weekly"] = report["decay_weekly"]
     state["walk_forward"] = report["walk_forward"]
@@ -868,6 +878,9 @@ def main():
     tbl("Por killzone", report["by_kz"])
     tbl("Por nearEdge", report["by_nearEdge"])
     tbl("Por aligned", report["by_aligned"])
+    tbl("Por kind/side x nearEdge", report["by_kindside_edge"])
+    tbl("Por kind/side x tier", report["by_kindside_tier"])
+    tbl("Por kind/side x aligned", report["by_kindside_aligned"])
     L.append("\n## Autopsia de SL\n")
     L.append(f"n_losses={report['sl_post_mortem']['n_losses']}  causas: "
              + ", ".join(f"{k}×{v}" for k, v in causes.items()) + "\n")

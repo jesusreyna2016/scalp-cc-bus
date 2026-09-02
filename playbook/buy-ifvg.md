@@ -7,8 +7,9 @@ Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se a
 
 ### Veredicto global
 _pendiente_ — TOMAR / TOMAR-FILTRADA / EVITAR, con WR TP1, E[R], PF por TF (1m / 2m / 5m).
-Sigue en n=0: el dataset (158 pares resueltos) no tiene ningún BUY INV
-todavía, sólo SELL INV (ver `sell-ifvg.md`). Prioridad 2, sin urgencia.
+Sigue en n=0: el dataset (270 pares resueltos, 2026-09-02) sigue sin tener
+ningún BUY INV, sólo SELL INV (ver `sell-ifvg.md`, n=9). Prioridad 2, sin
+urgencia.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Cada regla con: condición, n, WR/E[R] dentro vs fuera, confianza.
