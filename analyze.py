@@ -139,10 +139,12 @@ def build_pairs():
         }
         pairs.append(rec)
 
+    orphan_ids = []
     for sid in outs:
         if sid not in sigs:
             orphan_out += 1
-    return pairs, orphan_out, len(sigs), len(outs)
+            orphan_ids.append(sid)
+    return pairs, orphan_out, len(sigs), len(outs), orphan_ids
 
 # ------------------------------------------------------------------------ stats
 def _pct(xs, q):
@@ -641,7 +643,11 @@ def news_context(pairs, sa):
     except Exception:
         pass
     mkt = (sa or {}).get("market") or {}
-    for e in (mkt.get("news") or mkt.get("events") or []):
+    news = mkt.get("news")
+    news_events = news.get("events") if isinstance(news, dict) else news
+    for e in (news_events or mkt.get("events") or []):
+        if not isinstance(e, dict):
+            continue
         ts = e.get("ts") or e.get("timestamp")
         if ts and (e.get("impact") in ("high", "High", "HIGH") or e.get("importance") == 3):
             events.append({"ts": int(ts), "name": e.get("name") or e.get("title") or "?"})
@@ -755,20 +761,25 @@ def exec_gate(rep):
 
 # ---------------------------------------------------------------------- main
 def main():
-    pairs, orphan_out, n_sig, n_out = build_pairs()
+    pairs, orphan_out, n_sig, n_out, orphan_ids = build_pairs()
     resolved = [r for r in pairs if r["resolved"] and r["result"]]
     pending = [r for r in pairs if not r["resolved"]]
 
     report = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "totals": {"signals": n_sig, "outcomes": n_out, "pairs_resolved": len(resolved),
-                   "pending": len(pending), "orphan_outcomes": orphan_out},
+                   "pending": len(pending), "orphan_outcomes": orphan_out,
+                   "orphan_outcome_ids": orphan_ids},
         "by_tf_kind_side": by(pairs, lambda r: f"{r['tf']}m/{r['kind']}/{r['side']}"),
         "by_tier": by(pairs, lambda r: r["tier"]),
         "by_kz": by(pairs, lambda r: r["kz"]),
         "by_nearEdge": by(pairs, lambda r: f"edge={r['nearEdge']}"),
         "by_aligned": by(pairs, lambda r: f"aligned={r['aligned']}"),
         "by_emaStack": by(pairs, lambda r: f"emaStack={r['emaStack']}"),
+        # cortes cruzados kind/side x contexto, para reglas condicionales de playbook
+        "by_kindside_edge": by(pairs, lambda r: f"{r['kind']}/{r['side']}|edge={r['nearEdge']}"),
+        "by_kindside_aligned": by(pairs, lambda r: f"{r['kind']}/{r['side']}|aligned={r['aligned']}"),
+        "by_kindside_tier": by(pairs, lambda r: f"{r['kind']}/{r['side']}|tier={r['tier']}"),
         "by_symbol": by(pairs, lambda r: r["sigId"].split("-")[0]),
         "overall": seg_metrics(pairs),
         "sl_post_mortem": None,
@@ -819,6 +830,9 @@ def main():
     state["totals"] = report["totals"]
     state["metrics_by_tf_kind_side"] = report["by_tf_kind_side"]
     state["metrics_by_symbol"] = report["by_symbol"]
+    state["metrics_by_kindside_edge"] = report["by_kindside_edge"]
+    state["metrics_by_kindside_aligned"] = report["by_kindside_aligned"]
+    state["metrics_by_kindside_tier"] = report["by_kindside_tier"]
     state["sl_causes"] = causes
     state["decay_weekly"] = report["decay_weekly"]
     state["walk_forward"] = report["walk_forward"]
@@ -855,6 +869,9 @@ def main():
     tbl("Por killzone", report["by_kz"])
     tbl("Por nearEdge", report["by_nearEdge"])
     tbl("Por aligned", report["by_aligned"])
+    tbl("Por kind/side x nearEdge", report["by_kindside_edge"])
+    tbl("Por kind/side x aligned", report["by_kindside_aligned"])
+    tbl("Por kind/side x tier", report["by_kindside_tier"])
     L.append("\n## Autopsia de SL\n")
     L.append(f"n_losses={report['sl_post_mortem']['n_losses']}  causas: "
              + ", ".join(f"{k}×{v}" for k, v in causes.items()) + "\n")

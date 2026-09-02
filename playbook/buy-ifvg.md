@@ -3,10 +3,12 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: _pendiente_ · n: 0)
+## Sección viva  (última revisión: 2026-09-02 · n: 0)
 
 ### Veredicto global
 _pendiente_ — TOMAR / TOMAR-FILTRADA / EVITAR, con WR TP1, E[R], PF por TF (1m / 2m / 5m).
+Sigue en n=0: el dataset (158 pares resueltos) no tiene ningún BUY INV
+todavía, sólo SELL INV (ver `sell-ifvg.md`). Prioridad 2, sin urgencia.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Cada regla con: condición, n, WR/E[R] dentro vs fuera, confianza.

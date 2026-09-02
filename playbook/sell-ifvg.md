@@ -3,10 +3,14 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: _pendiente_ · n: 0)
+## Sección viva  (última revisión: 2026-09-02 · n: 4)
 
 ### Veredicto global
-_pendiente_ — TOMAR / TOMAR-FILTRADA / EVITAR, con WR TP1, E[R], PF por TF (1m / 2m / 5m).
+**MUESTRA MÍNIMA — primeros datos, no accionable.** n=4: 1m/INV/SHORT n=3
+(WR 66.7%, E[R]=-0.07, PF=0.79, 1 SL) + 5m/INV/SHORT n=1 (WR 100%,
+E[R]=0.52, PF=99 — un solo trade, sin valor estadístico). Muy lejos de
+n=20. Prioridad 2 — seguir monitoreando, sin comprometer tiempo de análisis
+mientras BUY/SELL RETEST tengan mejor muestra.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Cada regla con: condición, n, WR/E[R] dentro vs fuera, confianza.

@@ -1,6 +1,4 @@
 {
   "_doc": "Eventos economicos de alto impacto (US). analyze.py marca cada señal con minsToNews y separa near-news (<=30m) vs away. Mantener al dia: el agente puede añadir/quitar, o leer del feed del Session Analyst (market.json). ts = epoch ms UTC.",
-  "events": [
-    {"ts": 0, "impact": "high", "name": "EJEMPLO - borrar. FOMC / NFP / CPI / PPI / PCE / Jobless Claims / ISM"}
-  ]
+  "events": []
 }
