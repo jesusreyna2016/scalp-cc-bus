@@ -479,14 +479,17 @@ def managed_vs_naive(pairs):
     return out
 
 def sl_origin_vs_layer(pairs):
-    """SL de 3 capas (actual) vs SL = vela 1 (origen) del FVG. Medicion PARALELA:
-    misma entrada y mismos TP, solo cambia donde esta el stop. rMultiple es en base
-    al SL de 3 capas; rOrig es en base al SL de vela 1. Nunca cambia la gestion,
-    solo mide cual habria rendido mejor fuera de muestra.
+    """SL de 3 capas (actual) vs SL ESTRUCTURAL. Medicion PARALELA: misma entrada
+    y mismos TP, solo cambia donde esta el stop. rMultiple = base SL de 3 capas;
+    rOrig = base SL estructural. Nunca cambia la gestion, solo mide cual habria
+    rendido mejor fuera de muestra.
 
-    Nota de geometria: en RETEST, la vela 1 del FVG original invertido suele quedar
-    justo donde entra el retest (o al otro lado) -> slOrigTk <= 0 o 1-3 ticks. Esas
-    filas se cuentan en `invalid_geometry` y se excluyen de la comparacion de E[R]."""
+    SL estructural (lo pone el Pine): INVERSION -> vela 1 (origen) del FVG
+    (long=su minimo, short=su maximo); RETEST -> borde del iFVG re-tocado
+    (long=su piso, short=su techo). crudo, sin piso/techo/pad.
+
+    Filas con slOrigTk <= 0 (geometria degenerada: precio cerro al otro lado del
+    borde) se cuentan en `invalid_geometry` y se excluyen de la comparacion."""
     cand = [r for r in pairs if r["resolved"] and r["result"] and r.get("rOrig") is not None]
     invalid = [r for r in cand if not r.get("slOrigTk") or r["slOrigTk"] <= 0]
     res = [r for r in cand if r.get("slOrigTk") and r["slOrigTk"] > 0]
@@ -496,8 +499,7 @@ def sl_origin_vs_layer(pairs):
         inv_by_kind[k] = inv_by_kind.get(k, 0) + 1
     if len(res) < 5:
         return {"n": len(res), "invalid_geometry": len(invalid), "invalid_by_seg": inv_by_kind,
-                "note": "aun sin muestra util con SL de vela 1 (>0 ticks). "
-                        "RETEST suele dar slOrigTk<=0 por geometria; ver invalid_geometry."}
+                "note": "aun sin muestra util con SL estructural (>0 ticks); re-pegar Pine + recrear alertas."}
 
     def _boot(deltas, iters=2000, seed=999):
         if len(deltas) < 8:
