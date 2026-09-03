@@ -235,7 +235,18 @@ def sl_causes(rows):
             tally[c] += 1
         detail.append({"sigId": r["sigId"], "tf": r["tf"], "kind": r["kind"], "side": r["side"],
                        "causes": cs, "rMultiple": r["rMultiple"]})
-    return dict(tally.most_common()), detail
+    by_kind_side = defaultdict(Counter)
+    n_by_kind_side = Counter()
+    for r in losses:
+        key = f"{r['kind']}/{r['side']}"
+        n_by_kind_side[key] += 1
+    for row in detail:
+        key = f"{row['kind']}/{row['side']}"
+        for c in row["causes"]:
+            by_kind_side[key][c] += 1
+    causes_by_kind_side = {k: {"n": n_by_kind_side[k], "causes": dict(v.most_common())}
+                           for k, v in sorted(by_kind_side.items())}
+    return dict(tally.most_common()), detail, causes_by_kind_side
 
 # --------------------------------------------------- counterfactual exits
 def counterfactual(rows):
@@ -854,7 +865,10 @@ def material_alerts(rep, prev_state=None):
         verbo = "bate a" if mv["delta"] > 0 else "pierde contra"
         a.append(f"GESTION: el modelo escalera+parciales {verbo} el ingenuo "
                  f"({mv.get('managed_expR')} vs {mv.get('naive_expR')} E[R], n {mv['n']}).")
-    _sl_label = {"retestBar": "SL en la mecha de la vela del retest (2m/5m)",
+    # nota: el Pine aun no emite slBasis="retestBar2" para 1m SHORT (no visto en
+    # los datos todavia) -> "retestBar" hoy mezcla 1m/2m/5m, no solo "2m/5m".
+    # revisar este label si retestBar2 empieza a aparecer en signals/*.jsonl.
+    _sl_label = {"retestBar": "SL en la mecha de la vela del retest",
                  "retestBar2": "SL en la mecha del retest + vela previa (1m short)",
                  "candle1": "SL en la vela 1 del FVG (inversion)"}
     for _bk, _bv in ((rep.get("sl_origin_vs_layer", {}) or {}).get("by_basis", {}) or {}).items():
@@ -921,9 +935,9 @@ def main():
     report["session_analyst"] = sa
     report["news_context"] = news_context(pairs, sa)
     report["gate"] = exec_gate(report)
-    causes, detail = sl_causes(pairs)
+    causes, detail, causes_by_kind_side = sl_causes(pairs)
     report["sl_post_mortem"] = {"causes": causes, "n_losses": sum(1 for r in resolved if r["result"] == "SL"),
-                                "detail": detail[:60]}
+                                "detail": detail[:60], "causes_by_kind_side": causes_by_kind_side}
     try:
         with open(os.path.join(ROOT, "state.json")) as f:
             _prev_state = json.load(f)
@@ -1002,6 +1016,9 @@ def main():
     L.append("\n## Autopsia de SL\n")
     L.append(f"n_losses={report['sl_post_mortem']['n_losses']}  causas: "
              + ", ".join(f"{k}×{v}" for k, v in causes.items()) + "\n")
+    for seg, sd in causes_by_kind_side.items():
+        L.append(f"- {seg} (n={sd['n']}): "
+                 + ", ".join(f"{k}×{v}" for k, v in sd["causes"].items()) + "\n")
     L.append("\n## Contrafactual de gestion\n```json\n"
              + json.dumps(report["counterfactual"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Modelo GESTIONADO (escalera + parciales) vs INGENUO\n```json\n"

@@ -3,108 +3,102 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-02 · n: 222)
+## Sección viva  (última revisión: 2026-09-03 · n: 589)
 
 ### Veredicto global
-**TOMAR-FILTRADA, y el 5m pasa a TOMAR (primer segmento certificado del
-dataset).** n=222 (151× 1m, 53× 2m, 18× 5m). Crudo: 1m WR 49.0% E[R]=-0.015
-PF=0.97 (básicamente breakeven); 2m WR 54.7% E[R]=0.087 PF=1.2; 5m WR 88.9%
-E[R]=0.687 PF=7.19. **El 5m es el primer segmento de todo el dataset que
-sobrevive `segment_significance` (`survives_fdr10=true`, CI90=[0.372,1.0],
-no cruza 0, p_mean_le_0=0.0)** — sigue con n=18 (falta 2 para el piso de 20
-del método antes de proponer un cambio de Pine), pero ya es un veredicto
-TOMAR con confianza real, no una lectura de muestra chica. 1m y 2m siguen
-sin certificar (`survives_fdr10=false`, CI90 cruza 0 en ambos). El filtro
-de contexto (`nearEdge`, `tier`) sigue siendo el hallazgo más accionable
-para el grueso del volumen (1m/2m).
+**El 5m se DES-certifica — lección de método, no de mercado.** n=589
+(356× 1m, 165× 2m, 68× 5m; +367 desde la revisión anterior). Crudo: 1m WR
+47.8% E[R]=+0.026 PF=1.05 (básicamente breakeven); 2m WR 43.6%
+E[R]=**-0.087** PF=0.84 (se pone negativo, antes era +0.087); 5m WR 55.9%
+E[R]=+0.088 PF=1.2. **El 5m — el único segmento que había certificado en
+`segment_significance` la revisión anterior (`survives_fdr10=true` con
+n=18, WR 88.9%, E[R]=0.687)** ya no certifica con n=68: E[R] cayó a 0.088,
+CI90=[-0.139,0.332] vuelve a cruzar cero, `survives_fdr10=false`. Esto **no
+es necesariamente que el edge haya desaparecido** — es la prueba de que la
+regla del método (no declarar TOMAR hasta que sobreviva FDR con muestra
+seria) estaba bien puesta: n=18 con WR 88.9% era, en retrospectiva,
+mayormente varianza de muestra chica. Veredicto revisado: **NINGÚN TF de
+SELL RETEST certifica hoy** — bajar 5m de TOMAR a "vigilar, no confirmado".
+2m pasa a ser el TF con peor lectura cruda (-0.087, antes positivo) aunque
+tampoco certifica (CI90=[-0.225,0.052], p_mean_le_0=0.856, roza el lado
+negativo). El filtro de contexto (`nearEdge`, `tier`) sigue siendo el
+hallazgo más accionable para el volumen grande (1m/2m), y ahora con
+`cross_instrument` en `universal` para ambos — mejor confianza que antes.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
-Ninguna tiene `survives_fdr10=true` todavía (esa prueba corre por
-tf/kind/side, no por estos cortes cruzados) — se tratan como candidatas
-fuertes a vigilar, no como reglas certificadas. **Mejora permanente de hoy:
-`analyze.py` ahora calcula estos cortes cruzados directamente
-(`by_kindside_edge`/`by_kindside_tier`/`by_kindside_aligned`), cerrando el
-gap que pedía la revisión anterior — ya no se aproximan a mano.**
+Ninguna tiene `survives_fdr10=true` (esa prueba corre por tf/kind/side, no
+por estos cortes) — pero con n ya en cientos, el gradiente de `nearEdge` es
+un patrón práctico fuerte:
 
-| # | SI | ENTONCES | n (dentro/fuera) | efecto | confianza |
+| # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=1` (señal cerca del borde de la zona) | TOMAR | 49 / (125+48) | WR 69.4% vs 52.8% (edge=0) vs 39.6% (edge=-1); E[R] +0.326 vs +0.079 vs -0.233; PF 2.11 vs 1.18 vs 0.59 | **moderada-alta** — n≥48 en las tres ramas, gradiente monótono y consistente con la revisión anterior |
-| 2 | `nearEdge=-1` | FILTRAR / no tomar | 48 | E[R]=-0.233, PF 0.59, WR 39.6% | moderada — rama claramente perdedora, n=48 |
-| 3 | `tier=A+` | **ANOMALÍA — NO tratar como señal premium** | 16 | WR 6.2%, E[R]=-0.743, PF=0.21 — el peor resultado de *todo* el dataset, invertido respecto a lo que el nombre del tier sugiere | alta como alerta, moderada como regla — ver análisis abajo |
-| 4 | `tier=B` | TOMAR, prioridad | 73 / 133 | WR 63.0% vs 54.1% (tier C); E[R] +0.216 vs +0.081; PF 1.65 vs 1.19 | moderada — n≥73 ambos lados, coherente con `nearEdge` (probable solape) |
-| 5 | símbolo (`cross_instrument`) | NO generalizar por símbolo | ver detalle | 1m: `universal` (spread 0.265, NQ/GC/YM/ES todos dentro de rango). 2m: `universal` (spread 0.369). 5m: `instrument-specific` (spread 0.435, NQ 0.487 vs ES 0.922, n chico) | 1m/2m: el filtro `nearEdge`/`tier` sí generaliza entre símbolos — mejora la confianza de las reglas 1-4 |
+| 1 | `nearEdge=1` | mejor que `edge=0` mejor que `edge=-1` | 62 / 260 / 267 | WR 58.1%/46.9%/45.7%; E[R] +0.11/+0.015/-0.036; PF 1.27/1.03/0.93 | **alta** — n≥62 en las tres ramas (antes 48-125), gradiente monótono estable desde hace 2 revisiones, y `cross_instrument` marca 1m y 2m `universal` (ver regla #3) |
+| 2 | `nearEdge=-1` | FILTRAR / no tomar | 267 | E[R]=-0.036, PF 0.93, WR 45.7% | moderada — ya no tan negativo como antes (-0.233 con n=48), se moderó con más muestra pero se mantiene la peor rama |
+| 3 | símbolo (`cross_instrument`) | SÍ generalizar en 1m/2m | 1m spread 0.335 `universal` (NQ 78/0.175, GC 77/-0.16, YM 102/0.064, ES 99/0.013); 2m spread 0.194 `universal` (ES 40/-0.18, YM 52/-0.133, GC 31/-0.021, NQ 42/0.014) | ninguno se dispara fuera del resto | alta — a diferencia de BUY RETEST (donde CL/YM sí divergen fuerte), en SELL RETEST el filtro por `nearEdge`/`tier` no necesita cortarse por símbolo en 1m/2m |
+| 4 | `tier=B` | TOMAR, prioridad leve | 242 / 293 (tier C) | WR 52.9% vs 47.1%; E[R] +0.019 vs -0.02; PF 1.04 vs 0.96 | moderada — sigue siendo la mejor rama de tier, aunque el margen se redujo mucho vs la revisión anterior (era +0.216 vs +0.081) |
+| 5 | `tier=A+` | **la "anomalía" se moderó fuerte — ya NO es catastrófica** | 54 (antes 16) | WR 25.9%, E[R]=+0.04, PF=1.06 | ver corrección abajo — con n×3.4 el resultado dejó de ser el peor del dataset y pasó a estar en línea con B/C |
 
-**Anomalía a investigar — tier `A+` está invertido.** Con la muestra ya en
-n=16 (sigue bajo el piso de 20 para proponer cambio de Pine, pero ya no es
-ruido de 1-2 trades), el tier "A+" de SELL RETEST es el peor resultado de
-todo el dataset: 15 de 16 SL, E[R]=-0.743. Mirando el detalle
-(`dataset.jsonl`): las señales A+ tienen `rr1` sistemáticamente alto (1.6 a
-10.4, varias >4) y en su mayoría `nearEdge=-1` (13/16). El modelo P(TP1)
-in-sample pondera `rr1` con el coeficiente más fuerte de todos y signo
-**negativo** (-0.757: a mayor distancia del objetivo en R, menor
-probabilidad de tocarlo antes del SL) y `nearEdge` con signo positivo
-(+0.447: `edge=-1` es la peor rama, confirmado también en la regla #2 de
-arriba). Es decir: **el criterio que hoy califica una señal como "A+" en
-Pine parece estar seleccionando precisamente las dos características que,
-empíricamente, más *reducen* la probabilidad de éxito** (RR de entrada
-alto/objetivo lejano + señal lejos del borde de la zona). Hipótesis: la
-lógica de scoring de tier en `scalp_command.pine` puede estar tratando "RR
-más generoso" como sinónimo de "mejor calidad" cuando en la práctica es lo
-contrario para SELL RETEST. **No se propone cambio de Pine todavía (n=16 <
-20)**, pero se recomienda a Jesús revisar la fórmula de tier A+ en el
-indicador cuanto antes — no como resultado estadístico sino como posible
-error de diseño con evidencia ya consistente. Vigilar de cerca: si con
-n=20+ se sostiene, es "cambio del mes" candidato para la próxima revisión
-semanal.
+**Corrección de la anomalía anterior — `tier=A+` en SELL RETEST.** La
+revisión anterior reportó A+ como el peor resultado de todo el dataset
+(n=16, WR 6.2%, E[R]=-0.743) y lo marcó como posible error de diseño en
+Pine. Con n=54 (×3.4) el resultado se normalizó: WR 25.9%, E[R]=+0.04 — en
+línea con tier B (+0.019) y C (-0.02), ya no invertido ni catastrófico.
+**Lectura correcta: el hallazgo de la revisión anterior era en gran parte
+ruido de n=16**, exactamente el tipo de lectura prematura que
+`survives_fdr10` está diseñado para filtrar (nunca certificó). Se retira
+la recomendación urgente de auditar la fórmula de tier A+ en Pine — sigue
+mereciendo una mirada porque A+ no es "premium" tampoco aquí (no bate a
+B), pero ya no es una alarma. **Distinto es el caso de BUY RETEST**, donde
+`tier=A+` con n=13 muestra el mismo patrón invertido con la magnitud
+extrema de antes (E[R]=-0.705) — ver `buy-retest.md`; se vigila por
+separado, sin mezclar el diagnóstico de ambos sides.
 
 ### Entrada
-- Óptima: _pendiente_ — `entryZoneTk` insuficiente en la mayoría de outcomes.
+- Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara.
 
 ### Gestión
-- SL óptimo: `loserMFEbeforeSL_p50` global (away-from-news) 2.0 ticks —
-  descriptivo. `revAfterSL_rate` away-from-news 62.9% vs near-news 36.5%:
-  la mayoría de las pérdidas revierten después del SL, otra vez apuntando a
-  SL ajustado más que a dirección equivocada, y más marcado lejos de
-  noticias.
-- Objetivo: contrafactual `nextLevel` (0.276 E[R], n=8 global — todavía no
-  cortado por side) supera a RR fijo 1R (0.258) y empata con 1.5/2/3R fijos
-  (0.276 los tres); `altSL_0.5x_struct` (SL más ajustado) sube a 0.316 pero
-  n=8 es demasiado chico para actuar.
-- Parcial 1 / modelo GESTIONADO vs INGENUO (`managed_vs_naive`): en SELL
-  RETEST el gestionado bate al ingenuo en 1m y 5m, pero **pierde por
-  primera vez en 2m** — 1m delta +0.165 (n=144, naive -0.004 → managed
-  0.16, el salto más grande en volumen), 2m delta **-0.015** (n=53, naive
-  0.087 → managed 0.072), 5m delta +0.169 (n=17, naive 0.695 → managed
-  0.864). El global (todos los kind/side) es delta +0.119 (n=255,
-  naive 0.049 → managed 0.168) — la escalera sigue aportando en conjunto,
-  pero en 2m/SELL específicamente NO conviene la gestión con parciales
-  sobre el ingenuo con la muestra actual; vigilar si se sostiene.
-- ¿Trailing tras +1R?: `beAfterM1_rate` 18.8% global — descriptivo, sin
-  contrafactual propio todavía.
+- **La escalera + parciales (`managed_vs_naive`) ayuda en los tres TF de
+  SELL RETEST, incluido 2m** (se corrige lo de la revisión anterior: el
+  delta negativo en 2m era también muestra chica): 1m n=349 delta=+0.16
+  (naive 0.031→managed 0.191), 2m n=162 delta=+0.111 (naive -0.087→managed
+  0.024, la escalera rescata un segmento que en crudo es negativo), 5m
+  n=67 delta=+0.148 (naive 0.081→managed 0.23). Contraste claro con BUY
+  RETEST, donde la escalera no ayuda o perjudica (ver `buy-retest.md`).
+- **SL estructural (`sl_origin_vs_layer`) gana en 1m y 5m, no en 2m**: 1m
+  n=138 delta=+0.328 CI90=[0.009,0.722] bate cero; 5m n=42 delta=+1.701
+  CI90=[0.076,4.452] bate cero (el efecto más grande del dataset, aunque
+  con n moderado); 2m n=83 delta=+0.289 CI90=[-0.021,0.632] casi bate cero
+  pero no formalmente. El agregado por `basis` (`retestBar`, n=517) que
+  dispara la alerta de hoy mezcla estos tres TF con LONG — el efecto real
+  y significativo está en SHORT/1m y SHORT/5m, no generalizar a LONG (ver
+  `buy-retest.md`, donde el signo es plano/contrario).
+- `revAfterSL_rate`: 62.9% away-from-news vs 36.5% near-news (agregado
+  global) — las pérdidas lejos de noticias revierten más, apunta a SL
+  ajustado más que a dirección equivocada.
+- Parcial 1 / trailing: _pendiente_ de cortar por side en el contrafactual
+  global.
 
 ### Contextos a evitar
-- `nearEdge=-1` (ver regla #2) y `tier=A+` (ver anomalía arriba) — ambos
-  con E[R] muy negativo y muestra ya razonable (n=48 y n=16).
-- Autopsia de SL sobre las 94 pérdidas SHORT (recalculado hoy sin el cap de
-  60 filas que trunca el detalle mostrado en `report.md`): `RR-bajo` 40/94
-  (43%) y `stop-en-el-minimo` 40/94 (43%) **siguen empatadas como causa
-  dominante**, `contra-estructura` 32/94 (34%), `sin-nivel-detras` 21/94
-  (22%), `chop` 16/94 (17%), `sin-causa-clara` 14/94, `SL-muy-pegado` 11/94,
-  `estirado` 5/94. El empate RR-bajo/stop-en-el-mínimo se mantiene estable
-  desde la revisión anterior (era 22/44 y 22/44) — **sigue siendo la causa
-  de SL dominante del mes, doble**: RR de entrada demasiado bajo Y el SL
-  colocado justo donde el precio hace mínimo/máximo antes de revertir.
-  Ninguna de las dos está mitigada todavía por un experimento `confirmed` —
-  sigue bloqueando el gate de ejecución.
-- Hipótesis de cruce con Session Analyst (§8 de `agent-instructions.md`):
-  sigue sin cuantificarse — `analyze.py` no tiene todavía un cruce
-  histórico fecha+símbolo entre el veredicto GO/WAIT/AVOID del SA y el
-  resultado del par. Sigue siendo la mejora permanente pendiente más
-  valiosa para la próxima revisión semanal.
+- `nearEdge=-1` (regla #2). `tier=A+` ya no clasifica aquí (ver
+  corrección arriba) — sigue sin ser la mejor rama, pero no es un contexto
+  a evitar por sí solo.
+- Autopsia de SL sobre las 286 pérdidas SHORT (desglose permanente por
+  kind/side, sin cap de 60 filas — mejora de hoy en `analyze.py`):
+  `contra-estructura` 126/286 (44%) pasa a ser la causa **líder**, muy
+  cerca de `stop-en-el-minimo` 118/286 (41%) y `RR-bajo` 107/286 (37%) —
+  el empate exacto de la revisión anterior (40/94 y 40/94) se rompió
+  ligeramente a favor de contra-estructura con la muestra más grande.
+  `estirado` 60/286 (21%) y `sin-nivel-detras` 55/286 (19%) crecen en
+  proporción relativa. Ninguna causa está mitigada todavía por un
+  experimento `confirmed` — sigue bloqueando el gate de ejecución.
+- Hipótesis de cruce con Session Analyst: sigue sin cuantificarse —
+  mejora permanente pendiente para la próxima revisión semanal.
 
 ### Decaimiento
-Sólo 2026-W36 en `decay_weekly` (n=270 en todo el dataset, WR 54.4%, E[R]
-0.054) — sin semana previa para comparar decaimiento real todavía.
+Sólo 2026-W36 en `decay_weekly` (n=943 en todo el dataset) — sin semana
+previa para comparar decaimiento real todavía. La caída de 5m dentro de la
+misma semana (n=18→68) es un recordatorio de que "decaimiento" real
+necesita comparar semanas completas, no cortes parciales del mismo run.
 
 ## Histórico de cambios
 - 2026-09-01: primera escritura con datos reales (n=3, todas GC 1m SHORT
@@ -150,3 +144,25 @@ Sólo 2026-W36 en `decay_weekly` (n=270 en todo el dataset, WR 54.4%, E[R]
   para corridas futuras: no forzar push sobre `main`; si `git pull` reporta
   "forced update", revisar con cuidado que no se haya perdido trabajo antes
   de continuar.
+- 2026-09-03: salto de muestra fuerte n=222→589 (1m 151→356, 2m 53→165, 5m
+  18→68). **El 5m pierde la certificación FDR que tenía** (E[R] 0.687→0.088,
+  `survives_fdr10` true→false) — se documenta como lección de método: la
+  certificación anterior con n=18 no sobrevivió al crecer la muestra,
+  confirma que el piso de n y el FDR están bien calibrados y no hay que
+  bajar la guardia con muestras chicas aunque el p-valor parezca bueno. La
+  anomalía de `tier=A+` también se corrige: pasó de E[R]=-0.743 (n=16,
+  "peor del dataset") a E[R]=+0.04 (n=54, en línea con B/C) — era en buena
+  parte ruido de muestra chica; el mismo patrón SÍ persiste con fuerza en
+  BUY RETEST (n=13, E[R]=-0.705), que se sigue vigilando por separado. 2m
+  se pone negativo en crudo por primera vez (E[R] +0.087→-0.087) pero
+  `managed_vs_naive` muestra que la escalera con parciales lo rescata
+  (delta +0.111) — se corrige también el dato de la revisión anterior que
+  decía que la gestión perdía en 2m (n=53 chico entonces). `cross_instrument`
+  confirma `universal` en 1m y 2m — el filtro `nearEdge` generaliza bien
+  por símbolo. Mejora permanente en `analyze.py`:
+  `sl_post_mortem.causes_by_kind_side` (autopsia de SL por segmento sin cap
+  de 60 filas, ya no se recalcula a mano) y corrección del label de alerta
+  de `sl_origin_vs_layer` (decía "(2m/5m)" para el basis `retestBar` pero
+  el Pine todavía no separa 1m SHORT en `retestBar2`, así que el agregado
+  mezclaba los tres TF — el label ahora es neutral y el matiz por TF va en
+  la alerta).
