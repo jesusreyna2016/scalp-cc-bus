@@ -26,17 +26,19 @@
       "minAfterN": 40,
       "evidence": {
         "source": "sl_origin_vs_layer.by_basis (medicion PARALELA: misma entrada y mismos TP, solo se mueve el stop; rMultiple = base 3-capas, rOrig = base mecha del retest). No requiere cambio en TradingView para medir.",
-        "asOf": "2026-09-03",
-        "sell_retest_1m": {"n": 138, "deltaER_orig_minus_layer": 0.328, "ci90_no_cruza_cero": true},
-        "sell_retest_5m": {"n": 42, "deltaER_orig_minus_layer": 1.7},
-        "buy_retest": "no significativo / opuesto -> no aplicar a largos",
-        "overall_by_basis_retestBar": {"n_aprox": 517, "deltaER_aprox": 0.231, "ci90": [0.021, 0.499]}
+        "asOf": "2026-09-04",
+        "sell_retest_1m": {"n": 169, "deltaER_orig_minus_layer": 0.22, "ci90": [-0.056, 0.55], "ci90_no_cruza_cero": false, "nota": "se debilito vs 2026-09-03 (n=138, delta=0.328, ci90 no cruzaba cero) - ya no certifica solo, sostener SOLO por 5m con la muestra de hoy"},
+        "sell_retest_5m": {"n": 52, "deltaER_orig_minus_layer": 1.386, "ci90": [0.061, 3.601], "ci90_no_cruza_cero": true, "nota": "sigue certificando, bajo desde 1.7 (n=42) pero se mantiene el efecto mas grande del dataset"},
+        "sell_retest_2m": {"n": 101, "deltaER_orig_minus_layer": 0.3, "ci90": [-0.024, 0.651], "ci90_no_cruza_cero": false},
+        "buy_retest": "no significativo / opuesto -> no aplicar a largos (confirmado de nuevo 2026-09-04, ver buy-retest.md)",
+        "overall_by_basis_retestBar": {"n_aprox": 1639, "deltaER_aprox": 0.177, "ci90": [0.077, 0.292], "nota": "mezcla LONG (plano) y SHORT (real) - no usar como evidencia, usar los cortes por side arriba"}
       },
       "next_steps": [
         "Revision semanal del domingo: confirmar sobre walk-forward + segment_significance (FDR 10%), no solo in-sample.",
         "Anadir linea a predictions.jsonl con predictedDeltaER antes de aplicar.",
         "Si pasa: cambio en Pine = para RETEST SHORT usar lg_slOrig (mecha de la vela del retest) como SL de trabajo, no solo como medicion paralela; mantener 3-capas para el resto. Poner changeDate el dia que se aplique en los 12 graficos.",
-        "Vigilar: retestBar2 (1m SHORT = mecha vela retest + vela previa) aun no aparece en los datos; puede cambiar el numero de 1m cuando entre."
+        "Vigilar: retestBar2 (1m SHORT = mecha vela retest + vela previa) aun no aparece en los datos; puede cambiar el numero de 1m cuando entre.",
+        "2026-09-04: el 1m perdio la certificacion que tenia el 2026-09-03 (ci90 ahora cruza cero) - la propuesta ya no esta soportada en 1m con la muestra de hoy, solo en 5m. Re-evaluar con mas muestra antes de escalar a cambio de Pine; no degradar el status todavia (sigue 'proposed', no aplicado)."
       ]
     }
   ]

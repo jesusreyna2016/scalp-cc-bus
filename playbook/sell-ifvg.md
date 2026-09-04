@@ -3,17 +3,16 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-03 · n: 26)
+## Sección viva  (última revisión: 2026-09-04 · n: 28)
 
 ### Veredicto global
-**Crece rápido y empieza a verse interesante, pero todavía no toca el
-piso de n=20 por TF.** n=26 (antes 9): 1m n=17 (WR 70.6%, E[R]=+0.222,
-PF=1.75, 5 SL) — el más cerca de ser accionable, ya pasó n=20 en total de
-señales pero conviene esperar `segment_significance` (no listado todavía,
-probablemente por debajo del piso interno del método); 2m n=6 (WR 50%,
-E[R]=-0.267, PF=0.47, 3 SL); 5m n=3 (WR 66.7%, E[R]=-0.04, PF=0.88).
-Prioridad 2 se mantiene, pero el 1m ya merece que se le preste atención en
-la próxima revisión semanal si sigue creciendo al ritmo de hoy.
+**Crecimiento casi nulo hoy (+2) — pausa en la acumulación, sin cambio de
+lectura.** n=28 (antes 26): 1m n=18 (WR 66.7%, E[R]=+0.222, PF=1.75, 5 SL);
+2m n=6 (sin cambio, WR 50%, E[R]=-0.267, PF=0.47, 3 SL); 5m n=4 (WR 75%,
+E[R]=+0.018, PF=1.07, 1 SL). El 1m sigue siendo el más cerca de ser
+accionable pero el ritmo de crecimiento de ayer no se sostuvo — vigilar si
+es solo un día tranquilo de señales o un cambio de régimen que reduce la
+frecuencia de este patrón. Prioridad 2 se mantiene.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Todavía por debajo del piso de n=20 para cualquier corte cruzado, pero ya
@@ -69,3 +68,6 @@ _pendiente_ — sólo 2026-W36 disponible en todo el dataset.
   la escalera ayudando fuerte en 1m (+0.352). Mejora permanente en
   `analyze.py`: `sl_post_mortem.causes_by_kind_side` ya cubre este
   segmento sin necesidad de recalcular a mano.
+- 2026-09-04: crecimiento mínimo n=26→28 (1m 17→18, 2m sin cambio en 6,
+  5m 3→4). Sin cambios de lectura material — se deja constancia del
+  estancamiento momentáneo, nada accionable nuevo.
