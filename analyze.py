@@ -12,7 +12,7 @@ logistico) vive aqui, en Python, no en el razonamiento del modelo.
 
 Sin dependencias externas: solo stdlib.
 """
-import json, os, sys, math, glob, statistics as st
+import json, os, sys, math, glob, re, statistics as st
 from collections import defaultdict, Counter
 from datetime import datetime, timezone, timedelta
 
@@ -449,6 +449,89 @@ def sa_context():
     except Exception:
         pass
     return out
+
+def _sa_base_dir():
+    cands = [
+        os.path.join(ROOT, "..", "session-analyst-bus"),
+        os.path.join(ROOT, "..", "..", "session-analyst-bus"),
+        "/home/user/session-analyst-bus",
+    ]
+    return next((c for c in cands if os.path.isdir(c)), None)
+
+_SA_KZ_TO_RUNTYPE = {"Asia": "asia", "London": "london", "NY": "ny"}
+_SA_SYMBOLS = ("NQ", "ES", "GC", "YM", "CL")
+_SA_VERDICT_RE = re.compile(r"\b(GO|WAIT|AVOID)\b")
+
+def _sa_plan_verdicts(base):
+    """Lee session-analyst-bus/plans/<fecha>-pre-<sesion>.json y extrae, por
+    simbolo, el veredicto GO/WAIT/AVOID citado en la linea 'SYM: ...' del
+    resumen. No hay campo estructurado por simbolo (solo 'focus' trae uno,
+    el mas limpio del dia) asi que se parsea el texto libre del resumen."""
+    out = {}
+    plans_dir = os.path.join(base, "plans")
+    if not os.path.isdir(plans_dir):
+        return out
+    for fn in os.listdir(plans_dir):
+        m = re.match(r"^(\d{4}-\d{2}-\d{2})-pre-(asia|london|ny)\.json$", fn)
+        if not m:
+            continue
+        date, session = m.group(1), m.group(2)
+        try:
+            with open(os.path.join(plans_dir, fn), encoding="utf-8") as f:
+                plan = json.load(f)
+        except Exception:
+            continue
+        summary = plan.get("summary") or {}
+        lines = summary.get("es") if isinstance(summary, dict) else summary
+        lines = lines or []
+        for sym in _SA_SYMBOLS:
+            for line in lines:
+                if line.startswith(sym + ":"):
+                    mm = _SA_VERDICT_RE.search(line)
+                    if mm:
+                        out[(date, session, sym)] = mm.group(1)
+                    break
+    return out
+
+def session_analyst_cross(pairs, sa_base):
+    """Hipotesis de agent-instructions.md #8: las senales de scalp en un
+    instrumento marcado AVOID por el Session Analyst rinden peor que las de
+    uno en GO/WAIT. Cruza cada par resuelto (fecha + killzone->sesion SA +
+    simbolo) contra el veredicto de ese plan y compara E[R]/WR por veredicto."""
+    if not sa_base:
+        return {"available": False}
+    verdicts = _sa_plan_verdicts(sa_base)
+    if not verdicts:
+        return {"available": False}
+    buckets = defaultdict(list)
+    matched = 0
+    for r in pairs:
+        if not (r["resolved"] and r["result"]):
+            continue
+        session = _SA_KZ_TO_RUNTYPE.get(r["kz"])
+        if not session:
+            continue
+        sym = r["sigId"].split("-")[0]
+        v = verdicts.get((r["recvDate"], session, sym))
+        if not v:
+            continue
+        matched += 1
+        buckets[v].append(r)
+    if matched < 5:
+        return {"available": True, "n_matched": matched,
+                "note": "muestra insuficiente para cruzar veredicto SA x resultado scalp (join por fecha+killzone+simbolo)"}
+    avoid = buckets.get("AVOID", [])
+    rest = [r for v, rows in buckets.items() if v != "AVOID" for r in rows]
+    return {
+        "available": True,
+        "n_matched": matched,
+        "by_verdict": {v: seg_metrics(rows) for v, rows in sorted(buckets.items())},
+        "avoid_vs_rest": {"AVOID": seg_metrics(avoid), "GO_or_WAIT": seg_metrics(rest)},
+        "note": "join por (fecha, killzone->sesion SA asia/london/ny, simbolo); "
+                "'Sin KZ' no cruza (sin sesion SA equivalente); veredicto parseado del texto "
+                "libre del resumen SA (linea 'SYM: ...'), no de un campo estructurado; "
+                "sin prueba de significancia todavia (ver bootstrap_er_ci para eso mas adelante).",
+    }
 
 # ================================================================= RIGOR
 def r_has_v3(rows):
@@ -933,6 +1016,7 @@ def main():
     }
     sa = sa_context()
     report["session_analyst"] = sa
+    report["session_analyst_cross"] = session_analyst_cross(pairs, _sa_base_dir())
     report["news_context"] = news_context(pairs, sa)
     report["gate"] = exec_gate(report)
     causes, detail, causes_by_kind_side = sl_causes(pairs)
@@ -1054,6 +1138,8 @@ def main():
                                           indent=2, ensure_ascii=False)[:3000] + "\n```\n")
         if sa.get("narrative"):
             L.append("\n### narrative.md\n" + sa["narrative"][:2000] + "\n")
+    L.append("\n## Session Analyst x resultado scalp (hipotesis AVOID rinde peor)\n```json\n"
+             + json.dumps(report["session_analyst_cross"], indent=2, ensure_ascii=False) + "\n```\n")
     with open(os.path.join(ROOT, "report.md"), "w", encoding="utf-8") as f:
         f.write("".join(L))
 

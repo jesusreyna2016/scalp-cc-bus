@@ -3,87 +3,115 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-04 · n: 687)
+## Sección viva  (última revisión: 2026-09-05 · n: 772)
+
+### ⚠ Nota de proceso — data restaurada hoy
+Ver el detalle completo en `buy-retest.md` (misma corrida): el commit
+`92917b8` había borrado 1256 de 1280 señales de `signals/2026-09-03.jsonl`
+bajo el mensaje engañoso "heal 24 orphan signal(s)". Se restauró sin
+pérdida desde `f239309`. El salto de n de hoy (687→772 en SHORT, todo el
+dataset 1884→3140) es esa corrección, no señales nuevas — varias métricas
+de abajo cambian de signo simplemente por volver a incluir un día entero
+de datos legítimos que faltaban.
 
 ### Veredicto global
-**Sigue sin certificar ningún TF, y el 5m se sigue moderando hacia el
-ruido — confirma la lección de método de ayer.** n=687 (412×1m, 191×2m,
-84×5m; +98 desde la revisión anterior). Crudo: 1m WR 44.4% E[R]=+0.015
-PF=1.03 (188 SL de 412, casi breakeven); 2m WR 41.9% E[R]=**-0.08**
-PF=0.85 (95 SL de 191, sigue negativo como ayer); 5m WR 50.0% E[R]=+0.03
-PF=1.06 (36 SL de 84). El 5m — el que había certificado con n=18 y luego
-perdió la certificación con n=68 — **sigue cayendo**: E[R] 0.687→0.088→
-0.03, CI90=[-0.17,0.254] sigue cruzando cero, `survives_fdr10=false`.
-Tres lecturas seguidas convergiendo hacia cero confirman que el
-"TOMAR" original (n=18) era varianza de muestra chica, no un edge real que
-se está diluyendo. Veredicto sin cambios: **NINGÚN TF certifica** — el
-filtro de contexto (`nearEdge`, `tier`) sigue siendo el hallazgo más
-accionable para el volumen grande (1m/2m).
+n=772 (465×1m, 214×2m, 93×5m; +85 vs la lectura de ayer, que estaba sobre
+datos truncados). Crudo: 1m WR 43.7% E[R]=-0.004 PF=0.99 (219 SL de 465,
+casi breakeven, igual lectura que ayer); 2m WR 41.6% E[R]=**-0.106**
+PF=0.8 (108 SL de 214, más negativo que ayer -0.08); 5m WR 49.5%
+E[R]=**-0.007** PF=0.99 (41 SL de 93) — **el 5m cruza a negativo por
+primera vez** (venía de 0.687→0.088→0.03→-0.007), tres lecturas
+consecutivas cayendo confirman que el "TOMAR" original (n=18) era
+varianza de muestra chica: el edge se ha diluido hasta desaparecer del
+todo, no solo perder significancia. `segment_significance`: 1m
+CI90=[-0.097,0.08] p=0.542, 2m CI90=[-0.226,0.019] p=0.922 (roza
+certificar en negativo), 5m CI90=[-0.191,0.21] p=0.53 — ninguno certifica.
+Veredicto sin cambios: **NINGÚN TF certifica** — el filtro de contexto
+(`nearEdge`) sigue siendo el hallazgo más accionable para el volumen
+grande (1m/2m).
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Ninguna tiene `survives_fdr10=true` (esa prueba corre por tf/kind/side, no
 por estos cortes) — el gradiente de `nearEdge` se mantiene estable por
-tercera revisión seguida:
+cuarta revisión seguida, pero `tier=B` pierde su ventaja:
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=1` | mejor que `edge=0` mejor que `edge=-1` | 65 / 298 / 324 | WR 55.4%/43.6%/42.9%; E[R] +0.11/+0.006/-0.048; PF 1.27/1.01/0.91 | **alta** — gradiente monótono estable por tercera revisión, prácticamente sin cambio en los números (era 62/260/267 ayer) |
-| 2 | `nearEdge=-1` | FILTRAR / no tomar | 324 | E[R]=-0.048, PF 0.91, WR 42.9% | moderada — estable vs ayer (-0.036), sigue siendo la peor rama |
-| 3 | símbolo (`cross_instrument`) | SÍ generalizar en 1m/2m | 1m spread 0.264 `universal` (NQ 116/0.104, GC 79/-0.16, YM 110/0.064, ES 107/0.003); 2m spread 0.185 `universal` (ES 40/-0.18, YM 56/-0.133, GC 33/-0.021, NQ 62/0.005) | ninguno se dispara fuera del resto | alta — se mantiene `universal` en ambos TF con n creciendo, mismo patrón que ayer |
-| 3b | símbolo, 5m | **ya no se puede generalizar en 5m** | GC n=12 -0.489, YM n=15 -0.08, ES n=22 0.12, NQ n=35 0.181 (spread 0.67, `instrument-specific`) | nuevo corte — primera vez que 5m tiene n suficiente para evaluar `cross_instrument`; GC destaca muy negativo con n chico, vigilar sin generalizar todavía |
-| 4 | `tier=B` | TOMAR, prioridad leve | 294 / 336 (tier C) | WR 49.3% vs 43.5%; E[R] +0.02 vs -0.038; PF 1.04 vs 0.92 | moderada — se mantiene como mejor rama de tier, márgenes estables vs ayer |
-| 5 | `tier=A+` | ya normalizado, en línea con B/C | 57 (antes 54) | WR 24.6%, E[R]=+0.003, PF=1.0 | confirmado — segunda revisión seguida sin volver a ser anómalo, el caso ya se considera cerrado |
+| 1 | `nearEdge=1` | mejor que `edge=0` mejor que `edge=-1` | 65 / 327 / 380 | WR 55.4%/43.1%/42.4%; E[R] +0.11/-0.005/-0.08; PF 1.27/0.99/0.85 | **alta** — gradiente monótono estable por cuarta revisión seguida; `edge=1` no cambió de n (sin señales nuevas en esa rama) |
+| 2 | `nearEdge=-1` | FILTRAR / no tomar | 380 | E[R]=-0.08, PF 0.85, WR 42.4% | moderada — se puso más negativo que ayer (-0.048), sigue siendo la peor rama |
+| 3 | símbolo (`cross_instrument`), 1m | **vuelve a `instrument-specific`** — ya no generalizar | spread 0.469 (NQ 0.104, YM 0.087, ES 0.003, GC -0.152, CL **-0.365**) | CL vuelve a destacar muy negativo | moderada — cambio de dirección vs ayer (`universal` con spread 0.264); vigilar 1-2 corridas más antes de decidir si esto se asienta |
+| 3b | símbolo, 2m | sigue `universal` | spread 0.339 (NQ 0.005, GC -0.09, YM -0.121, ES -0.18, CL -0.334) | ninguno se dispara, todos negativos o planos | alta — mismo veredicto que ayer, spread creció un poco (0.185→0.339) pero sigue bajo el umbral de 0.4 |
+| 3c | símbolo, 5m | sigue sin poder generalizarse | GC -0.532, YM -0.08, ES 0.022, CL 0.015, NQ 0.181 (spread 0.713, `instrument-specific`) | GC sigue siendo el más negativo con diferencia | moderada — mismo veredicto que ayer, GC se puso todavía más negativo |
+| 4 | `tier=B` | **YA NO es TOMAR — se puso negativo** | 338 (antes 294) | WR 47.3% E[R]=**-0.032** PF=0.93 (antes E[R]=+0.02) | baja — se invirtió con la muestra restaurada, ver nota abajo, no usar como regla hasta que se estabilice |
+| 5 | `tier=A+` | normalizado, en línea con B/C | 57 (sin cambio, sin señales A+ SHORT nuevas hoy) | WR 24.6%, E[R]=+0.003, PF=1.0 | confirmado — idéntico a ayer, el caso sigue cerrado |
+
+**`tier=B` pierde su ventaja al restaurar el dato.** Las 3 revisiones
+previas mostraban a B como la mejor rama de tier con E[R] positivo
+(+0.02 ayer). Con las señales de 2026-09-03 restauradas, B pasa a
+E[R]=-0.032 — casi empatado con C (-0.038). Esto es evidencia de que la
+lectura anterior dependía en parte de un día de datos que faltaba, no de
+una ventaja estructural real. Se retira "TOMAR tier B" como regla activa
+hasta que se sostenga 1-2 revisiones más con dato completo.
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara.
 
 ### Gestión
 - **La escalera + parciales (`managed_vs_naive`) sigue ayudando en los
-  tres TF de SELL RETEST**, con n mucho más grande: 1m n=380 delta=+0.146
-  (naive 0.02→managed 0.165, un poco menor que ayer +0.16 pero
-  consistente); 2m n=180 delta=+0.091 (naive -0.08→managed 0.011, sigue
-  rescatando el segmento negativo, aunque el delta bajó de +0.111); 5m
-  n=77 delta=+0.174 (naive 0.023→managed 0.197, subió desde +0.148). Se
-  confirma el contraste con BUY RETEST, donde en 5m la escalera resta (ver
-  `buy-retest.md`).
-- **SL estructural (`sl_origin_vs_layer`) se debilita en 1m, sigue fuerte
-  en 5m, no certifica en 2m** — cambio importante vs ayer: 1m n=169
-  delta=+0.22 **CI90=[-0.056,0.55], ya NO bate cero** (ayer n=138
-  delta=+0.328 sí certificaba); 5m n=52 delta=+1.386 CI90=[0.061,3.601]
-  sigue batiendo cero (bajó desde +1.701 pero se mantiene el efecto más
-  grande del dataset); 2m n=101 delta=+0.3 CI90=[-0.024,0.651] sigue sin
-  certificar, muy cerca del borde. **La propuesta de `experiments.json`
-  (`sl-retest-wick-2026-09-03`) sigue siendo válida en 5m, pero ya no en
-  1m con la muestra de hoy — hay que actualizar la evidencia antes de la
-  revisión semanal.** El agregado global por `basis` (`retestBar`, n=1639,
-  ver alerta de hoy) sigue mezclando SHORT con LONG (donde el signo es
-  plano) — no usar ese número agregado como evidencia, usar los cortes por
-  side de aquí.
-- `revAfterSL_rate`: sin cambio material vs ayer (62.9% away-from-news vs
-  36.5% near-news, agregado global) — las pérdidas lejos de noticias
-  revierten más.
+  tres TF de SELL RETEST**: 1m n=433 delta=+0.142 (naive 0.0→managed
+  0.142); 2m n=203 delta=+0.121 (naive -0.106→managed 0.015, rescata casi
+  toda la pérdida cruda); 5m n=86 delta=+0.24 (naive -0.013→managed 0.227,
+  el delta más grande de los tres TF). Se confirma el contraste con BUY
+  RETEST, donde en 5m la escalera resta (ver `buy-retest.md`).
+- **SL estructural (`sl_origin_vs_layer`) RECUPERA la certificación en 1m
+  que había perdido ayer** — con el dato restaurado: 1m n=219 delta=+0.296
+  **CI90=[0.013,0.633], vuelve a batir cero** (ayer, con datos truncados:
+  n=169 delta=+0.22 CI90 cruzaba cero); 5m n=61 delta=+1.145
+  CI90=[0.013,3.032] sigue batiendo cero (efecto más grande del dataset,
+  aunque CI muy ancho); 2m n=123 delta=+0.226 CI90=[-0.046,0.505] sigue
+  sin certificar, muy cerca del borde. **La propuesta de `experiments.json`
+  (`sl-retest-wick-2026-09-03`) vuelve a estar soportada en 1m y 5m SHORT.**
+  Novedad importante: con el dato restaurado, **1m LONG también certificó
+  hoy por primera vez** (ver `buy-retest.md`) — el experimento ya no se
+  limita a SHORT, se amplió el segmento en `experiments.json` a todo
+  RETEST. El agregado global por `basis` (`retestBar`, n=2200) ya no
+  mezcla una rama plana con una real: LONG y SHORT certifican ambos en 1m
+  hoy, aunque se pide un día más de confirmación (ver nota de arriba).
+- `revAfterSL_rate`: sin cambio material (agregado global) — las pérdidas
+  lejos de noticias siguen revirtiendo más.
 - Parcial 1 / trailing: _pendiente_ de cortar por side en el contrafactual
   global.
 
 ### Contextos a evitar
 - `nearEdge=-1` (regla #2). `tier=A+` sigue sin ser un contexto a evitar
-  por sí solo (regla #5, confirmado normalizado).
-- Autopsia de SL sobre las 319 pérdidas SHORT (desglose permanente por
-  kind/side, sin cap de 60 filas): `contra-estructura` 127/319 (40%) se
-  mantiene como causa **líder**, con `stop-en-el-minimo` 123/319 (39%) y
-  `RR-bajo` 121/319 (38%) muy cerca — el mismo casi-empate de las dos
-  revisiones anteriores, estable. Ninguna causa está mitigada todavía por
-  un experimento `confirmed` — sigue bloqueando el gate de ejecución.
-- Hipótesis de cruce con Session Analyst: sigue sin cuantificarse — los
-  datos de `session_analyst` en el bus son narrativa de texto libre por
-  día/símbolo, no un histórico estructurado de veredictos GO/WAIT/AVOID
-  fácil de unir con los outcomes; requeriría una mejora dedicada en
-  `analyze.py` para extraer y trackear el veredicto diario por símbolo.
-  Pendiente para cuando haya presupuesto de tiempo para esa mejora.
+  por sí solo (regla #5, confirmado normalizado). `tier=B` ya NO es un
+  contexto a favor (ver nota arriba) pero tampoco es peor que C — neutral.
+- Autopsia de SL sobre las 368 pérdidas SHORT (desglose permanente por
+  kind/side, sin cap de 60 filas): `contra-estructura` 143/368 (39%) y
+  `stop-en-el-minimo` 143/368 (39%) empatados en el liderazgo, con
+  `RR-bajo` 137/368 (37%) muy cerca — mismo casi-empate de las revisiones
+  anteriores, estable pese a la restauración de datos. Ninguna causa está
+  mitigada todavía por un experimento `confirmed` — sigue bloqueando el
+  gate de ejecución.
+- **Cruce con Session Analyst — cuantificado por primera vez hoy.** Mejora
+  permanente en `analyze.py`: `session_analyst_cross` parsea el veredicto
+  GO/WAIT/AVOID de cada plan (`pre-asia/pre-london/pre-ny`) por símbolo y
+  lo cruza con el resultado real de las señales scalp de ese
+  símbolo+sesión+día (join por fecha+killzone, n=885 pares cruzados de
+  todo `kind/side`, todavía sin desglosar por SELL RETEST específicamente).
+  **Resultado sorprendente, CONTRARIO a la hipótesis de
+  `agent-instructions.md`**: las señales en un instrumento marcado `AVOID`
+  rindieron MEJOR (n=92, E[R]=+0.204, WR 56.5%, PF 1.47) que las marcadas
+  `GO` (n=122, E[R]=**-0.273**, WR 37.7%, PF 0.56) o `WAIT` (n=671,
+  E[R]=-0.014). Sin prueba de significancia todavía y sin desglose por
+  kind/side/tf — no generalizar ni usarlo para filtrar señales todavía,
+  pero es exactamente el tipo de contradicción con el Session Analyst que
+  `agent-instructions.md` pide vigilar. Próximo paso: bootstrap CI por
+  veredicto y desglose por kind/side antes de proponer nada.
 
 ### Decaimiento
-Sólo 2026-W36 en `decay_weekly` (n=2400 en todo el dataset) — sin semana
-previa para comparar decaimiento real todavía.
+Sólo 2026-W36 en `decay_weekly` (n=3140 en todo el dataset tras la
+restauración) — sin semana previa para comparar decaimiento real todavía.
 
 ## Histórico de cambios
 - 2026-09-01: primera escritura con datos reales (n=3, todas GC 1m SHORT
@@ -167,3 +195,28 @@ previa para comparar decaimiento real todavía.
   el Pine todavía no separa 1m SHORT en `retestBar2`, así que el agregado
   mezclaba los tres TF — el label ahora es neutral y el matiz por TF va en
   la alerta).
+- 2026-09-05: **hallazgo de pipeline, no de trading**: se detectó y
+  corrigió una pérdida real de datos — el commit `92917b8` había borrado
+  1256 de 1280 señales de `signals/2026-09-03.jsonl` bajo el mensaje
+  engañoso "heal 24 orphan signal(s)"; restaurado desde `f239309` sin
+  pérdida (verificado línea por línea). n saltó de 687 a 772 en SHORT por
+  esa restauración, no por señales nuevas. El 5m cruza a negativo por
+  primera vez (E[R] 0.687→0.088→0.03→-0.007), confirmando que el "TOMAR"
+  original con n=18 era ruido puro. `tier=B` se invirtió
+  (E[R]=+0.02→-0.032) al restaurar el día que faltaba — se retira como
+  regla activa. `cross_instrument` en 1m volvió de `universal` a
+  `instrument-specific` (CL otra vez el peor símbolo). `sl_origin_vs_layer`
+  en 1m RECUPERÓ la certificación que había perdido ayer (delta
+  +0.22→+0.296, CI90 vuelve a batir cero) — y por primera vez también
+  certificó en 1m LONG (ver `buy-retest.md`), así que el experimento
+  `sl-retest-wick-2026-09-03` en `experiments.json` se amplió de "solo
+  SHORT" a todo RETEST, marcado para confirmar el 2026-09-06 antes de
+  tratarlo como asentado. Mejora permanente en `analyze.py`:
+  `session_analyst_cross` — primera cuantificación real de la hipótesis
+  "AVOID rinde peor" de `agent-instructions.md` (parsea GO/WAIT/AVOID de
+  los planes pre-asia/pre-london/pre-ny por símbolo, cruza contra el
+  resultado real por fecha+killzone+símbolo). Resultado, con n=885
+  agregado de todo kind/side: AVOID rindió MEJOR que GO (E[R] +0.204 vs
+  -0.273) — lo opuesto a la hipótesis original. Todavía sin desglose por
+  segmento ni prueba de significancia; queda para la próxima revisión
+  afinarlo antes de sacar conclusiones.

@@ -16,29 +16,31 @@
     {
       "id": "sl-retest-wick-2026-09-03",
       "status": "proposed",
-      "hypothesis": "En SELL RETEST, poner el SL en la mecha exacta de la vela del retest (crudo, sin piso ni techo) en vez del stop de 3 capas sube el E[R]. Baja el win rate (stop mas pegado, salta mas) pero los ganadores que sobreviven pagan mucha mas R, y el neto mejora. NO aplica a BUY RETEST (plano u opuesto, sin significancia): no generalizar a largos.",
-      "param": "sl_basis_retest_short",
+      "hypothesis": "En RETEST, poner el SL en la mecha exacta de la vela del retest (crudo, sin piso ni techo) en vez del stop de 3 capas sube el E[R]. Baja el win rate (stop mas pegado, salta mas) pero los ganadores que sobreviven pagan mucha mas R, y el neto mejora. HASTA 2026-09-04 esto solo certificaba en SHORT (\"no aplica a largos\"); con la muestra de hoy (ver nota 2026-09-05) TAMBIEN certifica en 1m LONG, asi que se retira la exclusion dura de BUY RETEST y se deja como 'certifica por tf/side, no generalizar sin mirar la tabla' -- ver next_steps, se pide un dia mas para confirmar que el giro no es artefacto de la recuperacion de datos de hoy.",
+      "param": "sl_basis_retest",
       "from": "3-capas (sc_slbuf x ATR1m + piso sc_floor_atr5 + techo sc_cap_atr5 / sc_cap_adr)",
       "to": "mecha de la vela del retest (lg_slOrig con slBasis=retestBar / retestBar2, crudo)",
       "changeDate": null,
-      "segment": {"kind": "RETEST", "side": "SHORT"},
+      "segment": {"kind": "RETEST"},
       "targetMetric": "expR",
       "minAfterN": 40,
       "evidence": {
-        "source": "sl_origin_vs_layer.by_basis (medicion PARALELA: misma entrada y mismos TP, solo se mueve el stop; rMultiple = base 3-capas, rOrig = base mecha del retest). No requiere cambio en TradingView para medir.",
-        "asOf": "2026-09-04",
-        "sell_retest_1m": {"n": 169, "deltaER_orig_minus_layer": 0.22, "ci90": [-0.056, 0.55], "ci90_no_cruza_cero": false, "nota": "se debilito vs 2026-09-03 (n=138, delta=0.328, ci90 no cruzaba cero) - ya no certifica solo, sostener SOLO por 5m con la muestra de hoy"},
-        "sell_retest_5m": {"n": 52, "deltaER_orig_minus_layer": 1.386, "ci90": [0.061, 3.601], "ci90_no_cruza_cero": true, "nota": "sigue certificando, bajo desde 1.7 (n=42) pero se mantiene el efecto mas grande del dataset"},
-        "sell_retest_2m": {"n": 101, "deltaER_orig_minus_layer": 0.3, "ci90": [-0.024, 0.651], "ci90_no_cruza_cero": false},
-        "buy_retest": "no significativo / opuesto -> no aplicar a largos (confirmado de nuevo 2026-09-04, ver buy-retest.md)",
-        "overall_by_basis_retestBar": {"n_aprox": 1639, "deltaER_aprox": 0.177, "ci90": [0.077, 0.292], "nota": "mezcla LONG (plano) y SHORT (real) - no usar como evidencia, usar los cortes por side arriba"}
+        "source": "sl_origin_vs_layer.by_basis / by_tf_kind_side (medicion PARALELA: misma entrada y mismos TP, solo se mueve el stop; rMultiple = base 3-capas, rOrig = base mecha del retest). No requiere cambio en TradingView para medir.",
+        "asOf": "2026-09-05",
+        "retest_1m_long": {"n": 1087, "deltaER_orig_minus_layer": 0.181, "ci90": [0.061, 0.314], "ci90_no_cruza_cero": true, "nota": "CAMBIO DE SIGNO vs 2026-09-04 (entonces plano/opuesto): certifica ahora, mismo orden de magnitud que SHORT. Pendiente de confirmar 2026-09-06 que no sea artefacto de la restauracion de datos de hoy (ver nota general de la corrida)."},
+        "retest_1m_short": {"n": 219, "deltaER_orig_minus_layer": 0.296, "ci90": [0.013, 0.633], "ci90_no_cruza_cero": true, "nota": "sigue certificando, ya con muestra mas sana tras restaurar signals/2026-09-03.jsonl"},
+        "retest_2m_long": {"n": 577, "deltaER_orig_minus_layer": 0.018, "ci90": [-0.078, 0.124], "ci90_no_cruza_cero": false},
+        "retest_2m_short": {"n": 123, "deltaER_orig_minus_layer": 0.226, "ci90": [-0.046, 0.505], "ci90_no_cruza_cero": false, "nota": "no certifica pero el CI ya roza cero por poco"},
+        "retest_5m_long": {"n": 214, "deltaER_orig_minus_layer": 0.124, "ci90": [-0.093, 0.37], "ci90_no_cruza_cero": false},
+        "retest_5m_short": {"n": 61, "deltaER_orig_minus_layer": 1.145, "ci90": [0.013, 3.032], "ci90_no_cruza_cero": true, "nota": "sigue siendo el efecto mas grande del dataset, CI muy ancho por n chico"},
+        "overall_by_basis_retestBar": {"n": 2200, "deltaER": 0.171, "ci90": [0.083, 0.26], "nota": "ya no mezcla una rama plana con una real (LONG y SHORT certifican ambos en 1m) -- sigue sin usarse sola como evidencia, la decision es por tf/side de la tabla de arriba"}
       },
       "next_steps": [
-        "Revision semanal del domingo: confirmar sobre walk-forward + segment_significance (FDR 10%), no solo in-sample.",
+        "2026-09-05: se recupero signals/2026-09-03.jsonl (ver nota de la corrida en state.json/narrative y en el historico de los playbooks) -- estaba truncado de 1280 a 24 lineas por un commit 'heal' que en realidad BORRO datos en vez de repararlos. Todas las cifras de esta entrada ya usan el dato restaurado. Confirmar el 2026-09-06 que retest_1m_long se mantiene positivo con datos nuevos genuinos (no solo re-anadidos) antes de tratarlo como hallazgo estable.",
+        "Revision semanal del domingo: confirmar sobre walk-forward + segment_significance (FDR 10%), no solo in-sample (walk_forward todavia no esta listo, solo 1 semana de datos).",
         "Anadir linea a predictions.jsonl con predictedDeltaER antes de aplicar.",
-        "Si pasa: cambio en Pine = para RETEST SHORT usar lg_slOrig (mecha de la vela del retest) como SL de trabajo, no solo como medicion paralela; mantener 3-capas para el resto. Poner changeDate el dia que se aplique en los 12 graficos.",
-        "Vigilar: retestBar2 (1m SHORT = mecha vela retest + vela previa) aun no aparece en los datos; puede cambiar el numero de 1m cuando entre.",
-        "2026-09-04: el 1m perdio la certificacion que tenia el 2026-09-03 (ci90 ahora cruza cero) - la propuesta ya no esta soportada en 1m con la muestra de hoy, solo en 5m. Re-evaluar con mas muestra antes de escalar a cambio de Pine; no degradar el status todavia (sigue 'proposed', no aplicado)."
+        "Si pasa 2+ dias mas: cambio en Pine = para RETEST (long y short, no solo short) usar lg_slOrig (mecha de la vela del retest) como SL de trabajo en 1m; en 5m solo SHORT; en 2m no aplicar todavia (ningun lado certifica). Poner changeDate el dia que se aplique en los 12 graficos.",
+        "Vigilar: retestBar2 (1m SHORT = mecha vela retest + vela previa) sigue siendo una fraccion chica de la muestra 1m short (n=81 de by_basis) -- puede mover el numero cuando crezca."
       ]
     }
   ]
