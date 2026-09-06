@@ -3,7 +3,14 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-05 · n: 29)
+## Sección viva  (última revisión: 2026-09-06 · n: 29)
+
+### ⚠ Nota de proceso — sin dato nuevo, bug de "heal" repetido
+n sin cambios respecto a 2026-09-05 (CME cerrado el fin de semana). El
+commit `0cf0a30` volvió a truncar `signals/2026-09-03.jsonl` (segunda vez,
+mismo bug que el 2026-09-05); restaurado de nuevo. No afectó a este
+playbook. Ver `buy-retest.md` y `experiments.json` para el detalle
+completo, y `reviews/2026-week-36.md` para la revisión semanal.
 
 ### Veredicto global
 **Crecimiento casi nulo de nuevo (+1) — sin cambio de lectura, este
@@ -80,3 +87,8 @@ _pendiente_ — sólo 2026-W36 disponible en todo el dataset.
   playbook no se movió con la restauración de `signals/2026-09-03.jsonl`
   de hoy — su muestra de ese día ya era chica y no dependía del archivo
   dañado. Sin cambios de lectura material.
+- 2026-09-06 (revisión semanal, domingo): n sin cambios (29) — sin dato de
+  mercado nuevo (fin de semana). El bug de `heal` de `signals/2026-09-03.jsonl`
+  se repitió una segunda vez y se restauró de nuevo; se añadió guarda
+  permanente en `analyze.py` (`file_integrity_check`). Ver
+  `reviews/2026-week-36.md`.

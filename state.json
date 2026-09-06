@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T01:30:01.935042+00:00",
+  "updatedAt": "2026-09-06T01:16:26.462430+00:00",
   "recommendedParams": {
     "note": "vacio hasta que algun segmento tenga n>=20 (revision semanal)",
     "sc_min_rr": null,
@@ -16,8 +16,8 @@
   "totals": {
     "signals": 3162,
     "outcomes": 3063,
-    "pairs_resolved": 3140,
-    "pending": 22,
+    "pairs_resolved": 3162,
+    "pending": 0,
     "orphan_outcomes": 22
   },
   "metrics_by_tf_kind_side": {
@@ -58,10 +58,10 @@
       "revAfterSL_rate": 40.0
     },
     "1m/RETEST/LONG": {
-      "n": 1355,
-      "wrTP1": 43.0,
+      "n": 1365,
+      "wrTP1": 42.7,
       "nSL": 695,
-      "nTO": 77,
+      "nTO": 87,
       "expR": -0.025,
       "pf": 0.95,
       "mfe_p25": 5.0,
@@ -76,10 +76,10 @@
       "revAfterSL_rate": 27.8
     },
     "1m/RETEST/SHORT": {
-      "n": 465,
-      "wrTP1": 43.7,
+      "n": 468,
+      "wrTP1": 43.4,
       "nSL": 219,
-      "nTO": 43,
+      "nTO": 46,
       "expR": -0.004,
       "pf": 0.99,
       "mfe_p25": 7.0,
@@ -130,10 +130,10 @@
       "revAfterSL_rate": 33.3
     },
     "2m/RETEST/LONG": {
-      "n": 687,
-      "wrTP1": 45.4,
+      "n": 692,
+      "wrTP1": 45.1,
       "nSL": 354,
-      "nTO": 21,
+      "nTO": 26,
       "expR": -0.073,
       "pf": 0.86,
       "mfe_p25": 6.0,
@@ -148,10 +148,10 @@
       "revAfterSL_rate": 36.7
     },
     "2m/RETEST/SHORT": {
-      "n": 214,
-      "wrTP1": 41.6,
+      "n": 215,
+      "wrTP1": 41.4,
       "nSL": 108,
-      "nTO": 17,
+      "nTO": 18,
       "expR": -0.106,
       "pf": 0.8,
       "mfe_p25": 8.0,
@@ -202,10 +202,10 @@
       "revAfterSL_rate": 100.0
     },
     "5m/RETEST/LONG": {
-      "n": 234,
-      "wrTP1": 53.0,
+      "n": 235,
+      "wrTP1": 52.8,
       "nSL": 99,
-      "nTO": 11,
+      "nTO": 12,
       "expR": 0.098,
       "pf": 1.22,
       "mfe_p25": 9.0,
@@ -220,10 +220,10 @@
       "revAfterSL_rate": 53.5
     },
     "5m/RETEST/SHORT": {
-      "n": 93,
-      "wrTP1": 49.5,
+      "n": 95,
+      "wrTP1": 48.4,
       "nSL": 41,
-      "nTO": 6,
+      "nTO": 8,
       "expR": -0.007,
       "pf": 0.99,
       "mfe_p25": 12.0,
@@ -252,10 +252,10 @@
   },
   "metrics_by_symbol": {
     "CL": {
-      "n": 548,
-      "wrTP1": 45.3,
+      "n": 559,
+      "wrTP1": 44.4,
       "nSL": 286,
-      "nTO": 14,
+      "nTO": 25,
       "expR": -0.136,
       "pf": 0.74,
       "mfe_p25": 5.0,
@@ -270,10 +270,10 @@
       "revAfterSL_rate": 36.4
     },
     "ES": {
-      "n": 712,
-      "wrTP1": 45.2,
+      "n": 715,
+      "wrTP1": 45.0,
       "nSL": 342,
-      "nTO": 48,
+      "nTO": 51,
       "expR": -0.004,
       "pf": 0.99,
       "mfe_p25": 3.0,
@@ -306,10 +306,10 @@
       "revAfterSL_rate": 26.2
     },
     "NQ": {
-      "n": 646,
-      "wrTP1": 48.9,
+      "n": 648,
+      "wrTP1": 48.8,
       "nSL": 302,
-      "nTO": 28,
+      "nTO": 30,
       "expR": 0.033,
       "pf": 1.07,
       "mfe_p25": 27.0,
@@ -324,10 +324,10 @@
       "revAfterSL_rate": 29.1
     },
     "YM": {
-      "n": 744,
-      "wrTP1": 44.5,
+      "n": 750,
+      "wrTP1": 44.1,
       "nSL": 366,
-      "nTO": 47,
+      "nTO": 53,
       "expR": -0.015,
       "pf": 0.97,
       "mfe_p25": 5.0,
@@ -344,8 +344,8 @@
   },
   "decay_weekly": {
     "2026-W36": {
-      "n": 3140,
-      "wrTP1": 44.8,
+      "n": 3162,
+      "wrTP1": 44.5,
       "expR": -0.023
     }
   },
@@ -649,10 +649,10 @@
       "revAfterSL_rate": 0.0
     },
     "RETEST/LONG|edge=-1": {
-      "n": 133,
-      "wrTP1": 45.9,
+      "n": 140,
+      "wrTP1": 43.6,
       "nSL": 59,
-      "nTO": 13,
+      "nTO": 20,
       "expR": -0.004,
       "pf": 0.99,
       "mfe_p25": 5.75,
@@ -667,10 +667,10 @@
       "revAfterSL_rate": 47.5
     },
     "RETEST/LONG|edge=0": {
-      "n": 1113,
-      "wrTP1": 49.1,
+      "n": 1118,
+      "wrTP1": 48.8,
       "nSL": 541,
-      "nTO": 26,
+      "nTO": 31,
       "expR": -0.028,
       "pf": 0.94,
       "mfe_p25": 5.0,
@@ -685,10 +685,10 @@
       "revAfterSL_rate": 41.2
     },
     "RETEST/LONG|edge=1": {
-      "n": 1030,
-      "wrTP1": 40.0,
+      "n": 1034,
+      "wrTP1": 39.8,
       "nSL": 548,
-      "nTO": 70,
+      "nTO": 74,
       "expR": -0.028,
       "pf": 0.95,
       "mfe_p25": 7.0,
@@ -703,10 +703,10 @@
       "revAfterSL_rate": 22.8
     },
     "RETEST/SHORT|edge=-1": {
-      "n": 380,
-      "wrTP1": 42.4,
+      "n": 386,
+      "wrTP1": 41.7,
       "nSL": 192,
-      "nTO": 27,
+      "nTO": 33,
       "expR": -0.08,
       "pf": 0.85,
       "mfe_p25": 8.25,
@@ -813,10 +813,10 @@
       "revAfterSL_rate": 0.0
     },
     "RETEST/LONG|aligned=1": {
-      "n": 2265,
-      "wrTP1": 44.7,
+      "n": 2281,
+      "wrTP1": 44.4,
       "nSL": 1147,
-      "nTO": 105,
+      "nTO": 121,
       "expR": -0.029,
       "pf": 0.95,
       "mfe_p25": 5.0,
@@ -831,10 +831,10 @@
       "revAfterSL_rate": 32.8
     },
     "RETEST/SHORT|aligned=1": {
-      "n": 772,
-      "wrTP1": 43.8,
+      "n": 778,
+      "wrTP1": 43.4,
       "nSL": 368,
-      "nTO": 66,
+      "nTO": 72,
       "expR": -0.033,
       "pf": 0.94,
       "mfe_p25": 8.0,
@@ -941,10 +941,10 @@
       "revAfterSL_rate": 10.8
     },
     "RETEST/LONG|tier=B": {
-      "n": 844,
-      "wrTP1": 43.0,
+      "n": 855,
+      "wrTP1": 42.5,
       "nSL": 443,
-      "nTO": 38,
+      "nTO": 49,
       "expR": -0.009,
       "pf": 0.98,
       "mfe_p25": 6.0,
@@ -955,14 +955,14 @@
       "loserMFEbeforeSL_p50": 4.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 4.0,
-      "entryZoneTk_p50": -13.0,
+      "entryZoneTk_p50": -12.0,
       "revAfterSL_rate": 28.0
     },
     "RETEST/LONG|tier=C": {
-      "n": 1274,
-      "wrTP1": 49.1,
+      "n": 1279,
+      "wrTP1": 48.9,
       "nSL": 603,
-      "nTO": 46,
+      "nTO": 51,
       "expR": -0.03,
       "pf": 0.94,
       "mfe_p25": 5.0,
@@ -995,10 +995,10 @@
       "revAfterSL_rate": 21.6
     },
     "RETEST/SHORT|tier=B": {
-      "n": 338,
-      "wrTP1": 47.3,
+      "n": 342,
+      "wrTP1": 46.8,
       "nSL": 155,
-      "nTO": 23,
+      "nTO": 27,
       "expR": -0.032,
       "pf": 0.93,
       "mfe_p25": 8.0,
@@ -1013,10 +1013,10 @@
       "revAfterSL_rate": 38.7
     },
     "RETEST/SHORT|tier=C": {
-      "n": 377,
-      "wrTP1": 43.5,
+      "n": 379,
+      "wrTP1": 43.3,
       "nSL": 176,
-      "nTO": 37,
+      "nTO": 39,
       "expR": -0.038,
       "pf": 0.92,
       "mfe_p25": 7.0,
@@ -1032,8 +1032,8 @@
     }
   },
   "narrative": {
-    "es": "Hoy medimos 3140 operaciones cerradas de Scalp CC (22 pendientes, 22 outcomes sin señal - de nuevo en nivel normal). El salto de hoy (desde 1884 ayer) no son señales nuevas: un commit automático de \"reparación\" del 3 de septiembre había BORRADO 1256 de 1280 señales de ese día por error; lo restauramos desde el historial de git sin perder nada. El sistema sigue cerca de tablas: por operación se pierde en promedio 0.023 veces lo arriesgado, sin confianza estadística de que sea real (el rango de error cruza el cero). Acierto global: 45%. La causa principal de los stops es un objetivo demasiado cerca del stop desde el origen (RR bajo), casi empatada con operar contra la estructura del mercado. La gestión con escalera de entrada y salidas parciales sigue ganando más que la versión simple (0.056 de media contra -0.024 sin gestión) - confirma que vale la pena gestionar así. Hallazgo nuevo sin confirmar: con los datos ya arreglados, mover el stop a la mecha del retest empezó a ganar también en compras de 1 minuto, algo que hasta ayer solo pasaba en ventas - falta un día más para saber si es real o efecto del arreglo. Seguimos en el primer peldaño (solo asesoría), lejos de cuenta real. Qué vigilar: el pipeline que ingiere señales desde TradingView perdió datos reales esta semana - Jesús debería revisar el proceso de \"reparación\" automática antes de que vuelva a pasar.",
-    "en": "Today we measured 3140 closed trades from Scalp CC (22 pending, 22 outcomes with no matching signal - back to normal). Today's jump (from 1884 yesterday) isn't new signals: an automated \"healing\" commit for September 3rd had DELETED 1256 of 1280 signals from that day by mistake; we restored it from git history with zero data loss. The system remains near break-even: per trade it loses about 0.023 times what was risked on average, with no statistical confidence this is real (the error range crosses zero). Overall win rate: 45%. The main cause of stop-outs is a target set too close to the stop from the start (low reward-to-risk), nearly tied with trading against market structure. Managed execution (laddered entries plus partial exits) keeps beating the simple version (+0.056 average versus -0.024 without management) - worth managing this way. New unconfirmed finding: with the data fixed, moving the stop to the retest candle's wick started winning on 1-minute buys too, something that until yesterday only held for sells - one more day is needed to know if that's real or an artifact of the fix. We remain on the first rung (advisor only), far from a live account. What to watch: the pipeline that ingests signals from TradingView actually lost real data this week - Jesus should review the automated \"healing\" process before it happens again."
+    "es": "Hoy medimos 3162 operaciones cerradas de Scalp CC (0 pendientes, 22 outcomes sin señal - nivel normal). El numero no subio por trades nuevos: el mercado estuvo cerrado el fin de semana. Lo que si paso es grave: el mismo error automatico de \"reparacion\" que ya habia borrado datos el 4 de septiembre volvio a borrar el mismo dia (1256 de 1280 señales) por segunda vez, y lo volvimos a arreglar restaurando desde el historial de git. Añadimos una alarma permanente al programa para detectar esto solo la proxima vez. El sistema sigue cerca de tablas: por operacion se pierde en promedio 0.023 veces lo arriesgado, sin confianza estadistica de que sea real. Acierto global: 44.5%. La causa principal de los stops sigue siendo un objetivo demasiado cerca del stop (RR bajo), seguida de operar contra la estructura del mercado. La gestion con escalera de entrada y salidas parciales sigue ganando mas que la version simple. El hallazgo de mover el stop a la mecha del retest se mantiene igual que ayer (mismos numeros, no hubo dato nuevo) - sigue pendiente un dia con trades genuinamente nuevos para confirmarlo del todo. Seguimos en el primer peldaño (solo asesoria). Que vigilar: Jesus debe revisar o desactivar el job de \"reparacion\" automatica del pipeline - ya borro datos reales dos veces en tres dias.",
+    "en": "Today we measured 3162 closed trades from Scalp CC (0 pending, 22 outcomes with no matching signal - normal level). The count did not grow from new trades: markets were closed over the weekend. What did happen is serious: the same automated \"healing\" bug that already deleted data on September 4th deleted the same day again (1256 of 1280 signals) for a second time, and we fixed it again by restoring from git history. We added a permanent guard to the script to catch this automatically next time. The system remains near break-even: per trade it loses about 0.023 times what was risked on average, with no statistical confidence this is real. Overall win rate: 44.5%. The main cause of stop-outs remains a target set too close to the stop (low reward-to-risk), followed by trading against market structure. Managed execution (laddered entries plus partial exits) keeps beating the simple version. The finding about moving the stop to the retest candle wick is unchanged from yesterday (same numbers, no new data) - it still needs a day with genuinely new trades to be fully confirmed. We remain on the first rung (advisor only). What to watch: Jesus should review or disable the pipeline's automated \"healing\" job - it has already deleted real data twice in three days."
   },
   "sl_origin_vs_layer": {
     "overall": {
@@ -1347,5 +1347,15 @@
         "orig_caused_SL": 4
       }
     }
+  },
+  "file_line_counts": {
+    "signals/2026-09-01.jsonl": 105,
+    "signals/2026-09-02.jsonl": 983,
+    "signals/2026-09-03.jsonl": 1280,
+    "signals/2026-09-04.jsonl": 795,
+    "outcomes/2026-09-01.jsonl": 90,
+    "outcomes/2026-09-02.jsonl": 920,
+    "outcomes/2026-09-03.jsonl": 1257,
+    "outcomes/2026-09-04.jsonl": 797
   }
 }

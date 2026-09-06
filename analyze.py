@@ -42,6 +42,30 @@ def load_events(kind):
         rows.extend(_load_jsonl(p))
     return rows
 
+def file_integrity_check(prev_state):
+    """Detecta si un jsonl diario de signals/outcomes ENCOGIO desde la corrida
+    previa (append-only por diseno: un job externo de 'heal' ya borro datos
+    reales dos veces confundiendo huerfanos con duplicados). Devuelve
+    (alertas, conteos_actuales_para_guardar_en_state)."""
+    prev_counts = (prev_state or {}).get("file_line_counts", {})
+    cur_counts = {}
+    alerts = []
+    for kind in ("signals", "outcomes"):
+        for p in sorted(glob.glob(os.path.join(ROOT, kind, "*.jsonl"))):
+            rel = f"{kind}/{os.path.basename(p)}"
+            with open(p, encoding="utf-8") as f:
+                n = sum(1 for _ in f)
+            cur_counts[rel] = n
+            prev_n = prev_counts.get(rel)
+            if prev_n is not None and n < prev_n:
+                alerts.append(f"INTEGRIDAD: {rel} ENCOGIO de {prev_n} a {n} lineas desde la corrida previa "
+                               f"(un job externo de 'heal' ya borro datos reales aqui antes -- restaurar desde git log "
+                               f"y avisar a Jesus, no es un duplicado legitimo).")
+    # nunca dejar que un conteo bajado por accidente "gane" para siempre: nos quedamos
+    # con el maximo visto, asi una restauracion no dispara falsos positivos despues.
+    merged = {rel: max(n, prev_counts.get(rel, 0)) for rel, n in cur_counts.items()}
+    return alerts, merged
+
 def _f(d, k):
     v = d.get(k, "")
     if v in ("", None):
@@ -1027,7 +1051,8 @@ def main():
             _prev_state = json.load(f)
     except Exception:
         _prev_state = {}
-    report["alerts"] = material_alerts(report, _prev_state)
+    integrity_alerts, file_line_counts = file_integrity_check(_prev_state)
+    report["alerts"] = integrity_alerts + material_alerts(report, _prev_state)
 
     with open(os.path.join(ROOT, "report.json"), "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
@@ -1064,6 +1089,7 @@ def main():
     state["managed_vs_naive"] = report["managed_vs_naive"]
     state["sl_origin_vs_layer"] = report["sl_origin_vs_layer"]
     state["alerts"] = report["alerts"]
+    state["file_line_counts"] = file_line_counts
     state["prediction_scoreboard"] = {k: v for k, v in report["prediction_scoreboard"].items() if k != "detail"}
     state.setdefault("recommendedParams", {"note": "lo mantiene el agente en la revision semanal"})
     state.setdefault("executionGate", {"phase": "advisor", "readyForLive": False})

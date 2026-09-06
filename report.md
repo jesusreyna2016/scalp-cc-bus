@@ -1,5 +1,5 @@
-# Scalp CC · report 2026-09-05T01:30Z
-- signals=3162 outcomes=3063 pares_resueltos=3140 pendientes=22 huerfanos=22
+# Scalp CC · report 2026-09-06T01:16Z
+- signals=3162 outcomes=3063 pares_resueltos=3162 pendientes=0 huerfanos=22
 
 ## ⚠ ALERTAS (llevar al frente del resumen)
 - SL: SL en la mecha de la vela del retest BATE al de 3 capas fuera de ruido (E[R] 0.135 vs -0.036, delta 0.171 CI90 [0.083, 0.26], n 2200). Candidato para experiments.json + revision semanal.
@@ -12,44 +12,44 @@
 |---|--|--|--|--|--|--|--|--|
 | 1m/INV/LONG | 40 | 47.5 | 0.307 | 1.72 | 16 | 10.0 | 5.0 | 18.8 |
 | 1m/INV/SHORT | 19 | 68.4 | 0.264 | 1.95 | 5 | 13.0 | 21.0 | 40.0 |
-| 1m/RETEST/LONG | 1355 | 43.0 | -0.025 | 0.95 | 695 | 11.0 | 9.0 | 27.8 |
-| 1m/RETEST/SHORT | 465 | 43.7 | -0.004 | 0.99 | 219 | 15.0 | 10.0 | 37.4 |
+| 1m/RETEST/LONG | 1365 | 42.7 | -0.025 | 0.95 | 695 | 11.0 | 9.0 | 27.8 |
+| 1m/RETEST/SHORT | 468 | 43.4 | -0.004 | 0.99 | 219 | 15.0 | 10.0 | 37.4 |
 | 2m/INV/LONG | 18 | 38.9 | -0.271 | 0.56 | 11 | 5.5 | 7.5 | 27.3 |
 | 2m/INV/SHORT | 6 | 50.0 | -0.267 | 0.47 | 3 | 8.5 | 14.0 | 33.3 |
-| 2m/RETEST/LONG | 687 | 45.4 | -0.073 | 0.86 | 354 | 14.0 | 12.0 | 36.7 |
-| 2m/RETEST/SHORT | 214 | 41.6 | -0.106 | 0.8 | 108 | 17.0 | 16.0 | 42.6 |
+| 2m/RETEST/LONG | 692 | 45.1 | -0.073 | 0.86 | 354 | 14.0 | 12.0 | 36.7 |
+| 2m/RETEST/SHORT | 215 | 41.4 | -0.106 | 0.8 | 108 | 17.0 | 16.0 | 42.6 |
 | 5m/INV/LONG | 5 | 100.0 | 0.674 | 99.0 | 0 | 28.0 | 32.0 | None |
 | 5m/INV/SHORT | 4 | 75.0 | 0.018 | 1.07 | 1 | 56.5 | 88.5 | 100.0 |
-| 5m/RETEST/LONG | 234 | 53.0 | 0.098 | 1.22 | 99 | 20.5 | 18.25 | 53.5 |
-| 5m/RETEST/SHORT | 93 | 49.5 | -0.007 | 0.99 | 41 | 32.0 | 23.0 | 36.6 |
+| 5m/RETEST/LONG | 235 | 52.8 | 0.098 | 1.22 | 99 | 20.5 | 18.25 | 53.5 |
+| 5m/RETEST/SHORT | 95 | 48.4 | -0.007 | 0.99 | 41 | 32.0 | 23.0 | 36.6 |
 
 ## Por tier
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
 | A+ | 215 | 20.9 | -0.075 | 0.89 | 139 | 16.0 | 16.0 | 13.7 |
-| B | 1207 | 44.5 | -0.009 | 0.98 | 606 | 17.0 | 12.0 | 30.4 |
-| C | 1718 | 48.0 | -0.027 | 0.94 | 807 | 12.0 | 11.0 | 40.4 |
+| B | 1222 | 43.9 | -0.009 | 0.98 | 606 | 17.0 | 12.0 | 30.4 |
+| C | 1725 | 47.8 | -0.027 | 0.94 | 807 | 12.0 | 11.0 | 40.4 |
 
 ## Por killzone
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
 | Asia | 1285 | 46.9 | -0.026 | 0.95 | 604 | 10.0 | 8.0 | 42.9 |
-| London | 488 | 44.3 | -0.104 | 0.81 | 268 | 16.0 | 12.0 | 36.6 |
+| London | 492 | 43.9 | -0.104 | 0.81 | 268 | 16.0 | 12.0 | 36.6 |
 | NY | 468 | 44.0 | 0.198 | 1.4 | 224 | 33.5 | 21.0 | 30.4 |
-| Sin KZ | 899 | 42.5 | -0.088 | 0.84 | 456 | 14.0 | 11.75 | 22.8 |
+| Sin KZ | 917 | 41.7 | -0.088 | 0.84 | 456 | 14.0 | 11.75 | 22.8 |
 
 ## Por nearEdge
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| edge=-1 | 526 | 44.1 | -0.047 | 0.91 | 254 | 17.0 | 19.0 | 35.8 |
-| edge=0 | 1485 | 47.9 | -0.02 | 0.96 | 711 | 10.0 | 9.0 | 41.9 |
-| edge=1 | 1129 | 41.1 | -0.015 | 0.97 | 587 | 19.0 | 14.0 | 23.9 |
+| edge=-1 | 539 | 43.0 | -0.047 | 0.91 | 254 | 17.0 | 19.0 | 35.8 |
+| edge=0 | 1490 | 47.7 | -0.02 | 0.96 | 711 | 10.0 | 9.0 | 41.9 |
+| edge=1 | 1133 | 41.0 | -0.015 | 0.97 | 587 | 19.0 | 14.0 | 23.9 |
 
 ## Por aligned
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
 | aligned=0 | 11 | 54.5 | 0.459 | 4.21 | 1 | 20.0 | 12.25 | 0.0 |
-| aligned=1 | 3129 | 44.8 | -0.024 | 0.95 | 1551 | 13.0 | 11.0 | 34.1 |
+| aligned=1 | 3151 | 44.5 | -0.024 | 0.95 | 1551 | 13.0 | 11.0 | 34.1 |
 
 ## Por kind/side x nearEdge
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
@@ -60,10 +60,10 @@
 | INV/SHORT|edge=-1 | 12 | 75.0 | 0.262 | 2.05 | 3 | 23.0 | 50.0 | 0.0 |
 | INV/SHORT|edge=0 | 15 | 60.0 | 0.047 | 1.13 | 5 | 12.0 | 74.0 | 80.0 |
 | INV/SHORT|edge=1 | 2 | 50.0 | -0.29 | 0.42 | 1 | 7.0 | 5.0 | 0.0 |
-| RETEST/LONG|edge=-1 | 133 | 45.9 | -0.004 | 0.99 | 59 | 9.0 | 7.0 | 47.5 |
-| RETEST/LONG|edge=0 | 1113 | 49.1 | -0.028 | 0.94 | 541 | 10.0 | 8.0 | 41.2 |
-| RETEST/LONG|edge=1 | 1030 | 40.0 | -0.028 | 0.95 | 548 | 19.0 | 14.0 | 22.8 |
-| RETEST/SHORT|edge=-1 | 380 | 42.4 | -0.08 | 0.85 | 192 | 23.0 | 21.0 | 32.8 |
+| RETEST/LONG|edge=-1 | 140 | 43.6 | -0.004 | 0.99 | 59 | 9.0 | 7.0 | 47.5 |
+| RETEST/LONG|edge=0 | 1118 | 48.8 | -0.028 | 0.94 | 541 | 10.0 | 8.0 | 41.2 |
+| RETEST/LONG|edge=1 | 1034 | 39.8 | -0.028 | 0.95 | 548 | 19.0 | 14.0 | 22.8 |
+| RETEST/SHORT|edge=-1 | 386 | 41.7 | -0.08 | 0.85 | 192 | 23.0 | 21.0 | 32.8 |
 | RETEST/SHORT|edge=0 | 327 | 43.1 | -0.005 | 0.99 | 151 | 13.0 | 11.0 | 44.4 |
 | RETEST/SHORT|edge=1 | 65 | 55.4 | 0.11 | 1.27 | 25 | 13.0 | 9.0 | 52.0 |
 
@@ -75,11 +75,11 @@
 | INV/SHORT|tier=B | 7 | 71.4 | 0.201 | 1.71 | 2 | 9.0 | 12.0 | 0.0 |
 | INV/SHORT|tier=C | 22 | 63.6 | 0.086 | 1.26 | 7 | 26.0 | 71.5 | 57.1 |
 | RETEST/LONG|tier=A+ | 158 | 19.6 | -0.104 | 0.85 | 102 | 13.0 | 17.5 | 10.8 |
-| RETEST/LONG|tier=B | 844 | 43.0 | -0.009 | 0.98 | 443 | 16.0 | 11.0 | 28.0 |
-| RETEST/LONG|tier=C | 1274 | 49.1 | -0.03 | 0.94 | 603 | 11.0 | 10.0 | 40.0 |
+| RETEST/LONG|tier=B | 855 | 42.5 | -0.009 | 0.98 | 443 | 16.0 | 11.0 | 28.0 |
+| RETEST/LONG|tier=C | 1279 | 48.9 | -0.03 | 0.94 | 603 | 11.0 | 10.0 | 40.0 |
 | RETEST/SHORT|tier=A+ | 57 | 24.6 | 0.003 | 1.0 | 37 | 28.5 | 8.0 | 21.6 |
-| RETEST/SHORT|tier=B | 338 | 47.3 | -0.032 | 0.93 | 155 | 18.0 | 19.0 | 38.7 |
-| RETEST/SHORT|tier=C | 377 | 43.5 | -0.038 | 0.92 | 176 | 14.0 | 13.25 | 42.6 |
+| RETEST/SHORT|tier=B | 342 | 46.8 | -0.032 | 0.93 | 155 | 18.0 | 19.0 | 38.7 |
+| RETEST/SHORT|tier=C | 379 | 43.3 | -0.038 | 0.92 | 176 | 14.0 | 13.25 | 42.6 |
 
 ## Por kind/side x aligned
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
@@ -87,8 +87,8 @@
 | INV/LONG|aligned=1 | 63 | 49.2 | 0.169 | 1.38 | 27 | 9.0 | 7.0 | 22.2 |
 | INV/SHORT|aligned=1 | 29 | 65.5 | 0.115 | 1.36 | 9 | 14.0 | 57.0 | 44.4 |
 | RETEST/LONG|aligned=0 | 11 | 54.5 | 0.459 | 4.21 | 1 | 20.0 | 12.25 | 0.0 |
-| RETEST/LONG|aligned=1 | 2265 | 44.7 | -0.029 | 0.95 | 1147 | 12.0 | 10.0 | 32.8 |
-| RETEST/SHORT|aligned=1 | 772 | 43.8 | -0.033 | 0.94 | 368 | 17.0 | 16.0 | 38.9 |
+| RETEST/LONG|aligned=1 | 2281 | 44.4 | -0.029 | 0.95 | 1147 | 12.0 | 10.0 | 32.8 |
+| RETEST/SHORT|aligned=1 | 778 | 43.4 | -0.033 | 0.94 | 368 | 17.0 | 16.0 | 38.9 |
 
 ## Autopsia de SL
 n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×529, killzone-Asia-largo×442, sin-nivel-detras×313, estirado×258, chop×218, SL-muy-pegado×178, sin-causa-clara×139, contra-sesgo×1
@@ -628,8 +628,8 @@ n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×
 ```json
 {
   "2026-W36": {
-    "n": 3140,
-    "wrTP1": 44.8,
+    "n": 3162,
+    "wrTP1": 44.5,
     "expR": -0.023
   }
 }
@@ -875,22 +875,22 @@ n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×
   "clusters": [
     {
       "id": 0,
-      "n": 1258,
-      "wrTP1": 43.2,
-      "expR": 0.005,
-      "pf": 1.01,
+      "n": 1272,
+      "wrTP1": 43.6,
+      "expR": 0.013,
+      "pf": 1.02,
       "defining_features": {
-        "structDir": 0.89,
-        "emaStack": 0.61,
+        "structDir": 0.9,
+        "emaStack": 0.62,
         "biasScore": 0.57,
-        "nearEdge": 0.33
+        "nearEdge": 0.34
       }
     },
     {
       "id": 1,
-      "n": 696,
-      "wrTP1": 44.3,
-      "expR": -0.011,
+      "n": 699,
+      "wrTP1": 43.9,
+      "expR": -0.012,
       "pf": 0.98,
       "defining_features": {
         "biasScore": -1.61,
@@ -901,28 +901,28 @@ n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×
     },
     {
       "id": 3,
-      "n": 779,
-      "wrTP1": 48.4,
-      "expR": -0.043,
+      "n": 795,
+      "wrTP1": 47.8,
+      "expR": -0.04,
       "pf": 0.92,
       "defining_features": {
-        "structDir": -1.12,
+        "structDir": -1.11,
         "biasScore": 0.44,
         "stretchAtr": -0.26,
-        "nearEdge": 0.25
+        "nearEdge": 0.23
       }
     },
     {
       "id": 2,
-      "n": 407,
-      "wrTP1": 43.7,
-      "expR": -0.091,
-      "pf": 0.82,
+      "n": 396,
+      "wrTP1": 41.7,
+      "expR": -0.124,
+      "pf": 0.77,
       "defining_features": {
-        "stretchAtr": 1.62,
-        "rvol": 1.32,
-        "chopIdx": -1.31,
-        "hourNY": -0.34
+        "stretchAtr": 1.65,
+        "rvol": 1.36,
+        "chopIdx": -1.32,
+        "hourNY": -0.33
       }
     }
   ]
@@ -982,18 +982,18 @@ n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×
         "expR": 0.089
       },
       "NQ": {
-        "n": 228,
-        "wrTP1": 47.8,
+        "n": 229,
+        "wrTP1": 47.6,
         "expR": 0.024
       },
       "ES": {
-        "n": 321,
-        "wrTP1": 42.4,
+        "n": 324,
+        "wrTP1": 42.0,
         "expR": -0.031
       },
       "CL": {
-        "n": 292,
-        "wrTP1": 42.5,
+        "n": 298,
+        "wrTP1": 41.6,
         "expR": -0.201
       },
       "YM": {
@@ -1018,8 +1018,8 @@ n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×
         "expR": -0.152
       },
       "YM": {
-        "n": 124,
-        "wrTP1": 48.4,
+        "n": 127,
+        "wrTP1": 47.2,
         "expR": 0.087
       },
       "ES": {
@@ -1075,8 +1075,8 @@ n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×
         "expR": -0.012
       },
       "CL": {
-        "n": 152,
-        "wrTP1": 47.4,
+        "n": 157,
+        "wrTP1": 45.9,
         "expR": -0.075
       },
       "ES": {
@@ -1101,8 +1101,8 @@ n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×
         "expR": -0.18
       },
       "YM": {
-        "n": 61,
-        "wrTP1": 42.6,
+        "n": 62,
+        "wrTP1": 41.9,
         "expR": -0.121
       },
       "GC": {
@@ -1147,8 +1147,8 @@ n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×
         "expR": 0.159
       },
       "NQ": {
-        "n": 68,
-        "wrTP1": 48.5,
+        "n": 69,
+        "wrTP1": 47.8,
         "expR": -0.095
       }
     },
@@ -1173,8 +1173,8 @@ n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×
         "expR": -0.532
       },
       "YM": {
-        "n": 15,
-        "wrTP1": 40.0,
+        "n": 17,
+        "wrTP1": 35.3,
         "expR": -0.08
       },
       "CL": {
@@ -1213,10 +1213,10 @@ n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×
     "revAfterSL_rate": 36.2
   },
   "away_from_news": {
-    "n": 2872,
-    "wrTP1": 44.6,
+    "n": 2894,
+    "wrTP1": 44.2,
     "nSL": 1425,
-    "nTO": 167,
+    "nTO": 189,
     "expR": -0.034,
     "pf": 0.93,
     "mfe_p25": 6.0,
@@ -1350,13 +1350,13 @@ n_losses=1552  causas: RR-bajo×624, contra-estructura×594, stop-en-el-minimo×
       "Si pasa 2+ dias mas: cambio en Pine = para RETEST (long y short, no solo short) usar lg_slOrig (mecha de la vela del retest) como SL de trabajo en 1m; en 5m solo SHORT; en 2m no aplicar todavia (ningun lado certifica). Poner changeDate el dia que se aplique en los 12 graficos.",
       "Vigilar: retestBar2 (1m SHORT = mecha vela retest + vela previa) sigue siendo una fraccion chica de la muestra 1m short (n=81 de by_basis) -- puede mover el numero cuando crezca."
     ],
-    "beforeN": 3048,
+    "beforeN": 3070,
     "afterN": 0,
     "before": {
-      "n": 3048,
-      "wrTP1": 44.5,
+      "n": 3070,
+      "wrTP1": 44.2,
       "nSL": 1516,
-      "nTO": 175,
+      "nTO": 197,
       "expR": -0.028,
       "pf": 0.94,
       "mfe_p25": 6.0,

@@ -3,21 +3,28 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-05 · n: 2276)
+## Sección viva  (última revisión: 2026-09-06 · n: 2292)
 
-### ⚠ Nota de proceso — data restaurada hoy
-La corrida de hoy encontró que el commit `92917b8` ("heal 24 orphan
-signal(s) 2026-09-03") en realidad **borró 1256 de las 1280 señales**
-de `signals/2026-09-03.jsonl` (diff real: 1256 líneas eliminadas, 0
-añadidas) en vez de repararlas — probablemente un bug del healer del
-pipeline Netlify/Pine, no de este repo. Se restauró el archivo completo
-desde el commit anterior (`f239309`, verificado línea por línea: las 24
-que quedaban eran subconjunto exacto de las 1280 originales, cero
-pérdida). Todas las cifras de esta revisión usan el dato restaurado
-(n total del dataset pasó de 1884 a 3140 pares). **Los números de ayer
-(2026-09-04, n=1641) estaban calculados sobre datos ya truncados** —
-tratar el salto de hoy como corrección de un agujero, no como señales
-nuevas genuinas de un solo día.
+### ⚠ Nota de proceso — EL MISMO BUG DE "HEAL" BORRÓ DATOS OTRA VEZ (2ª vez en 3 días)
+El 2026-09-05 ya se había detectado y arreglado que el commit `92917b8`
+("heal 24 orphan signal(s) 2026-09-03") borró 1256 de las 1280 señales de
+`signals/2026-09-03.jsonl`. Hoy, al hacer `git pull`, apareció un **segundo**
+commit casi idéntico (`0cf0a30`, mismo mensaje, autor `jesusreyna2016`,
+timestamp de commit 2026-09-04 20:31 -0500) que **volvió a truncar el mismo
+archivo de 1280 a 24 líneas**, deshaciendo el arreglo de ayer. Se restauró
+de nuevo desde el commit bueno (`945c337`, la revisión de ayer del agente,
+verificado línea por línea). **Esto confirma que el job externo de "heal"
+de huérfanos del pipeline Netlify/Pine tiene un bug activo y recurrente**:
+confunde señales legítimas con huérfanos y las borra en vez de repararlas.
+Se añadió una guarda permanente en `analyze.py` (`file_integrity_check`):
+compara las líneas de cada `signals/outcomes/*.jsonl` contra el máximo
+visto en corridas previas (guardado en `state.json.file_line_counts`) y
+lanza una alerta si algún archivo encoge. Jesús debería revisar/desactivar
+ese healer antes de que borre un tercer día. Aparte de esto, **no llegó
+ningún dato de mercado nuevo** desde la corrida de ayer (CME cerrado
+sábado-domingo, normal) — las cifras de abajo son las mismas que ayer
+salvo por la restauración (n total 3140→3162 en todo el dataset, exacto
+por la resta de huérfanos que vuelven a emparejar).
 
 ### Veredicto global
 Con el dato completo (1m n=1355, 2m n=687, 5m n=234): 1m WR 43.0%
@@ -85,20 +92,19 @@ a Jesús que confirme la definición exacta de `aligned` en Pine.
   siendo el único TF donde la gestión resta en LONG, consistente con las
   2 revisiones previas — esto ya es un patrón estable, no ruido). Regla:
   gestionar con escalera en 1m/2m, ir al mercado simple en 5m LONG.
-- **SL estructural (`sl_origin_vs_layer`) — CAMBIO IMPORTANTE HOY: 1m LONG
-  pasa a certificar positivo**, algo que las 2 revisiones previas
-  descartaban explícitamente ("no aplica a largos"). 1m n=1087
-  delta=**+0.181** CI90=**[0.061,0.314] no cruza cero** (antes: n=802
-  delta=+0.143 CI90 rozando cero, y n=171 delta=-0.128 negativo el día
-  anterior a ese); 2m n=577 delta=+0.018 (CI90 [-0.078,0.124], sigue sin
+- **SL estructural (`sl_origin_vs_layer`)**: 1m LONG sigue certificando
+  positivo, n=1087 delta=**+0.181** CI90=**[0.061,0.314] no cruza cero** —
+  **cifras idénticas a 2026-09-05** porque no llegó dato nuevo (fin de
+  semana). Esto SÍ confirma que el giro de ayer no era un artefacto de la
+  restauración (al restaurar hoy de nuevo el mismo archivo, el número no
+  cambió), pero todavía no cuenta como "un día más de confirmación
+  independiente" porque es el mismo dataset recalculado, no trades nuevos
+  — eso queda pendiente para el próximo día hábil (probablemente
+  2026-09-08). 2m n=577 delta=+0.018 (CI90 [-0.078,0.124], sigue sin
   significar); 5m n=214 delta=+0.124 (CI90 [-0.093,0.37], sigue sin
-  significar). **No confiar todavía en el giro de 1m**: coincide con el
-  mismo día en que se restauró `signals/2026-09-03.jsonl` (ver nota de
-  arriba), así que antes de tratarlo como hallazgo real hace falta
-  confirmarlo el 2026-09-06 con datos que no dependan de la restauración.
-  Registrado en `experiments.json` (`sl-retest-wick-2026-09-03`) con
-  segmento ampliado a todo RETEST (ya no solo SHORT). Sigue sin aplicarse
-  — es medición paralela.
+  significar). Registrado en `experiments.json`
+  (`sl-retest-wick-2026-09-03`) con segmento ampliado a todo RETEST (ya no
+  solo SHORT). Sigue sin aplicarse — es medición paralela.
 - Objetivo / Parcial 1 / trailing: _pendiente_ — el contrafactual global
   (`counterfactual`, n=9) no está cortado por side todavía.
 - `revAfterSL_rate` por corte: `edge=-1` 47.5%, `edge=0` 41.2%, `edge=1`
@@ -215,3 +221,15 @@ comparación semana-contra-semana real.
   resultado real de las señales scalp del mismo símbolo+sesión+día; ver
   `report.md` para el resultado agregado (todo-kind), sorprendentemente
   contrario a la hipótesis original de agent-instructions.md.
+- 2026-09-06 (revisión semanal, domingo): **el mismo bug de "heal" volvió a
+  borrar `signals/2026-09-03.jsonl` una segunda vez** (commit `0cf0a30`,
+  deshaciendo el arreglo de ayer); restaurado de nuevo desde `945c337`. Sin
+  dato de mercado nuevo (CME cerrado el fin de semana) — todas las cifras
+  de esta revisión son idénticas a 2026-09-05, lo que SÍ confirma que el
+  giro de `sl_origin_vs_layer` en 1m LONG no era artefacto de la
+  restauración de ayer (ver Gestión). Mejora permanente en `analyze.py`:
+  `file_integrity_check` — alerta si algún `signals/outcomes/*.jsonl`
+  encoge respecto al máximo visto en corridas previas, para detectar este
+  tipo de borrado automáticamente sin depender de que el agente note el
+  tamaño del diff a mano. Ver `reviews/2026-week-36.md` para la revisión
+  semanal completa (primera del bus).

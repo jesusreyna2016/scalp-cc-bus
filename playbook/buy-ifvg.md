@@ -3,13 +3,20 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-05 · n: 63)
+## Sección viva  (última revisión: 2026-09-06 · n: 63)
 
-### ⚠ Nota de proceso — data restaurada hoy
-Ver el detalle en `buy-retest.md`: se restauró `signals/2026-09-03.jsonl`
-(un commit anterior había borrado 1256 de 1280 líneas por error). Parte
-del salto de n de hoy (48→63) viene de esa corrección, no de señales
-nuevas.
+### ⚠ Nota de proceso — el bug de "heal" volvió a borrar datos, y no hubo mercado nuevo
+Sin cambios en las cifras de abajo respecto a 2026-09-05: no llegó ningún
+signal/outcome nuevo del cron de Netlify (CME cerrado sábado-domingo,
+normal). Lo único que pasó hoy es que el commit `0cf0a30` ("heal 24 orphan
+signal(s) 2026-09-03") volvió a truncar `signals/2026-09-03.jsonl` de 1280
+a 24 líneas — el mismo bug ya visto el 2026-09-05, ahora repetido una
+segunda vez. Se restauró de nuevo (ver `buy-retest.md` para el detalle
+completo) y se añadió una guarda permanente en `analyze.py`
+(`file_integrity_check`) que alerta si algún `signals/*.jsonl` u
+`outcomes/*.jsonl` encoge respecto a la corrida previa. No afecta a este
+playbook (INV/LONG no tiene señales el 2026-09-03 en la parte que se
+truncaba), se deja constancia porque es un riesgo de pipeline compartido.
 
 ### Veredicto global
 1m n=40 (WR 47.5%, E[R]=+0.307, PF=1.72, 16 SL); 2m n=18 (WR 38.9%,
@@ -75,3 +82,9 @@ _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
   (+2.472→+1.708, n=12→18, todavía bajo el piso de n=20). A diferencia de
   BUY/SELL RETEST, aquí la restauración de datos no cambió ningún signo —
   este playbook ya tenía muestra chica y por lo tanto poco que corregir.
+- 2026-09-06 (revisión semanal, domingo): n sin cambios (63) — CME cerrado
+  el fin de semana, cero signals/outcomes nuevos. El bug de `heal` que
+  truncó `signals/2026-09-03.jsonl` se repitió una segunda vez (commit
+  `0cf0a30`) y se restauró de nuevo; ver nota de proceso arriba y
+  `experiments.json`/`analyze.py` (guarda `file_integrity_check` nueva).
+  Ver `reviews/2026-week-36.md` para la revisión semanal completa.

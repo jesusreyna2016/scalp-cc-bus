@@ -3,16 +3,19 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-05 · n: 772)
+## Sección viva  (última revisión: 2026-09-06 · n: 772)
 
-### ⚠ Nota de proceso — data restaurada hoy
-Ver el detalle completo en `buy-retest.md` (misma corrida): el commit
-`92917b8` había borrado 1256 de 1280 señales de `signals/2026-09-03.jsonl`
-bajo el mensaje engañoso "heal 24 orphan signal(s)". Se restauró sin
-pérdida desde `f239309`. El salto de n de hoy (687→772 en SHORT, todo el
-dataset 1884→3140) es esa corrección, no señales nuevas — varias métricas
-de abajo cambian de signo simplemente por volver a incluir un día entero
-de datos legítimos que faltaban.
+### ⚠ Nota de proceso — el mismo bug de "heal" volvió a borrar datos (2ª vez)
+Ver el detalle completo en `buy-retest.md` (misma corrida). Resumen: el
+commit `92917b8` había borrado 1256 de 1280 señales de
+`signals/2026-09-03.jsonl` el 2026-09-04/05; se arregló. Hoy apareció un
+**segundo** commit casi idéntico (`0cf0a30`) que volvió a truncar el mismo
+archivo, deshaciendo el arreglo — se restauró de nuevo y se añadió una
+guarda permanente en `analyze.py` (`file_integrity_check`) que alerta si
+cualquier `signals/outcomes/*.jsonl` encoge respecto a corridas previas.
+Aparte de eso, no llegó dato de mercado nuevo (CME cerrado el fin de
+semana) — n=772 sin cambio respecto a ayer, todas las cifras de abajo son
+idénticas a 2026-09-05.
 
 ### Veredicto global
 n=772 (465×1m, 214×2m, 93×5m; +85 vs la lectura de ayer, que estaba sobre
@@ -63,20 +66,19 @@ hasta que se sostenga 1-2 revisiones más con dato completo.
   toda la pérdida cruda); 5m n=86 delta=+0.24 (naive -0.013→managed 0.227,
   el delta más grande de los tres TF). Se confirma el contraste con BUY
   RETEST, donde en 5m la escalera resta (ver `buy-retest.md`).
-- **SL estructural (`sl_origin_vs_layer`) RECUPERA la certificación en 1m
-  que había perdido ayer** — con el dato restaurado: 1m n=219 delta=+0.296
-  **CI90=[0.013,0.633], vuelve a batir cero** (ayer, con datos truncados:
-  n=169 delta=+0.22 CI90 cruzaba cero); 5m n=61 delta=+1.145
+- **SL estructural (`sl_origin_vs_layer`)**: 1m sigue certificando, n=219
+  delta=+0.296 **CI90=[0.013,0.633]** — cifras idénticas a 2026-09-05 (sin
+  dato nuevo, ver nota de proceso); 5m n=61 delta=+1.145
   CI90=[0.013,3.032] sigue batiendo cero (efecto más grande del dataset,
-  aunque CI muy ancho); 2m n=123 delta=+0.226 CI90=[-0.046,0.505] sigue
-  sin certificar, muy cerca del borde. **La propuesta de `experiments.json`
-  (`sl-retest-wick-2026-09-03`) vuelve a estar soportada en 1m y 5m SHORT.**
-  Novedad importante: con el dato restaurado, **1m LONG también certificó
-  hoy por primera vez** (ver `buy-retest.md`) — el experimento ya no se
-  limita a SHORT, se amplió el segmento en `experiments.json` a todo
-  RETEST. El agregado global por `basis` (`retestBar`, n=2200) ya no
-  mezcla una rama plana con una real: LONG y SHORT certifican ambos en 1m
-  hoy, aunque se pide un día más de confirmación (ver nota de arriba).
+  CI muy ancho); 2m n=123 delta=+0.226 CI90=[-0.046,0.505] sigue sin
+  certificar. **La propuesta de `experiments.json`
+  (`sl-retest-wick-2026-09-03`) sigue soportada en 1m y 5m SHORT, y también
+  en 1m LONG** (ver `buy-retest.md`) — el agregado global por `basis`
+  (`retestBar`, n=2200) sigue sin mezclar una rama plana con una real:
+  LONG y SHORT certifican ambos en 1m. Como es el mismo dataset que ayer
+  recalculado (no trades nuevos), todavía se pide un día hábil más con
+  datos genuinamente nuevos antes de tratarlo como confirmación
+  independiente (ver `experiments.json.next_steps`).
 - `revAfterSL_rate`: sin cambio material (agregado global) — las pérdidas
   lejos de noticias siguen revirtiendo más.
 - Parcial 1 / trailing: _pendiente_ de cortar por side en el contrafactual
@@ -220,3 +222,14 @@ restauración) — sin semana previa para comparar decaimiento real todavía.
   -0.273) — lo opuesto a la hipótesis original. Todavía sin desglose por
   segmento ni prueba de significancia; queda para la próxima revisión
   afinarlo antes de sacar conclusiones.
+- 2026-09-06 (revisión semanal, domingo): **el mismo bug de "heal" volvió a
+  borrar `signals/2026-09-03.jsonl` una segunda vez** (commit `0cf0a30`,
+  deshaciendo el arreglo de ayer); restaurado de nuevo. Sin dato de mercado
+  nuevo (CME cerrado el fin de semana) — n=772 y todas las cifras idénticas
+  a 2026-09-05, lo que confirma que la recuperación de `sl_origin_vs_layer`
+  en 1m/5m SHORT de ayer no era artefacto de la restauración (al restaurar
+  hoy de nuevo el mismo archivo, el número no cambió). Mejora permanente en
+  `analyze.py`: `file_integrity_check` — detecta automáticamente si algún
+  `signals/outcomes/*.jsonl` encoge respecto al máximo visto antes. Ver
+  `reviews/2026-week-36.md` para la revisión semanal completa (primera del
+  bus).
