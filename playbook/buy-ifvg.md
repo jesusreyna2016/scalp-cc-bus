@@ -3,60 +3,60 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-06 · n: 63)
+## Sección viva  (última revisión: 2026-09-07 · n: 66)
 
-### ⚠ Nota de proceso — el bug de "heal" volvió a borrar datos, y no hubo mercado nuevo
-Sin cambios en las cifras de abajo respecto a 2026-09-05: no llegó ningún
-signal/outcome nuevo del cron de Netlify (CME cerrado sábado-domingo,
-normal). Lo único que pasó hoy es que el commit `0cf0a30` ("heal 24 orphan
-signal(s) 2026-09-03") volvió a truncar `signals/2026-09-03.jsonl` de 1280
-a 24 líneas — el mismo bug ya visto el 2026-09-05, ahora repetido una
-segunda vez. Se restauró de nuevo (ver `buy-retest.md` para el detalle
-completo) y se añadió una guarda permanente en `analyze.py`
-(`file_integrity_check`) que alerta si algún `signals/*.jsonl` u
-`outcomes/*.jsonl` encoge respecto a la corrida previa. No afecta a este
-playbook (INV/LONG no tiene señales el 2026-09-03 en la parte que se
-truncaba), se deja constancia porque es un riesgo de pipeline compartido.
+### Nota de proceso
+Primer día sin repetición del bug de "heal" (ver `buy-retest.md` para el
+detalle completo) — llegó algo de dato nuevo genuino (lunes festivo
+EE.UU., Globex con volumen reducido), aunque este segmento sigue teniendo
+muestra chica y crece lento.
 
 ### Veredicto global
-1m n=40 (WR 47.5%, E[R]=+0.307, PF=1.72, 16 SL); 2m n=18 (WR 38.9%,
-E[R]=-0.271, PF=0.56, 11 SL); 5m n=5 (100% TP1, todavía sin valor
-estadístico). `segment_significance`: 1m CI90=[-0.088,0.695]
-p_mean_le_0=0.101, se alejó un poco del borde de significancia respecto a
-ayer (era p=0.059) pero sigue en la misma dirección positiva; 2m
-CI90=[-0.638,0.119] p=0.879, sigue negativo sin certificar. Prioridad 2 se
-mantiene; el 1m sigue siendo el único con algo de lectura útil.
+1m n=42 (WR 47.6%, E[R]=+0.276, PF=1.64, 17 SL); 2m n=18 (sin cambio, WR
+38.9%, E[R]=-0.271, PF=0.56, 11 SL); 5m n=6 (100% TP1, E[R]=+0.712, PF=99,
+todavía sin valor estadístico, n creció de 5 a 6). `segment_significance`:
+1m CI90=[-0.102,0.653] p_mean_le_0=0.116 (n=41), se alejó un poco más del
+borde de significancia (era p=0.101 ayer, p=0.059 hace 2 días) pero sigue
+en la misma dirección positiva; 2m CI90=[-0.638,0.119] p=0.879, idéntico a
+ayer (sin señales 2m nuevas), sigue negativo sin certificar. Prioridad 2
+se mantiene; el 1m sigue siendo el único con algo de lectura útil.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar, pero ya hay lectura por corte:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=1` | mejor que `edge=0` | 32 / 30 | WR 46.9%/50.0%; E[R] +0.175/+0.082; PF 1.4/1.17 | baja-moderada — n creció (24/20→32/30) pero el efecto se moderó, mismo sentido que RETEST |
-| 2 | `tier=B` | mejor que `tier=C` | 18 / 45 | E[R] +0.352 vs +0.1; PF 1.91 vs 1.21 | baja-moderada — n de B creció (13→18), efecto se moderó (+0.577→+0.352) pero se mantiene la misma dirección |
+| 1 | `nearEdge=1` | mejor que `edge=0`; primera señal `edge=-1` hoy | 34 / 31 / 1 | WR 50.0%/48.4%/100%; E[R] +0.201/+0.047/+2.59; PF 1.49/1.1/99 | baja-moderada — mismo sentido que antes en `edge=1` vs `edge=0`, pero `edge=-1` es una sola señal nueva (n=1), no generalizar |
+| 2 | `tier=B` | mejor que `tier=C` | 18 / 48 | E[R] +0.352 vs +0.098; PF 1.91 vs 1.21 | baja-moderada — tier B sin señales nuevas (n=18 igual que ayer), tier C creció poco (45→48), misma dirección |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`; ver `entryZoneTk` de ganadores vs perdedores)
 
 ### Gestión
-- `managed_vs_naive`: 2m n=18 delta=+0.03 (naive -0.271→managed -0.241,
-  sigue negativo, la escalera resta menos que ayer +0.014→+0.03). 1m no
-  tiene fila propia en este corte con la muestra de hoy (ver
-  `report.json.managed_vs_naive.by_tf_kind_side` para el detalle crudo).
-- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=39
-  delta=+0.257 CI90=[-0.43,1.011] no certifica; 2m n=18 delta=**+1.708**
-  CI90=[0.256,3.449] **bate cero** — se mantiene el efecto grande (bajó de
-  +2.472 con n=12 a +1.708 con n=18), n sigue justo debajo del piso de 20
-  del método; no proponer cambio todavía, un solo par más de muestra lo
-  pondría en condición de evaluarse.
+- `managed_vs_naive`: **1m tiene fila propia por primera vez hoy**, n=41
+  delta=**+0.113** (naive 0.276→managed 0.389, ayuda); 2m n=18 delta=+0.03
+  (naive -0.271→managed -0.241, sigue negativo, sin cambio); 5m n=6
+  delta=+0.191 (naive 0.712→managed 0.903, primera lectura con fila
+  propia, ayuda, pero n mínimo).
+- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=41
+  delta=+0.24 CI90=[-0.431,0.958] no certifica, casi sin cambio; 2m n=18
+  delta=**+1.708** CI90=[0.256,3.449] **sigue batiendo cero** — idéntico a
+  ayer (sin señales 2m nuevas), n sigue justo debajo del piso de 20 del
+  método; 5m n=6 delta=**-1.255** (primera lectura, va en sentido
+  contrario a 2m — el SL de 3 capas gana ahí, CI no calculable con n=6,
+  anotar sin accionar). No proponer cambio todavía en INV/LONG.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 27 pérdidas INV/LONG (desglose permanente por
-  kind/side en `analyze.py`): `killzone-Asia-largo` 15/27 (56%) sigue
-  siendo la causa dominante, con `RR-bajo` 14/27 (52%) y
-  `contra-estructura` 11/27 (41%) cerca detrás — mismo patrón que ayer
-  (58%/47%/37%), estable.
+- Autopsia de SL sobre las 28 pérdidas INV/LONG (desglose permanente por
+  kind/side en `analyze.py`): `killzone-Asia-largo` 16/28 (57%) sigue
+  siendo la causa dominante, con `RR-bajo` 15/28 (54%) y
+  `contra-estructura` 11/28 (39%) cerca detrás — mismo patrón de siempre,
+  estable.
+- `cross_instrument` (primera vez con lectura, sigue `instrument-specific`,
+  spread 1.109): YM n=18 E[R]=0.501, CL n=13 E[R]=0.428, ES n=5
+  E[R]=-0.5, GC n=4 E[R]=-0.608 — n por símbolo todavía muy chico, no
+  generalizar.
 
 ### Decaimiento
 _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
@@ -88,3 +88,11 @@ _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
   `0cf0a30`) y se restauró de nuevo; ver nota de proceso arriba y
   `experiments.json`/`analyze.py` (guarda `file_integrity_check` nueva).
   Ver `reviews/2026-week-36.md` para la revisión semanal completa.
+- 2026-09-07 (lunes, festivo EE.UU.): primer día sin repetición del bug de
+  "heal", con algo de dato nuevo genuino (n=63→66: 1m 40→42, 5m 5→6, 2m
+  sin cambio en 18). Primera vez con fila propia de `managed_vs_naive` en
+  1m (delta+0.113) y 5m (delta+0.191), ambas ayudan. Primera lectura de
+  `sl_origin_vs_layer` en 5m: delta negativo (-1.255, n=6 mínimo, sentido
+  opuesto al de 2m) — anotado sin accionar. Primera lectura de
+  `cross_instrument` en este segmento (`instrument-specific`, spread
+  1.109, YM/CL positivos, ES/GC negativos, n por símbolo muy chico).

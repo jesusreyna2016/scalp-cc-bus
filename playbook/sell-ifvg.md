@@ -3,24 +3,25 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-06 · n: 29)
+## Sección viva  (última revisión: 2026-09-07 · n: 29)
 
-### ⚠ Nota de proceso — sin dato nuevo, bug de "heal" repetido
-n sin cambios respecto a 2026-09-05 (CME cerrado el fin de semana). El
-commit `0cf0a30` volvió a truncar `signals/2026-09-03.jsonl` (segunda vez,
-mismo bug que el 2026-09-05); restaurado de nuevo. No afectó a este
-playbook. Ver `buy-retest.md` y `experiments.json` para el detalle
-completo, y `reviews/2026-week-36.md` para la revisión semanal.
+### Nota de proceso
+Primer día sin repetición del bug de "heal" (ver `buy-retest.md`). Este
+playbook en particular tuvo **cero señales nuevas hoy** pese a que otros
+segmentos sí recibieron dato genuino — ver veredicto abajo.
 
 ### Veredicto global
-**Crecimiento casi nulo de nuevo (+1) — sin cambio de lectura, este
-playbook no se vio afectado por la restauración de datos de hoy (ver
-`buy-retest.md`).** n=29 (antes 28): 1m n=19 (WR 68.4%, E[R]=+0.264,
-PF=1.95, 5 SL); 2m n=6 (sin cambio, WR 50%, E[R]=-0.267, PF=0.47, 3 SL);
-5m n=4 (sin cambio, WR 75%, E[R]=+0.018, PF=1.07, 1 SL). El 1m sigue
-siendo el más cerca de ser accionable; el ritmo de crecimiento lento se
-mantiene por segunda revisión — vigilar si es un patrón de baja frecuencia
-o un problema de detección en Pine. Prioridad 2 se mantiene.
+**Tercera revisión seguida sin ninguna señal nueva — vigilar si es baja
+frecuencia real o un problema de detección en Pine.** n=29 (sin cambio
+desde 2026-09-05): 1m n=19 (WR 68.4%, E[R]=+0.264, PF=1.95, 5 SL); 2m n=6
+(WR 50%, E[R]=-0.267, PF=0.47, 3 SL); 5m n=4 (WR 75%, E[R]=+0.018,
+PF=1.07, 1 SL) — cifras idénticas a las 3 últimas corridas. El 1m sigue
+siendo el más cerca de ser accionable. A diferencia de INV/LONG (que sí
+recibió 2 señales nuevas hoy en `buy-ifvg.md`), este lado (SHORT) lleva ya
+3 revisiones (2026-09-05, 09-06, 09-07) sin una sola señal nueva — si se
+mantiene 1-2 corridas más, vale la pena preguntarle a Jesús si `kind=INV
+side=SHORT` tiene algún filtro o condición en Pine que lo esté bloqueando
+más de lo esperado. Prioridad 2 se mantiene.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Todavía por debajo del piso de n=20 para cualquier corte cruzado, sin
@@ -61,9 +62,15 @@ INV todavía.
   6/9 (67%) empatadas como causa dominante, `stop-en-el-minimo` 4/9 (44%)
   — sin cambio vs ayer. Mismo patrón cualitativo que RETEST/SHORT, con
   menos muestra.
+- `cross_instrument` (primera vez con lectura en este segmento,
+  `instrument-specific`, spread 0.597, sólo 1m): YM n=14 WR 64.3%
+  E[R]=0.198, NQ n=4 WR 100% E[R]=0.795 — n por símbolo demasiado chico
+  para generalizar.
 
 ### Decaimiento
-_pendiente_ — sólo 2026-W36 disponible en todo el dataset.
+`decay_weekly` ya reporta 2 semanas en todo el dataset (2026-W36 n=3231,
+2026-W37 n=26) pero este segmento no tuvo señales en la semana nueva —
+sin decaimiento propio que medir todavía.
 
 ## Histórico de cambios
 - 2026-09-02 (corrida formal del agente): refresco n=4->9 (1m n=3->8, 5m
@@ -92,3 +99,10 @@ _pendiente_ — sólo 2026-W36 disponible en todo el dataset.
   se repitió una segunda vez y se restauró de nuevo; se añadió guarda
   permanente en `analyze.py` (`file_integrity_check`). Ver
   `reviews/2026-week-36.md`.
+- 2026-09-07 (lunes, festivo EE.UU.): n sin cambios (29) — tercera revisión
+  seguida sin ninguna señal INV/SHORT nueva, pese a que otros segmentos
+  (INV/LONG, RETEST) sí recibieron dato genuino hoy. Primera lectura de
+  `cross_instrument` en este segmento (`instrument-specific`, spread
+  0.597, sólo 1m, n por símbolo muy chico). Se deja anotado para preguntar
+  a Jesús si hay algo en Pine bloqueando la detección de este lado si el
+  estancamiento sigue 1-2 corridas más.
