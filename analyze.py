@@ -546,15 +546,26 @@ def session_analyst_cross(pairs, sa_base):
                 "note": "muestra insuficiente para cruzar veredicto SA x resultado scalp (join por fecha+killzone+simbolo)"}
     avoid = buckets.get("AVOID", [])
     rest = [r for v, rows in buckets.items() if v != "AVOID" for r in rows]
+    by_kind_side = defaultdict(lambda: defaultdict(list))
+    for v, rows in buckets.items():
+        for r in rows:
+            by_kind_side[f"{r['kind']}/{r['side']}"][v].append(r)
     return {
         "available": True,
         "n_matched": matched,
         "by_verdict": {v: seg_metrics(rows) for v, rows in sorted(buckets.items())},
+        "by_verdict_ci90": {v: bootstrap_er_ci(rows) for v, rows in sorted(buckets.items())},
         "avoid_vs_rest": {"AVOID": seg_metrics(avoid), "GO_or_WAIT": seg_metrics(rest)},
+        "avoid_vs_rest_ci90": {"AVOID": bootstrap_er_ci(avoid), "GO_or_WAIT": bootstrap_er_ci(rest)},
+        "by_kind_side": {
+            ks: {v: seg_metrics(rows) for v, rows in sorted(vd.items()) if len(rows) >= 5}
+            for ks, vd in sorted(by_kind_side.items())
+        },
         "note": "join por (fecha, killzone->sesion SA asia/london/ny, simbolo); "
                 "'Sin KZ' no cruza (sin sesion SA equivalente); veredicto parseado del texto "
                 "libre del resumen SA (linea 'SYM: ...'), no de un campo estructurado; "
-                "sin prueba de significancia todavia (ver bootstrap_er_ci para eso mas adelante).",
+                "by_verdict_ci90/avoid_vs_rest_ci90 = bootstrap 90% CI de E[R] (null si n<8); "
+                "by_kind_side = mismo cruce desglosado por kind/side (solo celdas con n>=5).",
     }
 
 # ================================================================= RIGOR
@@ -989,6 +1000,16 @@ def material_alerts(rep, prev_state=None):
         elif _bv.get("delta_below_zero"):
             a.append(f"SL: {_lab} rinde PEOR que el de 3 capas "
                      f"(delta {_bv['delta_orig_minus_layer']} CI90 {_bv.get('delta_ci90')}, n {_bv['n']}). Mantener el actual ahi.")
+    sac = rep.get("session_analyst_cross", {}) or {}
+    for _v, _ci in (sac.get("by_verdict_ci90", {}) or {}).items():
+        if not _ci or _ci.get("n", 0) < 30:
+            continue
+        lo, hi = _ci["ci90"]
+        if lo > 0 or hi < 0:
+            signo = "MEJOR" if lo > 0 else "PEOR"
+            a.append(f"SESSION ANALYST: senales scalp con veredicto SA={_v} rinden {signo} de forma no-random "
+                     f"(E[R] {_ci['expR']} CI90 {_ci['ci90']}, n {_ci['n']}). "
+                     f"{'Contrario a' if (_v == 'AVOID') == (lo > 0) else 'Consistente con'} la hipotesis original de agent-instructions.md.")
     return a
 
 def exec_gate(rep):
