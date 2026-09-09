@@ -3,33 +3,30 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-08 · n: 77)
+## Sección viva  (última revisión: 2026-09-09 · n: 79)
 
 ### Nota de proceso
-Segundo día sin repetición del bug de "heal" (ver `buy-retest.md` para el
-detalle completo, incluida la nota de `git pull "forced update"` resuelta
-con `git reset --hard origin/main`). Llegó dato nuevo genuino del primer
-día hábil completo post-feriado, aunque este segmento sigue creciendo
-lento por ser prioridad 2.
+Día de confirmación, no de dato nuevo (ver `buy-retest.md` para el detalle
+del pipeline) — no llegó ningún `signals/outcomes` fechado 2026-09-09,
+solo +2 pares resueltos en 1m (2m y 5m sin cambio, siguen sin ninguna
+señal nueva desde hace varias corridas — segmento de prioridad 2, sigue
+creciendo lento).
 
 ### Veredicto global
-1m n=50 (WR 46.0%, E[R]=+0.212, PF=1.48, 21 SL); 2m n=20 (WR 35.0%,
-E[R]=-0.344, PF=0.47, 13 SL, empeoró vs -0.271 con 2 señales nuevas); 5m
-n=7 (WR 100%, E[R]=+0.646, PF=99, todavía sin valor estadístico, n creció
-de 6 a 7). `segment_significance`: 1m CI90=[-0.103,0.534] p_mean_le_0=0.162
-(n=49), se alejó más del borde de significancia (era p=0.116 ayer) pero
-sigue en la misma dirección positiva; 2m CI90=[-0.675,0.027] p=0.942, el
-límite superior se acerca a cero por primera vez pero sigue sin certificar
-sobre el lado negativo. Prioridad 2 se mantiene; el 1m sigue siendo el
-único con algo de lectura útil.
+1m n=52 (+2, WR 44.2%, E[R]=+0.212, PF=1.48, 21 SL — sin cambio de SL, los
+2 nuevos fueron TO); 2m n=20 (sin cambio, WR 35.0%, E[R]=-0.344, PF=0.47,
+13 SL); 5m n=7 (sin cambio, WR 100%, E[R]=+0.646, PF=99, todavía sin valor
+estadístico). `segment_significance` idéntico a ayer: 1m CI90=[-0.103,0.534]
+p=0.162 (n=49); 2m CI90=[-0.675,0.027] p=0.942. Prioridad 2 se mantiene; el
+1m sigue siendo el único con algo de lectura útil.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar, pero ya hay lectura por corte:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=1` | mejor que `edge=0`; `edge=-1` creció de n=1 a n=4 | 38 / 35 / 4 | WR 47.4%/48.6%/50.0%; E[R] +0.141/+0.028/+0.455; PF 1.34/1.06/1.91 | baja-moderada — orden edge=1 vs edge=0 se invirtió levemente (antes edge=1 mejor con más margen), n sigue chico en todas las ramas |
-| 2 | `tier=B` | mejor que `tier=C` | 20 / 57 | E[R] +0.268 vs +0.051; PF 1.67 vs 1.11 | baja-moderada — mismo sentido que ayer, ambas ramas crecieron un poco (18→20, 48→57) |
+| 1 | `nearEdge=1` | mejor que `edge=0`; `edge=-1` sigue en n=4 | 40 (+2) / 35 (sin cambio) / 4 | WR 45.0%/48.6%/50.0%; E[R] +0.141/+0.028/+0.455; PF 1.34/1.06/1.91 | baja-moderada — n sigue chico en todas las ramas, los 2 nuevos entraron en `edge=1` |
+| 2 | `tier=B` | mejor que `tier=C` | 22 (+2) / 57 (sin cambio) | E[R] +0.268 vs +0.051; PF 1.67 vs 1.11 | baja-moderada — mismo sentido que ayer, sin cambio de cifra |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`; ver `entryZoneTk` de ganadores vs perdedores)
@@ -54,27 +51,34 @@ Sin n suficiente todavía para certificar, pero ya hay lectura por corte:
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Cruce con Session Analyst
-Primera celda con lectura en este segmento (`session_analyst_cross.by_kind_side`,
-mejora de `analyze.py` de hoy): INV/LONG bajo veredicto SA `WAIT` n=7
-E[R]=+0.437 — n insuficiente para comparar contra AVOID/GO todavía. Ver
-`sell-retest.md` para el hallazgo agregado (AVOID rinde mejor que GO,
-ahora con CI90 real).
+El `n_matched` global de este cruce saltó mucho hoy (ver `sell-retest.md`
+para el detalle) y por primera vez aparece una celda `GO` en este
+segmento: INV/LONG bajo veredicto SA `GO` n=5 E[R]=-0.212, bajo `WAIT`
+n=8 (antes 7) E[R]=+0.396 (antes +0.437) — ambas todavía con n muy chico
+para sacar conclusión propia, pero el sentido (`GO` peor que `WAIT`) es
+consistente con el hallazgo agregado (AVOID rinde mejor que GO, ver
+`sell-retest.md`).
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 34 pérdidas INV/LONG (desglose permanente por
-  kind/side en `analyze.py`): `RR-bajo` 19/34 (56%) pasa a ser la causa
-  más frecuente, con `killzone-Asia-largo` 18/34 (53%) muy cerca detrás y
-  `contra-estructura` 12/34 (35%) — mismo casi-empate de siempre, orden
-  entre las dos primeras se invirtió levemente con dato nuevo.
-- `cross_instrument` sigue `instrument-specific` (spread 0.935, bajó de
-  1.109): YM n=18 E[R]=0.501, CL n=13 E[R]=0.428, NQ n=6 E[R]=0.257, ES
-  n=7 E[R]=-0.434, GC n=6 E[R]=-0.367 — n por símbolo todavía muy chico,
-  no generalizar.
+- Autopsia de SL sobre las 34 pérdidas INV/LONG (sin cambio hoy, cero SL
+  nuevos): `RR-bajo` 19/34 (56%) sigue siendo la causa más frecuente, con
+  `killzone-Asia-largo` 18/34 (53%) muy cerca detrás y `contra-estructura`
+  12/34 (35%) — mismo casi-empate de siempre.
+- `cross_instrument` sigue `instrument-specific` (spread 0.935, sin
+  cambio): YM n=18 E[R]=0.501, CL n=14 (+1) E[R]=0.428, NQ n=6 E[R]=0.257,
+  ES n=7 E[R]=-0.434, GC n=7 (+1) E[R]=-0.367 — n por símbolo todavía muy
+  chico, no generalizar.
 
 ### Decaimiento
 _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
 
 ## Histórico de cambios
+- 2026-09-09 (miércoles): día de confirmación, sin dato fechado hoy —
+  solo +2 pares en 1m (TO, sin SL nuevo), 2m/5m sin cambio. Todas las
+  cifras coinciden con ayer salvo el cruce con Session Analyst, cuyo
+  `n_matched` global creció mucho (ver `sell-retest.md`) y por primera vez
+  muestra una celda `GO` en este segmento (n=5, E[R]=-0.212, mismo sentido
+  que el hallazgo agregado AVOID>GO).
 - 2026-09-03: primeros datos reales, n=0→3 (1m n=2, 2m n=1). Sin valor
   estadístico todavía; se deja constancia. Sigue siendo el segmento con
   menos muestra de los cuatro playbooks — prioridad 2 confirmada.

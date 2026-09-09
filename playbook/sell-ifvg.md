@@ -3,46 +3,29 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-08 · n: 57)
+## Sección viva  (última revisión: 2026-09-09 · n: 58)
 
 ### Nota de proceso
-Segundo día sin repetición del bug de "heal" (ver `buy-retest.md`, incluye
-la nota de `git pull "forced update"` resuelta con `git reset --hard`).
-**La racha de "cero señales nuevas" se rompió hoy**: llegaron 28 señales
-nuevas de golpe (n 29→57) — ver veredicto abajo, ya no hace falta
-preguntarle a Jesús sobre un posible bloqueo en Pine para este lado, al
-menos por ahora.
+Día de confirmación, no de dato nuevo (ver `buy-retest.md` para el detalle
+del pipeline) — solo +1 par nuevo, en 1m (2m/5m sin cambio).
 
 ### Veredicto global
-**Se rompe la racha de 3 revisiones sin señales nuevas — llegaron 28 de
-golpe con el primer día hábil completo post-feriado.** n=57 (antes 29):
-1m n=36 (WR 52.8%, E[R]=**-0.054**, PF=0.88, 16 SL — se invirtió de
-positivo a negativo con las 17 señales nuevas); 2m n=16 (WR 31.2%,
-E[R]=**-0.189**, PF=0.66, 9 SL, empeoró bastante con 10 señales nuevas);
-5m n=5 (WR 60%, E[R]=-0.186, PF=0.54, 2 SL, solo 1 señal nueva, cambió de
-signo pero n mínimo). **El 1m se revierte de "TOMAR" a negativo apenas
-llega dato nuevo real** — la lectura de +0.264 con n=19 era en buena
-parte ruido/sesgo de muestra chica y de pocos días concretos, lección de
-método igual que se vio hoy en `buy-retest.md`/`sell-retest.md` con 2m
-RETEST. Prioridad 2 se mantiene; ya no hay lectura claramente accionable
-en ningún TF de este playbook.
+n=58 (antes 57, +1): 1m n=37 (WR 51.4%, E[R]=**-0.054**, PF=0.88, 16 SL —
+sin cambio, el nuevo par fue TO); 2m n=16 (sin cambio, WR 31.2%,
+E[R]=**-0.189**, PF=0.66, 9 SL); 5m n=5 (sin cambio, WR 60%, E[R]=-0.186,
+PF=0.54, 2 SL). Sin cambio de lectura: prioridad 2 se mantiene, sin señal
+claramente accionable en ningún TF de este playbook.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
-Con el salto de dato de hoy el cuadro se invierte por completo: `edge=-1`
-n=35 (WR 37.1%, E[R]=**-0.284**, PF=0.5), `edge=0` n=20 (WR 65%,
-E[R]=**+0.245**, PF=1.77), `edge=1` n=2 (WR 50%, E[R]=-0.29) — **`edge=-1`
-pasó de ser la mejor rama (n=12, ayer) a la peor (n=35, hoy)**, y
-`edge=0` pasó de neutral a la mejor rama. Lección de método: con n<20 este
-corte no era confiable, tal como advierte `agent-instructions.md`; ya no
-se puede decir "INV va al revés de RETEST en `nearEdge`" con esta
-muestra. `by_kindside_tier`: `tier=B` n=16 (E[R]=**-0.058**, PF=0.87) y
-`tier=C` n=41 (E[R]=**-0.123**, PF=0.75) — **ambos se volvieron
-negativos** con el dato nuevo (ayer B=+0.201, C=+0.086); mismo tipo de
-reversión.
+`edge=-1` n=36 (+1, WR 36.1%, E[R]=**-0.284**, PF=0.5), `edge=0` n=20
+(sin cambio, WR 65%, E[R]=**+0.245**, PF=1.77), `edge=1` n=2 (sin cambio,
+E[R]=-0.29). `by_kindside_tier`: `tier=B` n=17 (+1, E[R]=**-0.058**,
+PF=0.87) y `tier=C` n=41 (sin cambio, E[R]=**-0.123**, PF=0.75) — sin
+cambio de sentido vs ayer.
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=0` (en INV/SHORT) | mejor que `edge=-1`/`edge=1`, orden invertido vs ayer | 20/35/2 | E[R] +0.245/-0.284/-0.29 | baja — n recién cruzó 20 en una rama, el giro completo de signo en 24h muestra que era ruido de muestra chica, no generalizar todavía |
+| 1 | `nearEdge=0` (en INV/SHORT) | mejor que `edge=-1`/`edge=1` | 20/36/2 | E[R] +0.245/-0.284/-0.29 | baja — n sigue chico en todas las ramas, sin cambio vs ayer |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
@@ -63,31 +46,27 @@ reversión.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Cruce con Session Analyst
-Primera lectura con algo de muestra en este segmento
-(`session_analyst_cross.by_kind_side`, mejora de `analyze.py` de hoy):
+Sin cambio hoy en este corte (el nuevo par no matcheó con un plan SA):
 INV/SHORT bajo veredicto SA `AVOID` n=8 E[R]=**-0.036** (casi plano),
-`WAIT` n=13 E[R]=+0.158 — **es el único segmento donde `AVOID` NO se ve
-claramente mejor que el resto**, a diferencia del hallazgo agregado fuerte
-de `sell-retest.md` (AVOID +0.183 vs GO -0.273, con CI90 real). n=8 es
-demasiado chico para pesar contra el patrón agregado — anotado para
-vigilar si se sostiene con más muestra, no como excepción confirmada.
+`WAIT` n=13 E[R]=+0.158 — **sigue siendo el único segmento donde `AVOID`
+NO se ve claramente mejor que el resto**, a diferencia del hallazgo
+agregado fuerte de `sell-retest.md` (AVOID +0.175 vs GO -0.196, con CI90
+real y muestra mucho mayor hoy). n=8 sigue siendo demasiado chico para
+pesar contra el patrón agregado.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 27 pérdidas INV/SHORT (desglose permanente por
-  kind/side en `analyze.py`): `RR-bajo` 16/27 (59%) pasa a ser la causa
-  dominante clara, seguida de `stop-en-el-minimo` 10/27 (37%) y
-  `contra-estructura` 10/27 (37%) — con más muestra `RR-bajo` se despega
-  del empate que había ayer.
-- `cross_instrument` sigue `instrument-specific` (spread 1.0, subió de
-  0.597, sólo 1m): NQ n=4 WR 100% E[R]=0.795, GC n=4 WR 75% E[R]=0.512,
-  **YM n=26 (creció de 14) WR 46.2% E[R]=-0.205 (se invirtió de
-  +0.198 a negativo con las señales nuevas)** — n por símbolo sigue chico
-  en NQ/GC, no generalizar; YM ya tiene algo más de muestra y su giro es
-  la lectura más confiable de las tres.
+- Autopsia de SL sobre las 27 pérdidas INV/SHORT (sin cambio hoy, cero SL
+  nuevos): `RR-bajo` 16/27 (59%) sigue siendo la causa dominante clara,
+  seguida de `stop-en-el-minimo` 10/27 (37%) y `contra-estructura` 10/27
+  (37%).
+- `cross_instrument` sigue `instrument-specific` (spread 1.0, sin cambio,
+  sólo 1m): NQ n=4 WR 100% E[R]=0.795, GC n=4 WR 75% E[R]=0.512, YM n=27
+  (+1) WR 44.4% E[R]=-0.205 (sin cambio de cifra) — n por símbolo sigue
+  chico en NQ/GC, no generalizar.
 
 ### Decaimiento
 `decay_weekly` ya reporta 2 semanas con muestra sustancial en el dataset
-completo (2026-W36 n=3231, 2026-W37 n=1155) pero este segmento sigue sin
+completo (2026-W36 n=3231, 2026-W37 n=1224) pero este segmento sigue sin
 suficiente muestra propia por semana para medir decaimiento aislado.
 
 ## Histórico de cambios
@@ -139,3 +118,9 @@ suficiente muestra propia por semana para medir decaimiento aislado.
   único segmento que por ahora NO muestra el patrón "AVOID rinde mejor"
   confirmado hoy en `sell-retest.md`, pero n=8 es insuficiente para
   pesar contra el hallazgo agregado.
+- 2026-09-09 (miércoles): día de confirmación, sin dato fechado hoy — solo
+  +1 par en 1m (TO, sin SL nuevo), 2m/5m sin cambio. Todas las cifras
+  coinciden con ayer, incluido el cruce con Session Analyst (el nuevo par
+  no matcheó con un plan SA) — este playbook sigue siendo el único que no
+  muestra el patrón agregado "AVOID rinde mejor que GO" (ver
+  `sell-retest.md`, cuya muestra del cruce sí creció mucho hoy).

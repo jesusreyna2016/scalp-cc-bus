@@ -3,31 +3,26 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-08 · n: 1341)
+## Sección viva  (última revisión: 2026-09-09 · n: 1368)
 
-### Nota de proceso — segundo día limpio, sin repetición del bug de "heal"
-Ver el detalle completo en `buy-retest.md` (misma corrida). Resumen:
-`file_integrity_check` sin alertas por segundo día seguido; `git pull`
-mostró "forced update" de nuevo (clon superficial), resuelto con
-`git reset --hard origin/main` sin pérdida de trabajo. Salto grande de
-dato genuinamente nuevo: martes 2026-09-07 fue el primer día hábil
-COMPLETO post-feriado.
+### Nota de proceso — día de "calma": sin fecha nueva, solo resolución de pendientes
+Ver el detalle completo en `buy-retest.md` (misma corrida): no llegó
+ningún `signals/outcomes` fechado 2026-09-09, `file_integrity_check` sin
+alertas, +27 pares nuevos en este playbook, todos TP/TIMEOUT (cero SL
+nuevos: 422/1m, 192/2m, 59/5m idénticos a ayer).
 
 ### Veredicto global
-n=1341 (831×1m, 378×2m, 132×5m ; +545 vs ayer, todo dato nuevo real, casi
-duplicó la muestra). Crudo: 1m WR 41.8% E[R]=**-0.048** PF=0.91 (422 SL
-de 831, algo peor que ayer -0.013); 2m WR 43.4% E[R]=**-0.068** PF=0.87
-(192 SL de 378, mejoró bastante vs ayer -0.124); 5m WR 49.2%
-E[R]=**-0.027** PF=0.94 (59 SL de 132) — se mantiene negativo, quinta
-lectura consecutiva confirmando que el "TOMAR" original (n=18) era
-varianza de muestra chica. `segment_significance`: 1m CI90=[-0.116,0.018]
-p=0.887, 2m CI90=[-0.157,0.029] p=0.874 (**el CI volvió a cruzar cero
-hoy** — ayer estaba del lado negativo [-0.246,-0.001] — mismo patrón de
-reversión que en `buy-retest.md` 2m LONG con el salto de muestra de hoy),
-5m CI90=[-0.187,0.145] p=0.605 — ninguno certifica. Veredicto: **NINGÚN
-TF certifica** (2m pierde la lectura negativa que tenía ayer, ver nota de
-método en `buy-retest.md`) — el filtro de contexto (`nearEdge`) sigue
-siendo el hallazgo más accionable para el volumen grande (1m/2m).
+n=1368 (847×1m, 385×2m, 136×5m; +27 vs ayer, todo resolución de pendientes
+de 2026-09-08, no dato de una sesión nueva). Crudo: 1m WR 41.0% E[R]=-0.048
+PF=0.91 (sin cambio); 2m WR 42.6% E[R]=-0.068 PF=0.87 (sin cambio); 5m WR
+47.8% E[R]=-0.027 PF=0.94 (sin cambio) — sexta lectura consecutiva
+confirmando que el "TOMAR" original (n=18) era varianza de muestra chica.
+`segment_significance` idéntico a ayer: 1m CI90=[-0.116,0.018] p=0.887; 2m
+CI90=[-0.157,0.029] p=0.874; 5m CI90=[-0.187,0.145] p=0.605 — ninguno
+certifica (mismo rezago de muestra en el bootstrap ya notado en
+`buy-retest.md`). Veredicto sin cambios: **ningún TF certifica** — el
+filtro de contexto (`nearEdge`) sigue siendo el hallazgo más accionable
+para el volumen grande (1m/2m).
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Ninguna tiene `survives_fdr10=true` (esa prueba corre por tf/kind/side, no
@@ -36,82 +31,74 @@ cuarta revisión seguida, pero `tier=B` pierde su ventaja:
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=1` | mejor que `edge=0` mejor que `edge=-1` | 65 / 426 / 850 | WR 55.4%/40.8%/43.1%; E[R] +0.11/-0.087/-0.046; PF 1.27/0.84/0.91 | **alta** — `edge=1` sigue exactamente en n=65 (sexta revisión sin señales nuevas en esa rama); el orden edge=-1 vs edge=0 se invirtió levemente (edge=-1 ahora un poco mejor que edge=0) con el salto de dato, vigilar si se sostiene |
-| 2 | `nearEdge=0` | FILTRAR / no tomar (peor rama hoy) | 426 | E[R]=-0.087, PF 0.84, WR 40.8% | moderada — con el salto de dato de hoy `edge=0` pasa a ser la peor rama (antes era `edge=-1`); no generalizar todavía, vigilar 1-2 corridas |
-| 3 | símbolo (`cross_instrument`), 1m | sigue `instrument-specific` | spread 0.632 (NQ 0.104, YM 0.011, ES -0.02, GC -0.156, CL **-0.528**, n=35) | CL se puso mucho más negativo (-0.365→-0.528) con dato nuevo real | moderada — CL se sostiene como el peor símbolo en 1m, vigilar si se sostiene 1-2 corridas más |
-| 4 | `tier=B` | sigue sin ser TOMAR — negativo | 724 (antes 346) | WR 45.6% E[R]=**-0.039** PF=0.92 (antes -0.04) | baja — prácticamente sin cambio con el salto de dato, confirma que retirar "TOMAR tier B" fue correcto |
-| 5 | `tier=A+` | prácticamente en línea con B/C | 90 (antes 58) | WR 21.1%, E[R]=**-0.001**, PF=1.0 (antes -0.015) | baja — se mantiene cerca de cero con más muestra, WR muy bajo (21.1%) sigue siendo la señal más fuerte de este tier (ganadores grandes ocasionales) |
+| 1 | `nearEdge=1` | mejor que `edge=0` mejor que `edge=-1` | 65 / 432 (+6) / 871 (+21) | WR 55.4%/40.3%/42.0%; E[R] +0.11/-0.087/-0.046; PF 1.27/0.84/0.91 | **alta** — `edge=1` sigue exactamente en n=65 (séptima revisión sin señales nuevas en esa rama), E[R] idéntico en las otras dos ramas |
+| 2 | `nearEdge=0` | FILTRAR / no tomar (peor rama) | 432 | E[R]=-0.087, PF 0.84, WR 40.3% | moderada — sin cambio vs ayer |
+| 3 | símbolo (`cross_instrument`), 1m | sigue `instrument-specific` | spread 0.632 (NQ 0.104, YM 0.011, ES -0.02, GC -0.156, CL -0.528, n=35) | idéntico a ayer, cero pares 1m SHORT nuevos por símbolo hoy | moderada — CL se sostiene como el peor símbolo en 1m, vigilar si se sostiene 1-2 corridas más |
+| 4 | `tier=B` | sigue sin ser TOMAR — negativo | 738 (+14) | WR 44.7% E[R]=**-0.039** PF=0.92 (sin cambio) | baja — confirma con un día más que retirar "TOMAR tier B" fue correcto |
+| 5 | `tier=A+` | prácticamente en línea con B/C | 92 (+2) | WR 20.7%, E[R]=**-0.001**, PF=1.0 (sin cambio) | baja — WR muy bajo (20.7%) sigue siendo la señal más fuerte de este tier (ganadores grandes ocasionales) |
 
-**`tier=B` se mantiene negativo y estable con el gran salto de dato de
-hoy.** E[R] prácticamente sin cambio (-0.04→-0.039) pese a que n más que
-se duplicó (346→724) — confirma con fuerza que retirar "TOMAR tier B"
-como regla activa fue correcto, no era ruido de la restauración.
+**`tier=B` se mantiene negativo y estable.** E[R] sin cambio (-0.039) con
+14 pares nuevos que no movieron la cifra — sigue confirmando que retirar
+"TOMAR tier B" como regla activa fue correcto.
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara.
 
 ### Gestión
 - **La escalera + parciales (`managed_vs_naive`) sigue ayudando en los
-  tres TF de SELL RETEST**: 1m n=796 delta=+0.172 (naive -0.046→managed
-  0.126, mejoró vs ayer +0.139); 2m n=366 delta=+0.137 (naive
-  -0.068→managed 0.069, rescata casi toda la pérdida cruda, sin cambio de
-  sentido vs ayer +0.116); 5m n=123 delta=+0.181 (naive -0.032→managed
-  0.149, sigue siendo de los deltas más grandes, algo menor que ayer
-  +0.237). Se confirma el contraste con BUY RETEST, donde en 5m la
+  tres TF de SELL RETEST**: 1m n=796 delta=+0.172, 2m n=366 delta=+0.137,
+  5m n=123 delta=+0.181 — los tres sin cambio vs ayer (cero pares nuevos
+  en este corte). Se confirma el contraste con BUY RETEST, donde en 5m la
   escalera resta (ver `buy-retest.md`).
-- **SL estructural (`sl_origin_vs_layer`)**: 1m sigue certificando, n=514
-  delta=**+0.417** **CI90=[0.2,0.644]** — n subió de 229 a 514 con el
-  salto grande de dato de hoy, delta se hizo MÁS fuerte (0.283→0.417),
-  tercera confirmación independiente y la más sólida hasta ahora; 5m n=95
-  delta=+0.784 CI90=[0.064,1.975] sigue batiendo cero (efecto grande del
-  dataset, CI sigue ancho pero se redujo bastante); 2m n=260 delta=+0.245
-  CI90=[0.035,0.466] **certifica por primera vez** (ayer CI90=[-0.044,0.487]
-  cruzaba cero) — con esto las 4 combinaciones tf con muestra útil en
-  SHORT (1m, 2m, 5m) certifican positivo. **La propuesta de
-  `experiments.json` (`sl-retest-wick-2026-09-03`) queda hoy más sólida
-  que nunca en SHORT** — ver `experiments.json.next_steps`.
-- `revAfterSL_rate`: sin cambio material (agregado global) — las pérdidas
-  lejos de noticias siguen revirtiendo más.
+- **SL estructural (`sl_origin_vs_layer`)**: sin pares nuevos hoy en este
+  corte. 1m sigue certificando, n=514 delta=+0.417 CI90=[0.2,0.644] —
+  tercera confirmación independiente, sostenida por segundo día; 5m n=95
+  delta=+0.784 CI90=[0.064,1.975]; 2m n=260 delta=+0.245 CI90=[0.035,0.466]
+  — las tres combinaciones de TF con muestra útil en SHORT siguen
+  certificando positivo. La propuesta de `experiments.json`
+  (`sl-retest-wick-2026-09-03`) sigue siendo la más sólida en SHORT — ver
+  `experiments.json.next_steps`.
+- `revAfterSL_rate`: sin cambio material.
 - Parcial 1 / trailing: _pendiente_ de cortar por side en el contrafactual
   global.
 
 ### Contextos a evitar
-- `nearEdge=0` es hoy la peor rama (regla #2, ver nota de que el orden con
-  `edge=-1` se invirtió levemente). `tier=A+` sigue sin ser un contexto a
-  evitar por sí solo (regla #5, WR bajo pero E[R]≈0). `tier=B` sigue sin
-  ser un contexto a favor (confirmado negativo con el gran salto de dato)
-  pero tampoco es peor que C — neutral.
-- Autopsia de SL sobre las 673 pérdidas SHORT (desglose permanente por
-  kind/side, sin cap de 60 filas): `RR-bajo` 235/673 (34.9%) pasa a ser la
-  causa individual más frecuente, muy cerca de `stop-en-el-minimo`
-  228/673 (33.9%) y `contra-estructura` 226/673 (33.6%) — sigue siendo un
-  casi-empate de tres causas, mismo patrón cualitativo con casi el doble
-  de muestra. Ninguna causa está mitigada todavía por un experimento
-  `confirmed` — sigue bloqueando el gate de ejecución.
-- **Cruce con Session Analyst — hallazgo confirmado hoy con prueba
-  estadística real** (mejora permanente en `analyze.py`:
+- `nearEdge=0` sigue siendo la peor rama (regla #2). `tier=A+` sigue sin
+  ser un contexto a evitar por sí solo (regla #5, WR bajo pero E[R]≈0).
+  `tier=B` sigue sin ser un contexto a favor pero tampoco es peor que C —
+  neutral.
+- Autopsia de SL sobre las 673 pérdidas SHORT (sin cambio hoy: cero SL
+  nuevos): `RR-bajo` 235/673 (34.9%) sigue siendo la causa individual más
+  frecuente, muy cerca de `stop-en-el-minimo` 228/673 (33.9%) y
+  `contra-estructura` 226/673 (33.6%) — casi-empate de tres causas.
+  Ninguna causa está mitigada todavía por un experimento `confirmed` —
+  sigue bloqueando el gate de ejecución.
+- **Cruce con Session Analyst — la muestra creció mucho más que el resto
+  del bus hoy** (mejora permanente ya en `analyze.py`:
   `session_analyst_cross.by_verdict_ci90` + `by_kind_side`, bootstrap 90%
-  CI de E[R]). Agregado de todo `kind/side` (n=1306 cruces, join por
-  fecha+killzone+símbolo): `AVOID` **E[R]=+0.183 CI90=[0.08,0.285]
-  (n=350, no cruza cero)**, `GO` **E[R]=-0.273 CI90=[-0.423,-0.118]
-  (n=121, no cruza cero)**, `WAIT` E[R]=-0.006 (n=834, sin certificar).
-  **Esto REFUTA con confianza estadística, por primera vez, la hipótesis
-  original de `agent-instructions.md`** ("las señales en un instrumento
-  AVOID rinden peor") — es justo lo contrario: AVOID rinde mejor y GO
-  rinde peor, de forma no-random. Desglose por kind/side en RETEST/SHORT
-  (`by_kind_side`): `AVOID` n=187 E[R]=+0.212 PF=1.49 (WR 55.6%), `WAIT`
-  n=507 E[R]=-0.049 (WR 45.4%) — sin celda `GO` con n>=5 en SHORT
-  todavía, pero el mismo sentido que el agregado y que RETEST/LONG (ver
-  `buy-retest.md`). **Sigue sin usarse para filtrar señales en vivo** —
-  es una correlación cruzada, no causalidad probada, y falta ver si es
-  estable fuera de muestra — pero es el hallazgo cualitativamente más
-  importante de hoy: contradice de forma medible la intuición de partida
-  del propio sistema de aprendizaje.
+  CI de E[R]). Agregado de todo `kind/side` (n_matched=1551, +245 vs los
+  ~1306 de ayer — creció mucho más que los 69 pares nuevos totales del
+  bus, así que este join está recuperando/matcheando cruces
+  fecha+killzone+símbolo de días previos que antes no encontraban plan de
+  Session Analyst, no solo dato de hoy): `AVOID` **E[R]=+0.175
+  CI90=[0.085,0.267] (n=452, no cruza cero)**, `GO` **E[R]=-0.196
+  CI90=[-0.301,-0.08] (n=219, no cruza cero, CI bastante más angosto que
+  ayer [-0.423,-0.118])**, `WAIT` E[R]=+0.008 (n=848, sin certificar). La
+  hipótesis original de `agent-instructions.md` ("AVOID rinde peor") sigue
+  **refutada, y ahora con más precisión**: AVOID rinde mejor, GO rinde
+  peor, de forma no-random. Desglose por kind/side en RETEST/SHORT
+  (`by_kind_side`): `AVOID` n=204 (+17) E[R]=+0.139 PF=1.3 (WR 51.0%,
+  bajó de 55.6%), `GO` **aparece por primera vez con muestra útil**: n=40
+  E[R]=**-0.221** PF=0.61 (WR 32.5%) — mismo sentido que el agregado,
+  antes esta celda tenía n<5 y no era reportable; `WAIT` n=507 (sin
+  cambio) E[R]=-0.049 (WR 45.4%). **Sigue sin usarse para filtrar señales
+  en vivo** — es una correlación cruzada, no causalidad probada — pero es
+  el hallazgo que más se movió hoy en todo el bus.
 
 ### Decaimiento
 `decay_weekly` ya reporta 2 semanas con muestra sustancial: 2026-W36
-(n=3231, WR 44.6%, E[R]=-0.021) y 2026-W37 (n=1155, WR 46.3%,
-E[R]=-0.016) — mejora leve, sin señal de decaimiento.
+(n=3231, WR 44.6%, E[R]=-0.021) y 2026-W37 (n=1224, WR 43.7%,
+E[R]=-0.016) — sin señal de decaimiento.
 
 ## Histórico de cambios
 - 2026-09-01: primera escritura con datos reales (n=3, todas GC 1m SHORT
@@ -260,3 +247,16 @@ E[R]=-0.016) — mejora leve, sin señal de decaimiento.
   chequeo en `material_alerts` para que salga en `report.alerts`. Nota de
   proceso: `git pull` mostró "forced update" de nuevo (rama local vieja);
   resuelto con `git reset --hard origin/main` sin pérdida de trabajo.
+- 2026-09-09 (miércoles): día de confirmación, no de dato nuevo (ver
+  `buy-retest.md` para el detalle del pipeline) — +27 pares, todos
+  TP/TIMEOUT, cero SL nuevos (422/1m, 192/2m, 59/5m idénticos a ayer). La
+  mayoría de las métricas coinciden a 2-3 decimales con ayer. La excepción
+  es `session_analyst_cross`: el `n_matched` saltó de ~1306 a 1551
+  (+245, mucho más que los 69 pares nuevos de todo el bus — el join por
+  fecha+killzone+símbolo recuperó cruces de días previos que antes no
+  encontraban plan de Session Analyst). Con más muestra el hallazgo se
+  sostiene y se afina: `AVOID` E[R]=+0.175 CI90=[0.085,0.267] n=452, `GO`
+  E[R]=-0.196 CI90=[-0.301,-0.08] n=219 (CI mucho más angosto que ayer). En
+  RETEST/SHORT la celda `GO` pasó de n<5 (no reportable) a n=40
+  E[R]=-0.221 — primera vez con muestra útil, mismo sentido que el
+  agregado.

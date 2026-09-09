@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-08T01:26:59.102742+00:00",
+  "updatedAt": "2026-09-09T01:13:45.842058+00:00",
   "recommendedParams": {
     "note": "vacio hasta que algun segmento tenga n>=20 (revision semanal)",
     "sc_min_rr": null,
@@ -14,18 +14,18 @@
     "readyForLive": false
   },
   "totals": {
-    "signals": 4419,
+    "signals": 4780,
     "outcomes": 4298,
-    "pairs_resolved": 4386,
-    "pending": 33,
+    "pairs_resolved": 4455,
+    "pending": 325,
     "orphan_outcomes": 22
   },
   "metrics_by_tf_kind_side": {
     "1m/INV/LONG": {
-      "n": 50,
-      "wrTP1": 46.0,
+      "n": 52,
+      "wrTP1": 44.2,
       "nSL": 21,
-      "nTO": 6,
+      "nTO": 8,
       "expR": 0.212,
       "pf": 1.48,
       "mfe_p25": 6.0,
@@ -36,14 +36,14 @@
       "loserMFEbeforeSL_p50": 3.0,
       "bars_win_p50": 3.0,
       "bars_loss_p50": 8.0,
-      "entryZoneTk_p50": -9.5,
+      "entryZoneTk_p50": -10.5,
       "revAfterSL_rate": 23.8
     },
     "1m/INV/SHORT": {
-      "n": 36,
-      "wrTP1": 52.8,
+      "n": 37,
+      "wrTP1": 51.4,
       "nSL": 16,
-      "nTO": 1,
+      "nTO": 2,
       "expR": -0.054,
       "pf": 0.88,
       "mfe_p25": 6.5,
@@ -58,10 +58,10 @@
       "revAfterSL_rate": 25.0
     },
     "1m/RETEST/LONG": {
-      "n": 1754,
-      "wrTP1": 44.5,
+      "n": 1776,
+      "wrTP1": 43.9,
       "nSL": 873,
-      "nTO": 101,
+      "nTO": 123,
       "expR": -0.005,
       "pf": 0.99,
       "mfe_p25": 5.0,
@@ -76,10 +76,10 @@
       "revAfterSL_rate": 28.8
     },
     "1m/RETEST/SHORT": {
-      "n": 831,
-      "wrTP1": 41.8,
+      "n": 847,
+      "wrTP1": 41.0,
       "nSL": 422,
-      "nTO": 62,
+      "nTO": 78,
       "expR": -0.048,
       "pf": 0.91,
       "mfe_p25": 6.0,
@@ -130,10 +130,10 @@
       "revAfterSL_rate": 44.4
     },
     "2m/RETEST/LONG": {
-      "n": 861,
-      "wrTP1": 46.3,
+      "n": 872,
+      "wrTP1": 45.8,
       "nSL": 433,
-      "nTO": 29,
+      "nTO": 40,
       "expR": -0.04,
       "pf": 0.92,
       "mfe_p25": 6.0,
@@ -144,14 +144,14 @@
       "loserMFEbeforeSL_p50": 3.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
-      "entryZoneTk_p50": -11.0,
+      "entryZoneTk_p50": -12.0,
       "revAfterSL_rate": 38.1
     },
     "2m/RETEST/SHORT": {
-      "n": 378,
-      "wrTP1": 43.4,
+      "n": 385,
+      "wrTP1": 42.6,
       "nSL": 192,
-      "nTO": 22,
+      "nTO": 29,
       "expR": -0.068,
       "pf": 0.87,
       "mfe_p25": 8.0,
@@ -202,10 +202,10 @@
       "revAfterSL_rate": 100.0
     },
     "5m/RETEST/LONG": {
-      "n": 296,
-      "wrTP1": 53.0,
+      "n": 302,
+      "wrTP1": 52.0,
       "nSL": 127,
-      "nTO": 12,
+      "nTO": 18,
       "expR": 0.081,
       "pf": 1.18,
       "mfe_p25": 9.0,
@@ -220,10 +220,10 @@
       "revAfterSL_rate": 51.2
     },
     "5m/RETEST/SHORT": {
-      "n": 132,
-      "wrTP1": 49.2,
+      "n": 136,
+      "wrTP1": 47.8,
       "nSL": 59,
-      "nTO": 8,
+      "nTO": 12,
       "expR": -0.027,
       "pf": 0.94,
       "mfe_p25": 12.0,
@@ -252,10 +252,10 @@
   },
   "metrics_by_symbol": {
     "CL": {
-      "n": 832,
-      "wrTP1": 47.6,
+      "n": 850,
+      "wrTP1": 46.6,
       "nSL": 407,
-      "nTO": 29,
+      "nTO": 47,
       "expR": -0.043,
       "pf": 0.91,
       "mfe_p25": 6.0,
@@ -270,10 +270,10 @@
       "revAfterSL_rate": 38.1
     },
     "ES": {
-      "n": 933,
-      "wrTP1": 44.2,
+      "n": 941,
+      "wrTP1": 43.8,
       "nSL": 463,
-      "nTO": 58,
+      "nTO": 66,
       "expR": -0.042,
       "pf": 0.92,
       "mfe_p25": 3.0,
@@ -288,10 +288,10 @@
       "revAfterSL_rate": 30.9
     },
     "GC": {
-      "n": 712,
-      "wrTP1": 40.2,
+      "n": 720,
+      "wrTP1": 39.7,
       "nSL": 376,
-      "nTO": 50,
+      "nTO": 58,
       "expR": -0.041,
       "pf": 0.92,
       "mfe_p25": 16.0,
@@ -306,10 +306,10 @@
       "revAfterSL_rate": 29.8
     },
     "NQ": {
-      "n": 880,
-      "wrTP1": 48.9,
+      "n": 895,
+      "wrTP1": 48.0,
       "nSL": 408,
-      "nTO": 42,
+      "nTO": 57,
       "expR": 0.043,
       "pf": 1.09,
       "mfe_p25": 25.0,
@@ -324,10 +324,10 @@
       "revAfterSL_rate": 31.1
     },
     "YM": {
-      "n": 1029,
-      "wrTP1": 43.9,
+      "n": 1049,
+      "wrTP1": 43.1,
       "nSL": 513,
-      "nTO": 64,
+      "nTO": 84,
       "expR": -0.02,
       "pf": 0.96,
       "mfe_p25": 5.0,
@@ -349,8 +349,8 @@
       "expR": -0.021
     },
     "2026-W37": {
-      "n": 1155,
-      "wrTP1": 46.3,
+      "n": 1224,
+      "wrTP1": 43.7,
       "expR": -0.016
     }
   },
@@ -367,8 +367,8 @@
   "alerts": [
     "SL: SL en la mecha de la vela del retest BATE al de 3 capas fuera de ruido (E[R] 0.152 vs -0.017, delta 0.169 CI90 [0.097, 0.241], n 2941). Candidato para experiments.json + revision semanal.",
     "SL: SL en la mecha del retest + vela previa (1m short) BATE al de 3 capas fuera de ruido (E[R] 0.372 vs -0.078, delta 0.45 CI90 [0.182, 0.764], n 376). Candidato para experiments.json + revision semanal.",
-    "SESSION ANALYST: senales scalp con veredicto SA=AVOID rinden MEJOR de forma no-random (E[R] 0.183 CI90 [0.08, 0.285], n 350). Contrario a la hipotesis original de agent-instructions.md.",
-    "SESSION ANALYST: senales scalp con veredicto SA=GO rinden PEOR de forma no-random (E[R] -0.273 CI90 [-0.423, -0.118], n 121). Contrario a la hipotesis original de agent-instructions.md."
+    "SESSION ANALYST: senales scalp con veredicto SA=AVOID rinden MEJOR de forma no-random (E[R] 0.175 CI90 [0.085, 0.267], n 452). Contrario a la hipotesis original de agent-instructions.md.",
+    "SESSION ANALYST: senales scalp con veredicto SA=GO rinden PEOR de forma no-random (E[R] -0.196 CI90 [-0.301, -0.08], n 219). Contrario a la hipotesis original de agent-instructions.md."
   ],
   "prediction_scoreboard": {
     "n": 0,
@@ -585,10 +585,10 @@
       "revAfterSL_rate": 23.5
     },
     "INV/LONG|edge=1": {
-      "n": 38,
-      "wrTP1": 47.4,
+      "n": 40,
+      "wrTP1": 45.0,
       "nSL": 15,
-      "nTO": 5,
+      "nTO": 7,
       "expR": 0.141,
       "pf": 1.34,
       "mfe_p25": 7.0,
@@ -603,10 +603,10 @@
       "revAfterSL_rate": 20.0
     },
     "INV/SHORT|edge=-1": {
-      "n": 35,
-      "wrTP1": 37.1,
+      "n": 36,
+      "wrTP1": 36.1,
       "nSL": 20,
-      "nTO": 2,
+      "nTO": 3,
       "expR": -0.284,
       "pf": 0.5,
       "mfe_p25": 7.5,
@@ -675,10 +675,10 @@
       "revAfterSL_rate": 46.3
     },
     "RETEST/LONG|edge=0": {
-      "n": 1376,
-      "wrTP1": 50.1,
+      "n": 1391,
+      "wrTP1": 49.5,
       "nSL": 650,
-      "nTO": 37,
+      "nTO": 52,
       "expR": -0.017,
       "pf": 0.96,
       "mfe_p25": 5.0,
@@ -693,10 +693,10 @@
       "revAfterSL_rate": 41.7
     },
     "RETEST/LONG|edge=1": {
-      "n": 1359,
-      "wrTP1": 41.7,
+      "n": 1383,
+      "wrTP1": 41.0,
       "nSL": 701,
-      "nTO": 91,
+      "nTO": 115,
       "expR": -0.003,
       "pf": 0.99,
       "mfe_p25": 7.0,
@@ -707,14 +707,14 @@
       "loserMFEbeforeSL_p50": 5.0,
       "bars_win_p50": 3.0,
       "bars_loss_p50": 4.0,
-      "entryZoneTk_p50": -14.0,
+      "entryZoneTk_p50": -15.0,
       "revAfterSL_rate": 24.5
     },
     "RETEST/SHORT|edge=-1": {
-      "n": 850,
-      "wrTP1": 43.1,
+      "n": 871,
+      "wrTP1": 42.0,
       "nSL": 431,
-      "nTO": 53,
+      "nTO": 74,
       "expR": -0.046,
       "pf": 0.91,
       "mfe_p25": 7.0,
@@ -729,10 +729,10 @@
       "revAfterSL_rate": 29.9
     },
     "RETEST/SHORT|edge=0": {
-      "n": 426,
-      "wrTP1": 40.8,
+      "n": 432,
+      "wrTP1": 40.3,
       "nSL": 217,
-      "nTO": 35,
+      "nTO": 41,
       "expR": -0.087,
       "pf": 0.84,
       "mfe_p25": 8.0,
@@ -767,10 +767,10 @@
   },
   "metrics_by_kindside_aligned": {
     "INV/LONG|aligned=1": {
-      "n": 77,
-      "wrTP1": 48.1,
+      "n": 79,
+      "wrTP1": 46.8,
       "nSL": 34,
-      "nTO": 6,
+      "nTO": 8,
       "expR": 0.106,
       "pf": 1.23,
       "mfe_p25": 4.0,
@@ -785,10 +785,10 @@
       "revAfterSL_rate": 23.5
     },
     "INV/SHORT|aligned=1": {
-      "n": 57,
-      "wrTP1": 47.4,
+      "n": 58,
+      "wrTP1": 46.6,
       "nSL": 27,
-      "nTO": 3,
+      "nTO": 4,
       "expR": -0.105,
       "pf": 0.78,
       "mfe_p25": 7.75,
@@ -821,10 +821,10 @@
       "revAfterSL_rate": 0.0
     },
     "RETEST/LONG|aligned=1": {
-      "n": 2900,
-      "wrTP1": 45.9,
+      "n": 2939,
+      "wrTP1": 45.3,
       "nSL": 1432,
-      "nTO": 138,
+      "nTO": 177,
       "expR": -0.008,
       "pf": 0.98,
       "mfe_p25": 6.0,
@@ -839,10 +839,10 @@
       "revAfterSL_rate": 33.6
     },
     "RETEST/SHORT|aligned=1": {
-      "n": 1341,
-      "wrTP1": 43.0,
+      "n": 1368,
+      "wrTP1": 42.1,
       "nSL": 673,
-      "nTO": 92,
+      "nTO": 119,
       "expR": -0.051,
       "pf": 0.9,
       "mfe_p25": 7.0,
@@ -859,10 +859,10 @@
   },
   "metrics_by_kindside_tier": {
     "INV/LONG|tier=B": {
-      "n": 20,
-      "wrTP1": 45.0,
+      "n": 22,
+      "wrTP1": 40.9,
       "nSL": 7,
-      "nTO": 4,
+      "nTO": 6,
       "expR": 0.268,
       "pf": 1.67,
       "mfe_p25": 8.0,
@@ -873,7 +873,7 @@
       "loserMFEbeforeSL_p50": 6.0,
       "bars_win_p50": 3.0,
       "bars_loss_p50": 18.0,
-      "entryZoneTk_p50": -14.0,
+      "entryZoneTk_p50": -14.5,
       "revAfterSL_rate": 14.3
     },
     "INV/LONG|tier=C": {
@@ -895,10 +895,10 @@
       "revAfterSL_rate": 25.9
     },
     "INV/SHORT|tier=B": {
-      "n": 16,
-      "wrTP1": 50.0,
+      "n": 17,
+      "wrTP1": 47.1,
       "nSL": 7,
-      "nTO": 1,
+      "nTO": 2,
       "expR": -0.058,
       "pf": 0.87,
       "mfe_p25": 5.0,
@@ -909,7 +909,7 @@
       "loserMFEbeforeSL_p50": 3.0,
       "bars_win_p50": 2.5,
       "bars_loss_p50": 6.0,
-      "entryZoneTk_p50": -11.5,
+      "entryZoneTk_p50": -10.0,
       "revAfterSL_rate": 0.0
     },
     "INV/SHORT|tier=C": {
@@ -931,10 +931,10 @@
       "revAfterSL_rate": 50.0
     },
     "RETEST/LONG|tier=A+": {
-      "n": 218,
-      "wrTP1": 23.4,
+      "n": 223,
+      "wrTP1": 22.9,
       "nSL": 137,
-      "nTO": 30,
+      "nTO": 35,
       "expR": 0.02,
       "pf": 1.03,
       "mfe_p25": 7.5,
@@ -945,14 +945,14 @@
       "loserMFEbeforeSL_p50": 7.0,
       "bars_win_p50": 7.0,
       "bars_loss_p50": 6.0,
-      "entryZoneTk_p50": -10.5,
+      "entryZoneTk_p50": -11.0,
       "revAfterSL_rate": 14.6
     },
     "RETEST/LONG|tier=B": {
-      "n": 1123,
-      "wrTP1": 44.6,
+      "n": 1140,
+      "wrTP1": 43.9,
       "nSL": 569,
-      "nTO": 53,
+      "nTO": 70,
       "expR": 0.011,
       "pf": 1.02,
       "mfe_p25": 6.0,
@@ -967,10 +967,10 @@
       "revAfterSL_rate": 30.1
     },
     "RETEST/LONG|tier=C": {
-      "n": 1570,
-      "wrTP1": 49.9,
+      "n": 1587,
+      "wrTP1": 49.4,
       "nSL": 727,
-      "nTO": 59,
+      "nTO": 76,
       "expR": -0.023,
       "pf": 0.95,
       "mfe_p25": 5.0,
@@ -985,10 +985,10 @@
       "revAfterSL_rate": 39.9
     },
     "RETEST/SHORT|tier=A+": {
-      "n": 90,
-      "wrTP1": 21.1,
+      "n": 92,
+      "wrTP1": 20.7,
       "nSL": 61,
-      "nTO": 10,
+      "nTO": 12,
       "expR": -0.001,
       "pf": 1.0,
       "mfe_p25": 11.0,
@@ -1003,10 +1003,10 @@
       "revAfterSL_rate": 16.4
     },
     "RETEST/SHORT|tier=B": {
-      "n": 724,
-      "wrTP1": 45.6,
+      "n": 738,
+      "wrTP1": 44.7,
       "nSL": 355,
-      "nTO": 39,
+      "nTO": 53,
       "expR": -0.039,
       "pf": 0.92,
       "mfe_p25": 6.0,
@@ -1017,14 +1017,14 @@
       "loserMFEbeforeSL_p50": 3.0,
       "bars_win_p50": 3.0,
       "bars_loss_p50": 3.0,
-      "entryZoneTk_p50": -12.0,
+      "entryZoneTk_p50": -11.0,
       "revAfterSL_rate": 34.6
     },
     "RETEST/SHORT|tier=C": {
-      "n": 527,
-      "wrTP1": 43.1,
+      "n": 538,
+      "wrTP1": 42.2,
       "nSL": 257,
-      "nTO": 43,
+      "nTO": 54,
       "expR": -0.077,
       "pf": 0.85,
       "mfe_p25": 8.0,
@@ -1035,13 +1035,13 @@
       "loserMFEbeforeSL_p50": 3.0,
       "bars_win_p50": 3.0,
       "bars_loss_p50": 3.0,
-      "entryZoneTk_p50": -15.0,
+      "entryZoneTk_p50": -14.0,
       "revAfterSL_rate": 37.0
     }
   },
   "narrative": {
-    "es": "Hoy medimos 4386 operaciones cerradas de Scalp CC (33 pendientes, 22 outcomes sin señal propia — nivel estable, normal). Es el segundo día seguido sin que se repita el error automático de \"reparación\" que borró datos dos veces la semana pasada. Llegó un salto grande de operaciones genuinamente nuevas: el martes fue el primer día hábil completo tras el feriado de EE.UU. (el lunes había operado con volumen reducido). El sistema sigue casi en tablas: por operación se pierde en promedio 0.02 veces lo arriesgado, sin confianza estadística de que sea un patrón real (podría ser cero). Acierto global: 45.1%. La causa principal de los stops sigue siendo un objetivo demasiado cerca del stop (RR bajo). La gestión con escalera de entrada y salidas parciales sigue ganando más que la versión simple en casi todos los segmentos. El hallazgo más importante de hoy, y el más sorprendente hasta ahora: cuando el Session Analyst (el otro sistema, que evalúa el sesgo del día) marca un instrumento como \"evitar\", las señales de Scalp CC en ese instrumento en realidad rinden MEJOR que cuando lo marca \"adelante\" — justo lo contrario de lo esperado, y hoy por primera vez con prueba estadística real detrás. Por separado, mover el stop a la mecha de la vela del retest sigue ganando y hoy certificó en dos combinaciones nuevas. Seguimos en el primer peldaño de la escalera de ejecución (solo asesoría, nada en vivo). Qué vigilar: si la relación con el Session Analyst se sostiene con más días, y que el error de \"reparación\" no vuelva a aparecer un tercer día.",
-    "en": "Today we measured 4386 closed Scalp CC trades (33 pending, 22 outcomes with no matching signal — a stable, normal level). This is the second day in a row without a repeat of the automated \"healing\" bug that deleted data twice last week. A large batch of genuinely new trades arrived: Tuesday was the first full trading day after the US holiday (Monday ran at reduced volume). The system remains close to break-even: on average each trade loses about 0.02 times what was risked, with no statistical confidence this is a real pattern (it could be zero). Overall win rate: 45.1%. The main cause of stop-outs is still a target set too close to the stop (low reward-to-risk). Managed execution (laddered entries plus partial exits) keeps beating the simple version in most segments. Today's most important finding, and the most surprising one yet: when the Session Analyst (the sibling system that judges the day's bias) flags an instrument as \"avoid,\" Scalp CC signals on that instrument actually perform BETTER than when it says \"go\" — the opposite of what was expected, and today for the first time backed by real statistical confidence. Separately, moving the stop to the retest candle's wick keeps winning and newly certified in two more combinations today. We remain on the first rung of the execution ladder (advisor only, nothing live). What to watch: whether the Session Analyst relationship holds up over more days, and whether the \"healing\" bug stays gone for a third day."
+    "es": "Hoy medimos 4455 operaciones cerradas de Scalp CC (325 pendientes, 22 outcomes sin señal propia — nivel estable). Tercer dia seguido sin que reaparezca el error de \"reparacion\" que borraba datos. Pero hoy fue una corrida de calma: no llego ningun archivo de operaciones fechado hoy, solo terminaron de resolverse 69 operaciones pendientes de ayer, y ninguna toco el stop (todas cerraron en objetivo o por tiempo) — por eso casi todas las cifras de abajo coinciden con las de ayer: es confirmacion de estabilidad, no informacion nueva. El sistema sigue practicamente en tablas: por operacion se pierde en promedio 0.02 veces lo arriesgado, sin confianza estadistica de que sea un patron real (podria ser cero). Acierto global: 44.4%. La causa principal de los stops sigue siendo un objetivo demasiado cerca del stop (RR bajo). La gestion con escalera de entrada y salidas parciales sigue ganando mas que la version simple en casi todos los segmentos. Lo que mas se movio hoy: la relacion \"Session Analyst marca evitar y a Scalp CC le va MEJOR, marca adelante y le va PEOR\" crecio con muestra mucho mayor (de ~1300 a 1551 cruces) y se afino en vez de debilitarse — sigue siendo lo mas sorprendente del sistema. Seguimos en el primer peldano de la escalera de ejecucion (solo asesoria, nada en vivo). Que vigilar: que llegue una sesion realmente nueva para confirmar que las lecturas se sostienen, no solo que estan congeladas.",
+    "en": "Today we measured 4455 closed Scalp CC trades (325 pending, 22 outcomes with no matching signal — a stable level). Third day in a row without the \"healing\" bug reappearing. But today was a quiet run: no trade file dated today arrived — the only change was 69 trades pending from yesterday finally resolving, and none hit the stop (all closed at target or on timeout) — so almost every number below matches yesterday's exactly: a stability check, not new information. The system remains essentially at break-even: on average each trade loses about 0.02 times what was risked, with no statistical confidence this is real (it could be zero). Overall win rate: 44.4%. The main cause of stop-outs is still a target set too close to the stop (low reward-to-risk). Managed execution (laddered entries plus partial exits) keeps beating the simple version in most segments. What moved the most today: the \"Session Analyst says avoid and Scalp CC does BETTER, says go and it does WORSE\" relationship grew on a much larger sample (from ~1300 to 1551 crosses) and got tighter rather than weaker — still the most surprising finding in the system. We remain on the first rung of the execution ladder (advisor only, nothing live). What to watch: a genuinely new session to confirm these readings hold, rather than being merely frozen."
   },
   "sl_origin_vs_layer": {
     "overall": {
@@ -1363,7 +1363,7 @@
     "signals/2026-09-04.jsonl": 795,
     "signals/2026-09-06.jsonl": 69,
     "signals/2026-09-07.jsonl": 1141,
-    "signals/2026-09-08.jsonl": 47,
+    "signals/2026-09-08.jsonl": 408,
     "outcomes/2026-09-01.jsonl": 90,
     "outcomes/2026-09-02.jsonl": 920,
     "outcomes/2026-09-03.jsonl": 1257,
