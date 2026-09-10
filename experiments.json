@@ -9,7 +9,10 @@
       "from": 1.0,
       "to": 1.3,
       "changeDate": null,
-      "segment": {"tf": "1", "kind": "RETEST"},
+      "segment": {
+        "tf": "1",
+        "kind": "RETEST"
+      },
       "targetMetric": "expR",
       "minAfterN": 40
     },
@@ -21,19 +24,83 @@
       "from": "3-capas (sc_slbuf x ATR1m + piso sc_floor_atr5 + techo sc_cap_atr5 / sc_cap_adr)",
       "to": "mecha de la vela del retest (lg_slOrig con slBasis=retestBar / retestBar2, crudo)",
       "changeDate": null,
-      "segment": {"kind": "RETEST"},
+      "segment": {
+        "kind": "RETEST"
+      },
       "targetMetric": "expR",
       "minAfterN": 40,
       "evidence": {
         "source": "sl_origin_vs_layer.by_basis / by_tf_kind_side (medicion PARALELA: misma entrada y mismos TP, solo se mueve el stop; rMultiple = base 3-capas, rOrig = base mecha del retest). No requiere cambio en TradingView para medir.",
-        "asOf": "2026-09-08 (martes -- primer dia habil COMPLETO post-feriado, salto grande de dato genuinamente nuevo, sin repeticion del bug de heal por segundo dia consecutivo)",
-        "retest_1m_long": {"n": 1432, "deltaER_orig_minus_layer": 0.18, "ci90": [0.074, 0.296], "ci90_no_cruza_cero": true, "nota": "n subio de 1135 a 1432 con el salto grande de dato de hoy, delta estable (0.183->0.18) -- segunda confirmacion independiente real."},
-        "retest_1m_short": {"n": 514, "deltaER_orig_minus_layer": 0.417, "ci90": [0.2, 0.644], "ci90_no_cruza_cero": true, "nota": "n subio de 229 a 514, el delta se hizo MAS fuerte (0.283->0.417) -- la lectura mas solida hasta ahora en este experimento."},
-        "retest_2m_long": {"n": 742, "deltaER_orig_minus_layer": 0.01, "ci90": [-0.079, 0.1], "ci90_no_cruza_cero": false, "nota": "delta bajo a casi cero (0.028->0.01) con el salto de muestra -- sigue sin certificar, cada vez mas claro que 2m LONG no es candidato."},
-        "retest_2m_short": {"n": 260, "deltaER_orig_minus_layer": 0.245, "ci90": [0.035, 0.466], "ci90_no_cruza_cero": true, "nota": "CERTIFICA POR PRIMERA VEZ hoy (ayer CI90=[-0.044,0.487] cruzaba cero, n=129->260) -- ya las tres TF de SHORT (1m/2m/5m) certifican."},
-        "retest_5m_long": {"n": 274, "deltaER_orig_minus_layer": 0.178, "ci90": [0.005, 0.38], "ci90_no_cruza_cero": true, "nota": "CERTIFICA POR PRIMERA VEZ hoy pero al filo (limite inferior 0.005, casi cero; ayer CI90=[-0.086,0.36] cruzaba cero) -- tratar como debil hasta que se sostenga 1-2 corridas mas."},
-        "retest_5m_short": {"n": 95, "deltaER_orig_minus_layer": 0.784, "ci90": [0.064, 1.975], "ci90_no_cruza_cero": true, "nota": "sigue siendo el efecto mas grande del dataset, CI se redujo bastante (era [0.012,3.025]) con mas muestra (n=62->95)."},
-        "overall_by_basis_retestBar": {"n": 2941, "deltaER": 0.169, "ci90": [0.097, 0.241], "nota": "n subio de 2284 a 2941 con el salto de dato de hoy, delta estable -- sigue sin usarse sola como evidencia, la decision es por tf/side de la tabla de arriba"}
+        "asOf": "2026-09-10 (jueves -- salto grande de dato nuevo, el bus termino de asentar signals/outcomes/2026-09-08.jsonl; n total del experimento subio de 2941 a 3637 en la base retestBar)",
+        "retest_1m_long": {
+          "n": 1706,
+          "deltaER_orig_minus_layer": 0.178,
+          "ci90": [
+            0.079,
+            0.284
+          ],
+          "ci90_no_cruza_cero": true,
+          "nota": "n subio de 1432 a 1706, delta practicamente identico (0.18->0.178) -- tercera confirmacion independiente, la lectura mas estable del experimento."
+        },
+        "retest_1m_short": {
+          "n": 898,
+          "deltaER_orig_minus_layer": 0.181,
+          "ci90": [
+            0.027,
+            0.33
+          ],
+          "ci90_no_cruza_cero": true,
+          "nota": "n subio de 514 a 898 (+384), el delta bajo bastante (0.417->0.181) pero sigue certificando -- la lectura de ayer con n=514 probablemente sobrestimaba el efecto; tratar 0.18 como mas representativo que 0.417."
+        },
+        "retest_2m_long": {
+          "n": 866,
+          "deltaER_orig_minus_layer": 0.018,
+          "ci90": [
+            -0.062,
+            0.099
+          ],
+          "ci90_no_cruza_cero": false,
+          "nota": "n subio de 742 a 866, delta se mantuvo cerca de cero (0.01->0.018) -- sigue sin certificar, cuarta lectura seguida confirmando que 2m LONG no es candidato."
+        },
+        "retest_2m_short": {
+          "n": 462,
+          "deltaER_orig_minus_layer": 0.149,
+          "ci90": [
+            0.001,
+            0.313
+          ],
+          "ci90_no_cruza_cero": true,
+          "nota": "n subio de 260 a 462, el delta bajo de 0.245 a 0.149 y el CI90 quedo con el limite inferior en 0.001 -- certifica al filo, tratar como debil hasta que se sostenga con mas margen."
+        },
+        "retest_5m_long": {
+          "n": 316,
+          "deltaER_orig_minus_layer": 0.142,
+          "ci90": [
+            -0.011,
+            0.32
+          ],
+          "ci90_no_cruza_cero": false,
+          "nota": "PIERDE LA CERTIFICACION de ayer: n subio de 274 a 316, el CI90 volvio a cruzar cero (era [0.005,0.38], al filo). Se cumplio la advertencia de tratarlo como debil -- no incluir 5m LONG en ninguna propuesta hasta que vuelva a certificar de forma sostenida."
+        },
+        "retest_5m_short": {
+          "n": 149,
+          "deltaER_orig_minus_layer": 0.734,
+          "ci90": [
+            0.034,
+            1.63
+          ],
+          "ci90_no_cruza_cero": true,
+          "nota": "n subio de 95 a 149, delta bajo un poco (0.784->0.734) pero sigue siendo el efecto mas grande del dataset y sigue certificando con margen."
+        },
+        "overall_by_basis_retestBar": {
+          "n": 3637,
+          "deltaER": 0.162,
+          "ci90": [
+            0.093,
+            0.227
+          ],
+          "nota": "n subio de 2941 a 3637 con el salto de dato de hoy, delta estable (0.169->0.162) -- sigue sin usarse sola como evidencia, la decision es por tf/side de la tabla de arriba."
+        }
       },
       "next_steps": [
         "2026-09-05: se recupero signals/2026-09-03.jsonl (ver nota de la corrida en state.json/narrative y en el historico de los playbooks) -- estaba truncado de 1280 a 24 lineas por un commit 'heal' que en realidad BORRO datos en vez de repararlos.",
@@ -43,7 +110,8 @@
         "Revision semanal del domingo: confirmar sobre walk-forward + segment_significance (FDR 10%), no solo in-sample (walk_forward todavia no esta listo, solo 2 semanas de datos).",
         "Anadir linea a predictions.jsonl con predictedDeltaER antes de aplicar.",
         "Cuando se confirme con datos nuevos genuinos (no solo restaurados) durante varios dias mas y walk-forward este listo: cambio en Pine = para RETEST usar lg_slOrig (mecha de la vela del retest) como SL de trabajo en 1m (long y short) y 5m/2m SHORT; en 2m LONG y 5m LONG esperar mas confirmacion (5m LONG certifica pero al filo). Poner changeDate el dia que se aplique en los 12 graficos.",
-        "Vigilar: retestBar2 (1m SHORT = mecha vela retest + vela previa) sigue siendo una fraccion chica de la muestra 1m short -- puede mover el numero cuando crezca."
+        "Vigilar: retestBar2 (1m SHORT = mecha vela retest + vela previa) sigue siendo una fraccion chica de la muestra 1m short -- puede mover el numero cuando crezca.",
+        "2026-09-10 (jueves): salto grande de dato nuevo (bus asento signals/outcomes/2026-09-08.jsonl completos, +1203 pares en todo el dataset). Patron de metodo importante que se repite: 1m SHORT paso de un delta que parecia muy fuerte (n=514, delta=0.417) a uno mas moderado pero todavia solido (n=898, delta=0.181) -- confirma otra vez que las lecturas con n en los cientos bajos pueden sobrestimar el efecto, tratar el numero mas reciente (mayor n) como el mas representativo, no promediar con lecturas viejas de n mas chico. 5m LONG PERDIO la certificacion 'al filo' de ayer (CI90 volvio a cruzar cero) -- se cumplio la advertencia de tratarlo como debil; sacarlo de cualquier propuesta hasta que vuelva a certificar sostenido. 2m SHORT tambien se debilito (certifica al filo, limite inferior del CI90 en 0.001). El unico segmento que se fortalecio con mas confianza fue 1m LONG (tercera confirmacion, delta estable) y 5m SHORT (sigue siendo el efecto mas grande, con margen). Vista global: SOLO 1m LONG, 1m SHORT y 5m SHORT siguen siendo candidatos solidos para la propuesta de la revision semanal del domingo 2026-09-13; 2m SHORT es candidato debil; 2m LONG y 5m LONG quedan fuera por ahora."
       ]
     }
   ]
