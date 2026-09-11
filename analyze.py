@@ -66,6 +66,46 @@ def file_integrity_check(prev_state):
     merged = {rel: max(n, prev_counts.get(rel, 0)) for rel, n in cur_counts.items()}
     return alerts, merged
 
+def segment_n_regression_check(rep, prev_state):
+    """Como file_integrity_check pero a nivel de AGREGADO, no de archivo crudo:
+    vigila si el n de un segmento (by_tf_kind_side, by_kindside_aligned, o una
+    semana ya cerrada de decay_weekly) BAJO respecto a la corrida previa. Los
+    .jsonl crudos son append-only y file_integrity_check ya cubre eso, pero un
+    agregado puede bajar igual por deduplicacion o re-pareo sin que ningun
+    archivo encoja (ej.: 2026-09-11, la rama aligned=0 de RETEST/LONG bajo de
+    n=11 a n=10 y la semana ya cerrada 2026-W36 bajo de n=3231 a n=3183, ambos
+    detectados a mano por el agente porque este chequeo todavia no existia)."""
+    prev_counts = (prev_state or {}).get("segment_n_history", {})
+    cur_counts = {}
+    alerts = []
+    def _track(prefix, d):
+        for k, v in (d or {}).items():
+            if not isinstance(v, dict) or v.get("n") is None:
+                continue
+            key = f"{prefix}/{k}"
+            n = v["n"]
+            cur_counts[key] = n
+            prev_n = prev_counts.get(key)
+            if prev_n is not None and n < prev_n:
+                alerts.append(f"MUESTRA: {key} bajo de n={prev_n} a n={n} desde la corrida previa "
+                              f"(agregado, no archivo crudo -- revisar deduplicacion/re-pareo).")
+    _track("by_tf_kind_side", rep.get("by_tf_kind_side"))
+    _track("by_kindside_aligned", rep.get("by_kindside_aligned"))
+    dw = rep.get("decay_weekly", {}) or {}
+    weeks = sorted(dw)
+    for w in weeks[:-1]:  # la ultima semana sigue acumulando, no se evalua
+        v = dw.get(w)
+        if not isinstance(v, dict) or v.get("n") is None:
+            continue
+        key = f"decay_weekly/{w}"
+        cur_counts[key] = v["n"]
+        prev_n = prev_counts.get(key)
+        if prev_n is not None and v["n"] < prev_n:
+            alerts.append(f"MUESTRA: semana ya cerrada {w} bajo de n={prev_n} a n={v['n']} "
+                          f"desde la corrida previa -- vigilar, puede ser deduplicacion.")
+    merged = {k: max(n, prev_counts.get(k, 0)) for k, n in cur_counts.items()}
+    return alerts, merged
+
 def _f(d, k):
     v = d.get(k, "")
     if v in ("", None):
@@ -1073,7 +1113,8 @@ def main():
     except Exception:
         _prev_state = {}
     integrity_alerts, file_line_counts = file_integrity_check(_prev_state)
-    report["alerts"] = integrity_alerts + material_alerts(report, _prev_state)
+    n_regression_alerts, segment_n_history = segment_n_regression_check(report, _prev_state)
+    report["alerts"] = integrity_alerts + n_regression_alerts + material_alerts(report, _prev_state)
 
     with open(os.path.join(ROOT, "report.json"), "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
@@ -1111,6 +1152,7 @@ def main():
     state["sl_origin_vs_layer"] = report["sl_origin_vs_layer"]
     state["alerts"] = report["alerts"]
     state["file_line_counts"] = file_line_counts
+    state["segment_n_history"] = segment_n_history
     state["prediction_scoreboard"] = {k: v for k, v in report["prediction_scoreboard"].items() if k != "detail"}
     state.setdefault("recommendedParams", {"note": "lo mantiene el agente en la revision semanal"})
     state.setdefault("executionGate", {"phase": "advisor", "readyForLive": False})

@@ -3,85 +3,89 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-10 · n: 82)
+## Sección viva  (última revisión: 2026-09-11 · n: 94)
 
 ### Nota de proceso
-Ver `buy-retest.md` para el detalle del salto de dato de hoy. Este
-segmento sí participó del salto grande, a diferencia de `buy-ifvg.md`:
-n 58→82 (**+24**; 1m +17, 2m +7, 5m sin cambio) — el mayor crecimiento
-relativo de los cuatro playbooks (+41%).
+Ver `buy-retest.md` para el incidente de repo de hoy (reset a
+`origin/main`, sin pérdida de datos). Este segmento: n 82→94 (**+12**;
+1m +8, 2m +4, 5m sin cambio).
 
-### Veredicto global — **reversión de signo en 1m y 2m**
-n=82 (antes 58, +24): 1m n=54 (+17, WR 53.7%, E[R]=**+0.138**, PF=1.34, 21
-SL — sube de -0.054 a +0.138, con 5 SL nuevos de los 17 pares); 2m n=23
-(+7, WR 34.8%, E[R]=**-0.14**, PF=0.73, 12 SL — sigue negativo pero mejoró
-de -0.189, con 3 SL nuevos); 5m n=5 (sin cambio, WR 60%, E[R]=-0.186,
-PF=0.54, 2 SL). Igual que en `sell-retest.md`, el 1m se dio vuelta de
-negativo a positivo con la muestra nueva — **no tratar como veredicto
-nuevo todavía**, es el mismo patrón de reversión por salto de muestra que
-se repite hoy en varios segmentos del bus. `segment_significance`: 1m
-CI90=[-0.112,0.4] p=0.198 (n=51, sigue sin certificar pero el CI se movió
-hacia positivo); 2m CI90=[-0.475,0.18] p=0.776 (n=23).
+### Veredicto global
+1m n=62 (+8, WR 50.0%, E[R]=**+0.111** PF=1.25, 27 SL — bajó de +0.138,
+la mayoría de los pares nuevos (6 de 8) fueron SL); 2m n=27 (+4, WR
+33.3%, E[R]=**+0.019** PF=1.04 — **se da vuelta a positivo**, venía de
+-0.14); 5m n=5 (sin cambio, WR 60%, E[R]=-0.186, PF=0.54). `segment_significance`:
+1m CI90=[-0.151,0.382] p=0.255 n=60 (se alejó un poco de certificar,
+venía de [-0.112,0.4] p=0.198); 2m CI90=[-0.408,0.503] p=0.496 n=27
+(mejoró bastante junto con el E[R], sigue lejos de certificar).
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
-`edge=-1` n=52 (+16, WR 42.3%, E[R]=**-0.043**, PF=0.91 — mejoró mucho de
--0.284), `edge=0` n=28 (+8, WR 60.7%, E[R]=**+0.218**, PF=1.63 — se
-mantiene la mejor rama, bajó un poco de +0.245), `edge=1` n=2 (sin cambio,
-E[R]=-0.29). `tier=B` n=28 (+11, E[R]=**+0.104**, PF=1.25 — se dio vuelta
-de -0.058) y `tier=C` n=54 (+13, E[R]=**+0.002**, PF=1.0 — se dio vuelta
-de -0.123, quedó prácticamente plano).
+`edge=-1` n=57 (+5, WR 40.4%, E[R]=**+0.08** — **se da vuelta a
+positivo**, venía de -0.043), `edge=0` n=35 (+7, WR 54.3%, E[R]=**+0.068**
+— bajó fuerte de +0.218, deja de ser claramente la mejor rama), `edge=1`
+n=2 (sin cambio, E[R]=-0.29). `tier=B` n=30 (+2, E[R]=**+0.163**, subió
+de +0.104) y `tier=C` n=64 (+10, E[R]=**+0.021**, casi sin cambio de
++0.002).
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=0` (en INV/SHORT) | sigue siendo la mejor rama, con margen menor | 28/52/2 | E[R] +0.218/-0.043/-0.29 | baja — el gradiente se mantiene en el mismo orden que ayer (a diferencia de RETEST/SHORT, que se invirtió), pero `edge=-1` dejó de ser claramente negativo |
+| 1 | `nearEdge` (en INV/SHORT) | **el gradiente se aplana** — `edge=-1` y `edge=0` casi convergen | 57/35/2 | E[R] +0.08/+0.068/-0.29 | baja — hasta ayer `edge=0` era claramente la mejor rama (+0.218 vs -0.043); hoy la diferencia entre las dos ramas grandes casi desaparece, tratar como no asentado |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
 
 ### Gestión
-- `managed_vs_naive`: 1m n=51 delta=**+0.281** (naive 0.138→managed 0.419,
-  sigue ayudando mucho, en línea con el +0.278 de ayer); 2m n=23
-  delta=+0.131 (naive -0.14→managed -0.009, casi neutraliza la pérdida
-  cruda, subió de +0.018); 5m n=5 delta=+0.37 (sin cambio, n mínimo).
-  Mismo patrón cualitativo: la gestión con parciales ayuda más en 1m que
-  en 2m/5m de INV/SHORT.
-- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=41 (+16)
-  delta=**+0.62** CI90=[-0.489,2.212] (cambio grande de signo vs ayer
-  -0.018, pero el CI sigue siendo muy ancho y cruza cero — no certifica,
-  no accionar); 2m n=22 (+7) delta=+0.219 CI90=[-0.04,0.439] (subió de
-  +0.149, el límite inferior casi toca cero pero sigue sin certificar).
-  Ninguno certifica todavía con el n de hoy. No tocar el SL en INV/SHORT.
+- `managed_vs_naive`: 1m n=60 delta=**+0.279** (prácticamente sin cambio,
+  venía de +0.281 — sigue ayudando mucho); 2m n=27 delta=**-0.021**
+  (naive 0.019→managed -0.002 — **cambia de signo**, ayer ayudaba
+  +0.131, ahora resta ligeramente); 5m n=5 delta=+0.37 (sin cambio).
+- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=50 (+9)
+  delta=**+0.408** CI90=[-0.548,1.779] (bajó de +0.62, sigue sin
+  certificar, CI muy ancho); 2m n=26 (+4) delta=+0.245 CI90=[-0.031,0.516]
+  (subió un poco de +0.219, el límite inferior sigue justo debajo de
+  cero — cerca pero sin certificar). Ninguno certifica todavía. No tocar
+  el SL en INV/SHORT.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Cruce con Session Analyst
-Sin cambio hoy en este corte pese al salto de +24 pares en el segmento
-(ninguno de los pares nuevos matcheó con un plan SA): INV/SHORT bajo
-veredicto SA `AVOID` n=11 E[R]=**+0.057** (mejoró de -0.036, pero sigue
-sin ser fuerte), `WAIT` n=13 E[R]=+0.158 — **sigue siendo el segmento
-donde `AVOID` NO se ve claramente mejor que el resto**, a diferencia del
-hallazgo agregado que hoy es la alerta más fuerte de todo el bus (ver
-`sell-retest.md`: AVOID +0.122 CI90 no cruza cero vs GO -0.196). n sigue
-chico aquí para pesar contra el patrón agregado.
+**Reversión fuerte, en línea con lo que pasa en `sell-retest.md`**:
+INV/SHORT bajo veredicto SA `AVOID` n=23 (+12) E[R]=**-0.151** PF=0.72
+(**se da vuelta a negativo**, venía de +0.057) y `WAIT` n=19 (+6)
+E[R]=**-0.222** PF=0.53 (**también se da vuelta a negativo**, venía de
++0.158) — las dos ramas con lectura propia en este segmento pasaron de
+positivas a negativas a la vez. Coincide con la reversión general del
+cruce SA↔resultado-scalp que hoy se ve en los cuatro playbooks (ver
+`sell-retest.md` para el detalle agregado) — más evidencia de que esta
+relación es inestable de una corrida a otra, no una regla explotable.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 35 pérdidas INV/SHORT (+8 vs ayer): `RR-bajo`
-  18/35 (51%) sigue siendo la causa dominante, pero `contra-estructura`
-  12/35 (34%) se despegó de `stop-en-el-minimo` 10/35 (29%) — ya no es un
-  empate de dos, ahora es un segundo lugar más claro.
-- `cross_instrument` sigue `instrument-specific` (spread 0.603, bajó de
-  1.0, sólo 1m): NQ n=5 (+1) E[R]=0.644, ES n=3 (nuevo con n útil)
-  E[R]=0.307, GC n=6 (+2) E[R]=0.235 (bajó de 0.512), YM n=40 (+13)
-  E[R]=**+0.041** (subió mucho de -0.205, arrastrando buena parte de la
-  reversión del 1m) — n por símbolo sigue chico salvo YM, no generalizar
-  todavía pero vigilar YM de cerca al ser el símbolo con más muestra de
-  este segmento.
+- Autopsia de SL sobre las 43 pérdidas INV/SHORT (+8 vs ayer): `RR-bajo`
+  22/43 (51.2%) sigue siendo la causa dominante, sin cambio de posición;
+  `contra-estructura` 14/43 (32.6%) y `stop-en-el-minimo` 13/43 (30.2%)
+  se mantienen como segundo/tercer lugar en el mismo orden que ayer.
+- `cross_instrument` **mejora de `instrument-specific` a `universal`**
+  (spread 0.603→**0.328**, sólo 1m): YM n=46 (+6) E[R]=0.042 (casi sin
+  cambio), NQ n=6 (+1) E[R]=0.37 (bajó de 0.644), ES n=4 (+1) E[R]=0.285
+  (casi sin cambio), GC n=6 (sin cambio) E[R]=0.235 — primera vez que
+  este corte deja de ser `instrument-specific`, aunque con n por símbolo
+  todavía chico salvo YM.
 
 ### Decaimiento
-`decay_weekly` ahora reporta: 2026-W36 (n=3231) y 2026-W37 (n=2427,
-E[R]=+0.069 en el dataset completo) pero este segmento sigue sin
-suficiente muestra propia por semana para medir decaimiento aislado.
+`decay_weekly` (global): 2026-W36 n=3183 (bajó de n=3231, ver nota de
+anomalía en `buy-retest.md`) y 2026-W37 n=3856 E[R]=+0.042 en el dataset
+completo — este segmento sigue sin suficiente muestra propia por semana
+para medir decaimiento aislado.
 
 ## Histórico de cambios
+- 2026-09-11 (viernes): n 82→94 (+12; 1m+8, 2m+4). Mismo incidente de
+  repo que `buy-retest.md`. 2m se da vuelta a positivo (E[R] -0.14→+0.019)
+  y `managed_vs_naive` en 2m cambia de signo (+0.131→-0.021). El cruce con
+  Session Analyst se revierte con fuerza: `AVOID` pasa de +0.057 a -0.151
+  y `WAIT` de +0.158 a -0.222 — misma reversión que se ve en
+  `sell-retest.md`/`buy-retest.md` hoy, confirma que el cruce SA no es
+  estable corrida a corrida. `cross_instrument` en 1m pasa de
+  `instrument-specific` a `universal` (spread 0.603→0.328), primera vez
+  para este segmento.
 - 2026-09-10 (jueves): salto de dato mayor que `buy-ifvg.md` (+24 vs +3,
   n 58→82). **Reversión de signo en 1m y 2m** (1m E[R] -0.054→+0.138, 2m
   -0.189→-0.14), mismo patrón de volatilidad por muestra nueva que se ve
