@@ -1,102 +1,104 @@
-# Scalp CC · report 2026-09-11T01:26Z
-- signals=7077 outcomes=6927 pares_resueltos=7039 pendientes=38 huerfanos=25
+# Scalp CC · report 2026-09-12T01:13Z
+- signals=7752 outcomes=7633 pares_resueltos=7752 pendientes=0 huerfanos=25
 
 ## ⚠ ALERTAS (llevar al frente del resumen)
-- SL: SL en la mecha de la vela del retest BATE al de 3 capas fuera de ruido (E[R] 0.167 vs 0.014, delta 0.153 CI90 [0.094, 0.214], n 4504). Candidato para experiments.json + revision semanal.
-- SESSION ANALYST: senales scalp con veredicto SA=WAIT rinden MEJOR de forma no-random (E[R] 0.084 CI90 [0.031, 0.137], n 1415). Consistente con la hipotesis original de agent-instructions.md.
+- MUESTRA: semana ya cerrada 2026-W36 bajo de n=3183 a n=3179 desde la corrida previa -- vigilar, puede ser deduplicacion.
+- SL: SL en la mecha de la vela del retest BATE al de 3 capas fuera de ruido (E[R] 0.189 vs 0.047, delta 0.143 CI90 [0.087, 0.201], n 4834). Candidato para experiments.json + revision semanal.
+- SL: SL en la mecha del retest + vela previa (1m short) BATE al de 3 capas fuera de ruido (E[R] 0.211 vs 0.081, delta 0.13 CI90 [0.012, 0.256], n 1432). Candidato para experiments.json + revision semanal.
+- SESSION ANALYST: senales scalp con veredicto SA=WAIT rinden MEJOR de forma no-random (E[R] 0.081 CI90 [0.029, 0.133], n 1490). Consistente con la hipotesis original de agent-instructions.md.
 
-- E[R] global: {"expR": 0.015, "ci90": [-0.009, 0.041], "p_mean_le_0": 0.152, "n": 6902}
+- E[R] global: {"expR": 0.043, "ci90": [0.019, 0.068], "p_mean_le_0": 0.001, "n": 7608}
 - gate ejecucion: {"readyForLive": false, "segment": null, "note": "n>=100 & E[R]>0 & PF>=1.3 & WR>=50 en un segmento tf/kind/side. Falta ademas: estabilidad 3 semanas + causa de SL dominante mitigada (lo valida el agente)."}
 
 ## Por tf / kind / side
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| 1m/INV/LONG | 64 | 43.8 | 0.097 | 1.2 | 29 | 12.0 | 7.5 | 17.2 |
-| 1m/INV/SHORT | 62 | 50.0 | 0.111 | 1.25 | 27 | 14.5 | 10.5 | 18.5 |
-| 1m/RETEST/LONG | 2551 | 44.4 | 0.005 | 1.01 | 1269 | 13.0 | 9.0 | 28.5 |
-| 1m/RETEST/SHORT | 1684 | 43.4 | 0.017 | 1.03 | 840 | 14.0 | 9.0 | 29.4 |
+| 1m/INV/LONG | 66 | 43.9 | 0.129 | 1.27 | 30 | 12.0 | 8.0 | 20.0 |
+| 1m/INV/SHORT | 71 | 47.9 | 0.109 | 1.23 | 32 | 18.0 | 11.0 | 18.8 |
+| 1m/RETEST/LONG | 2658 | 44.5 | 0.026 | 1.05 | 1312 | 13.0 | 9.0 | 29.3 |
+| 1m/RETEST/SHORT | 2021 | 44.7 | 0.046 | 1.09 | 982 | 16.0 | 10.0 | 29.6 |
 | 2m/INV/LONG | 26 | 42.3 | -0.247 | 0.56 | 14 | 8.0 | 12.5 | 28.6 |
-| 2m/INV/SHORT | 27 | 33.3 | 0.019 | 1.04 | 14 | 10.0 | 5.0 | 42.9 |
-| 2m/RETEST/LONG | 1198 | 46.7 | -0.032 | 0.94 | 595 | 15.0 | 12.0 | 37.5 |
-| 2m/RETEST/SHORT | 789 | 48.2 | 0.074 | 1.15 | 377 | 19.0 | 10.0 | 39.5 |
+| 2m/INV/SHORT | 33 | 33.3 | -0.04 | 0.93 | 18 | 16.0 | 6.5 | 33.3 |
+| 2m/RETEST/LONG | 1254 | 47.0 | -0.008 | 0.98 | 618 | 16.0 | 12.0 | 37.5 |
+| 2m/RETEST/SHORT | 908 | 49.1 | 0.11 | 1.23 | 417 | 20.0 | 11.0 | 41.2 |
 | 5m/INV/LONG | 10 | 90.0 | 0.849 | 99.0 | 0 | 30.0 | 32.0 | None |
 | 5m/INV/SHORT | 5 | 60.0 | -0.186 | 0.54 | 2 | 34.0 | 88.5 | 100.0 |
-| 5m/RETEST/LONG | 379 | 53.6 | 0.09 | 1.2 | 164 | 21.0 | 19.0 | 50.6 |
-| 5m/RETEST/SHORT | 244 | 47.5 | -0.005 | 0.99 | 117 | 28.0 | 19.25 | 38.5 |
+| 5m/RETEST/LONG | 402 | 53.5 | 0.104 | 1.23 | 175 | 22.0 | 19.0 | 48.0 |
+| 5m/RETEST/SHORT | 298 | 51.0 | 0.084 | 1.19 | 131 | 29.0 | 20.25 | 38.9 |
 
 ## Por tier
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| A+ | 473 | 25.2 | 0.041 | 1.06 | 306 | 25.5 | 15.5 | 19.3 |
-| B | 2966 | 46.0 | 0.024 | 1.05 | 1448 | 15.0 | 10.0 | 30.9 |
-| C | 3600 | 48.1 | 0.004 | 1.01 | 1694 | 14.0 | 11.0 | 36.9 |
+| A+ | 536 | 27.2 | 0.117 | 1.18 | 338 | 28.0 | 15.0 | 19.8 |
+| B | 3248 | 46.6 | 0.05 | 1.1 | 1562 | 16.0 | 10.0 | 31.9 |
+| C | 3968 | 48.6 | 0.028 | 1.06 | 1831 | 15.0 | 11.0 | 36.8 |
 
 ## Por killzone
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| Asia | 2843 | 48.6 | 0.055 | 1.12 | 1305 | 11.0 | 8.0 | 37.9 |
-| London | 1155 | 45.3 | -0.067 | 0.87 | 610 | 16.0 | 11.0 | 32.3 |
-| NY | 1164 | 44.9 | 0.084 | 1.17 | 571 | 23.0 | 17.0 | 36.4 |
-| Sin KZ | 1877 | 41.8 | -0.037 | 0.93 | 962 | 17.0 | 12.0 | 24.0 |
+| Asia | 2919 | 48.8 | 0.055 | 1.12 | 1334 | 11.0 | 8.0 | 37.9 |
+| London | 1214 | 45.0 | -0.053 | 0.9 | 640 | 16.0 | 12.0 | 31.7 |
+| NY | 1307 | 46.6 | 0.165 | 1.34 | 617 | 25.0 | 17.0 | 37.3 |
+| Sin KZ | 2312 | 43.6 | 0.011 | 1.02 | 1140 | 19.0 | 13.0 | 26.3 |
 
 ## Por nearEdge
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| edge=-1 | 1762 | 43.8 | -0.01 | 0.98 | 887 | 16.5 | 11.0 | 29.8 |
-| edge=0 | 3105 | 48.2 | 0.015 | 1.03 | 1481 | 13.0 | 10.0 | 39.1 |
-| edge=1 | 2172 | 43.4 | 0.036 | 1.07 | 1080 | 17.0 | 13.0 | 26.7 |
+| edge=-1 | 1993 | 45.1 | 0.034 | 1.07 | 977 | 18.0 | 12.5 | 30.6 |
+| edge=0 | 3433 | 48.7 | 0.039 | 1.08 | 1604 | 14.0 | 10.0 | 39.0 |
+| edge=1 | 2326 | 43.6 | 0.057 | 1.11 | 1150 | 17.0 | 12.5 | 27.4 |
 
 ## Por aligned
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
 | aligned=0 | 10 | 50.0 | 0.433 | 3.6 | 1 | 18.5 | 7.0 | 0.0 |
-| aligned=1 | 7029 | 45.6 | 0.015 | 1.03 | 3447 | 15.0 | 11.0 | 32.8 |
+| aligned=1 | 7742 | 46.3 | 0.043 | 1.09 | 3730 | 16.0 | 11.0 | 33.2 |
 
 ## Por kind/side x nearEdge
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
 | INV/LONG|edge=-1 | 4 | 50.0 | 0.455 | 1.91 | 2 | 44.5 | 3.0 | 50.0 |
-| INV/LONG|edge=0 | 41 | 48.8 | 0.005 | 1.01 | 19 | 9.0 | 8.25 | 26.3 |
+| INV/LONG|edge=0 | 43 | 48.8 | 0.057 | 1.12 | 20 | 9.0 | 8.0 | 30.0 |
 | INV/LONG|edge=1 | 55 | 47.3 | 0.114 | 1.27 | 22 | 22.0 | 18.5 | 13.6 |
-| INV/SHORT|edge=-1 | 57 | 40.4 | 0.08 | 1.16 | 28 | 20.0 | 10.5 | 25.0 |
-| INV/SHORT|edge=0 | 35 | 54.3 | 0.068 | 1.16 | 14 | 11.0 | 11.0 | 42.9 |
-| INV/SHORT|edge=1 | 2 | 50.0 | -0.29 | 0.42 | 1 | 7.0 | 5.0 | 0.0 |
+| INV/SHORT|edge=-1 | 65 | 40.0 | 0.125 | 1.25 | 32 | 22.0 | 10.75 | 21.9 |
+| INV/SHORT|edge=0 | 41 | 51.2 | -0.033 | 0.93 | 18 | 11.0 | 17.0 | 38.9 |
+| INV/SHORT|edge=1 | 3 | 33.3 | -0.527 | 0.21 | 2 | 8.0 | 5.0 | 0.0 |
 | RETEST/LONG|edge=-1 | 212 | 47.6 | 0.043 | 1.09 | 97 | 11.0 | 7.0 | 49.5 |
-| RETEST/LONG|edge=0 | 1886 | 49.0 | -0.038 | 0.92 | 910 | 12.0 | 10.0 | 39.2 |
-| RETEST/LONG|edge=1 | 2030 | 42.8 | 0.034 | 1.07 | 1021 | 17.0 | 13.0 | 25.8 |
-| RETEST/SHORT|edge=-1 | 1489 | 43.3 | -0.023 | 0.96 | 760 | 17.0 | 12.0 | 27.4 |
-| RETEST/SHORT|edge=0 | 1143 | 46.8 | 0.103 | 1.21 | 538 | 15.0 | 9.0 | 39.2 |
-| RETEST/SHORT|edge=1 | 85 | 55.3 | 0.028 | 1.07 | 36 | 13.0 | 6.5 | 61.1 |
+| RETEST/LONG|edge=0 | 1953 | 49.4 | -0.016 | 0.97 | 933 | 13.0 | 10.0 | 39.5 |
+| RETEST/LONG|edge=1 | 2149 | 43.0 | 0.058 | 1.11 | 1075 | 18.0 | 13.0 | 26.4 |
+| RETEST/SHORT|edge=-1 | 1712 | 45.0 | 0.028 | 1.06 | 846 | 19.0 | 13.0 | 28.7 |
+| RETEST/SHORT|edge=0 | 1396 | 47.7 | 0.119 | 1.25 | 633 | 16.0 | 10.0 | 38.4 |
+| RETEST/SHORT|edge=1 | 119 | 54.6 | 0.034 | 1.08 | 51 | 13.5 | 9.0 | 54.9 |
 
 ## Por kind/side x tier
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
 | INV/LONG|tier=B | 30 | 46.7 | 0.14 | 1.34 | 11 | 19.5 | 14.5 | 9.1 |
-| INV/LONG|tier=C | 70 | 48.6 | 0.059 | 1.13 | 32 | 12.0 | 13.5 | 25.0 |
-| INV/SHORT|tier=B | 30 | 50.0 | 0.163 | 1.38 | 13 | 15.5 | 4.5 | 7.7 |
-| INV/SHORT|tier=C | 64 | 43.8 | 0.021 | 1.04 | 30 | 13.0 | 14.0 | 40.0 |
-| RETEST/LONG|tier=A+ | 301 | 23.9 | 0.002 | 1.0 | 195 | 21.0 | 18.25 | 16.9 |
-| RETEST/LONG|tier=B | 1693 | 46.1 | 0.058 | 1.12 | 820 | 15.0 | 10.0 | 31.2 |
-| RETEST/LONG|tier=C | 2134 | 48.8 | -0.043 | 0.91 | 1013 | 14.0 | 11.0 | 37.4 |
-| RETEST/SHORT|tier=A+ | 172 | 27.3 | 0.107 | 1.16 | 111 | 31.0 | 10.5 | 23.4 |
-| RETEST/SHORT|tier=B | 1213 | 45.6 | -0.031 | 0.94 | 604 | 15.0 | 10.0 | 31.3 |
-| RETEST/SHORT|tier=C | 1332 | 47.1 | 0.079 | 1.16 | 619 | 16.0 | 11.0 | 36.5 |
+| INV/LONG|tier=C | 72 | 48.6 | 0.089 | 1.19 | 33 | 12.0 | 13.0 | 27.3 |
+| INV/SHORT|tier=B | 36 | 47.2 | 0.157 | 1.33 | 17 | 18.0 | 5.0 | 5.9 |
+| INV/SHORT|tier=C | 73 | 42.5 | -0.006 | 0.99 | 35 | 16.0 | 20.0 | 37.1 |
+| RETEST/LONG|tier=A+ | 330 | 26.7 | 0.132 | 1.2 | 204 | 26.0 | 16.5 | 18.1 |
+| RETEST/LONG|tier=B | 1766 | 45.8 | 0.061 | 1.12 | 859 | 15.0 | 10.0 | 31.8 |
+| RETEST/LONG|tier=C | 2218 | 49.2 | -0.022 | 0.95 | 1042 | 14.0 | 11.0 | 37.5 |
+| RETEST/SHORT|tier=A+ | 206 | 28.2 | 0.094 | 1.14 | 134 | 34.0 | 11.75 | 22.4 |
+| RETEST/SHORT|tier=B | 1416 | 47.6 | 0.032 | 1.07 | 675 | 16.0 | 11.0 | 33.0 |
+| RETEST/SHORT|tier=C | 1605 | 47.9 | 0.096 | 1.21 | 721 | 18.0 | 11.0 | 36.2 |
 
 ## Por kind/side x aligned
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| INV/LONG|aligned=1 | 100 | 48.0 | 0.082 | 1.18 | 43 | 13.0 | 14.25 | 20.9 |
-| INV/SHORT|aligned=1 | 94 | 45.7 | 0.068 | 1.14 | 43 | 14.5 | 11.0 | 30.2 |
+| INV/LONG|aligned=1 | 102 | 48.0 | 0.103 | 1.23 | 44 | 13.0 | 14.0 | 22.7 |
+| INV/SHORT|aligned=1 | 109 | 44.0 | 0.049 | 1.1 | 52 | 18.0 | 11.25 | 26.9 |
 | RETEST/LONG|aligned=0 | 10 | 50.0 | 0.433 | 3.6 | 1 | 18.5 | 7.0 | 0.0 |
-| RETEST/LONG|aligned=1 | 4118 | 45.9 | 0.001 | 1.0 | 2027 | 14.0 | 11.0 | 33.0 |
-| RETEST/SHORT|aligned=1 | 2717 | 45.2 | 0.031 | 1.06 | 1334 | 16.0 | 10.0 | 33.1 |
+| RETEST/LONG|aligned=1 | 4304 | 46.1 | 0.023 | 1.05 | 2104 | 14.0 | 11.0 | 33.3 |
+| RETEST/SHORT|aligned=1 | 3227 | 46.5 | 0.068 | 1.14 | 1530 | 18.0 | 11.0 | 33.6 |
 
 ## Autopsia de SL
-n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo×1131, killzone-Asia-largo×817, sin-nivel-detras×677, estirado×623, chop×466, SL-muy-pegado×415, sin-causa-clara×341, contra-sesgo×1
-- INV/LONG (n=43): killzone-Asia-largo×21, RR-bajo×20, contra-estructura×13, estirado×10, stop-en-el-minimo×9, sin-nivel-detras×5, SL-muy-pegado×4, chop×3, sin-causa-clara×1
-- INV/SHORT (n=43): RR-bajo×22, contra-estructura×14, stop-en-el-minimo×13, sin-causa-clara×8, estirado×8, SL-muy-pegado×5, sin-nivel-detras×4, chop×3
-- RETEST/LONG (n=2028): killzone-Asia-largo×796, RR-bajo×786, contra-estructura×756, stop-en-el-minimo×668, sin-nivel-detras×405, estirado×348, chop×291, SL-muy-pegado×229, sin-causa-clara×148, contra-sesgo×1
-- RETEST/SHORT (n=1334): RR-bajo×463, contra-estructura×459, stop-en-el-minimo×441, sin-nivel-detras×263, estirado×257, sin-causa-clara×184, SL-muy-pegado×177, chop×169
+n_losses=3731  causas: RR-bajo×1413, contra-estructura×1313, stop-en-el-minimo×1239, killzone-Asia-largo×827, sin-nivel-detras×728, estirado×659, chop×519, SL-muy-pegado×449, sin-causa-clara×368, contra-sesgo×1
+- INV/LONG (n=44): killzone-Asia-largo×22, RR-bajo×21, contra-estructura×13, stop-en-el-minimo×10, estirado×10, sin-nivel-detras×5, SL-muy-pegado×4, chop×3, sin-causa-clara×1
+- INV/SHORT (n=52): RR-bajo×26, contra-estructura×17, stop-en-el-minimo×14, sin-causa-clara×10, estirado×9, SL-muy-pegado×7, chop×4, sin-nivel-detras×4
+- RETEST/LONG (n=2105): RR-bajo×816, killzone-Asia-largo×805, contra-estructura×786, stop-en-el-minimo×701, sin-nivel-detras×414, estirado×361, chop×311, SL-muy-pegado×234, sin-causa-clara×155, contra-sesgo×1
+- RETEST/SHORT (n=1530): RR-bajo×550, stop-en-el-minimo×514, contra-estructura×497, sin-nivel-detras×305, estirado×279, SL-muy-pegado×204, sin-causa-clara×202, chop×201
 
 ## Contrafactual de gestion
 ```json
@@ -135,70 +137,70 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
 ```json
 {
   "overall": {
-    "n": 6888,
-    "naive_expR": 0.015,
-    "managed_expR": 0.1,
-    "delta": 0.085,
-    "avgEntryBetterTk_p50": 2.6,
-    "fill_t3plus_pct": 48.4,
-    "fill_full_pct": 34.1,
-    "m1_rate": 35.6,
-    "m2_rate": 22.4,
-    "m3_rate": 12.2,
-    "beAfterM1_rate": 16.8
+    "n": 7594,
+    "naive_expR": 0.043,
+    "managed_expR": 0.123,
+    "delta": 0.08,
+    "avgEntryBetterTk_p50": 2.7,
+    "fill_t3plus_pct": 48.2,
+    "fill_full_pct": 33.9,
+    "m1_rate": 36.2,
+    "m2_rate": 23.1,
+    "m3_rate": 12.8,
+    "beAfterM1_rate": 16.7
   },
   "by_tf_kind_side": {
     "1m/INV/LONG": {
-      "n": 62,
-      "naive_expR": 0.097,
-      "managed_expR": 0.27,
-      "delta": 0.173,
-      "avgEntryBetterTk_p50": 2.05,
+      "n": 64,
+      "naive_expR": 0.129,
+      "managed_expR": 0.278,
+      "delta": 0.149,
+      "avgEntryBetterTk_p50": 2.0,
       "fill_t3plus_pct": 50.0,
-      "fill_full_pct": 38.7,
-      "m1_rate": 43.5,
-      "m2_rate": 30.6,
-      "m3_rate": 17.7,
-      "beAfterM1_rate": 17.7
+      "fill_full_pct": 39.1,
+      "m1_rate": 43.8,
+      "m2_rate": 31.2,
+      "m3_rate": 18.8,
+      "beAfterM1_rate": 17.2
     },
     "1m/INV/SHORT": {
-      "n": 60,
-      "naive_expR": 0.111,
-      "managed_expR": 0.39,
-      "delta": 0.279,
-      "avgEntryBetterTk_p50": 3.0,
-      "fill_t3plus_pct": 53.3,
-      "fill_full_pct": 43.3,
-      "m1_rate": 40.0,
-      "m2_rate": 28.3,
-      "m3_rate": 16.7,
-      "beAfterM1_rate": 15.0
+      "n": 69,
+      "naive_expR": 0.109,
+      "managed_expR": 0.339,
+      "delta": 0.23,
+      "avgEntryBetterTk_p50": 3.5,
+      "fill_t3plus_pct": 55.1,
+      "fill_full_pct": 42.0,
+      "m1_rate": 37.7,
+      "m2_rate": 27.5,
+      "m3_rate": 17.4,
+      "beAfterM1_rate": 13.0
     },
     "1m/RETEST/LONG": {
-      "n": 2506,
-      "naive_expR": 0.004,
-      "managed_expR": 0.093,
-      "delta": 0.088,
-      "avgEntryBetterTk_p50": 2.1,
-      "fill_t3plus_pct": 49.2,
-      "fill_full_pct": 35.4,
-      "m1_rate": 34.5,
-      "m2_rate": 21.4,
-      "m3_rate": 11.3,
-      "beAfterM1_rate": 15.8
+      "n": 2611,
+      "naive_expR": 0.026,
+      "managed_expR": 0.104,
+      "delta": 0.078,
+      "avgEntryBetterTk_p50": 2.3,
+      "fill_t3plus_pct": 49.3,
+      "fill_full_pct": 35.0,
+      "m1_rate": 34.8,
+      "m2_rate": 22.0,
+      "m3_rate": 11.7,
+      "beAfterM1_rate": 15.7
     },
     "1m/RETEST/SHORT": {
-      "n": 1632,
-      "naive_expR": 0.018,
-      "managed_expR": 0.137,
-      "delta": 0.12,
-      "avgEntryBetterTk_p50": 2.6500000000000004,
+      "n": 1968,
+      "naive_expR": 0.047,
+      "managed_expR": 0.159,
+      "delta": 0.112,
+      "avgEntryBetterTk_p50": 2.8,
       "fill_t3plus_pct": 48.9,
       "fill_full_pct": 33.4,
-      "m1_rate": 39.3,
-      "m2_rate": 25.0,
-      "m3_rate": 14.2,
-      "beAfterM1_rate": 18.5
+      "m1_rate": 39.6,
+      "m2_rate": 25.2,
+      "m3_rate": 14.1,
+      "beAfterM1_rate": 18.3
     },
     "2m/INV/LONG": {
       "n": 26,
@@ -214,43 +216,43 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
       "beAfterM1_rate": 3.8
     },
     "2m/INV/SHORT": {
-      "n": 27,
-      "naive_expR": 0.019,
-      "managed_expR": -0.002,
-      "delta": -0.021,
-      "avgEntryBetterTk_p50": 3.4,
-      "fill_t3plus_pct": 48.1,
-      "fill_full_pct": 37.0,
-      "m1_rate": 25.9,
-      "m2_rate": 22.2,
-      "m3_rate": 14.8,
-      "beAfterM1_rate": 7.4
+      "n": 33,
+      "naive_expR": -0.04,
+      "managed_expR": 0.023,
+      "delta": 0.063,
+      "avgEntryBetterTk_p50": 3.8,
+      "fill_t3plus_pct": 51.5,
+      "fill_full_pct": 42.4,
+      "m1_rate": 27.3,
+      "m2_rate": 24.2,
+      "m3_rate": 15.2,
+      "beAfterM1_rate": 6.1
     },
     "2m/RETEST/LONG": {
-      "n": 1180,
-      "naive_expR": -0.033,
-      "managed_expR": 0.05,
-      "delta": 0.083,
+      "n": 1235,
+      "naive_expR": -0.009,
+      "managed_expR": 0.069,
+      "delta": 0.078,
       "avgEntryBetterTk_p50": 2.8,
-      "fill_t3plus_pct": 47.6,
-      "fill_full_pct": 32.0,
-      "m1_rate": 33.4,
-      "m2_rate": 19.9,
-      "m3_rate": 10.8,
-      "beAfterM1_rate": 17.1
+      "fill_t3plus_pct": 47.3,
+      "fill_full_pct": 32.1,
+      "m1_rate": 33.8,
+      "m2_rate": 20.7,
+      "m3_rate": 11.7,
+      "beAfterM1_rate": 16.9
     },
     "2m/RETEST/SHORT": {
-      "n": 777,
-      "naive_expR": 0.074,
-      "managed_expR": 0.147,
-      "delta": 0.074,
+      "n": 893,
+      "naive_expR": 0.11,
+      "managed_expR": 0.178,
+      "delta": 0.068,
       "avgEntryBetterTk_p50": 2.8,
-      "fill_t3plus_pct": 48.4,
+      "fill_t3plus_pct": 48.2,
       "fill_full_pct": 36.6,
       "m1_rate": 38.1,
-      "m2_rate": 25.0,
-      "m3_rate": 14.0,
-      "beAfterM1_rate": 17.8
+      "m2_rate": 25.5,
+      "m3_rate": 14.2,
+      "beAfterM1_rate": 17.1
     },
     "5m/INV/LONG": {
       "n": 10,
@@ -279,30 +281,30 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
       "beAfterM1_rate": 0.0
     },
     "5m/RETEST/LONG": {
-      "n": 369,
-      "naive_expR": 0.09,
-      "managed_expR": 0.026,
-      "delta": -0.064,
-      "avgEntryBetterTk_p50": 2.4,
-      "fill_t3plus_pct": 39.8,
-      "fill_full_pct": 28.5,
-      "m1_rate": 30.9,
-      "m2_rate": 19.0,
-      "m3_rate": 10.0,
+      "n": 392,
+      "naive_expR": 0.104,
+      "managed_expR": 0.057,
+      "delta": -0.047,
+      "avgEntryBetterTk_p50": 2.7,
+      "fill_t3plus_pct": 38.3,
+      "fill_full_pct": 27.6,
+      "m1_rate": 32.1,
+      "m2_rate": 20.7,
+      "m3_rate": 11.5,
       "beAfterM1_rate": 16.3
     },
     "5m/RETEST/SHORT": {
-      "n": 234,
-      "naive_expR": -0.007,
-      "managed_expR": 0.032,
-      "delta": 0.039,
-      "avgEntryBetterTk_p50": 4.95,
-      "fill_t3plus_pct": 49.1,
-      "fill_full_pct": 30.8,
-      "m1_rate": 31.6,
-      "m2_rate": 21.4,
-      "m3_rate": 10.7,
-      "beAfterM1_rate": 14.5
+      "n": 288,
+      "naive_expR": 0.083,
+      "managed_expR": 0.146,
+      "delta": 0.064,
+      "avgEntryBetterTk_p50": 4.8,
+      "fill_t3plus_pct": 46.5,
+      "fill_full_pct": 30.2,
+      "m1_rate": 36.8,
+      "m2_rate": 23.6,
+      "m3_rate": 13.5,
+      "beAfterM1_rate": 17.0
     }
   }
 }
@@ -312,46 +314,46 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
 ```json
 {
   "overall": {
-    "n": 5806,
-    "layer_expR": 0.022,
-    "orig_expR": 0.171,
-    "delta_orig_minus_layer": 0.149,
+    "n": 6461,
+    "layer_expR": 0.055,
+    "orig_expR": 0.196,
+    "delta_orig_minus_layer": 0.141,
     "delta_ci90": [
-      0.092,
-      0.209
+      0.089,
+      0.196
     ],
     "delta_beats_zero": true,
     "delta_below_zero": false,
-    "layer_wrTP1": 46.3,
-    "orig_wrTP1": 32.3,
-    "slTk_p50": 18.0,
+    "layer_wrTP1": 47.0,
+    "orig_wrTP1": 32.9,
+    "slTk_p50": 19.0,
     "slOrigTk_p50": 8.0,
     "orig_wider_pct": 3.8,
     "orig_saved_from_SL": 12,
-    "orig_caused_SL": 826
+    "orig_caused_SL": 924
   },
   "note": "overall/by_tf_kind_side = solo build retestBar (legacy excluido)",
   "invalid_geometry": 0,
   "invalid_by_seg": {},
   "by_basis": {
     "candle1": {
-      "n": 178,
+      "n": 195,
       "layer_expR": 0.072,
-      "orig_expR": 0.307,
-      "delta_orig_minus_layer": 0.235,
+      "orig_expR": 0.253,
+      "delta_orig_minus_layer": 0.181,
       "delta_ci90": [
-        -0.136,
-        0.71
+        -0.175,
+        0.638
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 46.6,
-      "orig_wrTP1": 26.4,
-      "slTk_p50": 17.0,
+      "layer_wrTP1": 45.6,
+      "orig_wrTP1": 25.1,
+      "slTk_p50": 18.0,
       "slOrigTk_p50": 4.0,
-      "orig_wider_pct": 3.9,
+      "orig_wider_pct": 3.6,
       "orig_saved_from_SL": 0,
-      "orig_caused_SL": 36
+      "orig_caused_SL": 40
     },
     "legacy": {
       "n": 7,
@@ -373,120 +375,120 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
       "orig_caused_SL": 1
     },
     "retestBar": {
-      "n": 4504,
-      "layer_expR": 0.014,
-      "orig_expR": 0.167,
-      "delta_orig_minus_layer": 0.153,
+      "n": 4834,
+      "layer_expR": 0.047,
+      "orig_expR": 0.189,
+      "delta_orig_minus_layer": 0.143,
       "delta_ci90": [
-        0.094,
-        0.214
+        0.087,
+        0.201
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 46.8,
-      "orig_wrTP1": 33.3,
+      "layer_wrTP1": 47.5,
+      "orig_wrTP1": 33.8,
       "slTk_p50": 19.0,
       "slOrigTk_p50": 8.0,
       "orig_wider_pct": 4.0,
       "orig_saved_from_SL": 12,
-      "orig_caused_SL": 623
+      "orig_caused_SL": 675
     },
     "retestBar2": {
-      "n": 1124,
-      "layer_expR": 0.047,
-      "orig_expR": 0.168,
-      "delta_orig_minus_layer": 0.121,
+      "n": 1432,
+      "layer_expR": 0.081,
+      "orig_expR": 0.211,
+      "delta_orig_minus_layer": 0.13,
       "delta_ci90": [
-        -0.019,
-        0.267
+        0.012,
+        0.256
       ],
-      "delta_beats_zero": false,
+      "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 44.2,
-      "orig_wrTP1": 29.4,
-      "slTk_p50": 15.0,
-      "slOrigTk_p50": 7.0,
-      "orig_wider_pct": 3.3,
+      "layer_wrTP1": 45.7,
+      "orig_wrTP1": 31.1,
+      "slTk_p50": 18.0,
+      "slOrigTk_p50": 8.0,
+      "orig_wider_pct": 2.9,
       "orig_saved_from_SL": 0,
-      "orig_caused_SL": 167
+      "orig_caused_SL": 209
     }
   },
   "by_tf_kind_side": {
     "1m/INV/LONG": {
-      "n": 62,
-      "layer_expR": 0.097,
-      "orig_expR": 0.125,
-      "delta_orig_minus_layer": 0.028,
+      "n": 64,
+      "layer_expR": 0.129,
+      "orig_expR": 0.09,
+      "delta_orig_minus_layer": -0.039,
       "delta_ci90": [
-        -0.435,
-        0.499
+        -0.482,
+        0.455
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 45.2,
-      "orig_wrTP1": 24.2,
+      "layer_wrTP1": 45.3,
+      "orig_wrTP1": 23.4,
       "slTk_p50": 15.0,
       "slOrigTk_p50": 3.0,
-      "orig_wider_pct": 4.8,
+      "orig_wider_pct": 4.7,
       "orig_saved_from_SL": 0,
-      "orig_caused_SL": 13
+      "orig_caused_SL": 14
     },
     "1m/INV/SHORT": {
-      "n": 50,
-      "layer_expR": 0.122,
-      "orig_expR": 0.531,
-      "delta_orig_minus_layer": 0.408,
+      "n": 59,
+      "layer_expR": 0.118,
+      "orig_expR": 0.467,
+      "delta_orig_minus_layer": 0.349,
       "delta_ci90": [
-        -0.548,
-        1.779
+        -0.547,
+        1.441
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 50.0,
-      "orig_wrTP1": 26.0,
-      "slTk_p50": 16.5,
+      "layer_wrTP1": 47.5,
+      "orig_wrTP1": 23.7,
+      "slTk_p50": 18.0,
       "slOrigTk_p50": 5.0,
-      "orig_wider_pct": 2.0,
+      "orig_wider_pct": 1.7,
       "orig_saved_from_SL": 0,
-      "orig_caused_SL": 12
+      "orig_caused_SL": 14
     },
     "1m/RETEST/LONG": {
-      "n": 2135,
-      "layer_expR": 0.005,
-      "orig_expR": 0.169,
-      "delta_orig_minus_layer": 0.163,
+      "n": 2231,
+      "layer_expR": 0.032,
+      "orig_expR": 0.183,
+      "delta_orig_minus_layer": 0.152,
       "delta_ci90": [
-        0.076,
-        0.254
+        0.069,
+        0.238
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 44.4,
+      "layer_wrTP1": 44.7,
       "orig_wrTP1": 29.8,
       "slTk_p50": 18.0,
       "slOrigTk_p50": 6.0,
       "orig_wider_pct": 1.3,
       "orig_saved_from_SL": 2,
-      "orig_caused_SL": 315
+      "orig_caused_SL": 334
     },
     "1m/RETEST/SHORT": {
-      "n": 1252,
-      "layer_expR": 0.034,
-      "orig_expR": 0.168,
-      "delta_orig_minus_layer": 0.133,
+      "n": 1560,
+      "layer_expR": 0.068,
+      "orig_expR": 0.207,
+      "delta_orig_minus_layer": 0.139,
       "delta_ci90": [
-        0.003,
-        0.271
+        0.022,
+        0.256
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 44.1,
-      "orig_wrTP1": 29.3,
-      "slTk_p50": 16.0,
-      "slOrigTk_p50": 7.0,
-      "orig_wider_pct": 3.0,
+      "layer_wrTP1": 45.4,
+      "orig_wrTP1": 30.9,
+      "slTk_p50": 18.0,
+      "slOrigTk_p50": 8.0,
+      "orig_wider_pct": 2.8,
       "orig_saved_from_SL": 0,
-      "orig_caused_SL": 185
+      "orig_caused_SL": 227
     },
     "2m/INV/LONG": {
       "n": 26,
@@ -508,61 +510,61 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
       "orig_caused_SL": 4
     },
     "2m/INV/SHORT": {
-      "n": 26,
-      "layer_expR": 0.003,
-      "orig_expR": 0.248,
-      "delta_orig_minus_layer": 0.245,
+      "n": 32,
+      "layer_expR": -0.054,
+      "orig_expR": 0.067,
+      "delta_orig_minus_layer": 0.121,
       "delta_ci90": [
-        -0.031,
-        0.516
+        -0.142,
+        0.372
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 30.8,
-      "orig_wrTP1": 26.9,
-      "slTk_p50": 16.5,
-      "slOrigTk_p50": 5.0,
+      "layer_wrTP1": 31.2,
+      "orig_wrTP1": 25.0,
+      "slTk_p50": 20.0,
+      "slOrigTk_p50": 4.5,
       "orig_wider_pct": 0.0,
       "orig_saved_from_SL": 0,
-      "orig_caused_SL": 1
+      "orig_caused_SL": 2
     },
     "2m/RETEST/LONG": {
-      "n": 1063,
-      "layer_expR": -0.018,
-      "orig_expR": 0.024,
-      "delta_orig_minus_layer": 0.042,
+      "n": 1116,
+      "layer_expR": 0.009,
+      "orig_expR": 0.027,
+      "delta_orig_minus_layer": 0.019,
       "delta_ci90": [
-        -0.034,
-        0.126
+        -0.057,
+        0.104
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 47.6,
+      "layer_wrTP1": 48.0,
       "orig_wrTP1": 34.1,
-      "slTk_p50": 19.0,
+      "slTk_p50": 20.0,
       "slOrigTk_p50": 9.0,
-      "orig_wider_pct": 3.1,
+      "orig_wider_pct": 3.0,
       "orig_saved_from_SL": 0,
-      "orig_caused_SL": 144
+      "orig_caused_SL": 155
     },
     "2m/RETEST/SHORT": {
-      "n": 625,
-      "layer_expR": 0.096,
-      "orig_expR": 0.212,
-      "delta_orig_minus_layer": 0.117,
+      "n": 729,
+      "layer_expR": 0.142,
+      "orig_expR": 0.252,
+      "delta_orig_minus_layer": 0.11,
       "delta_ci90": [
-        -0.009,
-        0.243
+        -0.001,
+        0.224
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 49.9,
-      "orig_wrTP1": 34.7,
-      "slTk_p50": 19.0,
-      "slOrigTk_p50": 9.0,
-      "orig_wider_pct": 3.4,
+      "layer_wrTP1": 51.0,
+      "orig_wrTP1": 35.9,
+      "slTk_p50": 20.0,
+      "slOrigTk_p50": 10.0,
+      "orig_wider_pct": 3.2,
       "orig_saved_from_SL": 1,
-      "orig_caused_SL": 96
+      "orig_caused_SL": 111
     },
     "5m/INV/LONG": {
       "n": 10,
@@ -584,42 +586,42 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
       "orig_caused_SL": 5
     },
     "5m/RETEST/LONG": {
-      "n": 355,
-      "layer_expR": 0.081,
-      "orig_expR": 0.235,
-      "delta_orig_minus_layer": 0.154,
+      "n": 378,
+      "layer_expR": 0.096,
+      "orig_expR": 0.284,
+      "delta_orig_minus_layer": 0.187,
       "delta_ci90": [
-        0.007,
-        0.314
+        0.028,
+        0.363
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 54.9,
-      "orig_wrTP1": 46.2,
+      "layer_wrTP1": 54.8,
+      "orig_wrTP1": 46.3,
       "slTk_p50": 23.0,
-      "slOrigTk_p50": 13.0,
-      "orig_wider_pct": 14.9,
+      "slOrigTk_p50": 14.0,
+      "orig_wider_pct": 15.3,
       "orig_saved_from_SL": 3,
-      "orig_caused_SL": 34
+      "orig_caused_SL": 35
     },
     "5m/RETEST/SHORT": {
-      "n": 198,
-      "layer_expR": -0.045,
-      "orig_expR": 0.642,
-      "delta_orig_minus_layer": 0.687,
+      "n": 252,
+      "layer_expR": 0.066,
+      "orig_expR": 0.654,
+      "delta_orig_minus_layer": 0.588,
       "delta_ci90": [
-        0.13,
-        1.418
+        0.146,
+        1.133
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 47.0,
-      "orig_wrTP1": 41.9,
+      "layer_wrTP1": 51.2,
+      "orig_wrTP1": 44.8,
       "slTk_p50": 27.0,
-      "slOrigTk_p50": 21.5,
-      "orig_wider_pct": 21.7,
+      "slOrigTk_p50": 21.0,
+      "orig_wider_pct": 19.4,
       "orig_saved_from_SL": 6,
-      "orig_caused_SL": 16
+      "orig_caused_SL": 22
     }
   }
 }
@@ -629,14 +631,14 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
 ```json
 {
   "2026-W36": {
-    "n": 3183,
+    "n": 3179,
     "wrTP1": 44.7,
     "expR": -0.018
   },
   "2026-W37": {
-    "n": 3856,
-    "wrTP1": 46.4,
-    "expR": 0.042
+    "n": 4573,
+    "wrTP1": 47.4,
+    "expR": 0.084
   }
 }
 ```
@@ -645,123 +647,123 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
 ```json
 {
   "fitted": true,
-  "n": 6660,
-  "brier": 0.2221,
-  "bias": -0.154,
+  "n": 7318,
+  "brier": 0.2237,
+  "bias": -0.116,
   "coefficients": [
     {
       "feature": "rr1",
-      "weight": -1.143
+      "weight": -1.099
     },
     {
       "feature": "stretchAtr",
-      "weight": -0.16
+      "weight": -0.147
     },
     {
       "feature": "rvol",
-      "weight": 0.076
-    },
-    {
-      "feature": "chopIdx",
-      "weight": -0.073
+      "weight": 0.079
     },
     {
       "feature": "biasScore",
-      "weight": -0.067
+      "weight": -0.072
     },
     {
       "feature": "nearTk",
-      "weight": -0.067
+      "weight": -0.066
+    },
+    {
+      "feature": "chopIdx",
+      "weight": -0.059
     },
     {
       "feature": "nearEdge",
-      "weight": 0.052
-    },
-    {
-      "feature": "atrPctUsed",
-      "weight": -0.042
-    },
-    {
-      "feature": "aligned",
-      "weight": -0.037
+      "weight": 0.041
     },
     {
       "feature": "structDir",
-      "weight": 0.026
+      "weight": 0.039
+    },
+    {
+      "feature": "aligned",
+      "weight": -0.034
     },
     {
       "feature": "hourNY",
-      "weight": 0.015
+      "weight": 0.016
     },
     {
       "feature": "emaStack",
-      "weight": -0.006
+      "weight": -0.013
+    },
+    {
+      "feature": "atrPctUsed",
+      "weight": 0.008
     },
     {
       "feature": "entryZoneTk",
-      "weight": 0.003
+      "weight": 0.002
     }
   ],
   "calibration_deciles": [
     {
       "bin": 0,
-      "pred": 0.154,
-      "actual": 0.191,
-      "n": 666
+      "pred": 0.162,
+      "actual": 0.207,
+      "n": 731
     },
     {
       "bin": 1,
-      "pred": 0.335,
-      "actual": 0.276,
-      "n": 666
+      "pred": 0.346,
+      "actual": 0.301,
+      "n": 732
     },
     {
       "bin": 2,
-      "pred": 0.415,
-      "actual": 0.315,
-      "n": 666
+      "pred": 0.425,
+      "actual": 0.331,
+      "n": 732
     },
     {
       "bin": 3,
-      "pred": 0.465,
-      "actual": 0.384,
-      "n": 666
+      "pred": 0.475,
+      "actual": 0.388,
+      "n": 732
     },
     {
       "bin": 4,
-      "pred": 0.505,
-      "actual": 0.458,
-      "n": 666
+      "pred": 0.514,
+      "actual": 0.462,
+      "n": 732
     },
     {
       "bin": 5,
-      "pred": 0.538,
-      "actual": 0.548,
-      "n": 666
+      "pred": 0.546,
+      "actual": 0.547,
+      "n": 731
     },
     {
       "bin": 6,
-      "pred": 0.564,
-      "actual": 0.584,
-      "n": 666
+      "pred": 0.571,
+      "actual": 0.604,
+      "n": 732
     },
     {
       "bin": 7,
-      "pred": 0.587,
-      "actual": 0.656,
-      "n": 666
+      "pred": 0.594,
+      "actual": 0.626,
+      "n": 732
     },
     {
       "bin": 8,
-      "pred": 0.613,
-      "actual": 0.688,
-      "n": 666
+      "pred": 0.617,
+      "actual": 0.71,
+      "n": 732
     },
     {
       "bin": 9,
-      "pred": 0.659,
-      "actual": 0.722,
-      "n": 666
+      "pred": 0.66,
+      "actual": 0.727,
+      "n": 732
     }
   ],
   "note": "in-sample; interpretar signo/magnitud, no como verdad fuera de muestra hasta 200+"
@@ -781,43 +783,43 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
 ```json
 {
   "1m/INV/LONG": {
-    "expR": 0.097,
+    "expR": 0.129,
     "ci90": [
-      -0.168,
-      0.382
+      -0.138,
+      0.414
     ],
-    "p_mean_le_0": 0.285,
-    "n": 62,
+    "p_mean_le_0": 0.231,
+    "n": 64,
     "survives_fdr10": false
   },
   "1m/INV/SHORT": {
-    "expR": 0.111,
+    "expR": 0.109,
     "ci90": [
-      -0.151,
-      0.382
+      -0.141,
+      0.377
     ],
-    "p_mean_le_0": 0.255,
-    "n": 60,
+    "p_mean_le_0": 0.244,
+    "n": 69,
     "survives_fdr10": false
   },
   "1m/RETEST/LONG": {
-    "expR": 0.005,
+    "expR": 0.026,
     "ci90": [
-      -0.035,
-      0.047
+      -0.015,
+      0.068
     ],
-    "p_mean_le_0": 0.439,
-    "n": 2510,
+    "p_mean_le_0": 0.155,
+    "n": 2615,
     "survives_fdr10": false
   },
   "1m/RETEST/SHORT": {
-    "expR": 0.017,
+    "expR": 0.046,
     "ci90": [
-      -0.033,
-      0.072
+      0.001,
+      0.095
     ],
-    "p_mean_le_0": 0.293,
-    "n": 1639,
+    "p_mean_le_0": 0.044,
+    "n": 1975,
     "survives_fdr10": false
   },
   "2m/INV/LONG": {
@@ -831,34 +833,34 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
     "survives_fdr10": false
   },
   "2m/INV/SHORT": {
-    "expR": 0.019,
+    "expR": -0.04,
     "ci90": [
-      -0.408,
-      0.503
+      -0.391,
+      0.395
     ],
-    "p_mean_le_0": 0.496,
-    "n": 27,
+    "p_mean_le_0": 0.589,
+    "n": 33,
     "survives_fdr10": false
   },
   "2m/RETEST/LONG": {
-    "expR": -0.032,
+    "expR": -0.008,
     "ci90": [
-      -0.088,
-      0.021
+      -0.064,
+      0.046
     ],
-    "p_mean_le_0": 0.84,
-    "n": 1182,
+    "p_mean_le_0": 0.598,
+    "n": 1237,
     "survives_fdr10": false
   },
   "2m/RETEST/SHORT": {
-    "expR": 0.074,
+    "expR": 0.11,
     "ci90": [
-      -0.002,
-      0.145
+      0.04,
+      0.18
     ],
-    "p_mean_le_0": 0.056,
-    "n": 777,
-    "survives_fdr10": false
+    "p_mean_le_0": 0.004,
+    "n": 893,
+    "survives_fdr10": true
   },
   "5m/INV/LONG": {
     "expR": 0.849,
@@ -871,23 +873,23 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
     "survives_fdr10": true
   },
   "5m/RETEST/LONG": {
-    "expR": 0.09,
+    "expR": 0.104,
     "ci90": [
-      -0.007,
-      0.191
+      0.006,
+      0.202
     ],
-    "p_mean_le_0": 0.068,
-    "n": 369,
+    "p_mean_le_0": 0.038,
+    "n": 392,
     "survives_fdr10": false
   },
   "5m/RETEST/SHORT": {
-    "expR": -0.005,
+    "expR": 0.084,
     "ci90": [
-      -0.133,
-      0.14
+      -0.031,
+      0.211
     ],
-    "p_mean_le_0": 0.521,
-    "n": 235,
+    "p_mean_le_0": 0.128,
+    "n": 289,
     "survives_fdr10": false
   }
 }
@@ -900,55 +902,55 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
   "k": 4,
   "clusters": [
     {
-      "id": 2,
-      "n": 2442,
-      "wrTP1": 45.6,
-      "expR": 0.044,
-      "pf": 1.09,
+      "id": 3,
+      "n": 2277,
+      "wrTP1": 45.8,
+      "expR": 0.083,
+      "pf": 1.17,
       "defining_features": {
-        "biasScore": -1.09,
-        "emaStack": -0.94,
-        "nearEdge": -0.82,
+        "biasScore": -1.03,
+        "emaStack": -0.89,
+        "nearEdge": -0.79,
         "structDir": -0.43
       }
     },
     {
       "id": 1,
-      "n": 3426,
-      "wrTP1": 47.2,
-      "expR": 0.032,
-      "pf": 1.07,
+      "n": 3336,
+      "wrTP1": 45.9,
+      "expR": 0.047,
+      "pf": 1.09,
       "defining_features": {
-        "biasScore": 0.76,
-        "emaStack": 0.67,
-        "nearEdge": 0.55,
-        "structDir": 0.29
+        "biasScore": 0.85,
+        "emaStack": 0.78,
+        "nearEdge": 0.66,
+        "structDir": 0.4
+      }
+    },
+    {
+      "id": 2,
+      "n": 1227,
+      "wrTP1": 51.0,
+      "expR": 0.039,
+      "pf": 1.09,
+      "defining_features": {
+        "hourNY": 1.27,
+        "atrPctUsed": -0.78,
+        "emaStack": -0.5,
+        "biasScore": -0.49
       }
     },
     {
       "id": 0,
-      "n": 936,
-      "wrTP1": 42.3,
-      "expR": -0.063,
+      "n": 912,
+      "wrTP1": 42.5,
+      "expR": -0.064,
       "pf": 0.88,
       "defining_features": {
-        "stretchAtr": 1.63,
-        "rvol": 1.33,
-        "chopIdx": -1.29,
-        "hourNY": -0.17
-      }
-    },
-    {
-      "id": 3,
-      "n": 235,
-      "wrTP1": 36.6,
-      "expR": -0.221,
-      "pf": 0.63,
-      "defining_features": {
-        "entryZoneTk": -3.18,
-        "nearTk": 2.5,
-        "nearEdge": 0.28,
-        "stretchAtr": 0.27
+        "stretchAtr": 1.72,
+        "rvol": 1.52,
+        "chopIdx": -1.34,
+        "hourNY": -0.25
       }
     }
   ]
@@ -961,9 +963,9 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
   "1m/INV/LONG": {
     "symbols": {
       "CL": {
-        "n": 19,
-        "wrTP1": 52.6,
-        "expR": 0.32
+        "n": 21,
+        "wrTP1": 52.4,
+        "expR": 0.4
       },
       "YM": {
         "n": 21,
@@ -986,41 +988,41 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
         "expR": -0.193
       }
     },
-    "expR_spread": 0.754,
+    "expR_spread": 0.834,
     "verdict": "instrument-specific"
   },
   "1m/INV/SHORT": {
     "symbols": {
       "YM": {
-        "n": 46,
-        "wrTP1": 45.7,
-        "expR": 0.042
+        "n": 49,
+        "wrTP1": 44.9,
+        "expR": 0.085
       },
       "NQ": {
-        "n": 6,
-        "wrTP1": 66.7,
-        "expR": 0.37
+        "n": 8,
+        "wrTP1": 50.0,
+        "expR": 0.027
       },
       "ES": {
-        "n": 4,
-        "wrTP1": 50.0,
-        "expR": 0.285
+        "n": 5,
+        "wrTP1": 60.0,
+        "expR": 0.354
       },
       "GC": {
-        "n": 6,
-        "wrTP1": 66.7,
-        "expR": 0.235
+        "n": 9,
+        "wrTP1": 55.6,
+        "expR": 0.168
       }
     },
-    "expR_spread": 0.328,
+    "expR_spread": 0.327,
     "verdict": "universal"
   },
   "1m/RETEST/LONG": {
     "symbols": {
       "GC": {
-        "n": 478,
-        "wrTP1": 45.8,
-        "expR": 0.113
+        "n": 481,
+        "wrTP1": 45.5,
+        "expR": 0.108
       },
       "NQ": {
         "n": 561,
@@ -1033,9 +1035,9 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
         "expR": -0.01
       },
       "CL": {
-        "n": 720,
-        "wrTP1": 44.7,
-        "expR": -0.052
+        "n": 824,
+        "wrTP1": 45.4,
+        "expR": 0.027
       },
       "YM": {
         "n": 315,
@@ -1043,30 +1045,30 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
         "expR": 0.101
       }
     },
-    "expR_spread": 0.167,
+    "expR_spread": 0.162,
     "verdict": "universal"
   },
   "1m/RETEST/SHORT": {
     "symbols": {
       "NQ": {
-        "n": 207,
-        "wrTP1": 44.0,
-        "expR": 0.032
+        "n": 268,
+        "wrTP1": 42.2,
+        "expR": 0.129
       },
       "GC": {
-        "n": 318,
-        "wrTP1": 40.9,
-        "expR": -0.002
+        "n": 412,
+        "wrTP1": 47.3,
+        "expR": 0.091
       },
       "YM": {
-        "n": 650,
-        "wrTP1": 44.8,
-        "expR": 0.09
+        "n": 744,
+        "wrTP1": 45.7,
+        "expR": 0.083
       },
       "ES": {
-        "n": 466,
-        "wrTP1": 44.4,
-        "expR": -0.025
+        "n": 554,
+        "wrTP1": 43.9,
+        "expR": -0.03
       },
       "CL": {
         "n": 43,
@@ -1074,7 +1076,7 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
         "expR": -0.547
       }
     },
-    "expR_spread": 0.637,
+    "expR_spread": 0.676,
     "verdict": "instrument-specific"
   },
   "2m/INV/LONG": {
@@ -1111,45 +1113,50 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
   "2m/INV/SHORT": {
     "symbols": {
       "YM": {
-        "n": 18,
-        "wrTP1": 38.9,
-        "expR": 0.251
+        "n": 20,
+        "wrTP1": 35.0,
+        "expR": 0.126
       },
-      "ES": {
+      "NQ": {
         "n": 3,
         "wrTP1": 33.3,
-        "expR": -0.44
+        "expR": -0.567
+      },
+      "ES": {
+        "n": 5,
+        "wrTP1": 40.0,
+        "expR": -0.072
       },
       "GC": {
-        "n": 4,
-        "wrTP1": 0.0,
-        "expR": -0.495
+        "n": 5,
+        "wrTP1": 20.0,
+        "expR": -0.352
       }
     },
-    "expR_spread": 0.746,
+    "expR_spread": 0.693,
     "verdict": "instrument-specific"
   },
   "2m/RETEST/LONG": {
     "symbols": {
       "NQ": {
-        "n": 286,
-        "wrTP1": 47.9,
-        "expR": -0.037
+        "n": 288,
+        "wrTP1": 47.6,
+        "expR": -0.044
       },
       "GC": {
-        "n": 170,
-        "wrTP1": 46.5,
-        "expR": 0.045
+        "n": 173,
+        "wrTP1": 45.7,
+        "expR": 0.027
       },
       "CL": {
-        "n": 346,
-        "wrTP1": 49.4,
-        "expR": -0.023
+        "n": 394,
+        "wrTP1": 51.3,
+        "expR": 0.071
       },
       "ES": {
-        "n": 233,
-        "wrTP1": 46.8,
-        "expR": -0.049
+        "n": 236,
+        "wrTP1": 46.2,
+        "expR": -0.057
       },
       "YM": {
         "n": 163,
@@ -1157,30 +1164,30 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
         "expR": -0.102
       }
     },
-    "expR_spread": 0.147,
+    "expR_spread": 0.173,
     "verdict": "universal"
   },
   "2m/RETEST/SHORT": {
     "symbols": {
       "ES": {
-        "n": 190,
-        "wrTP1": 51.6,
-        "expR": 0.064
+        "n": 220,
+        "wrTP1": 50.9,
+        "expR": 0.087
       },
       "YM": {
-        "n": 337,
-        "wrTP1": 49.9,
-        "expR": 0.152
+        "n": 365,
+        "wrTP1": 50.7,
+        "expR": 0.143
       },
       "GC": {
-        "n": 137,
-        "wrTP1": 41.6,
-        "expR": -0.017
+        "n": 166,
+        "wrTP1": 48.8,
+        "expR": 0.088
       },
       "NQ": {
-        "n": 105,
-        "wrTP1": 47.6,
-        "expR": 0.05
+        "n": 137,
+        "wrTP1": 44.5,
+        "expR": 0.165
       },
       "CL": {
         "n": 20,
@@ -1188,7 +1195,7 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
         "expR": -0.422
       }
     },
-    "expR_spread": 0.574,
+    "expR_spread": 0.587,
     "verdict": "instrument-specific"
   },
   "5m/INV/LONG": {
@@ -1225,45 +1232,45 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
         "expR": 0.163
       },
       "YM": {
-        "n": 60,
-        "wrTP1": 48.3,
-        "expR": 0.035
+        "n": 63,
+        "wrTP1": 46.0,
+        "expR": -0.016
       },
       "CL": {
-        "n": 113,
-        "wrTP1": 58.4,
-        "expR": 0.198
+        "n": 127,
+        "wrTP1": 61.4,
+        "expR": 0.309
       },
       "NQ": {
-        "n": 120,
-        "wrTP1": 50.8,
-        "expR": -0.051
+        "n": 126,
+        "wrTP1": 48.4,
+        "expR": -0.097
       }
     },
-    "expR_spread": 0.329,
-    "verdict": "universal"
+    "expR_spread": 0.406,
+    "verdict": "instrument-specific"
   },
   "5m/RETEST/SHORT": {
     "symbols": {
       "NQ": {
-        "n": 47,
-        "wrTP1": 53.2,
-        "expR": -0.014
+        "n": 57,
+        "wrTP1": 50.9,
+        "expR": -0.011
       },
       "ES": {
-        "n": 56,
-        "wrTP1": 55.4,
-        "expR": 0.098
+        "n": 79,
+        "wrTP1": 59.5,
+        "expR": 0.188
       },
       "GC": {
-        "n": 44,
-        "wrTP1": 29.5,
-        "expR": -0.406
+        "n": 54,
+        "wrTP1": 37.0,
+        "expR": -0.107
       },
       "YM": {
-        "n": 89,
-        "wrTP1": 48.3,
-        "expR": 0.161
+        "n": 100,
+        "wrTP1": 52.0,
+        "expR": 0.19
       },
       "CL": {
         "n": 8,
@@ -1271,7 +1278,7 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
         "expR": -0.239
       }
     },
-    "expR_spread": 0.567,
+    "expR_spread": 0.429,
     "verdict": "instrument-specific"
   }
 }
@@ -1283,25 +1290,40 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
   "available": true,
   "n_events": 10,
   "near_news_30m": {
-    "n": 0
+    "n": 40,
+    "wrTP1": 60.0,
+    "nSL": 8,
+    "nTO": 8,
+    "expR": 1.954,
+    "pf": 10.77,
+    "mfe_p25": 32.25,
+    "mfe_p50": 88.0,
+    "mfe_p75": 174.0,
+    "winnerMAE_p75": 15.0,
+    "winnerMAE_p90": 30.799999999999997,
+    "loserMFEbeforeSL_p50": 14.0,
+    "bars_win_p50": 4.0,
+    "bars_loss_p50": 9.5,
+    "entryZoneTk_p50": -27.0,
+    "revAfterSL_rate": 25.0
   },
   "away_from_news": {
-    "n": 7039,
-    "wrTP1": 45.6,
-    "nSL": 3448,
-    "nTO": 379,
-    "expR": 0.015,
-    "pf": 1.03,
+    "n": 7712,
+    "wrTP1": 46.2,
+    "nSL": 3723,
+    "nTO": 426,
+    "expR": 0.033,
+    "pf": 1.07,
     "mfe_p25": 7.0,
-    "mfe_p50": 15.0,
-    "mfe_p75": 37.0,
+    "mfe_p50": 16.0,
+    "mfe_p75": 38.0,
     "winnerMAE_p75": 11.0,
     "winnerMAE_p90": 23.0,
     "loserMFEbeforeSL_p50": 4.0,
-    "bars_win_p50": 2.5,
+    "bars_win_p50": 3.0,
     "bars_loss_p50": 4.0,
     "entryZoneTk_p50": -12.0,
-    "revAfterSL_rate": 32.8
+    "revAfterSL_rate": 33.2
   }
 }
 ```
@@ -1430,25 +1452,25 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
       "2026-09-10 (jueves): salto grande de dato nuevo (bus asento signals/outcomes/2026-09-08.jsonl completos, +1203 pares en todo el dataset). Patron de metodo importante que se repite: 1m SHORT paso de un delta que parecia muy fuerte (n=514, delta=0.417) a uno mas moderado pero todavia solido (n=898, delta=0.181) -- confirma otra vez que las lecturas con n en los cientos bajos pueden sobrestimar el efecto, tratar el numero mas reciente (mayor n) como el mas representativo, no promediar con lecturas viejas de n mas chico. 5m LONG PERDIO la certificacion 'al filo' de ayer (CI90 volvio a cruzar cero) -- se cumplio la advertencia de tratarlo como debil; sacarlo de cualquier propuesta hasta que vuelva a certificar sostenido. 2m SHORT tambien se debilito (certifica al filo, limite inferior del CI90 en 0.001). El unico segmento que se fortalecio con mas confianza fue 1m LONG (tercera confirmacion, delta estable) y 5m SHORT (sigue siendo el efecto mas grande, con margen). Vista global: SOLO 1m LONG, 1m SHORT y 5m SHORT siguen siendo candidatos solidos para la propuesta de la revision semanal del domingo 2026-09-13; 2m SHORT es candidato debil; 2m LONG y 5m LONG quedan fuera por ahora.",
       "2026-09-11 (viernes): incidente de repo (origin/main reescrito rio arriba, sin ancestro comun con la rama local; verificado como superset sin perdida de datos, resuelto con git reset --hard origin/main -- ver playbooks para el detalle). Dato nuevo genuino post-reset. Vista actualizada de candidatos: 1m LONG sigue solido (cuarta confirmacion, delta 0.163); 1m SHORT certifica pero a un paso de perder la certificacion (limite inferior del CI90 bajo a 0.003, vigilar de cerca); 5m SHORT sigue siendo el efecto mas grande y ahora la lectura mas solida (CI90 se estrecho); 5m LONG RECUPERA la certificacion que habia perdido ayer (tercer vaiven en 3 dias, seguir tratando como inestable). 2m SHORT PIERDE la certificacion 'al filo' de ayer (CI90 volvio a cruzar cero) -- se une a 2m LONG como no-candidato. Vista para la revision semanal del domingo 2026-09-13: candidatos solidos = 1m LONG y 5m SHORT; candidato debil/al filo = 1m SHORT; inestable (no incluir todavia) = 5m LONG; fuera = 2m LONG y 2m SHORT."
     ],
-    "beforeN": 6845,
+    "beforeN": 7541,
     "afterN": 0,
     "before": {
-      "n": 6845,
-      "wrTP1": 45.6,
-      "nSL": 3362,
-      "nTO": 362,
-      "expR": 0.013,
-      "pf": 1.03,
+      "n": 7541,
+      "wrTP1": 46.3,
+      "nSL": 3635,
+      "nTO": 416,
+      "expR": 0.042,
+      "pf": 1.09,
       "mfe_p25": 7.0,
-      "mfe_p50": 15.0,
-      "mfe_p75": 37.0,
+      "mfe_p50": 16.0,
+      "mfe_p75": 38.0,
       "winnerMAE_p75": 11.0,
       "winnerMAE_p90": 23.0,
       "loserMFEbeforeSL_p50": 4.0,
-      "bars_win_p50": 2.0,
+      "bars_win_p50": 3.0,
       "bars_loss_p50": 4.0,
       "entryZoneTk_p50": -12.0,
-      "revAfterSL_rate": 33.0
+      "revAfterSL_rate": 33.4
     },
     "after": {
       "n": 0
@@ -1463,52 +1485,47 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
   "available": true,
   "latest_plan": {
     "date": "2026-09-11",
-    "session": "asia",
-    "runType": "asia-2",
-    "generatedAt": "2026-09-10T19:15:00-05:00",
+    "session": "ny",
+    "runType": "pre-ny",
+    "generatedAt": "2026-09-11T07:55:00-05:00",
     "schema": "sa-plan-2",
-    "cleanest": "ES",
+    "cleanest": "NQ",
     "focus": {
-      "sym": "ES",
-      "verdict": "AVOID",
-      "window": "20:00-23:00 CT",
+      "sym": "NQ",
+      "verdict": "WAIT",
+      "window": "08:30-11:00 CT",
       "setup": {
-        "es": "A+ retest IBH/VAH 7615-7632 + FVG 1h 7609-7632, corto a favor -- en espera de que enfrie el estiramiento",
-        "en": "A+ IBH/VAH retest 7615-7632 + 1h FVG 7609-7632, short with bias -- waiting for the stretch to cool"
+        "es": "probando el techo del cluster VAH/FVG 29359-29363 tras romper el IB al alza -- si confirma, la entrada real es el retroceso a 29309-29333 (EMA20/EMA50/VAH)",
+        "en": "testing the top of the VAH/FVG 29359-29363 cluster after breaking the IB up -- if it confirms, the real entry is the pullback to 29309-29333 (EMA20/EMA50/VAH)"
       },
       "trigger": {
-        "es": "primero que el estiramiento baje de 2A; luego mecha dentro de 7615-7632 con cierre 5m de vuelta bajo 7615, o barrida de 7632 y rechazo inmediato",
-        "en": "first wait for the stretch to drop under 2A; then a wick into 7615-7632 with a 5m close back below 7615, or a 7632 sweep with an immediate rejection"
+        "es": "cierre 5m sostenido sobre 29363 con seguimiento primero; luego, en el retroceso, cierre 5m de vuelta sobre 29309",
+        "en": "a sustained 5m close above 29363 with follow-through first; then, on the pullback, a 5m close back above 29309"
       },
       "invalid": {
-        "es": "cierre 5m sostenido sobre 7646 (techo del FVG 4h)",
-        "en": "5m close sustained above 7646 (4h FVG top)"
+        "es": "cierre 5m sostenido bajo 29278 devuelve todo el cluster y reabre el corto hacia el PDL 29043.25",
+        "en": "a sustained 5m close below 29278 gives back the whole cluster and reopens the short toward the PDL 29043.25"
       },
       "note": {
-        "es": "estirado 2.43A tras la reapertura -- no persigas mas corto aqui; la tesis (3 sesiones limpias) sigue siendo la mejor del complejo pero toca esperar a que enfrie antes del rebote a la zona",
-        "en": "stretched 2.43A after the reopen -- don't chase more short here; the thesis (3 clean sessions) is still the best in the complex but it needs to cool off before the bounce into the zone"
+        "es": "todo el complejo (NQ/ES/YM) esta probando el mismo tipo de techo a la vez tras el CPI de las 07:30 CT -- no persigas el toque, el dia ya gasto 82-95% de su presupuesto de rango; espera el retroceso",
+        "en": "the whole complex (NQ/ES/YM) is testing the same kind of ceiling at once after the 07:30 CT CPI -- don't chase the touch, the day has already burned 82-95% of its range budget; wait for the pullback"
       }
     },
     "summary": {
       "es": [
-        "!! precision de escenario A bajo 30% en NQ/ES/GC (20d) -- escepticismo extra con escenarios A hoy (la otra causa de la alarma del pre-asia, orb caido, ya se resolvio)",
-        "reapertura sin resolucion en indices: NQ y ES profundizaron el corto sin testear sus zonas A+ -- ahora estirados 3.55A/2.43A, AVOID temporal a perseguir mas aqui, ambos pegados a su minimo overnight",
-        "GC y CL: el estiramiento extremo citado en el pre-asia (13.35A/15.22A) se normalizo (1.15A/0.99A command) -- era discrepancia de fuentes, no un giro real; siguen sin zona A+ a tiro, quedan en WAIT",
-        "YM sigue en conflicto de marcos y ahora ademas indeciso (command paso de SHORT a NEUTRAL/DEBIL en el chop) -- WAIT",
-        "CL ya hizo maximo nuevo sin retroceso (104.46, rompio el IBH previo 104.04) -- confirma el escenario B previsto (prob 0.68); el retroceso a 99.73-100.64 sigue sin llegar",
-        "mas limpio: ES (tesis mas solida, 3 sesiones de confirmacion limpia) pero ahora en AVOID por estiramiento -- vigila que enfrie antes del rebote a 7615-7632",
-        "limite $1000 por cuenta -- ninguna zona de hoy da maxContracts>0 en full size, revisa micros antes de entrar"
-      ],
-      "en": [
-        "!! scenario-A accuracy under 30% on NQ/ES/GC (20d) -- extra skepticism on scenario-A calls today (the pre-asia's other alarm cause, orb down, has resolved)",
-        "unresolved index reopen: NQ and ES deepened the short without tes
+        "El CPI de EEUU (07:30 CT, 25 min antes de esta corrida) desato una ruptura de todo el complejo de indices: NQ, ES e YM rompieron su Initial Balance al alza y prueban el techo de sus respectivos clusters de decision a la vez -- pero los 3 ya gastaron 81-95% de su presupuesto de rango, sin margen para perseguir.",
+        "NQ WAIT: GIRA el sesgo a LARGO (marco diario volteo a +1, alineado con el semanal), probando el techo 29359-29363 sin cierre confirmado -- espera el retroceso a 29309-29333.",
+        "ES WAIT: tambien GIRA a LARGO, pero literalmente a 1.5pts de romper su propia tesis bajista de 3 dias (7648) con solo 7.25pts de ATR restante -- sin margen para forzar nada.",
+        "GC WAIT: el mas mixto del complejo, 1h/4h confirman alcista pero command fusiona NEUTRAL/DEBIL sin permiso de entrada; su zona de venta 4432-4453 queda fuera de alcance esta sesion.",
+        "YM WAIT: unico indice que NO volteo su marco diario -- roza el maximo overnight 52500 tras 14 toques sin un solo reclamo, mantiene el corto de fondo degradado en vez de girar como NQ/ES.",
+        "CL WAIT: confirmo la ruptura de su propia tesis larga (perdio 100.04) tras el giro violento de Londres -- dia ya al 145% de su ATR normal, reinicio bajista candidato, sin presupuesto para
 ```
 
 ## Session Analyst x resultado scalp (hipotesis AVOID rinde peor)
 ```json
 {
   "available": true,
-  "n_matched": 2616,
+  "n_matched": 2694,
   "by_verdict": {
     "AVOID": {
       "n": 909,
@@ -1547,22 +1564,22 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
       "revAfterSL_rate": 31.5
     },
     "WAIT": {
-      "n": 1442,
-      "wrTP1": 48.4,
-      "nSL": 654,
-      "nTO": 90,
-      "expR": 0.084,
+      "n": 1520,
+      "wrTP1": 48.9,
+      "nSL": 684,
+      "nTO": 93,
+      "expR": 0.081,
       "pf": 1.18,
       "mfe_p25": 8.0,
-      "mfe_p50": 21.0,
-      "mfe_p75": 51.0,
-      "winnerMAE_p75": 16.0,
-      "winnerMAE_p90": 32.0,
+      "mfe_p50": 20.0,
+      "mfe_p75": 49.0,
+      "winnerMAE_p75": 15.0,
+      "winnerMAE_p90": 30.0,
       "loserMFEbeforeSL_p50": 4.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
-      "entryZoneTk_p50": -16.0,
-      "revAfterSL_rate": 37.2
+      "entryZoneTk_p50": -15.0,
+      "revAfterSL_rate": 37.1
     }
   },
   "by_verdict_ci90": {
@@ -1585,13 +1602,13 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
       "n": 264
     },
     "WAIT": {
-      "expR": 0.084,
+      "expR": 0.081,
       "ci90": [
-        0.031,
-        0.137
+        0.029,
+        0.133
       ],
       "p_mean_le_0": 0.004,
-      "n": 1415
+      "n": 1490
     }
   },
   "avoid_vs_rest": {
@@ -1614,17 +1631,17 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
       "revAfterSL_rate": 35.3
     },
     "GO_or_WAIT": {
-      "n": 1707,
-      "wrTP1": 48.5,
-      "nSL": 784,
-      "nTO": 95,
-      "expR": 0.074,
+      "n": 1785,
+      "wrTP1": 48.9,
+      "nSL": 814,
+      "nTO": 98,
+      "expR": 0.072,
       "pf": 1.16,
       "mfe_p25": 8.0,
-      "mfe_p50": 21.0,
-      "mfe_p75": 49.0,
-      "winnerMAE_p75": 15.0,
-      "winnerMAE_p90": 30.0,
+      "mfe_p50": 20.0,
+      "mfe_p75": 48.0,
+      "winnerMAE_p75": 14.0,
+      "winnerMAE_p90": 29.0,
       "loserMFEbeforeSL_p50": 4.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
@@ -1643,34 +1660,34 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
       "n": 898
     },
     "GO_or_WAIT": {
-      "expR": 0.074,
+      "expR": 0.072,
       "ci90": [
-        0.025,
-        0.123
+        0.026,
+        0.122
       ],
-      "p_mean_le_0": 0.004,
-      "n": 1679
+      "p_mean_le_0": 0.003,
+      "n": 1754
     }
   },
   "by_kind_side": {
     "INV/LONG": {
       "WAIT": {
-        "n": 19,
-        "wrTP1": 57.9,
-        "nSL": 7,
+        "n": 20,
+        "wrTP1": 55.0,
+        "nSL": 8,
         "nTO": 1,
-        "expR": 0.215,
-        "pf": 1.58,
-        "mfe_p25": 19.5,
-        "mfe_p50": 43.0,
-        "mfe_p75": 55.0,
+        "expR": 0.154,
+        "pf": 1.39,
+        "mfe_p25": 15.25,
+        "mfe_p50": 38.5,
+        "mfe_p75": 53.5,
         "winnerMAE_p75": 20.0,
         "winnerMAE_p90": 25.0,
-        "loserMFEbeforeSL_p50": 1.0,
+        "loserMFEbeforeSL_p50": 0.5,
         "bars_win_p50": 4.0,
-        "bars_loss_p50": 8.0,
-        "entryZoneTk_p50": -17.0,
-        "revAfterSL_rate": 28.6
+        "bars_loss_p50": 6.0,
+        "entryZoneTk_p50": -16.5,
+        "revAfterSL_rate": 37.5
       }
     },
     "INV/SHORT": {
@@ -1749,22 +1766,22 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
         "revAfterSL_rate": 36.8
       },
       "WAIT": {
-        "n": 758,
+        "n": 780,
         "wrTP1": 52.1,
-        "nSL": 318,
-        "nTO": 45,
-        "expR": 0.202,
-        "pf": 1.48,
-        "mfe_p25": 9.0,
-        "mfe_p50": 24.0,
-        "mfe_p75": 55.0,
+        "nSL": 327,
+        "nTO": 47,
+        "expR": 0.191,
+        "pf": 1.45,
+        "mfe_p25": 8.0,
+        "mfe_p50": 23.0,
+        "mfe_p75": 53.0,
         "winnerMAE_p75": 13.0,
-        "winnerMAE_p90": 25.600000000000023,
+        "winnerMAE_p90": 25.0,
         "loserMFEbeforeSL_p50": 4.0,
         "bars_win_p50": 2.0,
         "bars_loss_p50": 4.0,
-        "entryZoneTk_p50": -16.0,
-        "revAfterSL_rate": 40.3
+        "entryZoneTk_p50": -15.0,
+        "revAfterSL_rate": 39.4
       }
     },
     "RETEST/SHORT": {
@@ -1805,22 +1822,22 @@ n_losses=3448  causas: RR-bajo×1291, contra-estructura×1242, stop-en-el-minimo
         "revAfterSL_rate": 15.2
       },
       "WAIT": {
-        "n": 646,
-        "wrTP1": 43.8,
-        "nSL": 320,
-        "nTO": 43,
-        "expR": -0.055,
-        "pf": 0.89,
-        "mfe_p25": 8.0,
-        "mfe_p50": 19.0,
-        "mfe_p75": 48.0,
-        "winnerMAE_p75": 20.0,
-        "winnerMAE_p90": 36.80000000000001,
+        "n": 701,
+        "wrTP1": 45.2,
+        "nSL": 340,
+        "nTO": 44,
+        "expR": -0.04,
+        "pf": 0.92,
+        "mfe_p25": 7.0,
+        "mfe_p50": 17.0,
+        "mfe_p75": 43.0,
+        "winnerMAE_p75": 18.0,
+        "winnerMAE_p90": 34.0,
         "loserMFEbeforeSL_p50": 3.0,
         "bars_win_p50": 2.0,
         "bars_loss_p50": 3.0,
-        "entryZoneTk_p50": -15.0,
-        "revAfterSL_rate": 34.1
+        "entryZoneTk_p50": -14.0,
+        "revAfterSL_rate": 34.7
       }
     }
   },

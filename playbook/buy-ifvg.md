@@ -3,86 +3,94 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-11 · n: 100)
+## Sección viva  (última revisión: 2026-09-12 · n: 102)
 
 ### Nota de proceso
-Ver `buy-retest.md` para el incidente de repo de hoy (reset a
-`origin/main`, superset verificado, sin pérdida de datos). Este segmento
-(prioridad 2) sí participó del salto: n 82→100 (**+18**; 1m +11, 2m +4, 5m
-+3) — la muestra más grande que ha sumado este playbook en un solo día.
+Sin incidentes de repo hoy. Este segmento (prioridad 2) creció poco, como
+es habitual: n 100→102 (**+2**, todo en 1m).
 
 ### Veredicto global
-1m n=64 (+11, WR 43.8%, E[R]=**0.097** PF=1.2, 29 SL — bajó de +0.225,
-primer retroceso del 1m tras varios días subiendo); 2m n=26 (+4, WR
-42.3%, E[R]=**-0.247** PF=0.56, 14 SL — mejoró de -0.32 pero sigue siendo
-la peor rama del segmento); 5m n=10 (+3, WR 90.0%, E[R]=**0.849** PF=99,
-0 SL). `segment_significance`: 1m CI90=[-0.168,0.382] p=0.285 n=62 (se
-alejó de certificar, venía de [-0.084,0.531] p=0.127); 2m
-CI90=[-0.537,0.051] p=0.904 n=26 (mejoró un poco, sigue lejos de
-certificar); **5m aparece por primera vez con `survives_fdr10=true`**
-(CI90=[0.522,1.254] p=0.0, n=10) — **no usable**: la regla del propio
-playbook exige n≥20 para proponer cualquier cambio, y n=10 es awfully
-small para un PF=99 (0 pérdidas); tratar como ruido de muestra mínima,
-no como hallazgo.
+1m n=66 (+2, WR 43.9%, E[R]=**0.129** PF=1.27, 30 SL — subió de +0.097,
+recupera la racha de subida tras el retroceso de ayer); 2m n=26 (sin
+cambio, cero señales nuevas, WR 42.3%, E[R]=-0.247 PF=0.56, 14 SL —
+congelado, sigue siendo la peor rama); 5m n=10 (sin cambio, WR 90.0%,
+E[R]=0.849 PF=99, 0 SL — congelado). `segment_significance`: 1m
+CI90=[-0.138,0.414] p=0.231 n=64 (mejoró un poco desde [-0.168,0.382),
+sigue lejos de certificar); 2m y 5m sin cambio (congelados, mismas
+cifras que ayer). `survives_fdr10=true` en 5m se mantiene (CI90=
+[0.522,1.254], n=10) — sigue **no usable**: muy por debajo del piso n≥20
+del playbook, tratar como ruido de muestra mínima.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
-Sin n suficiente todavía para certificar en la mayoría de las ramas:
+Sin n suficiente todavía para certificar en la mayoría de las ramas; casi
+toda la actividad de hoy fue en `edge=0`:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=1` | sigue siendo la mejor rama, aunque el efecto se moderó | 55 (+14) / 41 (+4) / 4 (sin cambio) | WR 47.3%/48.8%/50.0%; E[R] +0.114/+0.005/+0.455 (edge=0 casi colapsó de +0.161 a +0.005); PF 1.27/1.01/1.91 | baja-moderada — `edge=1` ahora tiene la muestra más grande de las tres, pero `edge=0` se diluyó fuerte |
-| 2 | `tier=B` | mejor que `tier=C`, aunque ambos bajaron | 30 (+7) / 70 (+11) | E[R] +0.14 (venía de +0.293) vs +0.059 (venía de +0.047); PF 1.34 vs 1.13 | baja-moderada — mismo sentido que ayer pero B se moderó bastante, sin cambiar el orden |
+| 1 | `nearEdge=1` | sigue siendo la mejor rama, congelada hoy | 55 (sin cambio) / 43 (+2) / 4 (sin cambio) | WR 47.3%/48.8%/50.0%; E[R] +0.114 (sin cambio) / +0.057 (subió de +0.005) / +0.455 (sin cambio) | baja-moderada — `edge=0` se recupera un poco pero sigue siendo la rama más débil de las tres |
+| 2 | `tier=B` | mejor que `tier=C`, ambos congelados/con poco cambio | 30 (sin cambio) / 72 (+2) | E[R] +0.14 (sin cambio) vs +0.089 (subió de +0.059); PF 1.34 vs 1.19 | baja-moderada — mismo sentido que ayer, la brecha entre B y C se achica |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`; ver `entryZoneTk` de ganadores vs perdedores)
 
 ### Gestión
-- `managed_vs_naive`: 1m n=62 delta=**+0.173** (naive 0.097→managed 0.27,
-  ayuda más que ayer, +0.142); 2m n=26 delta=+0.017 (naive
-  -0.247→managed -0.231, casi sin cambio, sigue apenas positivo); 5m n=10
-  delta=**-0.117** (naive 0.849→managed 0.732 — **cambia de signo**,
-  ahora la gestión resta en 5m INV/LONG, aunque con n=10 no es
-  concluyente).
-- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=62
-  delta=**+0.028** CI90=[-0.435,0.499] no certifica (bajó fuerte de
-  +0.168, casi a cero); 2m **sigue certificando por cuarto día, pero al
-  filo**: n=26 (+4) delta=**+1.066** CI90=**[0.007,2.311]** (bajó de
-  +1.394, el límite inferior cayó de 0.185 a 0.007 — a un paso de perder
-  la certificación); 5m n=10 (+3) delta=**-1.307** CI90=**[-1.91,-0.771]**
-  (primera vez con CI calculable — confirma que el SL de 3 capas es
-  MEJOR que el estructural en 5m INV/LONG, sentido opuesto a 2m, aunque
-  n=10 sigue por debajo del piso de n≥20 del playbook). Sigue sin
-  proponerse cambio en `experiments.json` para INV/LONG — 2m sigue siendo
-  el único candidato con algo de solidez, pero está debilitándose.
+- `managed_vs_naive`: 1m n=64 delta=**+0.149** (naive 0.129→managed
+  0.278, bajó un poco de +0.173, sigue ayudando mucho); 2m n=26
+  delta=+0.017 (sin cambio, congelado); 5m n=10 delta=**-0.117** (sin
+  cambio, congelado, la gestión sigue restando en 5m INV/LONG con n
+  demasiado chico para concluir).
+- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=64 (+2)
+  delta=**-0.039** CI90=[-0.482,0.455] no certifica (se dio vuelta a
+  ligeramente negativo desde +0.028, sigue siendo ruido alrededor de
+  cero); 2m **sigue certificando, sin cambio (congelado)**: n=26
+  delta=+1.066 CI90=[0.007,2.311] (mismas cifras que ayer, sigue al
+  filo); 5m n=10 delta=-1.307 CI90=[-1.91,-0.771] (sin cambio,
+  congelado). Sigue sin proponerse cambio en `experiments.json` para
+  INV/LONG — 2m sigue siendo el único candidato con algo de solidez, pero
+  sin dato nuevo que lo confirme o lo debilite hoy.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Cruce con Session Analyst
-INV/LONG bajo veredicto SA `WAIT` n=19 (+11) E[R]=**0.215** PF=1.58 (bajó
-de +0.396 con más muestra, sigue positivo); la celda `GO` que ayer tenía
-n=5 ya no aparece (cayó bajo el piso de n≥5 que usa este corte) — no hay
-lectura propia de `GO` hoy en este segmento. Con `WAIT` como único dato,
-no se puede comparar contra la hipótesis original aquí; ver
-`buy-retest.md`/`sell-retest.md` para el hallazgo agregado, que hoy se
-invirtió por completo (SA=WAIT pasa a ser la mejor rama en RETEST/LONG,
-ya no SA=AVOID).
+INV/LONG bajo veredicto SA `WAIT` n=20 (+1) E[R]=**0.154** PF=1.39 (bajó
+de +0.215 con algo más de muestra, sigue positivo); no hay lectura propia
+de `GO`/`AVOID` hoy en este segmento (n por debajo del piso de 5). Con
+`WAIT` como único dato, sigue sin poder compararse contra la hipótesis
+original aquí; ver `buy-retest.md`/`sell-retest.md` para el hallazgo
+agregado (WAIT mejor, GO peor, sostenido por segundo día seguido y ya con
+respaldo estadístico a nivel global).
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 43 pérdidas INV/LONG (+9 vs ayer): **cambia el
-  orden** — `killzone-Asia-largo` 21/43 (48.8%) pasa a ser la causa más
-  frecuente, `RR-bajo` 20/43 (46.5%) muy cerca detrás (venía siendo
-  dominante en solitario con 56%), `contra-estructura` 13/43 (30.2%)
-  tercero. Ya no hay una causa claramente dominante en solitario.
-- `cross_instrument` sigue `instrument-specific` pero el spread se
-  estrechó bastante (0.935→0.754): CL n=19 (+5) E[R]=0.32 (bajó de
-  0.428), YM n=21 (+3) E[R]=0.194 (bajó fuerte de 0.501), GC n=11 (+3)
-  E[R]=-0.193 (empeoró de -0.141), ES n=7 (sin cambio) E[R]=-0.434, NQ
-  n=6 (sin cambio) E[R]=0.257 — n por símbolo sigue chico, no
-  generalizar.
+- Autopsia de SL sobre las 44 pérdidas INV/LONG (+1 vs ayer): sin cambio
+  de orden — `killzone-Asia-largo` 22/44 (50.0%) sigue como causa más
+  frecuente, `RR-bajo` 21/44 (47.7%) muy cerca detrás, `contra-estructura`
+  13/44 (29.5%) tercero. Segundo día seguido con este orden, empieza a
+  verse más estable que el vaivén de días previos.
+- `cross_instrument` sigue `instrument-specific`, spread se ensanchó un
+  poco (0.754→0.834): CL n=21 (+2) E[R]=0.4 (subió de 0.32, único símbolo
+  con dato nuevo), YM/ES/NQ/GC sin cambio (E[R] 0.194/-0.434/0.257/-0.193
+  respectivamente) — n por símbolo sigue chico, no generalizar.
 
 ### Decaimiento
 _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
 
 ## Histórico de cambios
+- 2026-09-12 (sábado): n 100→102 (+2, todo en 1m), sin incidentes de
+  repo. Segmento casi congelado hoy: 2m y 5m sin señales nuevas (idénticas
+  a ayer en todas las métricas). 1m recupera la racha de subida
+  (E[R] 0.097→0.129). Autopsia de SL sostiene el mismo orden por segundo
+  día (`killzone-Asia-largo` > `RR-bajo` > `contra-estructura`).
+- 2026-09-11 (viernes): n 82→100 (+18; 1m+11, 2m+4, 5m+3), la muestra más
+  grande sumada en un día en este playbook. Mismo incidente de repo que
+  `buy-retest.md` (reset a `origin/main`, sin pérdida de datos). 1m
+  retrocede de E[R]=+0.225 a +0.097 (primer retroceso tras varios días
+  subiendo). `segment_significance` marca `survives_fdr10=true` en 5m por
+  primera vez (n=10, PF=99) — explícitamente **no accionable**, muy por
+  debajo del piso n≥20 del playbook. `sl_origin_vs_layer` en 2m sigue
+  certificando pero al filo (límite inferior del CI90 cayó a 0.007); en
+  5m aparece con CI calculable por primera vez y certifica en sentido
+  CONTRARIO a 2m (el SL de 3 capas gana, no el estructural), con n=10.
+  Autopsia de SL: `killzone-Asia-largo` desplaza a `RR-bajo` como causa
+  más frecuente (48.8% vs 46.5%, antes RR-bajo dominaba solo con 56%).
 - 2026-09-11 (viernes): n 82→100 (+18; 1m+11, 2m+4, 5m+3), la muestra más
   grande sumada en un día en este playbook. Mismo incidente de repo que
   `buy-retest.md` (reset a `origin/main`, sin pérdida de datos). 1m

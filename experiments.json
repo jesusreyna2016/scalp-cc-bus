@@ -31,75 +31,75 @@
       "minAfterN": 40,
       "evidence": {
         "source": "sl_origin_vs_layer.by_basis / by_tf_kind_side (medicion PARALELA: misma entrada y mismos TP, solo se mueve el stop; rMultiple = base 3-capas, rOrig = base mecha del retest). No requiere cambio en TradingView para medir.",
-        "asOf": "2026-09-11 (viernes -- incidente de repo: origin/main fue reescrito rio arriba, historia sin ancestro comun con la local; verificado como superset sin perdida de datos y resuelto con git reset --hard origin/main. Dato nuevo genuino del bus post-reset.)",
+        "asOf": "2026-09-12 (sabado). Dato nuevo genuino (+713 pares resueltos en todo el dataset desde ayer, n paso de 7039 a 7752). Sin incidentes de repo hoy.",
         "retest_1m_long": {
-          "n": 2135,
-          "deltaER_orig_minus_layer": 0.163,
+          "n": 2231,
+          "deltaER_orig_minus_layer": 0.152,
           "ci90": [
-            0.076,
-            0.254
+            0.069,
+            0.238
           ],
           "ci90_no_cruza_cero": true,
-          "nota": "n subio de 1706 a 2135, delta bajo un poco (0.178->0.163) pero sigue firme -- cuarta confirmacion independiente, sigue siendo la lectura mas estable del experimento."
+          "nota": "n subio de 2135 a 2231, delta bajo un poco (0.163->0.152) pero sigue firme -- quinta confirmacion independiente, sigue siendo la lectura mas estable del experimento."
         },
         "retest_1m_short": {
-          "n": 1252,
-          "deltaER_orig_minus_layer": 0.133,
+          "n": 1560,
+          "deltaER_orig_minus_layer": 0.139,
           "ci90": [
-            0.003,
-            0.271
+            0.022,
+            0.256
           ],
           "ci90_no_cruza_cero": true,
-          "nota": "n subio de 898 a 1252, delta bajo de 0.181 a 0.133 y el limite inferior del CI90 cayo de 0.027 a 0.003 -- certifica, pero a un paso de dejar de hacerlo; vigilar de cerca la proxima corrida."
+          "nota": "n subio de 1252 a 1560, delta subio un poco (0.133->0.139) y el limite inferior del CI90 SUBIO de 0.003 a 0.022 -- deja de estar 'a un paso de perder certificacion' y pasa a certificar con mas margen. Mejora, no solo estabilidad."
         },
         "retest_2m_long": {
-          "n": 1063,
-          "deltaER_orig_minus_layer": 0.042,
+          "n": 1116,
+          "deltaER_orig_minus_layer": 0.019,
           "ci90": [
-            -0.034,
-            0.126
+            -0.057,
+            0.104
           ],
           "ci90_no_cruza_cero": false,
-          "nota": "n subio de 866 a 1063, delta subio un poco (0.018->0.042) pero sigue sin certificar -- quinta lectura seguida confirmando que 2m LONG no es candidato."
+          "nota": "n subio de 1063 a 1116, delta bajo de 0.042 a 0.019 -- sexta lectura seguida confirmando que 2m LONG no es candidato."
         },
         "retest_2m_short": {
-          "n": 625,
-          "deltaER_orig_minus_layer": 0.096,
+          "n": 729,
+          "deltaER_orig_minus_layer": 0.11,
           "ci90": [
-            -0.009,
-            0.243
+            -0.001,
+            0.224
           ],
           "ci90_no_cruza_cero": false,
-          "nota": "PIERDE LA CERTIFICACION 'al filo' de ayer: n subio de 462 a 625, el CI90 volvio a cruzar cero (era [0.001,0.313]). Se cumplio la advertencia de tratarlo como debil -- sacar 2m SHORT de la propuesta de la revision semanal junto con 2m LONG."
+          "nota": "n subio de 625 a 729, delta subio de 0.096 a 0.11 pero el CI90 sigue sin cruzar del lado positivo (limite inferior -0.001, literalmente al borde) -- sigue fuera de la propuesta, pero es el no-candidato mas cerca de flipear."
         },
         "retest_5m_long": {
-          "n": 355,
-          "deltaER_orig_minus_layer": 0.154,
+          "n": 378,
+          "deltaER_orig_minus_layer": 0.187,
           "ci90": [
-            0.007,
-            0.314
+            0.028,
+            0.363
           ],
           "ci90_no_cruza_cero": true,
-          "nota": "RECUPERA LA CERTIFICACION que habia perdido ayer: n subio de 316 a 355, el CI90 volvio a quedar del lado positivo ([-0.011,0.32] -> [0.007,0.314]). Tercer vaiven certifica/no-certifica de este segmento en 3 dias -- seguir tratandolo como inestable, no incluir en la propuesta de la revision semanal hasta que se sostenga 2 lecturas seguidas del mismo lado."
+          "nota": "SEGUNDA LECTURA SEGUIDA CERTIFICANDO (09-11 y hoy): n subio de 355 a 378, delta MEJORO de 0.154 a 0.187, CI90 [0.007,0.314] -> [0.028,0.363] (mas lejos de cero). Cumple por primera vez la barra que el propio next_steps fijo ('sostenerse 2 lecturas seguidas del mismo lado') -- sube de 'inestable, no incluir' a 'candidato experimental para la revision semanal de manana', pero con la salvedad de que tuvo 3 vaivenes certifica/no-certifica en los 3 dias previos, asi que tratarlo como el mas fragil de los candidatos, no al nivel de 1m LONG/SHORT o 5m SHORT."
         },
         "retest_5m_short": {
-          "n": 198,
-          "deltaER_orig_minus_layer": 0.687,
+          "n": 252,
+          "deltaER_orig_minus_layer": 0.588,
           "ci90": [
-            0.13,
-            1.418
+            0.146,
+            1.133
           ],
           "ci90_no_cruza_cero": true,
-          "nota": "n subio de 149 a 198, delta bajo un poco (0.734->0.687) pero el CI90 se estrecho (antes [0.034,1.63]) -- sigue siendo el efecto mas grande y ahora tambien la lectura mas solida del dataset."
+          "nota": "n subio de 198 a 252, delta bajo de 0.687 a 0.588 (sigue siendo por lejos el mas grande) y el CI90 se estrecho de [0.13,1.418] a [0.146,1.133] -- sigue siendo la lectura mas solida del experimento."
         },
         "overall_by_basis_retestBar": {
-          "n": 4504,
-          "deltaER": 0.153,
+          "n": 4834,
+          "deltaER": 0.143,
           "ci90": [
-            0.094,
-            0.214
+            0.087,
+            0.201
           ],
-          "nota": "n subio de 3637 a 4504, delta bajo un poco (0.162->0.153) -- sigue sin usarse sola como evidencia, la decision es por tf/side de la tabla de arriba."
+          "nota": "n subio de 4504 a 4834, delta bajo un poco (0.153->0.143) -- sigue sin usarse sola como evidencia, la decision es por tf/side de la tabla de arriba."
         }
       },
       "next_steps": [
@@ -112,7 +112,8 @@
         "Cuando se confirme con datos nuevos genuinos (no solo restaurados) durante varios dias mas y walk-forward este listo: cambio en Pine = para RETEST usar lg_slOrig (mecha de la vela del retest) como SL de trabajo en 1m (long y short) y 5m/2m SHORT; en 2m LONG y 5m LONG esperar mas confirmacion (5m LONG certifica pero al filo). Poner changeDate el dia que se aplique en los 12 graficos.",
         "Vigilar: retestBar2 (1m SHORT = mecha vela retest + vela previa) sigue siendo una fraccion chica de la muestra 1m short -- puede mover el numero cuando crezca.",
         "2026-09-10 (jueves): salto grande de dato nuevo (bus asento signals/outcomes/2026-09-08.jsonl completos, +1203 pares en todo el dataset). Patron de metodo importante que se repite: 1m SHORT paso de un delta que parecia muy fuerte (n=514, delta=0.417) a uno mas moderado pero todavia solido (n=898, delta=0.181) -- confirma otra vez que las lecturas con n en los cientos bajos pueden sobrestimar el efecto, tratar el numero mas reciente (mayor n) como el mas representativo, no promediar con lecturas viejas de n mas chico. 5m LONG PERDIO la certificacion 'al filo' de ayer (CI90 volvio a cruzar cero) -- se cumplio la advertencia de tratarlo como debil; sacarlo de cualquier propuesta hasta que vuelva a certificar sostenido. 2m SHORT tambien se debilito (certifica al filo, limite inferior del CI90 en 0.001). El unico segmento que se fortalecio con mas confianza fue 1m LONG (tercera confirmacion, delta estable) y 5m SHORT (sigue siendo el efecto mas grande, con margen). Vista global: SOLO 1m LONG, 1m SHORT y 5m SHORT siguen siendo candidatos solidos para la propuesta de la revision semanal del domingo 2026-09-13; 2m SHORT es candidato debil; 2m LONG y 5m LONG quedan fuera por ahora.",
-        "2026-09-11 (viernes): incidente de repo (origin/main reescrito rio arriba, sin ancestro comun con la rama local; verificado como superset sin perdida de datos, resuelto con git reset --hard origin/main -- ver playbooks para el detalle). Dato nuevo genuino post-reset. Vista actualizada de candidatos: 1m LONG sigue solido (cuarta confirmacion, delta 0.163); 1m SHORT certifica pero a un paso de perder la certificacion (limite inferior del CI90 bajo a 0.003, vigilar de cerca); 5m SHORT sigue siendo el efecto mas grande y ahora la lectura mas solida (CI90 se estrecho); 5m LONG RECUPERA la certificacion que habia perdido ayer (tercer vaiven en 3 dias, seguir tratando como inestable). 2m SHORT PIERDE la certificacion 'al filo' de ayer (CI90 volvio a cruzar cero) -- se une a 2m LONG como no-candidato. Vista para la revision semanal del domingo 2026-09-13: candidatos solidos = 1m LONG y 5m SHORT; candidato debil/al filo = 1m SHORT; inestable (no incluir todavia) = 5m LONG; fuera = 2m LONG y 2m SHORT."
+        "2026-09-11 (viernes): incidente de repo (origin/main reescrito rio arriba, sin ancestro comun con la rama local; verificado como superset sin perdida de datos, resuelto con git reset --hard origin/main -- ver playbooks para el detalle). Dato nuevo genuino post-reset. Vista actualizada de candidatos: 1m LONG sigue solido (cuarta confirmacion, delta 0.163); 1m SHORT certifica pero a un paso de perder la certificacion (limite inferior del CI90 bajo a 0.003, vigilar de cerca); 5m SHORT sigue siendo el efecto mas grande y ahora la lectura mas solida (CI90 se estrecho); 5m LONG RECUPERA la certificacion que habia perdido ayer (tercer vaiven en 3 dias, seguir tratando como inestable). 2m SHORT PIERDE la certificacion 'al filo' de ayer (CI90 volvio a cruzar cero) -- se une a 2m LONG como no-candidato. Vista para la revision semanal del domingo 2026-09-13: candidatos solidos = 1m LONG y 5m SHORT; candidato debil/al filo = 1m SHORT; inestable (no incluir todavia) = 5m LONG; fuera = 2m LONG y 2m SHORT.",
+        "2026-09-12 (sabado, ultima corrida antes de la revision semanal de manana domingo 2026-09-13): dato nuevo genuino sin incidentes de repo (+713 pares). Dos movimientos favorables: 1m SHORT deja de estar 'al filo' -- el limite inferior de su CI90 subio de 0.003 a 0.022, ya no es el candidato mas fragil de los tres solidos. Y sobre todo: **5m LONG certifica por SEGUNDA lectura seguida** (09-11 y hoy, delta 0.154->0.187, CI90 cada vez mas lejos de cero) -- es la primera vez que cumple la barra de '2 lecturas seguidas del mismo lado' que el propio experimento se puso el 09-08 tras tres vaivenes en 3 dias; pasa de 'inestable, no incluir' a candidato EXPERIMENTAL para la propuesta de manana, con la advertencia explicita de su historial volatil (no tratarlo al mismo nivel de confianza que 1m LONG/SHORT o 5m SHORT hasta una tercera lectura). 1m LONG (quinta confirmacion) y 5m SHORT (sigue siendo el efecto mas grande, CI90 mas angosto) se mantienen como los dos candidatos mas solidos sin cambios de fondo. 2m LONG (sexta lectura sin certificar) sigue fuera; 2m SHORT sigue sin certificar pero ahora es el no-candidato mas cerca de cero (limite inferior del CI90 = -0.001). PARA LA REVISION SEMANAL DE MANANA: candidatos solidos = 1m LONG, 1m SHORT (ya no al filo), 5m SHORT; candidato experimental (2 lecturas, vigilar una tercera) = 5m LONG; fuera = 2m LONG y 2m SHORT (este ultimo el mas cerca de flipear, seguir vigilando aunque no se proponga todavia)."
       ]
     }
   ]
