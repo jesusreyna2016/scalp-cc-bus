@@ -391,6 +391,30 @@ def decay(rows):
         out[k] = {"n": m["n"], "wrTP1": m.get("wrTP1"), "expR": m.get("expR")}
     return out
 
+def decay_weekly_by_segment(rows):
+    """decay_weekly desglosado por tf/kind/side, para la tabla de la revision
+    semanal (agent-instructions.md pide delta vs semana previa por segmento,
+    no solo global)."""
+    res = [r for r in rows if r["resolved"] and r["result"]]
+    wk = defaultdict(lambda: defaultdict(list))
+    for r in res:
+        try:
+            iso = r["recvDt"].isocalendar()
+            wkey = f"{iso[0]}-W{iso[1]:02d}"
+        except Exception:
+            continue
+        seg = f"{r['tf']}m/{r['kind']}/{r['side']}"
+        wk[wkey][seg].append(r)
+    out = {}
+    for wkey in sorted(wk):
+        segs = {}
+        for seg, rs in sorted(wk[wkey].items()):
+            m = seg_metrics(rs)
+            if m["n"] >= 1:
+                segs[seg] = {"n": m["n"], "wrTP1": m.get("wrTP1"), "expR": m.get("expR"), "pf": m.get("pf")}
+        out[wkey] = segs
+    return out
+
 # --------------------------------------------------- modelo logistico (P(TP1))
 FEATURES = ["biasScore", "aligned", "chopIdx", "stretchAtr", "structDir", "emaStack",
             "rvol", "atrPctUsed", "nearEdge", "nearTk", "entryZoneTk", "rr1", "hourNY"]
@@ -1087,6 +1111,7 @@ def main():
         "sl_post_mortem": None,
         "counterfactual": counterfactual(pairs),
         "decay_weekly": decay(pairs),
+        "decay_weekly_by_segment": decay_weekly_by_segment(pairs),
         "model": logistic_model(pairs),
         "experiments": eval_experiments(pairs),
         "session_analyst": None,
@@ -1107,6 +1132,23 @@ def main():
     causes, detail, causes_by_kind_side = sl_causes(pairs)
     report["sl_post_mortem"] = {"causes": causes, "n_losses": sum(1 for r in resolved if r["result"] == "SL"),
                                 "detail": detail[:60], "causes_by_kind_side": causes_by_kind_side}
+    # SL post-mortem de la semana ISO mas reciente (para la revision semanal del domingo)
+    if report["decay_weekly"]:
+        _last_week = sorted(report["decay_weekly"])[-1]
+        def _in_last_week(r):
+            try:
+                iso = r["recvDt"].isocalendar()
+                return f"{iso[0]}-W{iso[1]:02d}" == _last_week
+            except Exception:
+                return False
+        week_pairs = [r for r in pairs if _in_last_week(r)]
+        w_causes, w_detail, w_causes_by_kind_side = sl_causes(week_pairs)
+        report["sl_post_mortem_this_week"] = {
+            "week": _last_week, "causes": w_causes,
+            "n_losses": sum(1 for r in week_pairs if r["resolved"] and r["result"] == "SL"),
+            "example_sigIds": {c: [d["sigId"] for d in w_detail if c in d["causes"]][:5] for c in list(w_causes)[:3]},
+            "causes_by_kind_side": w_causes_by_kind_side,
+        }
     try:
         with open(os.path.join(ROOT, "state.json")) as f:
             _prev_state = json.load(f)
@@ -1146,6 +1188,7 @@ def main():
     state["metrics_by_kindside_aligned"] = report["by_kindside_aligned"]
     state["sl_causes"] = causes
     state["decay_weekly"] = report["decay_weekly"]
+    state["decay_weekly_by_segment"] = report["decay_weekly_by_segment"]
     state["walk_forward"] = report["walk_forward"]
     state["gate"] = report["gate"]
     state["managed_vs_naive"] = report["managed_vs_naive"]
@@ -1192,6 +1235,12 @@ def main():
     for seg, sd in causes_by_kind_side.items():
         L.append(f"- {seg} (n={sd['n']}): "
                  + ", ".join(f"{k}×{v}" for k, v in sd["causes"].items()) + "\n")
+    if report.get("sl_post_mortem_this_week"):
+        wpm = report["sl_post_mortem_this_week"]
+        L.append(f"\n## Autopsia de SL · semana {wpm['week']} (para revision semanal)\n")
+        L.append(f"n_losses={wpm['n_losses']}  causas: "
+                 + ", ".join(f"{k}×{v}" for k, v in wpm["causes"].items()) + "\n")
+        L.append("ejemplos por causa: " + json.dumps(wpm["example_sigIds"], ensure_ascii=False) + "\n")
     L.append("\n## Contrafactual de gestion\n```json\n"
              + json.dumps(report["counterfactual"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Modelo GESTIONADO (escalera + parciales) vs INGENUO\n```json\n"
@@ -1200,6 +1249,8 @@ def main():
              + json.dumps(report["sl_origin_vs_layer"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Decaimiento semanal\n```json\n"
              + json.dumps(report["decay_weekly"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Decaimiento semanal por segmento (tf/kind/side)\n```json\n"
+             + json.dumps(report["decay_weekly_by_segment"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Modelo P(TP1) (in-sample)\n```json\n"
              + json.dumps(report["model"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Walk-forward (fuera de muestra = el numero que cuenta)\n```json\n"

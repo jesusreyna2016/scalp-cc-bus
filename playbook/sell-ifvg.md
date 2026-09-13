@@ -3,80 +3,91 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-12 · n: 109)
+## Sección viva  (última revisión: 2026-09-13 · n: 113)
 
 ### Nota de proceso
-Sin incidentes de repo hoy. Este segmento: n 94→109 (**+15**; 1m +9, 2m
-+6, 5m sin cambio).
+Incidente menor de repo, ver `buy-retest.md`. Este segmento: n 109→113
+(**+4**; 1m +2, 2m +2, 5m sin cambio).
 
 ### Veredicto global
-1m n=71 (+9, WR 47.9%, E[R]=**+0.109** PF=1.23, 32 SL — prácticamente sin
-cambio de +0.111); 2m n=33 (+6, WR 33.3% sin cambio, E[R]=**-0.04**
-PF=0.93 — **se da vuelta a negativo otra vez**, venía de +0.019, segundo
-cambio de signo consecutivo); 5m n=5 (sin cambio, WR 60%, E[R]=-0.186,
-PF=0.54). `segment_significance`: 1m CI90=[-0.141,0.377] p=0.244 n=69
-(prácticamente sin cambio); 2m CI90=[-0.391,0.395] p=0.589 n=33 (el
-intervalo se estrechó un poco pero el E[R] volvió a negativo, sigue lejos
-de certificar).
+1m n=73 (+2, WR 46.6%, E[R]=**+0.077** PF=1.16, 34 SL — bajó de +0.109,
+sigue positivo pero se modera); 2m n=35 (+2, WR 37.1%, E[R]=**+0.044**
+PF=1.08 — **se da vuelta a positivo de nuevo**, venía de -0.04, tercer
+cambio de signo consecutivo en 3 corridas); 5m n=5 (sin cambio, WR 60%,
+E[R]=-0.186, PF=0.54). `segment_significance`: 1m CI90=[-0.168,0.332]
+p=0.315 n=71 (se ensanchó un poco, sigue lejos de certificar); 2m
+CI90=[-0.331,0.458] p=0.444 n=35 (el intervalo se ensanchó bastante y el
+E[R] volvió a positivo, sigue lejos de certificar en cualquier
+dirección).
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
-`edge=-1` n=65 (+8, WR 40.0%, E[R]=**+0.125**, subió de +0.08), `edge=0`
-n=41 (+6, WR 51.2%, E[R]=**-0.033** — **se da vuelta a negativo**, venía
-de +0.068), `edge=1` n=3 (+1, E[R]=**-0.527**, empeoró de -0.29). `tier=B`
-n=36 (+6, E[R]=**+0.157**, prácticamente sin cambio de +0.163) y `tier=C`
-n=73 (+9, E[R]=**-0.006** — se da vuelta a negativo, venía de +0.021).
+`nearEdge` **por primera vez en varias corridas NO cambia de forma**:
+`edge=-1` n=67 (+2, WR 40.3%, E[R]=**+0.146**, subió de +0.125), `edge=0`
+n=43 (+2, WR 51.2%, E[R]=**-0.051** — sigue negativo, bajó un poco de
+-0.033), `edge=1` n=3 (sin cambio, congelado, E[R]=**-0.527**). `tier=B`
+n=38 (+2, E[R]=**+0.192**, subió de +0.157) y `tier=C` n=75 (+2,
+E[R]=**-0.017**, sigue negativo, prácticamente igual a -0.006).
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge` (en INV/SHORT) | **se invierte de nuevo** — ahora `edge=-1` es la mejor rama, `edge=0` cae a negativo | 65/41/3 | E[R] +0.125/-0.033/-0.527 | baja — tercer cambio de forma en 3 corridas para este corte, sigue sin asentarse |
+| 1 | `nearEdge` (en INV/SHORT) | **mantiene la forma de ayer por primera vez** — `edge=-1` mejor rama, `edge=0`/`edge=1` negativos | 67/43/3 | E[R] +0.146/-0.051/-0.527 | baja-moderada — primera vez sin cambio de forma tras 3 corridas seguidas invirtiéndose; aún insuficiente para tratarlo como regla |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
 
 ### Gestión
-- `managed_vs_naive`: 1m n=69 delta=**+0.23** (bajó un poco de +0.279,
-  sigue ayudando mucho); 2m n=33 delta=**+0.063** (**se da vuelta a
-  positivo de nuevo**, venía de -0.021 — segundo cambio de signo
-  consecutivo en esta rama); 5m n=5 delta=+0.37 (sin cambio).
-- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=59 (+9)
-  delta=**+0.349** CI90=[-0.547,1.441] (bajó de +0.408, sigue sin
-  certificar, CI muy ancho); 2m n=32 (+6) delta=**+0.121**
-  CI90=**[-0.142,0.372]** (bajó bastante de +0.245, el límite inferior
-  se aleja de cero en vez de acercarse — pierde terreno respecto a la
-  lectura "cerca de certificar" de ayer). Ninguno certifica todavía. No
-  tocar el SL en INV/SHORT.
+- `managed_vs_naive`: 1m n=71 delta=**+0.224** (prácticamente igual a
+  +0.23, sigue ayudando mucho); 2m n=35 delta=**+0.022** (bajó de +0.063,
+  sigue positivo, tercera corrida en positivo tras el vaivén); 5m n=5
+  delta=+0.37 (sin cambio, congelado).
+- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=61 (+2)
+  delta=**+0.337** CI90=[-0.514,1.429] (prácticamente igual a +0.349,
+  sigue sin certificar, CI muy ancho); 2m n=34 (+2) delta=**+0.47**
+  CI90=**[-0.05,1.155]** (**salto grande** desde +0.121, el límite
+  inferior se acerca a cero desde -0.142 a -0.05) — movimiento grande con
+  apenas +2 de muestra, tratar como ruido de n chico, no como mejora
+  real; sigue sin certificar. Ninguno certifica todavía. No tocar el SL
+  en INV/SHORT.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Cruce con Session Analyst
 INV/SHORT bajo veredicto SA `AVOID` n=23 (sin cambio, cero señales nuevas
 cruzadas) E[R]=**-0.151** PF=0.72 y `WAIT` n=19 (sin cambio) E[R]=**-0.222**
-PF=0.53 — ambas celdas congeladas, sin dato nuevo hoy. Segundo día
-seguido con las dos ramas en negativo, mismo signo que ayer (a diferencia
-de `sell-retest.md`/`buy-retest.md`, donde el cruce sí se movió con dato
-nuevo) — sigue sin ser una regla explotable, sólo constancia de que no se
-revirtió por falta de muestra nueva, no por confirmación real.
+PF=0.53 — ambas celdas congeladas, sin dato nuevo hoy por tercer día
+seguido. Sigue sin ser una regla explotable, sólo constancia de que no se
+revirtió por falta de muestra nueva, no por confirmación real. Este
+sigue siendo el único playbook del bus que no muestra el patrón agregado
+"WAIT/GO mejor que AVOID" de `buy-retest.md`/`sell-retest.md`.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 52 pérdidas INV/SHORT (+9 vs ayer): `RR-bajo`
-  26/52 (50.0%) sigue siendo la causa dominante, sin cambio de posición
-  (segundo día con el mismo orden); `contra-estructura` 17/52 (32.7%) y
-  `stop-en-el-minimo` 14/52 (26.9%) se mantienen como segundo/tercer
-  lugar.
-- `cross_instrument` sigue `universal` (spread 0.328→0.327, prácticamente
-  sin cambio): YM n=49 (+3) E[R]=0.085 (subió de 0.042), NQ n=8 (+2)
-  E[R]=0.027 (bajó fuerte de 0.37, con muestra todavía chica), ES n=5
-  (+1) E[R]=0.354 (subió de 0.285), GC n=9 (+3) E[R]=0.168 (bajó de
-  0.235) — segundo día seguido como `universal`, aunque n por símbolo
+- Autopsia de SL sobre las 54 pérdidas INV/SHORT (+2 vs ayer): `RR-bajo`
+  26/54 (48.1%, conteo sin cambio, baja de % por el denominador mayor)
+  sigue siendo la causa dominante, tercer día con el mismo orden;
+  `contra-estructura` 18/54 (33.3%) y `stop-en-el-minimo` 14/54 (25.9%,
+  conteo sin cambio) se mantienen segundo/tercer lugar.
+- `cross_instrument` sigue `universal` (spread 0.327, prácticamente sin
+  cambio): YM n=50 (+1) E[R]=0.062 (bajó de 0.085), NQ n=8 (sin cambio)
+  E[R]=0.027, ES n=5 (sin cambio) E[R]=0.354, GC n=10 (+1) E[R]=0.051
+  (bajó de 0.168) — tercer día seguido como `universal`, n por símbolo
   sigue chico salvo YM.
 
 ### Decaimiento
-`decay_weekly` (global): 2026-W36 n=3179 (bajó de n=3183, tercera corrida
-seguida perdiendo muestra pero desacelerando — ver `buy-retest.md`) y
-2026-W37 n=4573 E[R]=+0.084 en el dataset completo (subió de +0.042) —
-este segmento sigue sin suficiente muestra propia por semana para medir
+`decay_weekly` (global): 2026-W36 n=3140 (bajó de n=3179, cuarta corrida
+seguida perdiendo muestra — ver `buy-retest.md`) y 2026-W37 n=5331
+E[R]=+0.072 en el dataset completo (bajó un poco de +0.084) — este
+segmento sigue sin suficiente muestra propia por semana para medir
 decaimiento aislado.
 
 ## Histórico de cambios
+- 2026-09-13 (domingo, REVISIÓN SEMANAL): n 109→113 (+4; 1m+2, 2m+2).
+  Incidente menor de repo, ver `buy-retest.md`. 2m se da vuelta a
+  positivo por tercera vez consecutiva (E[R] -0.04→+0.044) — sigue sin
+  asentarse, n=35 todavía chico. `nearEdge` deja de invertirse por
+  primera vez en 3 corridas (misma forma que ayer). `sl_origin_vs_layer`
+  en 2m da un salto grande (delta 0.121→0.47) con apenas +2 de muestra —
+  tratado como ruido, no como mejora real. Sigue siendo el único playbook
+  del bus sin el patrón agregado "AVOID rinde peor" (cruce con Session
+  Analyst congelado por tercer día).
 - 2026-09-12 (sábado): n 94→109 (+15; 1m+9, 2m+6), sin incidentes de
   repo. 2m se da vuelta a negativo por segunda vez consecutiva (E[R]
   +0.019→-0.04) y `managed_vs_naive` en 2m se da vuelta a positivo
