@@ -3,58 +3,50 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-13 · n: 108)
+## Sección viva  (última revisión: 2026-09-14 · n: 111)
 
 ### Nota de proceso
-Incidente menor de repo, ver `buy-retest.md`. Este segmento (prioridad 2)
-creció poco, como es habitual: n 102→108 (**+6**; 1m+7, **2m -1**, 5m sin
-cambio) — ver alerta abajo sobre el 2m.
+`git pull` limpio hoy, sin incidentes. Segmento de prioridad 2, crece
+poco como es habitual: n 108→111 (**+3**; 1m+2, 2m+1, 5m sin cambio).
 
 ### Veredicto global
-1m n=73 (+7, WR 42.5%, E[R]=**0.123** PF=1.25, 33 SL — bajó un poco de
-+0.129, sigue en terreno claramente positivo); 2m n=25 (**bajó de 26 a
-25** — `report.alerts` lo marca explícitamente: "MUESTRA:
-by_tf_kind_side/2m/INV/LONG bajó de n=26 a n=25 desde la corrida previa
-(agregado, no archivo crudo)"; `file_integrity_check` confirma que
-ningún `signals/outcomes/*.jsonl` encogió, así que es re-pareo/dedup del
-agregado, no pérdida real — pero es la primera vez que este segmento en
-concreto se ve afectado, vigilar si se repite; WR 44.0%, E[R]=**-0.217**
-PF=0.6, 13 SL — mejoró un poco de -0.247 pese al n menor, sigue siendo la
-peor rama); 5m n=10 (sin cambio, WR 90.0%, E[R]=0.849 PF=99, 0 SL —
-congelado). `segment_significance`: 1m CI90=[-0.132,0.396] p=0.228 n=70
+1m n=75 (+2, WR 44.0%, E[R]=**0.139** PF=1.29, 33 SL — subió de +0.123,
+sigue en terreno claramente positivo); 2m n=26 (**se recuperó de 25 a
+26** — la baja de ayer queda confirmada como re-pareo/dedup del agregado,
+no pérdida real, tal como se documentó; WR 46.2%, E[R]=**-0.152** PF=0.71,
+13 SL — mejoró de -0.217, sigue siendo la peor rama); 5m n=10 (sin
+cambio, WR 90.0%, E[R]=0.849 PF=99, 0 SL — congelado por segundo día).
+`segment_significance`: 1m CI90=[-0.103,0.402] p=0.181 n=72
 (prácticamente sin cambio, sigue lejos de certificar); 2m y 5m sin
-cambio de fondo. `survives_fdr10=true` en 5m se mantiene (CI90=
-[0.522,1.254], n=10) — sigue **no usable**: muy por debajo del piso n≥20
-del playbook, tratar como ruido de muestra mínima.
+cambio de fondo. `survives_fdr10=true` en 5m se mantiene (n=10) — sigue
+**no usable**, muy por debajo del piso n≥20 del playbook.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en la mayoría de las ramas:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=1` | sigue siendo la mejor rama | 58 (+3) / 46 (+3) / 4 (sin cambio) | WR 46.6%/47.8%/50.0%; E[R] +0.143 (subió de +0.114) / +0.04 (bajó de +0.057) / +0.455 (sin cambio) | baja-moderada — `edge=1` mejora, `edge=0` retrocede un poco, mismo orden relativo que ayer |
-| 2 | `tier=B` | mejor que `tier=C`, pero **`tier=B` pierde muestra** (30→28, -2) mientras `tier=C` gana (+8) | 28 (-2) / 80 (+8) | E[R] +0.132 (bajó de +0.14) vs +0.089→+0.104 (subió); PF 1.3 vs 1.23 | baja-moderada — segunda instancia de recuento agregado bajando en este mismo playbook hoy (ver nota del 2m arriba); la brecha entre B y C se sigue achicando |
+| 1 | `nearEdge=1` | sigue siendo la mejor rama | 60 (+2) / 47 (+1) / 4 (sin cambio) | WR 48.3%/48.9%/50.0%; E[R] +0.172 (subió de +0.143) / +0.059 (subió de +0.04) / +0.455 (sin cambio) | baja-moderada — ambas ramas grandes mejoran hoy, mismo orden relativo |
+| 2 | `tier=B` | mejor que `tier=C`, ambos sin señales nuevas hoy salvo C | 28 (sin cambio) / 83 (+3) | E[R] +0.132 (sin cambio) vs +0.104→+0.135 (subió, ya casi empata a B); PF 1.3 vs 1.31 | baja — la brecha entre B y C prácticamente desaparece hoy, vigilar si C supera a B con más muestra |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`; ver `entryZoneTk` de ganadores vs perdedores)
 
 ### Gestión
-- `managed_vs_naive`: 1m n=70 delta=**+0.141** (naive 0.123→managed
-  0.263, bajó un poco de +0.149, sigue ayudando mucho); 2m n=25
-  delta=+0.017 (prácticamente sin cambio pese al n menor); 5m n=10
-  delta=**-0.117** (sin cambio, congelado, la gestión sigue restando en
-  5m INV/LONG con n demasiado chico para concluir).
-- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=70 (+6)
-  delta=**-0.047** CI90=[-0.466,0.386] no certifica (prácticamente igual
-  a -0.039, sigue siendo ruido alrededor de cero); 2m **sigue
-  certificando, y mejora pese al n menor**: n=25 (-1) delta=**+1.109**
-  CI90=**[0.045,2.422]** (el límite inferior sube de 0.007 a 0.045,
-  deja de estar tan al filo); 5m n=10 delta=-1.307 CI90=[-1.91,-0.771]
-  (sin cambio, congelado, sentido opuesto a 2m). Sigue sin proponerse
-  cambio en `experiments.json` para INV/LONG — 2m sigue siendo el único
-  candidato con algo de solidez, pero por debajo del piso de muestra
-  que el bus viene usando para RETEST (n≥20 aquí es al filo, no un
-  margen cómodo).
+- `managed_vs_naive`: 1m n=72 delta=**+0.14** (prácticamente igual a
+  +0.141, sigue ayudando mucho); 2m n=26 delta=+0.011 (bajó un poco de
+  +0.017, casi neutro); 5m n=10 delta=**-0.117** (sin cambio, congelado).
+- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=72 (+2)
+  delta=**-0.078** CI90=[-0.471,0.334] no certifica (se aleja un poco más
+  de cero hacia el lado negativo desde -0.047, sigue siendo ruido); **2m
+  PIERDE la certificación que tenía ayer**: n=26 (+1) delta=**+1.025**
+  CI90=**[-0.018,2.287]** (vuelve a cruzar cero — ayer era [0.045,2.422])
+  pese a que la magnitud del delta casi no cambió (1.109→1.025) — con
+  n tan chico (26), un solo par nuevo empuja el límite inferior del CI90
+  de vuelta sobre cero; confirma que esta rama sigue sin ser un candidato
+  sólido pese al delta grande; 5m n=10 delta=-1.307 CI90=[-1.91,-0.771]
+  (sin cambio, congelado). Sin propuesta en `experiments.json` para
+  INV/LONG — ningún TF tiene todavía una lectura estable.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Cruce con Session Analyst
@@ -62,25 +54,32 @@ INV/LONG bajo veredicto SA `WAIT` n=20 (sin cambio, cero señales nuevas
 cruzadas hoy) E[R]=**0.154** PF=1.39 (idéntico a ayer); no hay lectura
 propia de `GO`/`AVOID` hoy en este segmento (n por debajo del piso de 5).
 Ver `buy-retest.md`/`sell-retest.md` para el hallazgo agregado (WAIT
-mejor, GO/AVOID peor, con respaldo estadístico a nivel global por tercer
+mejor, GO/AVOID peor, con respaldo estadístico a nivel global por cuarto
 día seguido).
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 46 pérdidas INV/LONG (+2 vs ayer): sin cambio
-  de orden — `killzone-Asia-largo` 22/46 (47.8%) sigue como causa más
-  frecuente, `RR-bajo` 21/46 (45.7%) muy cerca detrás, `contra-estructura`
-  14/46 (30.4%) tercero. Tercer día seguido con este orden.
-- `cross_instrument` sigue `instrument-specific`, spread se achica un
-  poco (0.834→0.803): CL n=21 (sin cambio) E[R]=0.4, YM n=26 E[R]=0.172,
-  NQ n=6 E[R]=0.373, GC n=13 E[R]=-0.26, ES n=7 E[R]=-0.403 — los valores
-  de E[R] se movieron un poco pese a n casi sin cambio en varios símbolos
-  (mismo patrón de recuento agregado que en el 2m y `tier=B` de arriba);
-  n por símbolo sigue chico, no generalizar.
+- Autopsia de SL sobre las 46 pérdidas INV/LONG (sin cambio — cero SL
+  nuevos hoy): mismo orden que ayer — `killzone-Asia-largo` 22/46
+  (47.8%), `RR-bajo` 21/46 (45.7%), `contra-estructura` 14/46 (30.4%).
+  Cuarto día seguido con este orden.
+- `cross_instrument` sigue `instrument-specific`, spread se ensancha un
+  poco (0.803→0.831): CL n=23 (+2) E[R]=0.428 (subió de 0.4), resto sin
+  cambio (YM n=26 E[R]=0.172, NQ n=6 E[R]=0.373, GC n=13 E[R]=-0.26, ES
+  n=7 E[R]=-0.403) — n por símbolo sigue chico, no generalizar.
 
 ### Decaimiento
 _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
 
 ## Histórico de cambios
+- 2026-09-14 (lunes): `git pull` limpio, sin incidentes. n 108→111 (+3;
+  1m+2, 2m+1, 5m sin cambio). **`2m/INV/LONG` se recupera de n=25 a
+  n=26**, confirmando que la baja de ayer era re-pareo/dedup y no pérdida
+  real — pero al mismo tiempo **pierde la certificación de
+  `sl_origin_vs_layer`** que tenía ayer (CI90 vuelve a cruzar cero pese a
+  que el delta apenas cambió), ilustrando lo frágil que es esta rama con
+  n=26: un solo par nuevo mueve el límite del CI90 de un lado a otro de
+  cero. Nada más accionable: día de muestra mínima en este segmento de
+  prioridad 2.
 - 2026-09-13 (domingo, REVISIÓN SEMANAL): n 102→108 (+6; 1m+7, 2m-1,
   5m sin cambio). Incidente menor de repo, ver `buy-retest.md`.
   **Primera alerta de muestra propia de este playbook**: `2m/INV/LONG`
