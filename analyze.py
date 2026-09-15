@@ -76,7 +76,18 @@ def segment_n_regression_check(rep, prev_state):
     n=11 a n=10 y la semana ya cerrada 2026-W36 bajo de n=3231 a n=3183, ambos
     detectados a mano por el agente porque este chequeo todavia no existia)."""
     prev_counts = (prev_state or {}).get("segment_n_history", {})
+    # segment_n_history es un maximo ratcheted (nunca baja) para que una restauracion
+    # tras un bug no parezca "todo bien" de golpe. Pero eso significa que una caida
+    # legitima UNA sola vez (dedup real, sin archivo encogido) reapareceria como alerta
+    # identica cada corrida para siempre. segment_n_last guarda el n crudo de la
+    # corrida anterior: solo alertamos si el n de HOY es una caida nueva respecto a
+    # esa ultima lectura (sigue empeorando), no si ya se estabilizo en el mismo valor
+    # bajo que ya se reporto ayer (visto 2026-09-14/15: 2026-W36 y W37 quedaron
+    # identicos dos corridas seguidas sin ningun archivo encogido segun
+    # file_line_counts -- dedup de una vez, no una fuga continua).
+    prev_last = (prev_state or {}).get("segment_n_last", {})
     cur_counts = {}
+    cur_last = {}
     alerts = []
     def _track(prefix, d):
         for k, v in (d or {}).items():
@@ -85,8 +96,10 @@ def segment_n_regression_check(rep, prev_state):
             key = f"{prefix}/{k}"
             n = v["n"]
             cur_counts[key] = n
+            cur_last[key] = n
             prev_n = prev_counts.get(key)
-            if prev_n is not None and n < prev_n:
+            last_n = prev_last.get(key)
+            if prev_n is not None and n < prev_n and (last_n is None or n != last_n):
                 alerts.append(f"MUESTRA: {key} bajo de n={prev_n} a n={n} desde la corrida previa "
                               f"(agregado, no archivo crudo -- revisar deduplicacion/re-pareo).")
     _track("by_tf_kind_side", rep.get("by_tf_kind_side"))
@@ -99,12 +112,14 @@ def segment_n_regression_check(rep, prev_state):
             continue
         key = f"decay_weekly/{w}"
         cur_counts[key] = v["n"]
+        cur_last[key] = v["n"]
         prev_n = prev_counts.get(key)
-        if prev_n is not None and v["n"] < prev_n:
+        last_n = prev_last.get(key)
+        if prev_n is not None and v["n"] < prev_n and (last_n is None or v["n"] != last_n):
             alerts.append(f"MUESTRA: semana ya cerrada {w} bajo de n={prev_n} a n={v['n']} "
                           f"desde la corrida previa -- vigilar, puede ser deduplicacion.")
     merged = {k: max(n, prev_counts.get(k, 0)) for k, n in cur_counts.items()}
-    return alerts, merged
+    return alerts, merged, cur_last
 
 def _f(d, k):
     v = d.get(k, "")
@@ -1155,7 +1170,7 @@ def main():
     except Exception:
         _prev_state = {}
     integrity_alerts, file_line_counts = file_integrity_check(_prev_state)
-    n_regression_alerts, segment_n_history = segment_n_regression_check(report, _prev_state)
+    n_regression_alerts, segment_n_history, segment_n_last = segment_n_regression_check(report, _prev_state)
     report["alerts"] = integrity_alerts + n_regression_alerts + material_alerts(report, _prev_state)
 
     with open(os.path.join(ROOT, "report.json"), "w", encoding="utf-8") as f:
@@ -1196,6 +1211,7 @@ def main():
     state["alerts"] = report["alerts"]
     state["file_line_counts"] = file_line_counts
     state["segment_n_history"] = segment_n_history
+    state["segment_n_last"] = segment_n_last
     state["prediction_scoreboard"] = {k: v for k, v in report["prediction_scoreboard"].items() if k != "detail"}
     state.setdefault("recommendedParams", {"note": "lo mantiene el agente en la revision semanal"})
     state.setdefault("executionGate", {"phase": "advisor", "readyForLive": False})
