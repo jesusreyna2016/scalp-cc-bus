@@ -1,109 +1,112 @@
-# Scalp CC · report 2026-09-16T01:14Z
-- signals=9600 outcomes=9309 pares_resueltos=9587 pendientes=13 huerfanos=26
+# Scalp CC · report 2026-09-17T01:14Z
+- signals=10714 outcomes=10179 pares_resueltos=10684 pendientes=30 huerfanos=26
 
 ## ⚠ ALERTAS (llevar al frente del resumen)
-- MUESTRA: semana ya cerrada 2026-W37 bajo de n=5389 a n=5375 desde la corrida previa -- vigilar, puede ser deduplicacion.
+- MUESTRA: by_kindside_aligned/RETEST/LONG|aligned=0 bajo de n=10 a n=9 desde la corrida previa (agregado, no archivo crudo -- revisar deduplicacion/re-pareo).
+- MUESTRA: semana ya cerrada 2026-W36 bajo de n=3183 a n=3135 desde la corrida previa -- vigilar, puede ser deduplicacion.
+- MUESTRA: semana ya cerrada 2026-W37 bajo de n=5389 a n=5338 desde la corrida previa -- vigilar, puede ser deduplicacion.
 - GATE: el segmento objetivo cumple el gate de ejecucion. Revisar escalera.
-- SL: SL en la mecha de la vela del retest BATE al de 3 capas fuera de ruido (E[R] 0.196 vs 0.046, delta 0.15 CI90 [0.101, 0.205], n 5888). Candidato para experiments.json + revision semanal.
-- SL: SL en la mecha del retest + vela previa (1m short) BATE al de 3 capas fuera de ruido (E[R] 0.192 vs 0.073, delta 0.119 CI90 [0.015, 0.225], n 1843). Candidato para experiments.json + revision semanal.
-- SESSION ANALYST: senales scalp con veredicto SA=WAIT rinden MEJOR de forma no-random (E[R] 0.078 CI90 [0.032, 0.124], n 1684). Consistente con la hipotesis original de agent-instructions.md.
+- SL: SL en la mecha de la vela del retest BATE al de 3 capas fuera de ruido (E[R] 0.199 vs 0.055, delta 0.144 CI90 [0.094, 0.191], n 6518). Candidato para experiments.json + revision semanal.
+- SL: SL en la mecha del retest + vela previa (1m short) BATE al de 3 capas fuera de ruido (E[R] 0.214 vs 0.078, delta 0.136 CI90 [0.037, 0.24], n 1957). Candidato para experiments.json + revision semanal.
+- SESSION ANALYST: senales scalp con veredicto SA=GO rinden MEJOR de forma no-random (E[R] 0.158 CI90 [0.073, 0.242], n 533). Consistente con la hipotesis original de agent-instructions.md.
+- SESSION ANALYST: senales scalp con veredicto SA=WAIT rinden MEJOR de forma no-random (E[R] 0.109 CI90 [0.069, 0.15], n 2204). Consistente con la hipotesis original de agent-instructions.md.
 
-- E[R] global: {"expR": 0.045, "ci90": [0.023, 0.066], "p_mean_le_0": 0.001, "n": 9283}
+- E[R] global: {"expR": 0.053, "ci90": [0.034, 0.074], "p_mean_le_0": 0.0, "n": 10153}
 - gate ejecucion: {"readyForLive": true, "segment": "5m/RETEST/LONG", "note": "n>=100 & E[R]>0 & PF>=1.3 & WR>=50 en un segmento tf/kind/side. Falta ademas: estabilidad 3 semanas + causa de SL dominante mitigada (lo valida el agente)."}
 
 ## Por tf / kind / side
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| 1m/INV/LONG | 88 | 45.5 | 0.123 | 1.27 | 38 | 16.0 | 11.25 | 21.1 |
-| 1m/INV/SHORT | 82 | 50.0 | 0.124 | 1.28 | 36 | 21.5 | 11.0 | 19.4 |
-| 1m/RETEST/LONG | 3271 | 44.4 | 0.026 | 1.05 | 1594 | 14.0 | 10.0 | 28.9 |
-| 1m/RETEST/SHORT | 2559 | 44.8 | 0.054 | 1.11 | 1180 | 17.0 | 12.0 | 33.0 |
-| 2m/INV/LONG | 30 | 46.7 | -0.159 | 0.68 | 14 | 9.0 | 8.0 | 28.6 |
+| 1m/INV/LONG | 110 | 45.5 | 0.107 | 1.23 | 46 | 13.0 | 10.75 | 21.7 |
+| 1m/INV/SHORT | 84 | 50.0 | 0.096 | 1.22 | 36 | 21.0 | 11.0 | 19.4 |
+| 1m/RETEST/LONG | 3750 | 44.6 | 0.032 | 1.07 | 1780 | 13.0 | 9.0 | 29.1 |
+| 1m/RETEST/SHORT | 2722 | 44.5 | 0.059 | 1.12 | 1233 | 18.0 | 12.0 | 32.6 |
+| 2m/INV/LONG | 33 | 48.5 | -0.111 | 0.76 | 14 | 10.0 | 8.25 | 28.6 |
 | 2m/INV/SHORT | 39 | 35.9 | 0.017 | 1.03 | 21 | 21.0 | 15.75 | 38.1 |
-| 2m/RETEST/LONG | 1505 | 46.2 | -0.017 | 0.97 | 741 | 16.5 | 13.0 | 36.0 |
-| 2m/RETEST/SHORT | 1098 | 49.3 | 0.088 | 1.19 | 495 | 21.0 | 12.0 | 41.2 |
-| 5m/INV/LONG | 13 | 76.9 | 0.788 | 99.0 | 0 | 29.0 | 31.25 | None |
+| 2m/RETEST/LONG | 1730 | 46.5 | 0.01 | 1.02 | 805 | 16.0 | 13.0 | 36.6 |
+| 2m/RETEST/SHORT | 1171 | 48.6 | 0.094 | 1.2 | 511 | 22.0 | 13.0 | 41.5 |
+| 5m/INV/LONG | 14 | 71.4 | 0.639 | 8.67 | 1 | 30.0 | 31.25 | 0.0 |
 | 5m/INV/SHORT | 8 | 75.0 | 0.615 | 3.46 | 2 | 58.0 | 68.75 | 100.0 |
-| 5m/RETEST/LONG | 529 | 52.9 | 0.155 | 1.35 | 228 | 25.0 | 18.25 | 47.8 |
-| 5m/RETEST/SHORT | 365 | 50.1 | 0.075 | 1.16 | 157 | 30.5 | 21.0 | 39.5 |
+| 5m/RETEST/LONG | 622 | 51.0 | 0.153 | 1.35 | 257 | 25.0 | 19.0 | 49.0 |
+| 5m/RETEST/SHORT | 401 | 48.4 | 0.096 | 1.21 | 162 | 31.0 | 23.0 | 38.3 |
 
 ## Por tier
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| A+ | 667 | 26.5 | 0.102 | 1.16 | 406 | 29.0 | 15.0 | 19.7 |
-| B | 4007 | 46.6 | 0.053 | 1.11 | 1868 | 17.0 | 12.0 | 33.4 |
-| C | 4913 | 48.5 | 0.03 | 1.06 | 2232 | 16.0 | 12.0 | 36.6 |
+| A+ | 745 | 25.8 | 0.123 | 1.19 | 447 | 28.5 | 15.0 | 19.9 |
+| B | 4483 | 46.9 | 0.064 | 1.14 | 2010 | 17.0 | 12.0 | 33.7 |
+| C | 5456 | 47.9 | 0.035 | 1.08 | 2411 | 16.0 | 12.0 | 36.5 |
 
 ## Por killzone
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| Asia | 3693 | 49.5 | 0.069 | 1.15 | 1660 | 13.0 | 9.0 | 39.5 |
-| London | 1443 | 44.9 | -0.047 | 0.91 | 747 | 18.0 | 12.0 | 31.5 |
-| NY | 1611 | 45.1 | 0.159 | 1.33 | 717 | 25.0 | 17.0 | 38.9 |
-| Sin KZ | 2840 | 43.1 | -0.002 | 1.0 | 1382 | 18.0 | 13.0 | 25.4 |
+| Asia | 4109 | 49.5 | 0.073 | 1.16 | 1835 | 13.0 | 9.0 | 39.2 |
+| London | 1695 | 46.1 | -0.007 | 0.99 | 834 | 18.0 | 12.0 | 34.2 |
+| NY | 1822 | 44.5 | 0.178 | 1.39 | 747 | 25.0 | 16.0 | 38.3 |
+| Sin KZ | 3058 | 41.8 | -0.009 | 0.98 | 1452 | 18.0 | 13.0 | 24.5 |
 
 ## Por nearEdge
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| edge=-1 | 2507 | 45.5 | 0.054 | 1.11 | 1152 | 21.0 | 14.0 | 32.8 |
-| edge=0 | 4240 | 48.4 | 0.035 | 1.07 | 1959 | 14.0 | 10.0 | 38.5 |
-| edge=1 | 2840 | 43.3 | 0.052 | 1.1 | 1395 | 18.0 | 13.0 | 27.8 |
+| edge=-1 | 2627 | 45.3 | 0.058 | 1.12 | 1187 | 21.0 | 14.0 | 32.9 |
+| edge=0 | 4733 | 47.8 | 0.04 | 1.08 | 2123 | 14.0 | 10.0 | 38.2 |
+| edge=1 | 3324 | 43.7 | 0.069 | 1.14 | 1558 | 17.0 | 14.0 | 28.5 |
 
 ## Por aligned
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| aligned=0 | 10 | 50.0 | 0.433 | 3.6 | 1 | 18.5 | 7.0 | 0.0 |
-| aligned=1 | 9577 | 46.1 | 0.045 | 1.09 | 4505 | 17.0 | 12.0 | 33.8 |
+| aligned=0 | 9 | 55.6 | 0.433 | 3.6 | 1 | 18.5 | 7.0 | 0.0 |
+| aligned=1 | 10675 | 45.9 | 0.053 | 1.11 | 4867 | 17.0 | 12.0 | 33.8 |
 
 ## Por kind/side x nearEdge
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
 | INV/LONG|edge=-1 | 4 | 50.0 | 0.455 | 1.91 | 2 | 44.5 | 3.0 | 50.0 |
-| INV/LONG|edge=0 | 61 | 50.8 | 0.078 | 1.18 | 24 | 10.5 | 10.5 | 29.2 |
-| INV/LONG|edge=1 | 66 | 47.0 | 0.128 | 1.3 | 26 | 22.5 | 17.0 | 15.4 |
-| INV/SHORT|edge=-1 | 75 | 41.3 | 0.133 | 1.27 | 37 | 24.0 | 12.0 | 27.0 |
-| INV/SHORT|edge=0 | 46 | 52.2 | -0.038 | 0.92 | 20 | 12.0 | 18.5 | 35.0 |
+| INV/LONG|edge=0 | 68 | 54.4 | 0.154 | 1.39 | 24 | 10.5 | 10.0 | 29.2 |
+| INV/LONG|edge=1 | 85 | 43.5 | 0.047 | 1.1 | 35 | 20.0 | 17.0 | 17.1 |
+| INV/SHORT|edge=-1 | 76 | 40.8 | 0.099 | 1.2 | 37 | 22.0 | 12.0 | 27.0 |
+| INV/SHORT|edge=0 | 47 | 53.2 | -0.028 | 0.94 | 20 | 13.0 | 17.0 | 35.0 |
 | INV/SHORT|edge=1 | 8 | 75.0 | 0.901 | 4.6 | 2 | 32.5 | 32.0 | 0.0 |
-| RETEST/LONG|edge=-1 | 245 | 51.4 | 0.118 | 1.27 | 103 | 13.0 | 8.0 | 49.5 |
-| RETEST/LONG|edge=0 | 2420 | 48.6 | -0.009 | 0.98 | 1148 | 14.0 | 10.0 | 37.7 |
-| RETEST/LONG|edge=1 | 2640 | 42.7 | 0.05 | 1.1 | 1312 | 18.0 | 13.0 | 26.9 |
-| RETEST/SHORT|edge=-1 | 2183 | 44.9 | 0.043 | 1.09 | 1010 | 22.0 | 15.0 | 31.3 |
-| RETEST/SHORT|edge=0 | 1713 | 48.0 | 0.098 | 1.21 | 767 | 17.0 | 10.0 | 40.2 |
-| RETEST/SHORT|edge=1 | 126 | 53.2 | 0.005 | 1.01 | 55 | 14.0 | 9.0 | 56.4 |
+| RETEST/LONG|edge=-1 | 266 | 54.1 | 0.18 | 1.44 | 105 | 12.0 | 7.25 | 49.5 |
+| RETEST/LONG|edge=0 | 2737 | 47.9 | -0.009 | 0.98 | 1271 | 13.0 | 10.0 | 37.8 |
+| RETEST/LONG|edge=1 | 3099 | 43.2 | 0.068 | 1.14 | 1466 | 17.0 | 13.0 | 27.8 |
+| RETEST/SHORT|edge=-1 | 2281 | 44.4 | 0.041 | 1.08 | 1043 | 22.0 | 15.0 | 31.4 |
+| RETEST/SHORT|edge=0 | 1881 | 47.3 | 0.11 | 1.24 | 808 | 17.0 | 10.0 | 39.4 |
+| RETEST/SHORT|edge=1 | 132 | 54.5 | 0.065 | 1.15 | 55 | 14.0 | 10.0 | 56.4 |
 
 ## Por kind/side x tier
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| INV/LONG|tier=B | 31 | 41.9 | 0.106 | 1.23 | 13 | 22.0 | 17.0 | 15.4 |
-| INV/LONG|tier=C | 100 | 51.0 | 0.119 | 1.28 | 39 | 13.0 | 12.5 | 25.6 |
-| INV/SHORT|tier=B | 39 | 46.2 | 0.162 | 1.33 | 19 | 19.0 | 8.75 | 10.5 |
-| INV/SHORT|tier=C | 90 | 47.8 | 0.104 | 1.23 | 40 | 25.5 | 28.0 | 37.5 |
-| RETEST/LONG|tier=A+ | 390 | 26.2 | 0.085 | 1.13 | 241 | 23.0 | 14.75 | 17.0 |
-| RETEST/LONG|tier=B | 2164 | 45.5 | 0.058 | 1.12 | 1041 | 15.0 | 11.0 | 32.2 |
-| RETEST/LONG|tier=C | 2751 | 48.7 | -0.007 | 0.99 | 1281 | 15.0 | 12.0 | 36.0 |
-| RETEST/SHORT|tier=A+ | 277 | 27.1 | 0.127 | 1.2 | 165 | 39.0 | 16.5 | 23.6 |
-| RETEST/SHORT|tier=B | 1773 | 47.9 | 0.044 | 1.09 | 795 | 18.0 | 13.0 | 35.7 |
-| RETEST/SHORT|tier=C | 1972 | 48.0 | 0.076 | 1.16 | 872 | 18.0 | 12.0 | 38.1 |
+| INV/LONG|tier=B | 39 | 38.5 | -0.051 | 0.9 | 19 | 14.0 | 15.5 | 15.8 |
+| INV/LONG|tier=C | 118 | 51.7 | 0.158 | 1.4 | 42 | 14.0 | 12.0 | 26.2 |
+| INV/SHORT|tier=B | 39 | 46.2 | 0.096 | 1.2 | 19 | 19.0 | 8.75 | 10.5 |
+| INV/SHORT|tier=C | 92 | 47.8 | 0.108 | 1.24 | 40 | 25.0 | 28.0 | 37.5 |
+| RETEST/LONG|tier=A+ | 453 | 25.4 | 0.114 | 1.18 | 275 | 23.0 | 13.5 | 18.5 |
+| RETEST/LONG|tier=B | 2554 | 46.5 | 0.08 | 1.17 | 1155 | 15.0 | 11.0 | 32.6 |
+| RETEST/LONG|tier=C | 3095 | 48.2 | -0.007 | 0.99 | 1412 | 14.0 | 11.0 | 36.2 |
+| RETEST/SHORT|tier=A+ | 292 | 26.4 | 0.138 | 1.21 | 172 | 37.0 | 17.0 | 22.1 |
+| RETEST/SHORT|tier=B | 1851 | 47.6 | 0.045 | 1.09 | 817 | 19.0 | 14.0 | 36.2 |
+| RETEST/SHORT|tier=C | 2151 | 47.2 | 0.087 | 1.19 | 917 | 19.0 | 12.0 | 37.3 |
 
 ## Por kind/side x aligned
 | seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|
-| INV/LONG|aligned=1 | 131 | 48.9 | 0.116 | 1.27 | 52 | 16.0 | 14.0 | 23.1 |
-| INV/SHORT|aligned=1 | 129 | 47.3 | 0.122 | 1.26 | 59 | 22.0 | 17.0 | 28.8 |
-| RETEST/LONG|aligned=0 | 10 | 50.0 | 0.433 | 3.6 | 1 | 18.5 | 7.0 | 0.0 |
-| RETEST/LONG|aligned=1 | 5295 | 45.8 | 0.026 | 1.05 | 2562 | 15.0 | 11.0 | 32.7 |
-| RETEST/SHORT|aligned=1 | 4022 | 46.5 | 0.065 | 1.14 | 1832 | 19.0 | 13.0 | 35.8 |
+| INV/LONG|aligned=1 | 157 | 48.4 | 0.104 | 1.24 | 61 | 14.0 | 13.25 | 23.0 |
+| INV/SHORT|aligned=1 | 131 | 47.3 | 0.104 | 1.23 | 59 | 21.5 | 16.25 | 28.8 |
+| RETEST/LONG|aligned=0 | 9 | 55.6 | 0.433 | 3.6 | 1 | 18.5 | 7.0 | 0.0 |
+| RETEST/LONG|aligned=1 | 6093 | 45.8 | 0.038 | 1.08 | 2841 | 15.0 | 11.0 | 33.1 |
+| RETEST/SHORT|aligned=1 | 4294 | 46.0 | 0.072 | 1.15 | 1906 | 20.0 | 13.0 | 35.5 |
 
 ## Autopsia de SL
-n_losses=4506  causas: RR-bajo×1726, contra-estructura×1580, stop-en-el-minimo×1521, killzone-Asia-largo×943, sin-nivel-detras×878, estirado×778, chop×645, SL-muy-pegado×556, sin-causa-clara×435, contra-sesgo×1
-- INV/LONG (n=52): killzone-Asia-largo×26, RR-bajo×22, contra-estructura×15, estirado×13, stop-en-el-minimo×12, SL-muy-pegado×7, sin-nivel-detras×7, chop×5, sin-causa-clara×1
+n_losses=4868  causas: RR-bajo×1863, contra-estructura×1707, stop-en-el-minimo×1646, killzone-Asia-largo×1099, sin-nivel-detras×965, estirado×846, chop×695, SL-muy-pegado×600, sin-causa-clara×462, contra-sesgo×1
+- INV/LONG (n=61): killzone-Asia-largo×32, RR-bajo×25, contra-estructura×19, estirado×15, stop-en-el-minimo×14, SL-muy-pegado×7, sin-nivel-detras×7, chop×5, sin-causa-clara×1
 - INV/SHORT (n=59): RR-bajo×30, contra-estructura×18, stop-en-el-minimo×17, estirado×12, sin-causa-clara×11, SL-muy-pegado×8, chop×5, sin-nivel-detras×4
-- RETEST/LONG (n=2563): RR-bajo×981, contra-estructura×954, killzone-Asia-largo×917, stop-en-el-minimo×837, sin-nivel-detras×529, estirado×425, chop×391, SL-muy-pegado×309, sin-causa-clara×193, contra-sesgo×1
-- RETEST/SHORT (n=1832): RR-bajo×693, stop-en-el-minimo×655, contra-estructura×593, sin-nivel-detras×338, estirado×328, chop×244, SL-muy-pegado×232, sin-causa-clara×230
+- RETEST/LONG (n=2842): RR-bajo×1083, killzone-Asia-largo×1067, contra-estructura×1060, stop-en-el-minimo×939, sin-nivel-detras×602, estirado×478, chop×438, SL-muy-pegado×344, sin-causa-clara×207, contra-sesgo×1
+- RETEST/SHORT (n=1906): RR-bajo×725, stop-en-el-minimo×676, contra-estructura×610, sin-nivel-detras×352, estirado×341, chop×247, sin-causa-clara×243, SL-muy-pegado×241
 
 ## Autopsia de SL · semana 2026-W38 (para revision semanal)
-n_losses=396  causas: RR-bajo×165, stop-en-el-minimo×153, contra-estructura×146, killzone-Asia-largo×100, estirado×71, sin-nivel-detras×69, chop×55, SL-muy-pegado×42, sin-causa-clara×34
-ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S", "GC-1-34473-S", "GC-2-27588-S"], "stop-en-el-minimo": ["NQ-5-20749-L", "NQ-5-21912-S", "GC-1-34473-S", "GC-2-27588-S", "GC-1-34476-S"], "contra-estructura": ["NQ-1-21696-L", "CL-5-20795-L", "ES-5-20579-S", "GC-1-34473-S", "GC-2-27588-S"]}
+n_losses=775  causas: RR-bajo×306, stop-en-el-minimo×286, contra-estructura×276, killzone-Asia-largo×262, sin-nivel-detras×157, estirado×140, chop×109, SL-muy-pegado×88, sin-causa-clara×62
+ejemplos por causa: {"RR-bajo": ["CL-1-23392-L", "NQ-5-20749-L", "CL-5-20795-L", "YM-2-21454-S", "YM-5-20950-S"], "stop-en-el-minimo": ["NQ-5-20749-L", "NQ-1-23388-L", "NQ-1-23634-L", "NQ-5-21185-L", "NQ-5-21912-S"], "contra-estructura": ["NQ-1-21696-L", "CL-5-20795-L", "ES-5-20579-S", "GC-1-34473-S", "GC-2-27588-S"]}
 
 ## Contrafactual de gestion
 ```json
@@ -142,83 +145,83 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
 ```json
 {
   "overall": {
-    "n": 9269,
-    "naive_expR": 0.045,
-    "managed_expR": 0.127,
-    "delta": 0.082,
-    "avgEntryBetterTk_p50": 2.8,
-    "fill_t3plus_pct": 47.8,
-    "fill_full_pct": 33.7,
-    "m1_rate": 36.7,
-    "m2_rate": 23.2,
-    "m3_rate": 12.5,
-    "beAfterM1_rate": 17.4
+    "n": 10139,
+    "naive_expR": 0.053,
+    "managed_expR": 0.132,
+    "delta": 0.078,
+    "avgEntryBetterTk_p50": 2.5,
+    "fill_t3plus_pct": 46.3,
+    "fill_full_pct": 32.6,
+    "m1_rate": 36.9,
+    "m2_rate": 23.0,
+    "m3_rate": 12.4,
+    "beAfterM1_rate": 17.7
   },
   "by_tf_kind_side": {
     "1m/INV/LONG": {
-      "n": 84,
-      "naive_expR": 0.123,
-      "managed_expR": 0.31,
-      "delta": 0.187,
+      "n": 102,
+      "naive_expR": 0.107,
+      "managed_expR": 0.295,
+      "delta": 0.188,
       "avgEntryBetterTk_p50": 2.1500000000000004,
-      "fill_t3plus_pct": 46.4,
+      "fill_t3plus_pct": 47.1,
       "fill_full_pct": 33.3,
-      "m1_rate": 47.6,
-      "m2_rate": 31.0,
-      "m3_rate": 15.5,
-      "beAfterM1_rate": 23.8
+      "m1_rate": 43.1,
+      "m2_rate": 28.4,
+      "m3_rate": 14.7,
+      "beAfterM1_rate": 21.6
     },
     "1m/INV/SHORT": {
-      "n": 80,
-      "naive_expR": 0.124,
-      "managed_expR": 0.312,
-      "delta": 0.188,
-      "avgEntryBetterTk_p50": 3.35,
-      "fill_t3plus_pct": 52.5,
-      "fill_full_pct": 40.0,
-      "m1_rate": 40.0,
-      "m2_rate": 25.0,
-      "m3_rate": 15.0,
-      "beAfterM1_rate": 18.8
+      "n": 81,
+      "naive_expR": 0.096,
+      "managed_expR": 0.296,
+      "delta": 0.2,
+      "avgEntryBetterTk_p50": 3.2,
+      "fill_t3plus_pct": 51.9,
+      "fill_full_pct": 39.5,
+      "m1_rate": 38.3,
+      "m2_rate": 23.5,
+      "m3_rate": 13.6,
+      "beAfterM1_rate": 18.5
     },
     "1m/RETEST/LONG": {
-      "n": 3193,
-      "naive_expR": 0.025,
-      "managed_expR": 0.113,
-      "delta": 0.088,
-      "avgEntryBetterTk_p50": 2.3,
-      "fill_t3plus_pct": 49.1,
-      "fill_full_pct": 35.4,
-      "m1_rate": 35.8,
+      "n": 3615,
+      "naive_expR": 0.032,
+      "managed_expR": 0.119,
+      "delta": 0.086,
+      "avgEntryBetterTk_p50": 2.1,
+      "fill_t3plus_pct": 47.8,
+      "fill_full_pct": 34.4,
+      "m1_rate": 35.9,
       "m2_rate": 22.4,
       "m3_rate": 11.5,
-      "beAfterM1_rate": 16.5
+      "beAfterM1_rate": 16.6
     },
     "1m/RETEST/SHORT": {
-      "n": 2425,
-      "naive_expR": 0.055,
-      "managed_expR": 0.168,
-      "delta": 0.112,
+      "n": 2546,
+      "naive_expR": 0.06,
+      "managed_expR": 0.171,
+      "delta": 0.111,
       "avgEntryBetterTk_p50": 2.8,
-      "fill_t3plus_pct": 49.2,
-      "fill_full_pct": 33.9,
-      "m1_rate": 40.2,
+      "fill_t3plus_pct": 48.4,
+      "fill_full_pct": 33.4,
+      "m1_rate": 40.3,
       "m2_rate": 25.0,
-      "m3_rate": 13.9,
-      "beAfterM1_rate": 18.9
+      "m3_rate": 14.0,
+      "beAfterM1_rate": 19.1
     },
     "2m/INV/LONG": {
-      "n": 29,
-      "naive_expR": -0.159,
-      "managed_expR": -0.153,
-      "delta": 0.006,
+      "n": 31,
+      "naive_expR": -0.111,
+      "managed_expR": -0.052,
+      "delta": 0.059,
       "avgEntryBetterTk_p50": 2.1,
-      "fill_t3plus_pct": 51.7,
-      "fill_full_pct": 34.5,
-      "m1_rate": 17.2,
-      "m2_rate": 17.2,
+      "fill_t3plus_pct": 51.6,
+      "fill_full_pct": 35.5,
+      "m1_rate": 19.4,
+      "m2_rate": 19.4,
       "m3_rate": 0.0,
-      "beAfterM1_rate": 3.4
+      "beAfterM1_rate": 3.2
     },
     "2m/INV/SHORT": {
       "n": 39,
@@ -234,43 +237,43 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
       "beAfterM1_rate": 5.1
     },
     "2m/RETEST/LONG": {
-      "n": 1472,
-      "naive_expR": -0.018,
-      "managed_expR": 0.065,
-      "delta": 0.084,
-      "avgEntryBetterTk_p50": 2.8,
-      "fill_t3plus_pct": 46.1,
-      "fill_full_pct": 31.1,
-      "m1_rate": 33.8,
+      "n": 1648,
+      "naive_expR": 0.01,
+      "managed_expR": 0.084,
+      "delta": 0.074,
+      "avgEntryBetterTk_p50": 2.3,
+      "fill_t3plus_pct": 43.5,
+      "fill_full_pct": 29.6,
+      "m1_rate": 35.1,
       "m2_rate": 20.7,
       "m3_rate": 11.3,
-      "beAfterM1_rate": 16.8
+      "beAfterM1_rate": 18.0
     },
     "2m/RETEST/SHORT": {
-      "n": 1068,
-      "naive_expR": 0.088,
+      "n": 1114,
+      "naive_expR": 0.094,
       "managed_expR": 0.152,
-      "delta": 0.065,
+      "delta": 0.058,
       "avgEntryBetterTk_p50": 2.9,
-      "fill_t3plus_pct": 48.5,
-      "fill_full_pct": 35.6,
-      "m1_rate": 36.8,
-      "m2_rate": 24.0,
-      "m3_rate": 12.6,
-      "beAfterM1_rate": 17.4
+      "fill_t3plus_pct": 47.2,
+      "fill_full_pct": 34.6,
+      "m1_rate": 37.1,
+      "m2_rate": 23.7,
+      "m3_rate": 12.4,
+      "beAfterM1_rate": 18.0
     },
     "5m/INV/LONG": {
-      "n": 11,
-      "naive_expR": 0.788,
-      "managed_expR": 0.575,
-      "delta": -0.214,
-      "avgEntryBetterTk_p50": 4.0,
-      "fill_t3plus_pct": 36.4,
-      "fill_full_pct": 27.3,
-      "m1_rate": 36.4,
-      "m2_rate": 27.3,
-      "m3_rate": 9.1,
-      "beAfterM1_rate": 18.2
+      "n": 12,
+      "naive_expR": 0.639,
+      "managed_expR": 0.443,
+      "delta": -0.196,
+      "avgEntryBetterTk_p50": 2.65,
+      "fill_t3plus_pct": 33.3,
+      "fill_full_pct": 25.0,
+      "m1_rate": 33.3,
+      "m2_rate": 25.0,
+      "m3_rate": 8.3,
+      "beAfterM1_rate": 16.7
     },
     "5m/INV/SHORT": {
       "n": 8,
@@ -286,30 +289,30 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
       "beAfterM1_rate": 12.5
     },
     "5m/RETEST/LONG": {
-      "n": 515,
-      "naive_expR": 0.155,
-      "managed_expR": 0.106,
-      "delta": -0.049,
-      "avgEntryBetterTk_p50": 2.5,
-      "fill_t3plus_pct": 36.7,
-      "fill_full_pct": 26.4,
-      "m1_rate": 34.6,
-      "m2_rate": 23.5,
-      "m3_rate": 13.8,
-      "beAfterM1_rate": 18.4
+      "n": 582,
+      "naive_expR": 0.153,
+      "managed_expR": 0.087,
+      "delta": -0.065,
+      "avgEntryBetterTk_p50": 1.45,
+      "fill_t3plus_pct": 33.3,
+      "fill_full_pct": 24.1,
+      "m1_rate": 34.2,
+      "m2_rate": 22.3,
+      "m3_rate": 13.2,
+      "beAfterM1_rate": 19.2
     },
     "5m/RETEST/SHORT": {
-      "n": 345,
-      "naive_expR": 0.073,
-      "managed_expR": 0.129,
-      "delta": 0.056,
+      "n": 361,
+      "naive_expR": 0.094,
+      "managed_expR": 0.139,
+      "delta": 0.045,
       "avgEntryBetterTk_p50": 5.0,
-      "fill_t3plus_pct": 47.5,
-      "fill_full_pct": 30.7,
-      "m1_rate": 34.8,
-      "m2_rate": 22.3,
-      "m3_rate": 12.8,
-      "beAfterM1_rate": 16.2
+      "fill_t3plus_pct": 46.0,
+      "fill_full_pct": 29.6,
+      "m1_rate": 35.2,
+      "m2_rate": 22.4,
+      "m3_rate": 13.0,
+      "beAfterM1_rate": 16.9
     }
   }
 }
@@ -319,46 +322,48 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
 ```json
 {
   "overall": {
-    "n": 7970,
-    "layer_expR": 0.054,
-    "orig_expR": 0.196,
-    "delta_orig_minus_layer": 0.142,
+    "n": 8736,
+    "layer_expR": 0.061,
+    "orig_expR": 0.198,
+    "delta_orig_minus_layer": 0.137,
     "delta_ci90": [
-      0.094,
-      0.19
+      0.096,
+      0.181
     ],
     "delta_beats_zero": true,
     "delta_below_zero": false,
-    "layer_wrTP1": 47.5,
-    "orig_wrTP1": 32.9,
-    "slTk_p50": 20.0,
+    "layer_wrTP1": 48.2,
+    "orig_wrTP1": 33.5,
+    "slTk_p50": 19.0,
     "slOrigTk_p50": 8.0,
-    "orig_wider_pct": 4.0,
+    "orig_wider_pct": 3.8,
     "orig_saved_from_SL": 15,
-    "orig_caused_SL": 1176
+    "orig_caused_SL": 1299
   },
   "note": "overall/by_tf_kind_side = solo build retestBar (legacy excluido)",
-  "invalid_geometry": 0,
-  "invalid_by_seg": {},
+  "invalid_geometry": 1,
+  "invalid_by_seg": {
+    "2m/RETEST/LONG": 1
+  },
   "by_basis": {
     "candle1": {
-      "n": 239,
-      "layer_expR": 0.119,
-      "orig_expR": 0.227,
-      "delta_orig_minus_layer": 0.108,
+      "n": 261,
+      "layer_expR": 0.103,
+      "orig_expR": 0.063,
+      "delta_orig_minus_layer": -0.04,
       "delta_ci90": [
-        -0.202,
-        0.472
+        -0.255,
+        0.201
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 49.0,
-      "orig_wrTP1": 28.5,
+      "layer_wrTP1": 49.8,
+      "orig_wrTP1": 28.4,
       "slTk_p50": 19.0,
       "slOrigTk_p50": 5.0,
-      "orig_wider_pct": 8.8,
+      "orig_wider_pct": 8.0,
       "orig_saved_from_SL": 1,
-      "orig_caused_SL": 50
+      "orig_caused_SL": 57
     },
     "legacy": {
       "n": 7,
@@ -380,139 +385,139 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
       "orig_caused_SL": 1
     },
     "retestBar": {
-      "n": 5888,
-      "layer_expR": 0.046,
-      "orig_expR": 0.196,
-      "delta_orig_minus_layer": 0.15,
+      "n": 6518,
+      "layer_expR": 0.055,
+      "orig_expR": 0.199,
+      "delta_orig_minus_layer": 0.144,
       "delta_ci90": [
-        0.101,
-        0.205
+        0.094,
+        0.191
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 47.6,
-      "orig_wrTP1": 33.4,
-      "slTk_p50": 20.0,
+      "layer_wrTP1": 48.4,
+      "orig_wrTP1": 33.9,
+      "slTk_p50": 19.0,
       "slOrigTk_p50": 8.0,
-      "orig_wider_pct": 4.2,
+      "orig_wider_pct": 4.0,
       "orig_saved_from_SL": 13,
-      "orig_caused_SL": 851
+      "orig_caused_SL": 956
     },
     "retestBar2": {
-      "n": 1843,
-      "layer_expR": 0.073,
-      "orig_expR": 0.192,
-      "delta_orig_minus_layer": 0.119,
+      "n": 1957,
+      "layer_expR": 0.078,
+      "orig_expR": 0.214,
+      "delta_orig_minus_layer": 0.136,
       "delta_ci90": [
-        0.015,
-        0.225
+        0.037,
+        0.24
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 46.9,
-      "orig_wrTP1": 32.1,
-      "slTk_p50": 19.0,
+      "layer_wrTP1": 47.2,
+      "orig_wrTP1": 32.7,
+      "slTk_p50": 20.0,
       "slOrigTk_p50": 9.0,
-      "orig_wider_pct": 2.6,
+      "orig_wider_pct": 2.5,
       "orig_saved_from_SL": 1,
-      "orig_caused_SL": 275
+      "orig_caused_SL": 286
     }
   },
   "by_tf_kind_side": {
     "1m/INV/LONG": {
-      "n": 84,
-      "layer_expR": 0.123,
-      "orig_expR": -0.046,
-      "delta_orig_minus_layer": -0.169,
+      "n": 102,
+      "layer_expR": 0.107,
+      "orig_expR": -0.056,
+      "delta_orig_minus_layer": -0.162,
       "delta_ci90": [
-        -0.522,
-        0.2
+        -0.485,
+        0.163
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 47.6,
-      "orig_wrTP1": 22.6,
-      "slTk_p50": 16.5,
+      "layer_wrTP1": 49.0,
+      "orig_wrTP1": 23.5,
+      "slTk_p50": 15.5,
       "slOrigTk_p50": 3.0,
-      "orig_wider_pct": 7.1,
+      "orig_wider_pct": 5.9,
       "orig_saved_from_SL": 0,
-      "orig_caused_SL": 21
+      "orig_caused_SL": 26
     },
     "1m/INV/SHORT": {
-      "n": 70,
-      "layer_expR": 0.134,
-      "orig_expR": 0.377,
-      "delta_orig_minus_layer": 0.243,
+      "n": 71,
+      "layer_expR": 0.102,
+      "orig_expR": -0.091,
+      "delta_orig_minus_layer": -0.193,
       "delta_ci90": [
-        -0.447,
-        1.18
+        -0.551,
+        0.194
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 50.0,
-      "orig_wrTP1": 25.7,
-      "slTk_p50": 19.5,
-      "slOrigTk_p50": 5.5,
-      "orig_wider_pct": 4.3,
+      "layer_wrTP1": 50.7,
+      "orig_wrTP1": 26.8,
+      "slTk_p50": 20.0,
+      "slOrigTk_p50": 6.0,
+      "orig_wider_pct": 4.2,
       "orig_saved_from_SL": 0,
       "orig_caused_SL": 17
     },
     "1m/RETEST/LONG": {
-      "n": 2737,
-      "layer_expR": 0.031,
-      "orig_expR": 0.181,
-      "delta_orig_minus_layer": 0.15,
+      "n": 3095,
+      "layer_expR": 0.038,
+      "orig_expR": 0.18,
+      "delta_orig_minus_layer": 0.142,
       "delta_ci90": [
-        0.072,
-        0.231
+        0.066,
+        0.218
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 44.8,
-      "orig_wrTP1": 28.8,
-      "slTk_p50": 18.0,
+      "layer_wrTP1": 45.7,
+      "orig_wrTP1": 29.4,
+      "slTk_p50": 17.0,
       "slOrigTk_p50": 6.0,
-      "orig_wider_pct": 1.2,
+      "orig_wider_pct": 1.1,
       "orig_saved_from_SL": 2,
-      "orig_caused_SL": 439
+      "orig_caused_SL": 505
     },
     "1m/RETEST/SHORT": {
-      "n": 1971,
-      "layer_expR": 0.063,
-      "orig_expR": 0.19,
-      "delta_orig_minus_layer": 0.127,
+      "n": 2085,
+      "layer_expR": 0.068,
+      "orig_expR": 0.211,
+      "delta_orig_minus_layer": 0.143,
       "delta_ci90": [
-        0.036,
-        0.226
+        0.046,
+        0.247
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 46.7,
-      "orig_wrTP1": 31.9,
-      "slTk_p50": 19.0,
+      "layer_wrTP1": 47.0,
+      "orig_wrTP1": 32.4,
+      "slTk_p50": 20.0,
       "slOrigTk_p50": 9.0,
-      "orig_wider_pct": 2.5,
+      "orig_wider_pct": 2.4,
       "orig_saved_from_SL": 1,
-      "orig_caused_SL": 293
+      "orig_caused_SL": 304
     },
     "2m/INV/LONG": {
-      "n": 29,
-      "layer_expR": -0.159,
-      "orig_expR": 0.75,
-      "delta_orig_minus_layer": 0.909,
+      "n": 31,
+      "layer_expR": -0.111,
+      "orig_expR": 0.637,
+      "delta_orig_minus_layer": 0.748,
       "delta_ci90": [
-        -0.027,
-        2.134
+        -0.142,
+        1.885
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 48.3,
-      "orig_wrTP1": 34.5,
-      "slTk_p50": 22.0,
+      "layer_wrTP1": 51.6,
+      "orig_wrTP1": 32.3,
+      "slTk_p50": 16.0,
       "slOrigTk_p50": 5.0,
-      "orig_wider_pct": 13.8,
+      "orig_wider_pct": 12.9,
       "orig_saved_from_SL": 0,
-      "orig_caused_SL": 4
+      "orig_caused_SL": 6
     },
     "2m/INV/SHORT": {
       "n": 38,
@@ -534,59 +539,59 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
       "orig_caused_SL": 2
     },
     "2m/RETEST/LONG": {
-      "n": 1327,
-      "layer_expR": 0.005,
-      "orig_expR": 0.04,
-      "delta_orig_minus_layer": 0.035,
+      "n": 1477,
+      "layer_expR": 0.027,
+      "orig_expR": 0.077,
+      "delta_orig_minus_layer": 0.05,
       "delta_ci90": [
-        -0.039,
-        0.109
+        -0.018,
+        0.12
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 48.0,
-      "orig_wrTP1": 34.1,
-      "slTk_p50": 20.0,
+      "layer_wrTP1": 49.4,
+      "orig_wrTP1": 35.4,
+      "slTk_p50": 19.0,
       "slOrigTk_p50": 9.0,
-      "orig_wider_pct": 3.4,
+      "orig_wider_pct": 3.2,
       "orig_saved_from_SL": 1,
-      "orig_caused_SL": 185
+      "orig_caused_SL": 207
     },
     "2m/RETEST/SHORT": {
-      "n": 895,
-      "layer_expR": 0.104,
-      "orig_expR": 0.221,
-      "delta_orig_minus_layer": 0.117,
+      "n": 939,
+      "layer_expR": 0.11,
+      "orig_expR": 0.223,
+      "delta_orig_minus_layer": 0.113,
       "delta_ci90": [
-        0.011,
-        0.221
+        0.012,
+        0.215
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 51.3,
-      "orig_wrTP1": 36.5,
+      "layer_wrTP1": 51.8,
+      "orig_wrTP1": 37.0,
       "slTk_p50": 22.0,
-      "slOrigTk_p50": 10.0,
-      "orig_wider_pct": 2.8,
+      "slOrigTk_p50": 11.0,
+      "orig_wider_pct": 2.7,
       "orig_saved_from_SL": 1,
-      "orig_caused_SL": 133
+      "orig_caused_SL": 140
     },
     "5m/INV/LONG": {
-      "n": 11,
-      "layer_expR": 0.788,
-      "orig_expR": -0.415,
-      "delta_orig_minus_layer": -1.203,
+      "n": 12,
+      "layer_expR": 0.639,
+      "orig_expR": -0.463,
+      "delta_orig_minus_layer": -1.103,
       "delta_ci90": [
-        -1.776,
-        -0.692
+        -1.662,
+        -0.625
       ],
       "delta_beats_zero": false,
       "delta_below_zero": true,
-      "layer_wrTP1": 90.9,
-      "orig_wrTP1": 45.5,
-      "slTk_p50": 37.0,
-      "slOrigTk_p50": 6.0,
-      "orig_wider_pct": 27.3,
+      "layer_wrTP1": 83.3,
+      "orig_wrTP1": 41.7,
+      "slTk_p50": 43.0,
+      "slOrigTk_p50": 6.5,
+      "orig_wider_pct": 25.0,
       "orig_saved_from_SL": 0,
       "orig_caused_SL": 5
     },
@@ -610,42 +615,42 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
       "orig_caused_SL": 1
     },
     "5m/RETEST/LONG": {
-      "n": 492,
-      "layer_expR": 0.154,
-      "orig_expR": 0.402,
-      "delta_orig_minus_layer": 0.248,
+      "n": 555,
+      "layer_expR": 0.143,
+      "orig_expR": 0.362,
+      "delta_orig_minus_layer": 0.218,
       "delta_ci90": [
-        0.063,
-        0.479
+        0.05,
+        0.403
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 54.5,
-      "orig_wrTP1": 45.5,
-      "slTk_p50": 24.0,
+      "layer_wrTP1": 54.4,
+      "orig_wrTP1": 45.2,
+      "slTk_p50": 25.0,
       "slOrigTk_p50": 14.0,
-      "orig_wider_pct": 17.3,
+      "orig_wider_pct": 16.2,
       "orig_saved_from_SL": 3,
-      "orig_caused_SL": 47
+      "orig_caused_SL": 54
     },
     "5m/RETEST/SHORT": {
-      "n": 309,
-      "layer_expR": 0.059,
-      "orig_expR": 0.613,
-      "delta_orig_minus_layer": 0.554,
+      "n": 324,
+      "layer_expR": 0.075,
+      "orig_expR": 0.59,
+      "delta_orig_minus_layer": 0.514,
       "delta_ci90": [
-        0.148,
-        1.067
+        0.133,
+        0.987
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 51.8,
-      "orig_wrTP1": 44.3,
-      "slTk_p50": 30.0,
+      "layer_wrTP1": 52.5,
+      "orig_wrTP1": 44.4,
+      "slTk_p50": 32.0,
       "slOrigTk_p50": 24.0,
-      "orig_wider_pct": 19.1,
+      "orig_wider_pct": 18.8,
       "orig_saved_from_SL": 6,
-      "orig_caused_SL": 29
+      "orig_caused_SL": 32
     }
   }
 }
@@ -655,19 +660,19 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
 ```json
 {
   "2026-W36": {
-    "n": 3140,
+    "n": 3135,
     "wrTP1": 44.8,
-    "expR": -0.016
+    "expR": -0.017
   },
   "2026-W37": {
-    "n": 5375,
-    "wrTP1": 46.9,
-    "expR": 0.071
+    "n": 5338,
+    "wrTP1": 46.8,
+    "expR": 0.07
   },
   "2026-W38": {
-    "n": 1072,
-    "wrTP1": 46.5,
-    "expR": 0.096
+    "n": 2211,
+    "wrTP1": 45.4,
+    "expR": 0.123
   }
 }
 ```
@@ -689,16 +694,16 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
       "pf": 1.95
     },
     "1m/RETEST/LONG": {
-      "n": 1370,
+      "n": 1367,
       "wrTP1": 42.9,
       "expR": -0.012,
       "pf": 0.98
     },
     "1m/RETEST/SHORT": {
-      "n": 449,
-      "wrTP1": 43.7,
-      "expR": -0.002,
-      "pf": 1.0
+      "n": 447,
+      "wrTP1": 43.8,
+      "expR": -0.006,
+      "pf": 0.99
     },
     "2m/INV/LONG": {
       "n": 17,
@@ -757,21 +762,21 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
       "pf": 0.9
     },
     "1m/INV/SHORT": {
-      "n": 57,
-      "wrTP1": 42.1,
-      "expR": 0.091,
-      "pf": 1.18
+      "n": 56,
+      "wrTP1": 41.1,
+      "expR": 0.038,
+      "pf": 1.07
     },
     "1m/RETEST/LONG": {
-      "n": 1606,
-      "wrTP1": 45.1,
-      "expR": 0.046,
+      "n": 1599,
+      "wrTP1": 45.2,
+      "expR": 0.047,
       "pf": 1.09
     },
     "1m/RETEST/SHORT": {
-      "n": 1715,
+      "n": 1710,
       "wrTP1": 45.0,
-      "expR": 0.046,
+      "expR": 0.045,
       "pf": 1.09
     },
     "2m/INV/LONG": {
@@ -787,16 +792,16 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
       "pf": 1.27
     },
     "2m/RETEST/LONG": {
-      "n": 694,
+      "n": 682,
       "wrTP1": 47.7,
-      "expR": 0.038,
+      "expR": 0.041,
       "pf": 1.08
     },
     "2m/RETEST/SHORT": {
-      "n": 757,
-      "wrTP1": 51.5,
-      "expR": 0.151,
-      "pf": 1.33
+      "n": 754,
+      "wrTP1": 51.3,
+      "expR": 0.143,
+      "pf": 1.32
     },
     "5m/INV/LONG": {
       "n": 4,
@@ -811,48 +816,48 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
       "pf": 5.85
     },
     "5m/RETEST/LONG": {
-      "n": 241,
+      "n": 235,
       "wrTP1": 52.3,
-      "expR": 0.196,
-      "pf": 1.44
+      "expR": 0.203,
+      "pf": 1.45
     },
     "5m/RETEST/SHORT": {
-      "n": 221,
-      "wrTP1": 51.6,
-      "expR": 0.113,
-      "pf": 1.25
+      "n": 218,
+      "wrTP1": 51.4,
+      "expR": 0.106,
+      "pf": 1.23
     }
   },
   "2026-W38": {
     "1m/INV/LONG": {
-      "n": 14,
-      "wrTP1": 57.1,
-      "expR": 0.122,
-      "pf": 1.32
+      "n": 36,
+      "wrTP1": 50.0,
+      "expR": 0.07,
+      "pf": 1.17
     },
     "1m/INV/SHORT": {
-      "n": 6,
+      "n": 9,
       "wrTP1": 66.7,
-      "expR": 0.013,
-      "pf": 1.04
+      "expR": 0.115,
+      "pf": 1.46
     },
     "1m/RETEST/LONG": {
-      "n": 295,
-      "wrTP1": 47.5,
-      "expR": 0.093,
-      "pf": 1.21
+      "n": 784,
+      "wrTP1": 46.4,
+      "expR": 0.086,
+      "pf": 1.19
     },
     "1m/RETEST/SHORT": {
-      "n": 395,
-      "wrTP1": 45.3,
-      "expR": 0.178,
-      "pf": 1.45
+      "n": 565,
+      "wrTP1": 43.5,
+      "expR": 0.177,
+      "pf": 1.44
     },
     "2m/INV/LONG": {
-      "n": 4,
-      "wrTP1": 50.0,
-      "expR": -0.217,
-      "pf": 0.35
+      "n": 7,
+      "wrTP1": 57.1,
+      "expR": 0.102,
+      "pf": 1.51
     },
     "2m/INV/SHORT": {
       "n": 2,
@@ -861,34 +866,34 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
       "pf": 0.0
     },
     "2m/RETEST/LONG": {
-      "n": 127,
-      "wrTP1": 38.6,
-      "expR": -0.09,
-      "pf": 0.84
+      "n": 364,
+      "wrTP1": 45.1,
+      "expR": 0.103,
+      "pf": 1.23
     },
     "2m/RETEST/SHORT": {
-      "n": 131,
-      "wrTP1": 50.4,
-      "expR": 0.019,
-      "pf": 1.05
+      "n": 207,
+      "wrTP1": 46.9,
+      "expR": 0.117,
+      "pf": 1.3
     },
     "5m/INV/LONG": {
-      "n": 3,
-      "wrTP1": 33.3,
-      "expR": 0.18,
-      "pf": 99.0
+      "n": 4,
+      "wrTP1": 25.0,
+      "expR": -0.41,
+      "pf": 0.18
     },
     "5m/RETEST/LONG": {
-      "n": 45,
-      "wrTP1": 57.8,
-      "expR": 0.314,
-      "pf": 1.82
+      "n": 144,
+      "wrTP1": 45.8,
+      "expR": 0.192,
+      "pf": 1.46
     },
     "5m/RETEST/SHORT": {
-      "n": 50,
-      "wrTP1": 48.0,
-      "expR": 0.066,
-      "pf": 1.17
+      "n": 89,
+      "wrTP1": 41.6,
+      "expR": 0.225,
+      "pf": 1.6
     }
   }
 }
@@ -898,123 +903,123 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
 ```json
 {
   "fitted": true,
-  "n": 8930,
-  "brier": 0.2229,
-  "bias": -0.1,
+  "n": 9774,
+  "brier": 0.2217,
+  "bias": -0.077,
   "coefficients": [
     {
       "feature": "rr1",
-      "weight": -1.161
+      "weight": -1.192
     },
     {
       "feature": "stretchAtr",
-      "weight": -0.117
+      "weight": -0.116
     },
     {
       "feature": "nearTk",
-      "weight": -0.078
-    },
-    {
-      "feature": "rvol",
-      "weight": 0.077
+      "weight": -0.083
     },
     {
       "feature": "biasScore",
-      "weight": -0.069
+      "weight": -0.079
+    },
+    {
+      "feature": "rvol",
+      "weight": 0.065
     },
     {
       "feature": "structDir",
-      "weight": 0.041
-    },
-    {
-      "feature": "hourNY",
-      "weight": 0.037
-    },
-    {
-      "feature": "chopIdx",
-      "weight": -0.034
-    },
-    {
-      "feature": "aligned",
-      "weight": -0.03
+      "weight": 0.046
     },
     {
       "feature": "nearEdge",
-      "weight": 0.013
+      "weight": 0.028
     },
     {
-      "feature": "atrPctUsed",
-      "weight": -0.008
-    },
-    {
-      "feature": "entryZoneTk",
-      "weight": -0.006
+      "feature": "aligned",
+      "weight": -0.028
     },
     {
       "feature": "emaStack",
-      "weight": 0.003
+      "weight": 0.027
+    },
+    {
+      "feature": "chopIdx",
+      "weight": -0.02
+    },
+    {
+      "feature": "entryZoneTk",
+      "weight": -0.013
+    },
+    {
+      "feature": "atrPctUsed",
+      "weight": -0.011
+    },
+    {
+      "feature": "hourNY",
+      "weight": 0.007
     }
   ],
   "calibration_deciles": [
     {
       "bin": 0,
-      "pred": 0.167,
-      "actual": 0.185,
-      "n": 893
+      "pred": 0.161,
+      "actual": 0.172,
+      "n": 977
     },
     {
       "bin": 1,
-      "pred": 0.352,
-      "actual": 0.298,
-      "n": 893
+      "pred": 0.355,
+      "actual": 0.305,
+      "n": 977
     },
     {
       "bin": 2,
-      "pred": 0.433,
-      "actual": 0.337,
-      "n": 893
+      "pred": 0.439,
+      "actual": 0.354,
+      "n": 978
     },
     {
       "bin": 3,
-      "pred": 0.482,
-      "actual": 0.42,
-      "n": 893
+      "pred": 0.49,
+      "actual": 0.421,
+      "n": 977
     },
     {
       "bin": 4,
-      "pred": 0.521,
-      "actual": 0.479,
-      "n": 893
+      "pred": 0.53,
+      "actual": 0.504,
+      "n": 978
     },
     {
       "bin": 5,
-      "pred": 0.552,
-      "actual": 0.558,
-      "n": 893
+      "pred": 0.562,
+      "actual": 0.569,
+      "n": 977
     },
     {
       "bin": 6,
-      "pred": 0.576,
-      "actual": 0.602,
-      "n": 893
+      "pred": 0.586,
+      "actual": 0.605,
+      "n": 977
     },
     {
       "bin": 7,
-      "pred": 0.599,
-      "actual": 0.642,
-      "n": 893
+      "pred": 0.609,
+      "actual": 0.653,
+      "n": 978
     },
     {
       "bin": 8,
-      "pred": 0.622,
-      "actual": 0.713,
-      "n": 893
+      "pred": 0.631,
+      "actual": 0.707,
+      "n": 977
     },
     {
       "bin": 9,
-      "pred": 0.662,
-      "actual": 0.72,
-      "n": 893
+      "pred": 0.667,
+      "actual": 0.729,
+      "n": 978
     }
   ],
   "note": "in-sample; interpretar signo/magnitud, no como verdad fuera de muestra hasta 200+"
@@ -1034,53 +1039,53 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
 ```json
 {
   "1m/INV/LONG": {
-    "expR": 0.123,
+    "expR": 0.107,
     "ci90": [
-      -0.103,
-      0.354
+      -0.096,
+      0.318
     ],
-    "p_mean_le_0": 0.192,
-    "n": 84,
+    "p_mean_le_0": 0.201,
+    "n": 102,
     "survives_fdr10": false
   },
   "1m/INV/SHORT": {
-    "expR": 0.124,
+    "expR": 0.096,
     "ci90": [
-      -0.104,
-      0.361
+      -0.116,
+      0.328
     ],
-    "p_mean_le_0": 0.193,
-    "n": 80,
+    "p_mean_le_0": 0.237,
+    "n": 81,
     "survives_fdr10": false
   },
   "1m/RETEST/LONG": {
-    "expR": 0.026,
+    "expR": 0.032,
     "ci90": [
-      -0.011,
-      0.064
+      -0.002,
+      0.068
     ],
-    "p_mean_le_0": 0.129,
-    "n": 3197,
+    "p_mean_le_0": 0.062,
+    "n": 3619,
     "survives_fdr10": false
   },
   "1m/RETEST/SHORT": {
-    "expR": 0.054,
+    "expR": 0.059,
     "ci90": [
-      0.013,
-      0.099
+      0.018,
+      0.1
     ],
-    "p_mean_le_0": 0.015,
-    "n": 2432,
+    "p_mean_le_0": 0.011,
+    "n": 2553,
     "survives_fdr10": true
   },
   "2m/INV/LONG": {
-    "expR": -0.159,
+    "expR": -0.111,
     "ci90": [
-      -0.447,
-      0.129
+      -0.38,
+      0.169
     ],
-    "p_mean_le_0": 0.818,
-    "n": 29,
+    "p_mean_le_0": 0.74,
+    "n": 31,
     "survives_fdr10": false
   },
   "2m/INV/SHORT": {
@@ -1094,33 +1099,33 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
     "survives_fdr10": false
   },
   "2m/RETEST/LONG": {
-    "expR": -0.017,
+    "expR": 0.01,
     "ci90": [
-      -0.066,
-      0.033
+      -0.037,
+      0.056
     ],
-    "p_mean_le_0": 0.718,
-    "n": 1474,
+    "p_mean_le_0": 0.352,
+    "n": 1650,
     "survives_fdr10": false
   },
   "2m/RETEST/SHORT": {
-    "expR": 0.088,
+    "expR": 0.094,
     "ci90": [
-      0.028,
-      0.149
+      0.035,
+      0.151
     ],
-    "p_mean_le_0": 0.009,
-    "n": 1068,
+    "p_mean_le_0": 0.005,
+    "n": 1114,
     "survives_fdr10": true
   },
   "5m/INV/LONG": {
-    "expR": 0.788,
+    "expR": 0.639,
     "ci90": [
-      0.473,
-      1.164
+      0.257,
+      1.035
     ],
-    "p_mean_le_0": 0.0,
-    "n": 11,
+    "p_mean_le_0": 0.002,
+    "n": 12,
     "survives_fdr10": true
   },
   "5m/INV/SHORT": {
@@ -1134,23 +1139,23 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
     "survives_fdr10": false
   },
   "5m/RETEST/LONG": {
-    "expR": 0.155,
+    "expR": 0.153,
     "ci90": [
-      0.061,
-      0.245
+      0.07,
+      0.237
     ],
-    "p_mean_le_0": 0.002,
-    "n": 515,
+    "p_mean_le_0": 0.003,
+    "n": 582,
     "survives_fdr10": true
   },
   "5m/RETEST/SHORT": {
-    "expR": 0.075,
+    "expR": 0.096,
     "ci90": [
-      -0.033,
-      0.195
+      -0.009,
+      0.207
     ],
-    "p_mean_le_0": 0.127,
-    "n": 346,
+    "p_mean_le_0": 0.072,
+    "n": 362,
     "survives_fdr10": false
   }
 }
@@ -1164,54 +1169,54 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
   "clusters": [
     {
       "id": 2,
-      "n": 3529,
-      "wrTP1": 46.4,
+      "n": 3776,
+      "wrTP1": 45.6,
       "expR": 0.076,
       "pf": 1.16,
       "defining_features": {
-        "biasScore": -1.06,
-        "emaStack": -0.96,
-        "nearEdge": -0.81,
-        "structDir": -0.44
+        "biasScore": -1.1,
+        "emaStack": -0.99,
+        "nearEdge": -0.84,
+        "structDir": -0.45
       }
     },
     {
       "id": 0,
-      "n": 3430,
-      "wrTP1": 44.7,
-      "expR": 0.051,
-      "pf": 1.1,
+      "n": 3927,
+      "wrTP1": 45.5,
+      "expR": 0.072,
+      "pf": 1.15,
       "defining_features": {
-        "biasScore": 0.8,
-        "nearEdge": 0.69,
+        "biasScore": 0.78,
+        "nearEdge": 0.68,
         "emaStack": 0.67,
-        "hourNY": -0.53
+        "hourNY": -0.54
       }
     },
     {
       "id": 1,
-      "n": 1674,
-      "wrTP1": 50.2,
-      "expR": 0.02,
+      "n": 1836,
+      "wrTP1": 49.6,
+      "expR": 0.017,
       "pf": 1.04,
       "defining_features": {
-        "hourNY": 1.29,
-        "atrPctUsed": -0.81,
-        "emaStack": 0.65,
+        "hourNY": 1.31,
+        "atrPctUsed": -0.84,
+        "emaStack": 0.61,
         "biasScore": 0.58
       }
     },
     {
       "id": 3,
-      "n": 954,
-      "wrTP1": 43.3,
-      "expR": -0.044,
-      "pf": 0.91,
+      "n": 1145,
+      "wrTP1": 42.9,
+      "expR": -0.025,
+      "pf": 0.95,
       "defining_features": {
-        "stretchAtr": 1.81,
-        "rvol": 1.75,
-        "chopIdx": -1.44,
-        "entryZoneTk": -0.33
+        "stretchAtr": 1.76,
+        "rvol": 1.62,
+        "chopIdx": -1.41,
+        "entryZoneTk": -0.17
       }
     }
   ]
@@ -1224,40 +1229,40 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
   "1m/INV/LONG": {
     "symbols": {
       "CL": {
-        "n": 28,
-        "wrTP1": 60.7,
+        "n": 29,
+        "wrTP1": 58.6,
         "expR": 0.464
       },
       "YM": {
-        "n": 31,
-        "wrTP1": 35.5,
-        "expR": 0.101
+        "n": 44,
+        "wrTP1": 38.6,
+        "expR": 0.124
       },
       "ES": {
-        "n": 9,
-        "wrTP1": 55.6,
-        "expR": -0.253
+        "n": 13,
+        "wrTP1": 53.8,
+        "expR": -0.187
       },
       "NQ": {
-        "n": 6,
-        "wrTP1": 33.3,
-        "expR": 0.212
+        "n": 8,
+        "wrTP1": 50.0,
+        "expR": 0.261
       },
       "GC": {
-        "n": 14,
-        "wrTP1": 35.7,
-        "expR": -0.317
+        "n": 16,
+        "wrTP1": 31.2,
+        "expR": -0.408
       }
     },
-    "expR_spread": 0.781,
+    "expR_spread": 0.872,
     "verdict": "instrument-specific"
   },
   "1m/INV/SHORT": {
     "symbols": {
       "YM": {
-        "n": 52,
-        "wrTP1": 44.2,
-        "expR": 0.048
+        "n": 51,
+        "wrTP1": 43.1,
+        "expR": -0.012
       },
       "NQ": {
         "n": 9,
@@ -1270,40 +1275,40 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
         "expR": 0.57
       },
       "GC": {
-        "n": 15,
-        "wrTP1": 60.0,
-        "expR": 0.157
+        "n": 18,
+        "wrTP1": 61.1,
+        "expR": 0.188
       }
     },
-    "expR_spread": 0.522,
+    "expR_spread": 0.582,
     "verdict": "instrument-specific"
   },
   "1m/RETEST/LONG": {
     "symbols": {
       "GC": {
-        "n": 537,
-        "wrTP1": 43.4,
-        "expR": 0.055
+        "n": 573,
+        "wrTP1": 44.2,
+        "expR": 0.059
       },
       "NQ": {
-        "n": 655,
-        "wrTP1": 43.5,
-        "expR": -0.049
+        "n": 720,
+        "wrTP1": 43.8,
+        "expR": -0.032
       },
       "ES": {
-        "n": 570,
-        "wrTP1": 44.7,
-        "expR": 0.017
+        "n": 708,
+        "wrTP1": 46.9,
+        "expR": 0.072
       },
       "CL": {
-        "n": 1063,
-        "wrTP1": 46.5,
-        "expR": 0.05
+        "n": 1201,
+        "wrTP1": 45.2,
+        "expR": 0.034
       },
       "YM": {
-        "n": 446,
-        "wrTP1": 41.7,
-        "expR": 0.055
+        "n": 548,
+        "wrTP1": 42.0,
+        "expR": 0.036
       }
     },
     "expR_spread": 0.104,
@@ -1317,14 +1322,14 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
         "expR": 0.104
       },
       "GC": {
-        "n": 637,
-        "wrTP1": 46.0,
-        "expR": 0.077
+        "n": 745,
+        "wrTP1": 45.2,
+        "expR": 0.072
       },
       "YM": {
-        "n": 795,
-        "wrTP1": 46.3,
-        "expR": 0.088
+        "n": 848,
+        "wrTP1": 45.8,
+        "expR": 0.107
       },
       "ES": {
         "n": 674,
@@ -1332,12 +1337,12 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
         "expR": 0.002
       },
       "CL": {
-        "n": 49,
-        "wrTP1": 32.7,
-        "expR": -0.441
+        "n": 51,
+        "wrTP1": 31.4,
+        "expR": -0.463
       }
     },
-    "expR_spread": 0.545,
+    "expR_spread": 0.57,
     "verdict": "instrument-specific"
   },
   "2m/INV/LONG": {
@@ -1353,22 +1358,22 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
         "expR": -0.137
       },
       "YM": {
-        "n": 7,
-        "wrTP1": 14.3,
-        "expR": -0.673
+        "n": 8,
+        "wrTP1": 25.0,
+        "expR": -0.484
       },
       "ES": {
-        "n": 5,
-        "wrTP1": 80.0,
-        "expR": 0.428
+        "n": 6,
+        "wrTP1": 83.3,
+        "expR": 0.442
       },
       "NQ": {
-        "n": 7,
-        "wrTP1": 57.1,
+        "n": 8,
+        "wrTP1": 50.0,
         "expR": -0.006
       }
     },
-    "expR_spread": 1.101,
+    "expR_spread": 0.926,
     "verdict": "instrument-specific"
   },
   "2m/INV/SHORT": {
@@ -1400,32 +1405,32 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
   "2m/RETEST/LONG": {
     "symbols": {
       "NQ": {
-        "n": 326,
-        "wrTP1": 48.8,
-        "expR": 0.008
+        "n": 366,
+        "wrTP1": 48.6,
+        "expR": 0.052
       },
       "GC": {
-        "n": 187,
-        "wrTP1": 44.4,
-        "expR": -0.003
+        "n": 209,
+        "wrTP1": 44.5,
+        "expR": 0.0
       },
       "CL": {
-        "n": 490,
-        "wrTP1": 49.8,
-        "expR": 0.05
+        "n": 540,
+        "wrTP1": 48.3,
+        "expR": 0.049
       },
       "ES": {
-        "n": 264,
-        "wrTP1": 45.1,
-        "expR": -0.106
+        "n": 328,
+        "wrTP1": 48.5,
+        "expR": -0.014
       },
       "YM": {
-        "n": 238,
-        "wrTP1": 37.8,
-        "expR": -0.11
+        "n": 287,
+        "wrTP1": 39.4,
+        "expR": -0.081
       }
     },
-    "expR_spread": 0.16,
+    "expR_spread": 0.133,
     "verdict": "universal"
   },
   "2m/RETEST/SHORT": {
@@ -1436,14 +1441,14 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
         "expR": 0.052
       },
       "YM": {
-        "n": 379,
+        "n": 400,
         "wrTP1": 51.5,
-        "expR": 0.134
+        "expR": 0.13
       },
       "GC": {
-        "n": 230,
-        "wrTP1": 50.4,
-        "expR": 0.07
+        "n": 282,
+        "wrTP1": 47.2,
+        "expR": 0.104
       },
       "NQ": {
         "n": 195,
@@ -1456,15 +1461,15 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
         "expR": -0.422
       }
     },
-    "expR_spread": 0.556,
+    "expR_spread": 0.552,
     "verdict": "instrument-specific"
   },
   "5m/INV/LONG": {
     "symbols": {
       "NQ": {
-        "n": 5,
-        "wrTP1": 80.0,
-        "expR": 0.412
+        "n": 6,
+        "wrTP1": 66.7,
+        "expR": 0.13
       },
       "YM": {
         "n": 4,
@@ -1477,38 +1482,38 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
         "expR": 1.517
       }
     },
-    "expR_spread": 1.105,
+    "expR_spread": 1.387,
     "verdict": "instrument-specific"
   },
   "5m/RETEST/LONG": {
     "symbols": {
       "GC": {
-        "n": 20,
-        "wrTP1": 65.0,
-        "expR": 0.448
+        "n": 23,
+        "wrTP1": 65.2,
+        "expR": 0.498
       },
       "ES": {
-        "n": 112,
-        "wrTP1": 50.9,
-        "expR": 0.173
+        "n": 140,
+        "wrTP1": 52.9,
+        "expR": 0.245
       },
       "YM": {
-        "n": 108,
-        "wrTP1": 51.9,
-        "expR": 0.209
+        "n": 113,
+        "wrTP1": 49.6,
+        "expR": 0.198
       },
       "CL": {
-        "n": 148,
-        "wrTP1": 60.1,
-        "expR": 0.294
+        "n": 162,
+        "wrTP1": 58.6,
+        "expR": 0.301
       },
       "NQ": {
-        "n": 141,
-        "wrTP1": 46.1,
-        "expR": -0.089
+        "n": 184,
+        "wrTP1": 41.8,
+        "expR": -0.128
       }
     },
-    "expR_spread": 0.537,
+    "expR_spread": 0.626,
     "verdict": "instrument-specific"
   },
   "5m/RETEST/SHORT": {
@@ -1524,14 +1529,14 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
         "expR": 0.131
       },
       "GC": {
-        "n": 73,
-        "wrTP1": 38.4,
-        "expR": -0.063
+        "n": 96,
+        "wrTP1": 35.4,
+        "expR": 0.019
       },
       "YM": {
-        "n": 108,
-        "wrTP1": 52.8,
-        "expR": 0.184
+        "n": 121,
+        "wrTP1": 51.2,
+        "expR": 0.201
       },
       "CL": {
         "n": 9,
@@ -1539,7 +1544,7 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
         "expR": -0.323
       }
     },
-    "expR_spread": 0.507,
+    "expR_spread": 0.524,
     "verdict": "instrument-specific"
   }
 }
@@ -1551,40 +1556,40 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
   "available": true,
   "n_events": 16,
   "near_news_30m": {
-    "n": 87,
-    "wrTP1": 35.6,
-    "nSL": 14,
-    "nTO": 42,
-    "expR": 0.226,
-    "pf": 1.72,
-    "mfe_p25": 13.0,
-    "mfe_p50": 24.0,
-    "mfe_p75": 34.0,
-    "winnerMAE_p75": 16.5,
-    "winnerMAE_p90": 22.0,
-    "loserMFEbeforeSL_p50": 1.5,
+    "n": 230,
+    "wrTP1": 46.1,
+    "nSL": 78,
+    "nTO": 46,
+    "expR": 0.21,
+    "pf": 1.5,
+    "mfe_p25": 10.75,
+    "mfe_p50": 20.5,
+    "mfe_p75": 38.25,
+    "winnerMAE_p75": 11.0,
+    "winnerMAE_p90": 20.0,
+    "loserMFEbeforeSL_p50": 2.0,
     "bars_win_p50": 2.0,
-    "bars_loss_p50": 2.5,
-    "entryZoneTk_p50": -26.0,
-    "revAfterSL_rate": 64.3
+    "bars_loss_p50": 3.0,
+    "entryZoneTk_p50": -16.5,
+    "revAfterSL_rate": 46.2
   },
   "away_from_news": {
-    "n": 9500,
-    "wrTP1": 46.2,
-    "nSL": 4492,
-    "nTO": 615,
-    "expR": 0.044,
-    "pf": 1.09,
+    "n": 10454,
+    "wrTP1": 45.9,
+    "nSL": 4790,
+    "nTO": 864,
+    "expR": 0.051,
+    "pf": 1.1,
     "mfe_p25": 7.0,
     "mfe_p50": 17.0,
-    "mfe_p75": 39.0,
+    "mfe_p75": 38.0,
     "winnerMAE_p75": 12.0,
-    "winnerMAE_p90": 25.0,
+    "winnerMAE_p90": 24.0,
     "loserMFEbeforeSL_p50": 4.0,
-    "bars_win_p50": 3.0,
+    "bars_win_p50": 2.0,
     "bars_loss_p50": 4.0,
-    "entryZoneTk_p50": -13.0,
-    "revAfterSL_rate": 33.7
+    "entryZoneTk_p50": -14.0,
+    "revAfterSL_rate": 33.6
   }
 }
 ```
@@ -1632,75 +1637,75 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
     "minAfterN": 40,
     "evidence": {
       "source": "sl_origin_vs_layer.by_basis / by_tf_kind_side (medicion PARALELA: misma entrada y mismos TP, solo se mueve el stop; rMultiple = base 3-capas, rOrig = base mecha del retest). No requiere cambio en TradingView para medir.",
-      "asOf": "2026-09-15 (martes). Dato nuevo genuino, sin incidentes de repo en el bus de datos (el `git pull` inicial trajo un historial de origin/main reescrito rio arriba -- ya investigado: mismo tip que la rama local, sin perdida de commits propios, resuelto haciendo checkout de main sobre origin/main). n de pares resueltos subio de 9052 a 9303.",
+      "asOf": "2026-09-16 (miercoles). Dato nuevo genuino, sin incidentes de repo salvo el 'forced update' habitual sobre origin/main (shallow clone, mismo tip, resuelto con checkout -B main origin/main). n de pares resueltos subio de 9303 a 9587.",
       "retest_1m_long": {
-        "n": 2676,
-        "deltaER_orig_minus_layer": 0.141,
+        "n": 2737,
+        "deltaER_orig_minus_layer": 0.15,
         "ci90": [
-          0.063,
-          0.224
+          0.072,
+          0.231
         ],
         "ci90_no_cruza_cero": true,
-        "nota": "n subio de 2525 a 2676, delta practicamente identico (0.146->0.141) -- octava confirmacion independiente, sigue siendo la lectura mas estable del experimento."
+        "nota": "n subio de 2676 a 2737, delta practicamente identico (0.141->0.15) -- novena confirmacion independiente, sigue siendo la lectura mas estable del experimento."
       },
       "retest_1m_short": {
-        "n": 1955,
-        "deltaER_orig_minus_layer": 0.126,
+        "n": 1971,
+        "deltaER_orig_minus_layer": 0.127,
         "ci90": [
-          0.034,
+          0.036,
           0.226
         ],
         "ci90_no_cruza_cero": true,
-        "nota": "n subio de 1708 a 1955, delta se mantiene sin cruzar cero (0.139->0.126), limite inferior del CI90 estable en 0.034."
+        "nota": "n subio de 1955 a 1971, delta se mantiene sin cruzar cero (0.126->0.127), limite inferior del CI90 estable en 0.036."
       },
       "retest_2m_long": {
-        "n": 1306,
-        "deltaER_orig_minus_layer": 0.032,
+        "n": 1327,
+        "deltaER_orig_minus_layer": 0.035,
         "ci90": [
-          -0.043,
-          0.106
+          -0.039,
+          0.109
         ],
         "ci90_no_cruza_cero": false,
-        "nota": "n subio de 1235 a 1306, delta subio un poco (0.015->0.032) pero el CI90 sigue cruzando cero -- novena lectura seguida sin certificar, se mantiene fuera de la propuesta."
+        "nota": "n subio de 1306 a 1327, delta subio un poco (0.032->0.035) pero el CI90 sigue cruzando cero -- decima lectura seguida sin certificar, se mantiene fuera de la propuesta."
       },
       "retest_2m_short": {
-        "n": 890,
+        "n": 895,
         "deltaER_orig_minus_layer": 0.117,
         "ci90": [
-          0.014,
-          0.223
+          0.011,
+          0.221
         ],
         "ci90_no_cruza_cero": true,
-        "nota": "n subio de 796 a 890, delta se fortalecio (0.093->0.117) y el CI90 ya no cruza cero, pero el limite inferior (0.014) sigue muy pegado a cero -- tratar como candidato debil/al filo, no promoverlo a la lista solida todavia (necesita mas de una lectura seguida lejos de cero)."
+        "nota": "n subio de 890 a 895, delta identico (0.117), el limite inferior del CI90 se mantiene muy pegado a cero (0.014->0.011) -- sigue como candidato debil/al filo, no promoverlo a la lista solida todavia."
       },
       "retest_5m_long": {
-        "n": 489,
-        "deltaER_orig_minus_layer": 0.246,
+        "n": 492,
+        "deltaER_orig_minus_layer": 0.248,
         "ci90": [
-          0.055,
-          0.471
+          0.063,
+          0.479
         ],
         "ci90_no_cruza_cero": true,
-        "nota": "QUINTA LECTURA SEGUIDA CERTIFICANDO: n subio de 459 a 489, delta practicamente identico (0.252->0.246) -- sigue estable, sin retroceso, desde que se incluyo en la propuesta de la revision semanal."
+        "nota": "SEXTA LECTURA SEGUIDA CERTIFICANDO: n subio de 489 a 492, delta practicamente identico (0.246->0.248) -- sigue estable, sin retroceso, desde que se incluyo en la propuesta de la revision semanal."
       },
       "retest_5m_short": {
-        "n": 305,
-        "deltaER_orig_minus_layer": 0.561,
+        "n": 309,
+        "deltaER_orig_minus_layer": 0.554,
         "ci90": [
-          0.163,
-          1.074
+          0.148,
+          1.067
         ],
         "ci90_no_cruza_cero": true,
-        "nota": "n subio de 270 a 305, delta practicamente sin cambio (0.559->0.561) -- sigue siendo la lectura mas solida del experimento."
+        "nota": "n subio de 305 a 309, delta practicamente sin cambio (0.561->0.554) -- sigue siendo la lectura mas solida del experimento."
       },
       "overall_by_basis_retestBar": {
-        "n": 5794,
-        "deltaER": 0.146,
+        "n": 5888,
+        "deltaER": 0.15,
         "ci90": [
-          0.096,
-          0.202
+          0.101,
+          0.205
         ],
-        "nota": "n subio de 5413 a 5794, delta estable (0.14->0.146) -- sigue sin usarse sola como evidencia, la decision es por tf/side de la tabla de arriba."
+        "nota": "n subio de 5794 a 5888, delta estable (0.146->0.15) -- sigue sin usarse sola como evidencia, la decision es por tf/side de la tabla de arriba."
       }
     },
     "next_steps": [
@@ -1717,27 +1722,28 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
       "2026-09-12 (sabado, ultima corrida antes de la revision semanal de manana domingo 2026-09-13): dato nuevo genuino sin incidentes de repo (+713 pares). Dos movimientos favorables: 1m SHORT deja de estar 'al filo' -- el limite inferior de su CI90 subio de 0.003 a 0.022, ya no es el candidato mas fragil de los tres solidos. Y sobre todo: **5m LONG certifica por SEGUNDA lectura seguida** (09-11 y hoy, delta 0.154->0.187, CI90 cada vez mas lejos de cero) -- es la primera vez que cumple la barra de '2 lecturas seguidas del mismo lado' que el propio experimento se puso el 09-08 tras tres vaivenes en 3 dias; pasa de 'inestable, no incluir' a candidato EXPERIMENTAL para la propuesta de manana, con la advertencia explicita de su historial volatil (no tratarlo al mismo nivel de confianza que 1m LONG/SHORT o 5m SHORT hasta una tercera lectura). 1m LONG (quinta confirmacion) y 5m SHORT (sigue siendo el efecto mas grande, CI90 mas angosto) se mantienen como los dos candidatos mas solidos sin cambios de fondo. 2m LONG (sexta lectura sin certificar) sigue fuera; 2m SHORT sigue sin certificar pero ahora es el no-candidato mas cerca de cero (limite inferior del CI90 = -0.001). PARA LA REVISION SEMANAL DE MANANA: candidatos solidos = 1m LONG, 1m SHORT (ya no al filo), 5m SHORT; candidato experimental (2 lecturas, vigilar una tercera) = 5m LONG; fuera = 2m LONG y 2m SHORT (este ultimo el mas cerca de flipear, seguir vigilando aunque no se proponga todavia).",
       "2026-09-13 (domingo, REVISION SEMANAL): dato nuevo genuino (+719 pares, sin incidentes de perdida real -- ver nota de proceso en `asOf`, hubo un `git pull` con 'forced update' al iniciar la corrida por una reescritura upstream de `origin/main`, verificada como superset y resuelta sin perder trabajo local). **5m LONG cumple hoy su TERCERA lectura seguida certificando** (delta 0.187->0.255, CI90 cada vez mas lejos de cero) -- se gradua de 'candidato experimental' a candidato SOLIDO, aunque se mantiene la nota de historial volatil (3 vaivenes entre 09-08 y 09-11) como diferencia frente a 1m LONG (sexta confirmacion sin un solo vaiven en su historia). DECISION DE LA REVISION SEMANAL: se propone formalmente a Jesus aplicar el cambio de SL en `scalp_command.pine` (usar `lg_slOrig`/mecha del retest en vez del stop de 3 capas) en los 4 segmentos que certifican de forma estable con n>=20 post-cambio exigido: **1m LONG, 1m SHORT, 5m LONG, 5m SHORT**. 2m LONG y 2m SHORT quedan explicitamente fuera de la propuesta (septima y octava lectura sin certificar de forma estable). Se anadieron 4 lineas a `predictions.jsonl` (una por segmento, `predictedDeltaER` = delta medido hoy) para poder puntuar el acierto una vez Jesus aplique el cambio y se junte muestra post-cambio (afterN>=40, marcar `experimental` hasta 40+ muestras y 2 semanas consecutivas en la misma direccion, per agent-instructions.md). Ver `reviews/2026-week-37.md` para el detalle completo de la revision. Status del experimento se mantiene en `proposed` (no aplicado todavia en TradingView, `changeDate` sigue null) -- pasara a medirse antes/despues (y potencialmente a `confirmed`) recien cuando Jesus ponga fecha de cambio en los graficos.",
       "2026-09-14 (lunes, primer dia habil tras la revision semanal): dato nuevo minimo (+96 pares en todo el dataset, reapertura de Globex del domingo). **Los 4 segmentos propuestos ayer (1m LONG, 1m SHORT, 5m LONG, 5m SHORT) se mantienen todos con `delta_beats_zero=true` sin ningun retroceso** -- primer dia de confirmacion post-propuesta, deltas practicamente identicos a ayer en los cuatro. 5m LONG suma su CUARTA lectura seguida certificando. 2m LONG y 2m SHORT siguen fuera (octava y novena lectura sin certificar). Sin cambios a la propuesta: sigue en estado `proposed`, `changeDate` null, esperando que Jesus aplique el cambio en TradingView.",
-      "2026-09-15 (martes, primer dia habil despues de la reapertura de Globex del domingo, dato genuino): los 4 segmentos propuestos en la revision semanal del 09-13 (1m LONG, 1m SHORT, 5m LONG, 5m SHORT) se mantienen TODOS con delta_beats_zero=true y sin ningun retroceso -- 1m LONG suma su octava confirmacion, 1m SHORT y 5m SHORT se mantienen estables, 5m LONG suma su QUINTA lectura seguida certificando (ya el doble del umbral de '2 lecturas seguidas' que se puso el propio experimento el 09-08). Movimiento notable: 2m SHORT se fortalecio (delta 0.093->0.117, CI90 ya no cruza cero) pero su limite inferior (0.014) sigue demasiado pegado a cero para promoverlo -- se mantiene como candidato debil/al filo, fuera de la propuesta hasta una segunda lectura consecutiva lejos de cero. 2m LONG sigue sin certificar (novena lectura). Sin cambios de estado: sigue `proposed`, `changeDate` null, esperando que Jesus aplique el cambio en TradingView. Nota de mantenimiento (no de dato): se corrigio hoy un bug de analyze.py que hacia que la alerta MUESTRA de 2026-W36/W37 (caida de n ya explicada por dedup, sin perdida de archivo real) se repitiera identica cada corrida para siempre en vez de solo mientras la cifra siguiera empeorando; el efecto se vera desde la proxima corrida."
+      "2026-09-15 (martes, primer dia habil despues de la reapertura de Globex del domingo, dato genuino): los 4 segmentos propuestos en la revision semanal del 09-13 (1m LONG, 1m SHORT, 5m LONG, 5m SHORT) se mantienen TODOS con delta_beats_zero=true y sin ningun retroceso -- 1m LONG suma su octava confirmacion, 1m SHORT y 5m SHORT se mantienen estables, 5m LONG suma su QUINTA lectura seguida certificando (ya el doble del umbral de '2 lecturas seguidas' que se puso el propio experimento el 09-08). Movimiento notable: 2m SHORT se fortalecio (delta 0.093->0.117, CI90 ya no cruza cero) pero su limite inferior (0.014) sigue demasiado pegado a cero para promoverlo -- se mantiene como candidato debil/al filo, fuera de la propuesta hasta una segunda lectura consecutiva lejos de cero. 2m LONG sigue sin certificar (novena lectura). Sin cambios de estado: sigue `proposed`, `changeDate` null, esperando que Jesus aplique el cambio en TradingView. Nota de mantenimiento (no de dato): se corrigio hoy un bug de analyze.py que hacia que la alerta MUESTRA de 2026-W36/W37 (caida de n ya explicada por dedup, sin perdida de archivo real) se repitiera identica cada corrida para siempre en vez de solo mientras la cifra siguiera empeorando; el efecto se vera desde la proxima corrida.",
+      "2026-09-16 (miercoles, dato nuevo genuino, +284 pares resueltos en todo el bus): los 4 segmentos propuestos el 09-13 (1m LONG, 1m SHORT, 5m LONG, 5m SHORT) se mantienen TODOS con `delta_beats_zero=true` y sin ningun retroceso -- 1m LONG suma su NOVENA confirmacion, 1m SHORT y 5m SHORT estables, **5m LONG suma su SEXTA lectura seguida certificando**. 2m SHORT se mantiene exactamente igual (delta 0.117, limite inferior del CI90 baja un poco de 0.014 a 0.011 -- sigue candidato debil/al filo, todavia sin una segunda lectura clara lejos de cero). 2m LONG sigue sin certificar, decima lectura seguida (delta 0.035, CI90 cruza cero). Sin cambios de estado: sigue `proposed`, `changeDate` null. La escalera de ejecucion sigue bloqueada en el peldano 0 (asesor) porque, aun con `gate.readyForLive=true` en 5m/RETEST/LONG (n>=100, E[R]>0, PF>=1.3, WR>=50), este mismo experimento -- la causa de SL dominante en RETEST -- sigue sin un `changeDate` ni muestra post-cambio; ese es exactamente el requisito que falta segun `execution-ladder.md` peldano 2. Nada accionable nuevo para Jesus hoy mas alla de: si va a aplicar el cambio de SL estructural en los 12 graficos, este es el dia con la evidencia mas solida acumulada hasta ahora (6 confirmaciones seguidas en el candidato mas fragil, 5m LONG)."
     ],
-    "beforeN": 9327,
+    "beforeN": 10396,
     "afterN": 0,
     "before": {
-      "n": 9327,
-      "wrTP1": 46.1,
-      "nSL": 4395,
-      "nTO": 633,
-      "expR": 0.043,
-      "pf": 1.09,
+      "n": 10396,
+      "wrTP1": 45.9,
+      "nSL": 4748,
+      "nTO": 880,
+      "expR": 0.052,
+      "pf": 1.11,
       "mfe_p25": 7.0,
       "mfe_p50": 17.0,
-      "mfe_p75": 39.0,
+      "mfe_p75": 38.0,
       "winnerMAE_p75": 12.0,
-      "winnerMAE_p90": 24.200000000000273,
+      "winnerMAE_p90": 24.0,
       "loserMFEbeforeSL_p50": 4.0,
-      "bars_win_p50": 3.0,
+      "bars_win_p50": 2.0,
       "bars_loss_p50": 4.0,
-      "entryZoneTk_p50": -13.0,
-      "revAfterSL_rate": 33.9
+      "entryZoneTk_p50": -14.0,
+      "revAfterSL_rate": 34.0
     },
     "after": {
       "n": 0
@@ -1751,346 +1757,342 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
 {
   "available": true,
   "latest_plan": {
-    "date": "2026-09-16",
+    "date": "2026-09-17",
     "session": "asia",
     "runType": "asia-2",
-    "generatedAt": "2026-09-15T19:13:00-05:00",
+    "generatedAt": "2026-09-16T19:11:00-05:00",
     "schema": "sa-plan-2",
-    "cleanest": "CL",
+    "cleanest": "ES",
     "focus": {
-      "sym": "CL",
+      "sym": "ES",
       "verdict": "WAIT",
-      "window": "20:00-01:00 CT",
+      "window": "17:00-01:00 CT",
       "setup": {
-        "es": "retroceso a favor del largo de fondo en 103.76-104.21 (FVG 1h + ONH, confluencia 8)",
-        "en": "a pullback in favor of the underlying long at 103.76-104.21 (1h FVG + ONH, confluence 8)"
+        "es": "la A+ real (fade 1h 7633.75-7674) ya esta al precio (7657.25) tras la reapertura -- el retest de VAL 7620-7627 quedo abajo, fuera de alcance por ahora",
+        "en": "the real A+ (1h fade 7633.75-7674) is now at price (7657.25) after the reopen -- the VAL 7620-7627 retest is now below, out of reach for now"
       },
       "trigger": {
-        "es": "reclamo/rechazo confirmado (cierre 5m de vuelta sobre 103.76) tras el retroceso -- el estiramiento de sesion ya normalizo (0.33 ATR) pero el precio sigue pegado arriba (105.36) sin haber dado el retroceso; NO perseguir aqui arriba",
-        "en": "confirmed reclaim/rejection (5m close back above 103.76) after the pullback -- the session stretch already normalized (0.33 ATR) but price is still glued up top (105.36) without giving the pullback; do NOT chase up here"
+        "es": "rechazo confirmado en el FVG 1h (cierre 5m de vuelta bajo 7633.75) ya con el precio dentro de la zona; sin ese cierre no hay entrada, no te adelantes al primer toque",
+        "en": "a confirmed rejection at the 1h FVG (5m close back below 7633.75) with price already inside the zone; no entry without that close, don't front-run the first tag"
       },
       "invalid": {
-        "es": "cierre 5m sostenido bajo 102.98 (pierde el viejo techo como soporte)",
-        "en": "5m close sustained below 102.98 (loses the old ceiling as support)"
+        "es": "cierre 5m sostenido sobre 7674 (borde alto del FVG 1h) con seguimiento real",
+        "en": "5m close sustained above 7674 (1h FVG high edge) with real follow-through"
       },
       "note": {
-        "es": "2h+ de reapertura y el mejor setup de la noche todavia no ha llegado -- paciencia, no compres el maximo",
-        "en": "2h+ into the reopen and tonight's best setup still hasn't arrived -- be patient, don't buy the high"
+        "es": "el precio ya esta dentro de la zona A+ real -- espera el rechazo confirmado, no el primer toque; el retest de VAL quedo descartado por ahora",
+        "en": "price is already inside the real A+ zone -- wait for the confirmed rejection, not the first tag; the VAL retest is off the table for now"
       }
     },
     "summary": {
       "es": [
-        "!! Fed manana miercoles: decision de tasas 13:00 CT + conferencia 13:30 CT -- trata el dia entero con cautela extra, aunque Asia este tranquila.",
-        "NQ: sesgo fusionado sigue muerto (~9h), el chop previsto en el cluster POC/EMA se confirmo en las primeras 2h de la reapertura, sin borde a ningun lado. WAIT.",
-        "ES: motor fusionado sigue DEBIL/NEUTRAL, precio sigue en el apilamiento de valor sin tocar ningun borde (rango de solo 5.75pts). WAIT.",
-        "GC: cayo 9.4pts sin dar la entrada del golden zone y ya extiende directo hacia el objetivo (4320), MUY estirado (2.06 ATR) -- no perseguir el corto aqui. AVOID.",
-        "YM: el estiramiento normalizo de 2.66 a 1.7 ATR, deja de ser trampa de persecucion pura, pero sigue sin marco propio y sin borde limpio. WAIT.",
-        "CL: precio practicamente sin cambios (105.36) pegado a los maximos; el retroceso a 103.76-104.21 (A+ 8) todavia no llega -- sigue la paciencia. WAIT.",
-        "mas limpio: CL.",
-        "Ayer (2026-09-15) se califico completo: los 5 instrumentos quedaron WAIT todo el dia; NQ/ES/CL tuvieron zonas reales que SI habrian pagado, bloqueadas por conflicto de marco.",
-        "Limite diario $1000/3 stops: los setups tacticos vivos (NQ, CL) siguen a 0 contratos full-size con ese stop -- solo con micros; GC paso a AVOID (ya extendido sin haber dado la entrada)."
-      ],
-      "en": [
-        "!! Fed tomorrow Wednesday: rate decision 13:00 CT + pr
+        "!! dia de la Fed con reversion violenta en el complejo: tesis rota en ES/GC/CL, YM confirma bajista con minimo nuevo de ciclo, NQ vuelve casi al mismo nivel de hace 2 dias tras tocar maximo Y minimo nuevos",
+        "NQ: WAIT · el rally de la reapertura llevo el precio a 29450.5 (+184.5p desde el cierre), ya sobre la invalidacion 29439 del corto -- zona A+ 29289-29326 fuera de alcance por ahora · EM 148p (44% usado, 271p restantes)",
+        "ES: WAIT · corto · la A+ real (fade 1h 7633.75-7674) ya esta al precio, esperando el rechazo confirmado · EM 68p (52% usado, 38p restantes)",
+        "GC: WAIT · corto tentativo · sigue sentado en el rango del minimo del dia (4296.8-4315.0), sin estructura fresca · EM 263p (16% usado, 100p restantes)",
+        "YM: WAIT · el rebote de la reapertura llevo el precio a 52136 (+233p), ya dentro de la zona de reclamo alcista 52061-52466 -- htfzones sigue caida (~35h), conviccion no pasa de baja · EM 137p (48% usado, 325p restantes)",
+        "CL: WAIT · corto · precio siguio cayendo a 101.77 sin rebotar a la zona 102.22-102.47, ya cerca del objetivo 1 (101.28) · EM 131p (18% usado, 380p restantes)",
+        "mas limpio: ES (unico con el conflicto de marco resuelto)",
+        "limite $1000 por cuenta ⇒ en casi todas las zonas de hoy el stop estructural deja maxContracts en 0 en full -- usa micros o pasa la s
 ```
 
 ## Session Analyst x resultado scalp (hipotesis AVOID rinde peor)
 ```json
 {
   "available": true,
-  "n_matched": 3181,
+  "n_matched": 4087,
   "by_verdict": {
     "AVOID": {
-      "n": 1080,
-      "wrTP1": 44.9,
-      "nSL": 531,
-      "nTO": 64,
-      "expR": 0.013,
-      "pf": 1.03,
-      "mfe_p25": 7.0,
-      "mfe_p50": 14.0,
-      "mfe_p75": 28.0,
+      "n": 1150,
+      "wrTP1": 44.3,
+      "nSL": 574,
+      "nTO": 66,
+      "expR": -0.004,
+      "pf": 0.99,
+      "mfe_p25": 6.0,
+      "mfe_p50": 13.0,
+      "mfe_p75": 27.0,
       "winnerMAE_p75": 9.0,
       "winnerMAE_p90": 19.0,
       "loserMFEbeforeSL_p50": 3.0,
       "bars_win_p50": 3.0,
-      "bars_loss_p50": 3.0,
+      "bars_loss_p50": 3.5,
       "entryZoneTk_p50": -11.0,
-      "revAfterSL_rate": 34.5
+      "revAfterSL_rate": 32.8
     },
     "GO": {
-      "n": 381,
-      "wrTP1": 50.9,
-      "nSL": 162,
-      "nTO": 25,
-      "expR": 0.09,
-      "pf": 1.2,
+      "n": 573,
+      "wrTP1": 52.0,
+      "nSL": 222,
+      "nTO": 53,
+      "expR": 0.158,
+      "pf": 1.38,
       "mfe_p25": 11.0,
-      "mfe_p50": 24.0,
-      "mfe_p75": 51.0,
-      "winnerMAE_p75": 16.0,
-      "winnerMAE_p90": 29.700000000000017,
+      "mfe_p50": 25.0,
+      "mfe_p75": 53.0,
+      "winnerMAE_p75": 17.0,
+      "winnerMAE_p90": 31.30000000000001,
       "loserMFEbeforeSL_p50": 5.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
-      "entryZoneTk_p50": -14.0,
-      "revAfterSL_rate": 38.3
+      "entryZoneTk_p50": -15.0,
+      "revAfterSL_rate": 40.5
     },
     "WAIT": {
-      "n": 1720,
-      "wrTP1": 49.2,
-      "nSL": 769,
-      "nTO": 104,
-      "expR": 0.078,
-      "pf": 1.17,
+      "n": 2364,
+      "wrTP1": 48.9,
+      "nSL": 973,
+      "nTO": 235,
+      "expR": 0.109,
+      "pf": 1.25,
       "mfe_p25": 8.0,
       "mfe_p50": 19.0,
-      "mfe_p75": 45.0,
-      "winnerMAE_p75": 14.0,
-      "winnerMAE_p90": 27.0,
-      "loserMFEbeforeSL_p50": 4.0,
+      "mfe_p75": 42.0,
+      "winnerMAE_p75": 13.0,
+      "winnerMAE_p90": 24.5,
+      "loserMFEbeforeSL_p50": 3.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
-      "entryZoneTk_p50": -14.0,
-      "revAfterSL_rate": 38.8
+      "entryZoneTk_p50": -16.0,
+      "revAfterSL_rate": 40.3
     }
   },
   "by_verdict_ci90": {
     "AVOID": {
-      "expR": 0.013,
+      "expR": -0.004,
       "ci90": [
-        -0.049,
-        0.077
+        -0.066,
+        0.057
       ],
-      "p_mean_le_0": 0.369,
-      "n": 1041
+      "p_mean_le_0": 0.555,
+      "n": 1110
     },
     "GO": {
-      "expR": 0.09,
+      "expR": 0.158,
       "ci90": [
-        -0.008,
-        0.193
+        0.073,
+        0.242
       ],
-      "p_mean_le_0": 0.064,
-      "n": 362
+      "p_mean_le_0": 0.001,
+      "n": 533
     },
     "WAIT": {
-      "expR": 0.078,
+      "expR": 0.109,
       "ci90": [
-        0.032,
-        0.124
+        0.069,
+        0.15
       ],
-      "p_mean_le_0": 0.002,
-      "n": 1684
+      "p_mean_le_0": 0.0,
+      "n": 2204
     }
   },
   "avoid_vs_rest": {
     "AVOID": {
-      "n": 1080,
-      "wrTP1": 44.9,
-      "nSL": 531,
-      "nTO": 64,
-      "expR": 0.013,
-      "pf": 1.03,
-      "mfe_p25": 7.0,
-      "mfe_p50": 14.0,
-      "mfe_p75": 28.0,
+      "n": 1150,
+      "wrTP1": 44.3,
+      "nSL": 574,
+      "nTO": 66,
+      "expR": -0.004,
+      "pf": 0.99,
+      "mfe_p25": 6.0,
+      "mfe_p50": 13.0,
+      "mfe_p75": 27.0,
       "winnerMAE_p75": 9.0,
       "winnerMAE_p90": 19.0,
       "loserMFEbeforeSL_p50": 3.0,
       "bars_win_p50": 3.0,
-      "bars_loss_p50": 3.0,
+      "bars_loss_p50": 3.5,
       "entryZoneTk_p50": -11.0,
-      "revAfterSL_rate": 34.5
+      "revAfterSL_rate": 32.8
     },
     "GO_or_WAIT": {
-      "n": 2101,
+      "n": 2937,
       "wrTP1": 49.5,
-      "nSL": 931,
-      "nTO": 129,
-      "expR": 0.08,
-      "pf": 1.18,
+      "nSL": 1195,
+      "nTO": 288,
+      "expR": 0.118,
+      "pf": 1.27,
       "mfe_p25": 8.0,
-      "mfe_p50": 20.0,
-      "mfe_p75": 47.0,
+      "mfe_p50": 19.0,
+      "mfe_p75": 44.0,
       "winnerMAE_p75": 14.0,
-      "winnerMAE_p90": 28.0,
+      "winnerMAE_p90": 25.700000000000045,
       "loserMFEbeforeSL_p50": 4.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
-      "entryZoneTk_p50": -14.0,
-      "revAfterSL_rate": 38.7
+      "entryZoneTk_p50": -15.0,
+      "revAfterSL_rate": 40.3
     }
   },
   "avoid_vs_rest_ci90": {
     "AVOID": {
-      "expR": 0.013,
+      "expR": -0.004,
       "ci90": [
-        -0.049,
-        0.077
+        -0.066,
+        0.057
       ],
-      "p_mean_le_0": 0.369,
-      "n": 1041
+      "p_mean_le_0": 0.555,
+      "n": 1110
     },
     "GO_or_WAIT": {
-      "expR": 0.08,
+      "expR": 0.118,
       "ci90": [
-        0.037,
-        0.123
+        0.083,
+        0.154
       ],
-      "p_mean_le_0": 0.001,
-      "n": 2046
+      "p_mean_le_0": 0.0,
+      "n": 2737
     }
   },
   "by_kind_side": {
     "INV/LONG": {
       "AVOID": {
-        "n": 5,
-        "wrTP1": 20.0,
-        "nSL": 3,
+        "n": 11,
+        "wrTP1": 54.5,
+        "nSL": 4,
         "nTO": 1,
-        "expR": -0.52,
-        "pf": 0.13,
+        "expR": 0.013,
+        "pf": 1.03,
         "mfe_p25": 5.0,
-        "mfe_p50": 29.0,
+        "mfe_p50": 6.0,
         "mfe_p75": 29.0,
-        "winnerMAE_p75": 4.0,
-        "winnerMAE_p90": 4.0,
-        "loserMFEbeforeSL_p50": 29.0,
+        "winnerMAE_p75": 0.0,
+        "winnerMAE_p90": 2.0,
+        "loserMFEbeforeSL_p50": 15.0,
         "bars_win_p50": 1.0,
-        "bars_loss_p50": 8.0,
-        "entryZoneTk_p50": -39.0,
-        "revAfterSL_rate": 0.0
+        "bars_loss_p50": 5.0,
+        "entryZoneTk_p50": -13.0,
+        "revAfterSL_rate": 25.0
       },
       "GO": {
-        "n": 6,
-        "wrTP1": 50.0,
-        "nSL": 2,
+        "n": 9,
+        "wrTP1": 55.6,
+        "nSL": 3,
         "nTO": 1,
-        "expR": -0.01,
-        "pf": 0.97,
-        "mfe_p25": 23.0,
-        "mfe_p50": 24.0,
-        "mfe_p75": 28.0,
-        "winnerMAE_p75": 7.5,
-        "winnerMAE_p90": 7.8,
-        "loserMFEbeforeSL_p50": 1.0,
-        "bars_win_p50": 2.0,
-        "bars_loss_p50": 3.0,
-        "entryZoneTk_p50": -419.5,
-        "revAfterSL_rate": 50.0
+        "expR": -0.016,
+        "pf": 0.96,
+        "mfe_p25": 19.75,
+        "mfe_p50": 26.0,
+        "mfe_p75": 33.25,
+        "winnerMAE_p75": 8.0,
+        "winnerMAE_p90": 28.400000000000002,
+        "loserMFEbeforeSL_p50": 2.0,
+        "bars_win_p50": 5.0,
+        "bars_loss_p50": 5.0,
+        "entryZoneTk_p50": -60.0,
+        "revAfterSL_rate": 33.3
       },
       "WAIT": {
-        "n": 24,
-        "wrTP1": 58.3,
-        "nSL": 9,
-        "nTO": 1,
-        "expR": 0.14,
-        "pf": 1.37,
-        "mfe_p25": 10.75,
-        "mfe_p50": 22.5,
-        "mfe_p75": 52.0,
-        "winnerMAE_p75": 18.5,
-        "winnerMAE_p90": 23.800000000000004,
-        "loserMFEbeforeSL_p50": 1.0,
-        "bars_win_p50": 4.0,
-        "bars_loss_p50": 4.0,
-        "entryZoneTk_p50": -15.0,
-        "revAfterSL_rate": 33.3
+        "n": 35,
+        "wrTP1": 45.7,
+        "nSL": 16,
+        "nTO": 3,
+        "expR": -0.078,
+        "pf": 0.84,
+        "mfe_p25": 7.0,
+        "mfe_p50": 20.0,
+        "mfe_p75": 48.0,
+        "winnerMAE_p75": 19.5,
+        "winnerMAE_p90": 29.0,
+        "loserMFEbeforeSL_p50": 2.5,
+        "bars_win_p50": 4.5,
+        "bars_loss_p50": 4.5,
+        "entryZoneTk_p50": -14.0,
+        "revAfterSL_rate": 25.0
       }
     },
     "INV/SHORT": {
       "AVOID": {
-        "n": 24,
-        "wrTP1": 37.5,
+        "n": 23,
+        "wrTP1": 34.8,
         "nSL": 13,
         "nTO": 2,
-        "expR": -0.188,
-        "pf": 0.67,
-        "mfe_p25": 7.0,
-        "mfe_p50": 14.0,
-        "mfe_p75": 23.0,
-        "winnerMAE_p75": 4.0,
-        "winnerMAE_p90": 6.6000000000000005,
+        "expR": -0.333,
+        "pf": 0.44,
+        "mfe_p25": 6.5,
+        "mfe_p50": 13.5,
+        "mfe_p75": 21.75,
+        "winnerMAE_p75": 4.5,
+        "winnerMAE_p90": 6.8999999999999995,
         "loserMFEbeforeSL_p50": 8.0,
-        "bars_win_p50": 4.0,
+        "bars_win_p50": 3.0,
         "bars_loss_p50": 7.0,
-        "entryZoneTk_p50": -10.5,
+        "entryZoneTk_p50": -10.0,
         "revAfterSL_rate": 15.4
       },
       "WAIT": {
-        "n": 20,
-        "wrTP1": 50.0,
+        "n": 22,
+        "wrTP1": 54.5,
         "nSL": 9,
         "nTO": 1,
-        "expR": -0.174,
-        "pf": 0.61,
-        "mfe_p25": 7.5,
-        "mfe_p50": 26.0,
-        "mfe_p75": 39.5,
-        "winnerMAE_p75": 53.75,
-        "winnerMAE_p90": 76.3,
+        "expR": -0.12,
+        "pf": 0.71,
+        "mfe_p25": 8.25,
+        "mfe_p50": 22.0,
+        "mfe_p75": 38.75,
+        "winnerMAE_p75": 33.25,
+        "winnerMAE_p90": 73.9,
         "loserMFEbeforeSL_p50": 4.0,
-        "bars_win_p50": 3.5,
+        "bars_win_p50": 3.0,
         "bars_loss_p50": 5.0,
-        "entryZoneTk_p50": -24.0,
+        "entryZoneTk_p50": -20.5,
         "revAfterSL_rate": 44.4
       }
     },
     "RETEST/LONG": {
       "AVOID": {
-        "n": 518,
-        "wrTP1": 47.9,
-        "nSL": 250,
-        "nTO": 20,
-        "expR": 0.014,
-        "pf": 1.03,
+        "n": 583,
+        "wrTP1": 46.1,
+        "nSL": 292,
+        "nTO": 22,
+        "expR": -0.019,
+        "pf": 0.96,
         "mfe_p25": 6.0,
-        "mfe_p50": 12.0,
-        "mfe_p75": 23.0,
-        "winnerMAE_p75": 10.25,
-        "winnerMAE_p90": 18.30000000000001,
-        "loserMFEbeforeSL_p50": 2.0,
+        "mfe_p50": 11.0,
+        "mfe_p75": 21.5,
+        "winnerMAE_p75": 10.0,
+        "winnerMAE_p90": 17.200000000000017,
+        "loserMFEbeforeSL_p50": 2.5,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 3.0,
-        "entryZoneTk_p50": -9.0,
-        "revAfterSL_rate": 31.2
+        "entryZoneTk_p50": -11.0,
+        "revAfterSL_rate": 28.1
       },
       "GO": {
-        "n": 177,
-        "wrTP1": 48.0,
-        "nSL": 91,
-        "nTO": 1,
-        "expR": -0.06,
-        "pf": 0.88,
-        "mfe_p25": 8.0,
-        "mfe_p50": 19.5,
-        "mfe_p75": 46.5,
-        "winnerMAE_p75": 16.0,
-        "winnerMAE_p90": 29.200000000000017,
-        "loserMFEbeforeSL_p50": 4.0,
+        "n": 366,
+        "wrTP1": 51.1,
+        "nSL": 150,
+        "nTO": 29,
+        "expR": 0.12,
+        "pf": 1.28,
+        "mfe_p25": 9.0,
+        "mfe_p50": 24.0,
+        "mfe_p75": 51.0,
+        "winnerMAE_p75": 17.0,
+        "winnerMAE_p90": 31.0,
+        "loserMFEbeforeSL_p50": 5.0,
         "bars_win_p50": 2.0,
-        "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -15.0,
-        "revAfterSL_rate": 38.5
+        "bars_loss_p50": 3.0,
+        "entryZoneTk_p50": -16.5,
+        "revAfterSL_rate": 42.0
       },
       "WAIT": {
-        "n": 927,
-        "wrTP1": 51.6,
-        "nSL": 392,
-        "nTO": 57,
-        "expR": 0.161,
-        "pf": 1.38,
-        "mfe_p25": 8.0,
-        "mfe_p50": 21.0,
-        "mfe_p75": 47.5,
-        "winnerMAE_p75": 12.0,
-        "winnerMAE_p90": 24.0,
+        "n": 1351,
+        "wrTP1": 51.1,
+        "nSL": 531,
+        "nTO": 129,
+        "expR": 0.166,
+        "pf": 1.4,
+        "mfe_p25": 7.0,
+        "mfe_p50": 17.0,
+        "mfe_p75": 39.5,
+        "winnerMAE_p75": 10.0,
+        "winnerMAE_p90": 21.0,
         "loserMFEbeforeSL_p50": 4.0,
         "bars_win_p50": 2.0,
         "bars_loss_p50": 3.0,
-        "entryZoneTk_p50": -14.0,
-        "revAfterSL_rate": 40.6
+        "entryZoneTk_p50": -15.0,
+        "revAfterSL_rate": 43.7
       }
     },
     "RETEST/SHORT": {
@@ -2131,22 +2133,22 @@ ejemplos por causa: {"RR-bajo": ["NQ-5-20749-L", "CL-5-20795-L", "NQ-5-21912-S",
         "revAfterSL_rate": 38.2
       },
       "WAIT": {
-        "n": 749,
-        "wrTP1": 46.1,
-        "nSL": 359,
-        "nTO": 45,
-        "expR": -0.023,
-        "pf": 0.95,
-        "mfe_p25": 7.0,
-        "mfe_p50": 17.0,
-        "mfe_p75": 42.0,
-        "winnerMAE_p75": 17.0,
-        "winnerMAE_p90": 32.60000000000002,
+        "n": 956,
+        "wrTP1": 45.7,
+        "nSL": 417,
+        "nTO": 102,
+        "expR": 0.038,
+        "pf": 1.08,
+        "mfe_p25": 8.0,
+        "mfe_p50": 20.0,
+        "mfe_p75": 44.75,
+        "winnerMAE_p75": 16.0,
+        "winnerMAE_p90": 28.400000000000034,
         "loserMFEbeforeSL_p50": 3.0,
         "bars_win_p50": 2.0,
         "bars_loss_p50": 3.0,
-        "entryZoneTk_p50": -14.0,
-        "revAfterSL_rate": 36.8
+        "entryZoneTk_p50": -17.0,
+        "revAfterSL_rate": 36.5
       }
     }
   },
