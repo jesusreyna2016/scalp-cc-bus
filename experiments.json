@@ -31,75 +31,75 @@
       "minAfterN": 40,
       "evidence": {
         "source": "sl_origin_vs_layer.by_basis / by_tf_kind_side (medicion PARALELA: misma entrada y mismos TP, solo se mueve el stop; rMultiple = base 3-capas, rOrig = base mecha del retest). No requiere cambio en TradingView para medir.",
-        "asOf": "2026-09-16 (miercoles). Dato nuevo genuino, sin incidentes de repo salvo el 'forced update' habitual sobre origin/main (shallow clone, mismo tip, resuelto con checkout -B main origin/main). n de pares resueltos subio de 9303 a 9587.",
+        "asOf": "2026-09-18 (viernes). Dato nuevo genuino, sin incidentes de perdida (repo tuvo un 'forced update' con historia sin ancestro comun sobre origin/main -- shallow-clone habitual, verificado como superset, resuelto con checkout -B main origin/main). n de pares resueltos subio de 10684 a 11452.",
         "retest_1m_long": {
-          "n": 2737,
-          "deltaER_orig_minus_layer": 0.15,
+          "n": 3410,
+          "deltaER_orig_minus_layer": 0.145,
           "ci90": [
-            0.072,
-            0.231
+            0.076,
+            0.214
           ],
           "ci90_no_cruza_cero": true,
-          "nota": "n subio de 2676 a 2737, delta practicamente identico (0.141->0.15) -- novena confirmacion independiente, sigue siendo la lectura mas estable del experimento."
+          "nota": "n subio de 3095 a 3410, delta practicamente identico (0.142->0.145) -- undecima confirmacion independiente, sigue siendo la lectura mas estable del experimento."
         },
         "retest_1m_short": {
-          "n": 1971,
-          "deltaER_orig_minus_layer": 0.127,
+          "n": 2179,
+          "deltaER_orig_minus_layer": 0.155,
           "ci90": [
-            0.036,
-            0.226
+            0.064,
+            0.249
           ],
           "ci90_no_cruza_cero": true,
-          "nota": "n subio de 1955 a 1971, delta se mantiene sin cruzar cero (0.126->0.127), limite inferior del CI90 estable en 0.036."
+          "nota": "n subio de 2085 a 2179, delta sube (0.143->0.155) -- undecima confirmacion, se fortalece en vez de debilitarse."
         },
         "retest_2m_long": {
-          "n": 1327,
-          "deltaER_orig_minus_layer": 0.035,
+          "n": 1599,
+          "deltaER_orig_minus_layer": 0.074,
           "ci90": [
-            -0.039,
-            0.109
+            0.005,
+            0.145
           ],
-          "ci90_no_cruza_cero": false,
-          "nota": "n subio de 1306 a 1327, delta subio un poco (0.032->0.035) pero el CI90 sigue cruzando cero -- decima lectura seguida sin certificar, se mantiene fuera de la propuesta."
+          "ci90_no_cruza_cero": true,
+          "nota": "CERTIFICA POR PRIMERA VEZ (duodecima lectura): n subio de 1477 a 1599, delta subio de 0.05 a 0.074 y el limite inferior del CI90 cruzo por encima de cero (-0.018->0.005) -- tratar como candidato NUEVO y fragil, no sumarlo a la propuesta formal hasta 2-3 lecturas mas confirmando (mismo criterio que se aplico a 5m LONG el 09-12/09-13)."
         },
         "retest_2m_short": {
-          "n": 895,
-          "deltaER_orig_minus_layer": 0.117,
+          "n": 984,
+          "deltaER_orig_minus_layer": 0.123,
           "ci90": [
-            0.011,
-            0.221
+            0.031,
+            0.223
           ],
           "ci90_no_cruza_cero": true,
-          "nota": "n subio de 890 a 895, delta identico (0.117), el limite inferior del CI90 se mantiene muy pegado a cero (0.014->0.011) -- sigue como candidato debil/al filo, no promoverlo a la lista solida todavia."
+          "nota": "n subio de 939 a 984, delta sube (0.113->0.123) y el limite inferior del CI90 se aleja de cero por primera vez de forma clara (0.011->0.031) -- mejor lectura hasta ahora de este candidato, pero se mantiene debil/al filo un dia mas antes de promoverlo."
         },
         "retest_5m_long": {
-          "n": 492,
-          "deltaER_orig_minus_layer": 0.248,
+          "n": 622,
+          "deltaER_orig_minus_layer": 0.312,
           "ci90": [
-            0.063,
-            0.479
+            0.123,
+            0.525
           ],
           "ci90_no_cruza_cero": true,
-          "nota": "SEXTA LECTURA SEGUIDA CERTIFICANDO: n subio de 489 a 492, delta practicamente identico (0.246->0.248) -- sigue estable, sin retroceso, desde que se incluyo en la propuesta de la revision semanal."
+          "nota": "OCTAVA LECTURA SEGUIDA CERTIFICANDO: n subio de 555 a 622, delta sube fuerte (0.218->0.312) -- sigue sin retroceso desde que se incluyo en la propuesta de la revision semanal."
         },
         "retest_5m_short": {
-          "n": 309,
-          "deltaER_orig_minus_layer": 0.554,
+          "n": 369,
+          "deltaER_orig_minus_layer": 0.546,
           "ci90": [
-            0.148,
-            1.067
+            0.184,
+            0.976
           ],
           "ci90_no_cruza_cero": true,
-          "nota": "n subio de 305 a 309, delta practicamente sin cambio (0.561->0.554) -- sigue siendo la lectura mas solida del experimento."
+          "nota": "n subio de 324 a 369, delta practicamente sin cambio (0.514->0.546) -- sigue siendo la lectura mas solida del experimento."
         },
         "overall_by_basis_retestBar": {
-          "n": 5888,
-          "deltaER": 0.15,
+          "n": 7109,
+          "deltaER": 0.163,
           "ci90": [
-            0.101,
-            0.205
+            0.113,
+            0.211
           ],
-          "nota": "n subio de 5794 a 5888, delta estable (0.146->0.15) -- sigue sin usarse sola como evidencia, la decision es por tf/side de la tabla de arriba."
+          "nota": "n subio de 5888 a 7109, delta estable (0.15->0.163) -- sigue sin usarse sola como evidencia, la decision es por tf/side de la tabla de arriba."
         }
       },
       "next_steps": [
@@ -118,7 +118,8 @@
         "2026-09-14 (lunes, primer dia habil tras la revision semanal): dato nuevo minimo (+96 pares en todo el dataset, reapertura de Globex del domingo). **Los 4 segmentos propuestos ayer (1m LONG, 1m SHORT, 5m LONG, 5m SHORT) se mantienen todos con `delta_beats_zero=true` sin ningun retroceso** -- primer dia de confirmacion post-propuesta, deltas practicamente identicos a ayer en los cuatro. 5m LONG suma su CUARTA lectura seguida certificando. 2m LONG y 2m SHORT siguen fuera (octava y novena lectura sin certificar). Sin cambios a la propuesta: sigue en estado `proposed`, `changeDate` null, esperando que Jesus aplique el cambio en TradingView.",
         "2026-09-15 (martes, primer dia habil despues de la reapertura de Globex del domingo, dato genuino): los 4 segmentos propuestos en la revision semanal del 09-13 (1m LONG, 1m SHORT, 5m LONG, 5m SHORT) se mantienen TODOS con delta_beats_zero=true y sin ningun retroceso -- 1m LONG suma su octava confirmacion, 1m SHORT y 5m SHORT se mantienen estables, 5m LONG suma su QUINTA lectura seguida certificando (ya el doble del umbral de '2 lecturas seguidas' que se puso el propio experimento el 09-08). Movimiento notable: 2m SHORT se fortalecio (delta 0.093->0.117, CI90 ya no cruza cero) pero su limite inferior (0.014) sigue demasiado pegado a cero para promoverlo -- se mantiene como candidato debil/al filo, fuera de la propuesta hasta una segunda lectura consecutiva lejos de cero. 2m LONG sigue sin certificar (novena lectura). Sin cambios de estado: sigue `proposed`, `changeDate` null, esperando que Jesus aplique el cambio en TradingView. Nota de mantenimiento (no de dato): se corrigio hoy un bug de analyze.py que hacia que la alerta MUESTRA de 2026-W36/W37 (caida de n ya explicada por dedup, sin perdida de archivo real) se repitiera identica cada corrida para siempre en vez de solo mientras la cifra siguiera empeorando; el efecto se vera desde la proxima corrida.",
         "2026-09-16 (miercoles, dato nuevo genuino, +284 pares resueltos en todo el bus): los 4 segmentos propuestos el 09-13 (1m LONG, 1m SHORT, 5m LONG, 5m SHORT) se mantienen TODOS con `delta_beats_zero=true` y sin ningun retroceso -- 1m LONG suma su NOVENA confirmacion, 1m SHORT y 5m SHORT estables, **5m LONG suma su SEXTA lectura seguida certificando**. 2m SHORT se mantiene exactamente igual (delta 0.117, limite inferior del CI90 baja un poco de 0.014 a 0.011 -- sigue candidato debil/al filo, todavia sin una segunda lectura clara lejos de cero). 2m LONG sigue sin certificar, decima lectura seguida (delta 0.035, CI90 cruza cero). Sin cambios de estado: sigue `proposed`, `changeDate` null. La escalera de ejecucion sigue bloqueada en el peldano 0 (asesor) porque, aun con `gate.readyForLive=true` en 5m/RETEST/LONG (n>=100, E[R]>0, PF>=1.3, WR>=50), este mismo experimento -- la causa de SL dominante en RETEST -- sigue sin un `changeDate` ni muestra post-cambio; ese es exactamente el requisito que falta segun `execution-ladder.md` peldano 2. Nada accionable nuevo para Jesus hoy mas alla de: si va a aplicar el cambio de SL estructural en los 12 graficos, este es el dia con la evidencia mas solida acumulada hasta ahora (6 confirmaciones seguidas en el candidato mas fragil, 5m LONG).",
-        "2026-09-17 (jueves, dato nuevo genuino, +1097 pares resueltos en todo el bus, el salto mas grande en varios dias): los 4 segmentos propuestos el 09-13 (1m LONG, 1m SHORT, 5m LONG, 5m SHORT) se mantienen TODOS con `delta_beats_zero=true` y sin ningun retroceso -- 1m LONG suma su DECIMA confirmacion (n=2737->3095, delta 0.15->0.142, CI90 [0.066,0.218]), 1m SHORT sube (n=1971->2085, delta 0.127->0.143, CI90 [0.046,0.247]), 5m LONG suma su SEPTIMA lectura seguida certificando (n=492->555, delta 0.248->0.218, CI90 [0.05,0.403]) y 5m SHORT sigue siendo el efecto mas grande, con margen (n=309->324, delta 0.554->0.514, CI90 [0.133,0.987]). 2m SHORT se mantiene candidato debil/al filo por otra corrida mas (n=895->939, delta 0.117->0.113, limite inferior del CI90 practicamente igual, 0.011 vs 0.012). 2m LONG sigue sin certificar, undecima lectura seguida (n=1327->1477, delta 0.035->0.05, CI90 [-0.018,0.12] -- el delta sube y el limite inferior se acerca a cero, vigilar si se acerca a certificar en las proximas corridas). Nota de gate: la semana ya cerrada 2026-W37 en el segmento 5m/RETEST/LONG (el segmento objetivo del gate de ejecucion) paso de PF=1.44 a PF=1.45 pero perdio 6 pares de muestra por el mismo mecanismo de dedup que ya afectaba los conteos agregados (n=241->235) -- primera vez que se ve este efecto a nivel de segmento individual, sin evidencia de perdida real de archivo (file_integrity_check limpio). Sin cambios de estado: sigue `proposed`, `changeDate` null, esperando que Jesus aplique el cambio en TradingView. Hallazgo nuevo en paralelo (no de este experimento): por primera vez el veredicto SA=GO certifica con significancia junto a SA=WAIT en el cruce agregado con Session Analyst (ver report.alerts); y en el desglose por kind/side, la rama AVOID de RETEST/LONG cruza a E[R] negativo por primera vez mientras la rama WAIT de RETEST/SHORT cruza a positivo -- ver playbooks para el detalle por lado."
+        "2026-09-17 (jueves, dato nuevo genuino, +1097 pares resueltos en todo el bus, el salto mas grande en varios dias): los 4 segmentos propuestos el 09-13 (1m LONG, 1m SHORT, 5m LONG, 5m SHORT) se mantienen TODOS con `delta_beats_zero=true` y sin ningun retroceso -- 1m LONG suma su DECIMA confirmacion (n=2737->3095, delta 0.15->0.142, CI90 [0.066,0.218]), 1m SHORT sube (n=1971->2085, delta 0.127->0.143, CI90 [0.046,0.247]), 5m LONG suma su SEPTIMA lectura seguida certificando (n=492->555, delta 0.248->0.218, CI90 [0.05,0.403]) y 5m SHORT sigue siendo el efecto mas grande, con margen (n=309->324, delta 0.554->0.514, CI90 [0.133,0.987]). 2m SHORT se mantiene candidato debil/al filo por otra corrida mas (n=895->939, delta 0.117->0.113, limite inferior del CI90 practicamente igual, 0.011 vs 0.012). 2m LONG sigue sin certificar, undecima lectura seguida (n=1327->1477, delta 0.035->0.05, CI90 [-0.018,0.12] -- el delta sube y el limite inferior se acerca a cero, vigilar si se acerca a certificar en las proximas corridas). Nota de gate: la semana ya cerrada 2026-W37 en el segmento 5m/RETEST/LONG (el segmento objetivo del gate de ejecucion) paso de PF=1.44 a PF=1.45 pero perdio 6 pares de muestra por el mismo mecanismo de dedup que ya afectaba los conteos agregados (n=241->235) -- primera vez que se ve este efecto a nivel de segmento individual, sin evidencia de perdida real de archivo (file_integrity_check limpio). Sin cambios de estado: sigue `proposed`, `changeDate` null, esperando que Jesus aplique el cambio en TradingView. Hallazgo nuevo en paralelo (no de este experimento): por primera vez el veredicto SA=GO certifica con significancia junto a SA=WAIT en el cruce agregado con Session Analyst (ver report.alerts); y en el desglose por kind/side, la rama AVOID de RETEST/LONG cruza a E[R] negativo por primera vez mientras la rama WAIT de RETEST/SHORT cruza a positivo -- ver playbooks para el detalle por lado.",
+        "2026-09-18 (viernes): HEAD quedo detached tras el `git pull` porque `origin/main` fue reescrito rio arriba (historia sin ancestro comun con la rama local, primera vez que pasa desde 09-11) -- verificado que el commit remoto contenia todo el trabajo esperado (mismo tip de datos, ultimos 50 commits del bus) antes de resolver con `checkout -B main origin/main`, sin perdida. Dato nuevo genuino grande (+768 pares en todo el dataset). **HALLAZGO PRINCIPAL: retest_2m_long CERTIFICA POR PRIMERA VEZ** tras 11 lecturas seguidas sin lograrlo (delta 0.05->0.074, CI90 [-0.018,0.12]->[0.005,0.145], limite inferior cruza por encima de cero) -- se trata como candidato nuevo y fragil, no se suma todavia a la propuesta formal (mismo criterio de '2-3 lecturas seguidas' que se aplico a 5m LONG en la semana pasada). Los 4 segmentos ya propuestos (1m LONG/SHORT, 5m LONG/SHORT) se mantienen TODOS con `delta_beats_zero=true` y se fortalecen: 1m LONG suma su UNDECIMA confirmacion, 1m SHORT sube de delta 0.143 a 0.155, 5m LONG suma su OCTAVA lectura seguida con un salto notable (0.218->0.312), 5m SHORT estable como el efecto mas grande. 2m SHORT tiene su mejor lectura hasta ahora (limite inferior del CI90 0.011->0.031) pero se mantiene un dia mas como candidato debil antes de promoverlo. Nota de gate: en el segmento objetivo (5m/RETEST/LONG), la semana ya cerrada 2026-W36 volvio a perder 1 par por dedup (n=242, PF=1.18, sigue <1.3) y 2026-W37 tambien perdio 1 par (n=234, pero PF SUBIO a 1.47) -- el dedup a nivel de segmento sigue siendo benigno (sin evidencia de perdida real de archivo) pero ya van 3 corridas seguidas afectando este segmento especifico, vigilar que no erosione la serie. Sin cambios de estado en el experimento: sigue `proposed`, `changeDate` null, esperando que Jesus aplique el cambio en TradingView -- con 4 segmentos solidos (2 de ellos en su octava/undecima confirmacion sin un solo retroceso desde el 09-13) mas un quinto candidato nuevo (2m LONG), esta es la evidencia acumulada mas fuerte hasta ahora para aplicar el cambio."
       ]
     }
   ]

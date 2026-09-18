@@ -3,99 +3,120 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-17 · n: 4294)
+## Sección viva  (última revisión: 2026-09-18 · n: 4498)
 
 ### Nota de proceso — ver `buy-retest.md`
-Mismo incidente inofensivo (HEAD detached tras `git pull`, resuelto con
-`checkout -B main origin/main`, sin pérdida). n 4022→4294 (**+272**; 1m
-2559→2722, 2m 1098→1171, 5m 365→401) — dato genuino, salto grande.
+Mismo incidente de repo que `buy-retest.md` (`origin/main` reescrito río
+arriba, verificado como mismo tip sin pérdida, resuelto con
+`checkout -B main origin/main`). n 4294→4498 (**+204**; 1m 2722→2831, 2m
+1171→1220, 5m 401→447) — dato genuino.
 
 ### Veredicto global
-1m n=2722 (+163) WR 44.5% E[R]=**+0.059** PF=1.12 (sube de +0.054); 2m
-n=1171 (+73) WR 48.6% E[R]=**+0.094** PF=1.2 (sube de +0.088); 5m n=401
-(+36) WR 48.4% E[R]=**+0.096** PF=1.21 (sube de +0.075, el TF con más
-mejora hoy). `segment_significance`: **1m CI90=[0.018,0.1] p=0.011
-n=2553 — sostiene `survives_fdr10=true` por TERCER día seguido**,
-límite inferior sube (0.013→0.018), cada vez más lejos de cero; **2m
-CI90=[0.035,0.151] p=0.005 n=1114 — sostiene `survives_fdr10=true` por
-SEXTO día seguido**, sigue siendo la lectura SHORT más duradera del bus;
-5m CI90=[-0.009,0.207] p=0.072 n=362 (sigue sin certificar, pero el
-límite inferior sube de -0.033 a -0.009, cada vez más cerca de cruzar).
-Veredicto actualizado: **1m y 2m siguen certificando FDR
-simultáneamente, ambos cada vez más lejos de cero** — 1m ya en su
-tercera confirmación, 2m sigue siendo la más confiable por antigüedad;
-5m mejora y se acerca a certificar por primera vez.
+1m n=2831 (+109) WR 44.0% E[R]=**+0.051** PF=1.1 (baja un poco de
++0.059); 2m n=1220 (+49) WR 48.0% E[R]=**+0.088** PF=1.19 (baja un poco
+de +0.094); 5m n=447 (+46) WR 47.4% E[R]=**+0.089** PF=1.19 (baja un
+poco de +0.096) — los tres TF ceden ligeramente hoy tras la mejora de
+ayer, ningún cambio de signo. `segment_significance`: **1m
+CI90=[0.01,0.09] p=0.024 n=2656 — sostiene `survives_fdr10=true` por
+CUARTO día seguido**, el límite inferior baja un poco (0.018→0.01) pero
+sigue lejos de cero; **2m CI90=[0.031,0.147] p=0.007 n=1160 — sostiene
+`survives_fdr10=true` por SÉPTIMO día seguido**, sigue siendo la lectura
+SHORT más duradera del bus; 5m CI90=[-0.013,0.193] p=0.074 n=407 (sigue
+sin certificar, el límite inferior retrocede un poco, -0.009→-0.013 —
+la aproximación a certificar de ayer no se sostuvo). Veredicto
+actualizado: **1m y 2m siguen certificando FDR simultáneamente**, ambos
+con muestra más grande; 5m retrocede un paso en vez de acercarse a
+certificar.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=-1` | prácticamente sin cambio | 2281 (+98) | E[R] **+0.041** (casi idéntico) | moderada — quinto día seguido sin cambiar de signo |
-| 2 | `nearEdge=0` | sigue como la mejor rama en magnitud, sube | 1881 (+168) | WR 47.3%, E[R]=**+0.11** (ayer +0.098) | alta — séptima corrida seguida como el corte más estable de esta tabla |
-| 3 | `nearEdge=1` | deja de estar congelado, sube fuerte | 132 (+6) | WR 54.5%, E[R]=**+0.065** (subió de +0.005 con las 6 señales nuevas) | baja — n todavía chico, primer movimiento en varias corridas |
-| 4 | símbolo (`cross_instrument`), los 3 TF | **CL sigue siendo sistemáticamente el peor símbolo en SELL RETEST en 1m, 2m Y 5m** | 1m CL n=51 E[R]=-0.463 (empeora un poco); 2m CL n=20 E[R]=-0.422 (sin cambio, cero trades nuevos); 5m CL n=9 E[R]=-0.323 (sin cambio) — `instrument-specific`, spreads 0.57/0.552/0.524 | moderada en 1m (n=51, patrón sostenido varios días) — baja en 2m/5m (n<20, no proponer cambio de regla todavía) |
-| 5 | `tier=A+` | sigue subiendo, más moderado | 292 (+15) | WR 26.4%, E[R]=**+0.138** (ayer +0.127) | baja-moderada — tercera lectura seguida subiendo, cada vez menos parece ruido |
-| 6 | `tier=B` | se mantiene positivo | 1851 (+78) | WR 47.6% E[R]=**+0.045** (ayer +0.044), PF=1.09 | moderada — sexto día seguido en positivo |
+| 1 | `nearEdge=-1` | prácticamente sin cambio | 2383 (+102) | E[R] **+0.036** (casi idéntico) | moderada — sexto día seguido sin cambiar de signo |
+| 2 | `nearEdge=0` | sigue como la mejor rama en magnitud | 1979 (+98) | WR 47.0%, E[R]=**+0.101** (ayer +0.11) | alta — octava corrida seguida como el corte más estable de esta tabla |
+| 3 | `nearEdge=1` | se modera tras la subida de ayer | 136 (+4) | WR 54.4%, E[R]=**+0.047** (bajó de +0.065) | baja — n todavía chico, vaivén esperado |
+| 4 | símbolo (`cross_instrument`), 1m | **CL sigue siendo sistemáticamente el peor símbolo en SELL RETEST 1m, empeora más** | n=96 (+45) E[R]=**-0.517** (peor que -0.463) — `instrument-specific`, spread 0.629 | moderada-alta — n casi se duplica y el patrón se sostiene, cada vez más sólido en 1m |
+| 4b | símbolo (`cross_instrument`), 2m y 5m | **el patrón de CL se diluye al crecer la muestra — verdict pasa a `universal` en ambos** | 2m CL n=37 (+17) E[R]=-0.246 (mejora de -0.422, spread 0.388); 5m CL n=23 (+14) E[R]=-0.036 (mejora mucho de -0.323, spread 0.212) | baja — CL sigue siendo el peor símbolo en ambos TF, pero ya no de forma tan extrema; **no generalizar la regla "evitar CL" más allá de 1m** |
+| 5 | `tier=A+` | sigue subiendo | 296 (+4) | WR 26.7%, E[R]=**+0.14** (ayer +0.138) | baja-moderada — cuarta lectura seguida subiendo, cada vez menos parece ruido |
+| 6 | `tier=B` | **cede, primera baja notable** | 1916 (+65) | WR 46.8% E[R]=**+0.021** (bajó de +0.045), PF=1.04 | baja — primer retroceso tras varios días estable, vigilar si se sostiene |
 
-**Lectura de método**: `nearEdge=0` lleva 7 corridas seguidas como la
-rama más estable de toda la tabla. El patrón de `cross_instrument`
-(fila 4) se sostiene: CL sigue rindiendo mal en SELL RETEST en las tres
-temporalidades a la vez — candidato a regla condicional ("evitar CL en
-SELL RETEST") una vez que la muestra en 2m/5m crezca de n<20 a n≥20.
+**Lectura de método**: `nearEdge=0` lleva 8 corridas seguidas como la
+rama más estable de toda la tabla. El patrón de `cross_instrument` se
+matiza hoy: CL sigue siendo el peor símbolo en las tres temporalidades,
+pero sólo en 1m se mantiene lo bastante extremo como para justificar una
+regla condicional — en 2m/5m, con más muestra, el efecto se acerca a lo
+normal. No proponer "evitar CL" fuera de 1m todavía.
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara.
 
 ### Gestión
 - **La escalera + parciales (`managed_vs_naive`) sigue ayudando en los
-  tres TF**: 1m n=2546 delta=**+0.111** (casi sin cambio de +0.112); 2m
-  n=1114 delta=**+0.058** (baja un poco de +0.065); 5m n=361
-  delta=**+0.045** (baja un poco de +0.056). Sigue positivo y estable en
-  los tres TF.
+  tres TF**: 1m n=2649 delta=**+0.106** (baja un poco de +0.111); 2m
+  n=1160 delta=**+0.058** (idéntico); 5m n=406 delta=**+0.059** (sube de
+  +0.045, la mejora más notable de los tres TF hoy). Sigue positivo y
+  estable en los tres TF.
 - **SL estructural (`sl_origin_vs_layer`)**: 1m sigue certificando,
-  n=2085 (+114) delta=**+0.143** CI90=**[0.046,0.247]** (sube de
-  +0.127) — DÉCIMA confirmación independiente; **2m sostiene la
-  certificación por tercer día**, n=939 (+44) delta=+0.113 CI90=
-  **[0.012,0.215]** (casi idéntico a +0.117, el límite inferior sigue
-  muy pegado a cero, 0.012 vs 0.011) — se mantiene como candidato
-  débil/al filo, no promoverlo a la propuesta formal todavía; 5m sigue
-  siendo el más sólido, casi sin cambio: n=324 (+15) delta=**+0.514**
-  CI90=[0.133,0.987] (baja un poco de +0.554, sigue muy lejos de cero).
-  Los 2 segmentos SHORT propuestos el 09-13 (1m y 5m) se mantienen ambos
-  con `delta_beats_zero=true`, sin retroceso; 2m SHORT sigue fuera de la
-  propuesta por ahora. Ver `experiments.json` (`sl-retest-wick-2026-09-03`)
-  y `reviews/2026-week-37.md`.
+  n=2179 (+94) delta=**+0.155** CI90=**[0.064,0.249]** (sube de
+  +0.143) — UNDÉCIMA confirmación independiente, se fortalece en vez de
+  debilitarse; **2m sostiene la certificación por cuarto día**, n=984
+  (+45) delta=+0.123 CI90=**[0.031,0.223]** (sube de +0.113, el límite
+  inferior se aleja de cero por primera vez de forma clara: 0.012→0.031)
+  — mejor lectura hasta ahora de este candidato débil, pero se mantiene
+  un día más antes de promoverlo a la propuesta formal; 5m sigue siendo
+  el más sólido, casi sin cambio: n=369 (+45) delta=**+0.546** CI90=
+  [0.184,0.976] (sube un poco de +0.514, sigue muy lejos de cero). Los 2
+  segmentos SHORT propuestos el 09-13 (1m y 5m) se mantienen ambos con
+  `delta_beats_zero=true`, sin retroceso; 2m SHORT sigue fuera de la
+  propuesta formal por ahora, aunque cada vez más cerca. Ver
+  `experiments.json` (`sl-retest-wick-2026-09-03`) y
+  `reviews/2026-week-37.md`.
 - `revAfterSL_rate` por corte: sin desglose nuevo relevante hoy.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 1906 pérdidas SHORT (+74 vs ayer): mismo
-  orden por quinto/sexto día seguido — `RR-bajo` 725/1906 (38.0%),
-  `stop-en-el-minimo` 676/1906 (35.5%), `contra-estructura` 610/1906
-  (32.0%). Ninguna causa mitigada todavía por un experimento `confirmed`.
+- Autopsia de SL sobre las 2023 pérdidas SHORT (+117 vs ayer): mismo
+  orden por sexto/séptimo día seguido — `RR-bajo` 756/2023 (37.4%),
+  `stop-en-el-minimo` 698/2023 (34.5%), `contra-estructura` 629/2023
+  (31.1%). Ninguna causa mitigada todavía por un experimento `confirmed`.
 - **Cruce con Session Analyst**. Desglose por kind/side en RETEST/SHORT
-  (`by_kind_side`): `AVOID` n=533 E[R]=**+0.026** (idéntico a ayer,
-  cero señales AVOID/GO nuevas hoy en SHORT) PF=1.05; `GO` n=196
-  E[R]=**+0.231** (idéntico, sigue siendo la mejor rama por lejos); `WAIT`
-  n=956 (+207) E[R]=**+0.038** (**cruza a positivo por primera vez**,
-  venía de -0.023). Sexto+ día seguido con "GO mejor, WAIT peor" en
-  orden relativo, pero WAIT ya deja de ser negativo en términos
-  absolutos — patrón sigue siendo **opuesto** al de `buy-retest.md`
-  (donde WAIT es la mejor rama), aunque ambos playbooks se acercan un
-  poco: hoy en LONG `AVOID` cruzó a negativo y aquí en SHORT `WAIT` cruzó
-  a positivo (ver nota global en `buy-retest.md`, donde por primera vez
-  certifican dos veredictos, WAIT y GO, con significancia agregada). El
+  (`by_kind_side`): `AVOID` n=533 (sin cambio, cero señales nuevas)
+  E[R]=**+0.026** PF=1.05; `GO` n=196 (sin cambio) E[R]=**+0.231**
+  (idéntico, sigue siendo la mejor rama por lejos); `WAIT` n=1032 (+76)
+  E[R]=**+0.021** (baja de +0.038, aunque se mantiene positivo). Séptimo+
+  día seguido con "GO mejor, WAIT peor" en orden relativo — patrón sigue
+  siendo **opuesto** al de `buy-retest.md` (donde hoy WAIT vuelve a ser
+  claramente la mejor rama, revirtiendo el acercamiento de ayer). El
   hallazgo agregado "WAIT rinde mejor" de `agent-instructions.md` sigue
   sin generalizarse a SELL RETEST sin mirar esta tabla.
 
 ### Decaimiento
-`decay_weekly` (global, no por segmento): 2026-W36 n=3135 WR 44.8%
-E[R]=-0.017 (bajó de n=3140 por -5, dedup ya conocido); 2026-W37
-n=5338 WR 46.8% E[R]=**+0.07** (bajó de n=5375 por -37, la caída más
-grande vista hasta ahora en esta semana — vigilar de cerca); 2026-W38
-n=2211 (subió fuerte de 1072) WR 45.4% E[R]=**+0.123** — semana en
-curso.
+`decay_weekly` (global, no por segmento): 2026-W36 n=3121 WR 44.7%
+E[R]=-0.019 (bajó de n=3183 por -62, la caída agregada más grande vista
+hasta ahora — dedup ya conocido, sin evidencia de pérdida real de
+archivo); 2026-W37 n=5315 WR 46.8% E[R]=**+0.071** (bajó de n=5389 por
+-74, también la caída más grande vista hasta ahora — vigilar que el
+mecanismo no se esté acelerando); 2026-W38 n=3016 (subió fuerte de
+2211) WR 45.1% E[R]=**+0.081** — semana en curso.
 
 ## Histórico de cambios
+- 2026-09-18 (viernes): mismo incidente de repo que `buy-retest.md`
+  (`origin/main` reescrito río arriba, verificado sin pérdida). n
+  4294→4498 (+204; 1m+109, 2m+49, 5m+46). **1m suma su cuarta
+  confirmación FDR seguida** y 2m su séptima; 5m retrocede un paso en
+  vez de acercarse a certificar (CI90 límite inferior -0.009→-0.013). El
+  SL estructural sube en los tres TF: 1m a su undécima confirmación
+  (delta 0.143→0.155), 2m a su mejor lectura hasta ahora (límite
+  inferior del CI90 0.012→0.031, sigue sin promoverse) y 5m estable como
+  el efecto más grande. **Hallazgo del día**: el patrón "CL rinde mal en
+  SELL RETEST" se confirma con más fuerza en 1m (n casi se duplica,
+  E[R] empeora a -0.517) pero se diluye en 2m/5m al crecer la muestra
+  (ambos pasan a verdict `universal`) — la regla condicional candidata
+  debe restringirse a 1m, no generalizarse a los tres TF como se venía
+  sugiriendo. En el cruce con Session Analyst, `WAIT` retrocede de
+  +0.038 a +0.021 mientras en `buy-retest.md` su rama `WAIT` vuelve a
+  ser claramente la mejor — el patrón opuesto entre LONG y SHORT se
+  reafirma tras el acercamiento pasajero de ayer. Sin cambios de estado
+  en el experimento de SL (`proposed`, sin `changeDate`).
 - 2026-09-17 (jueves): mismo incidente inofensivo de repo que
   `buy-retest.md` (HEAD detached, resuelto sin pérdida). Salto de dato
   grande (n 4022→4294, +272). **1m/RETEST/SHORT suma su TERCERA
