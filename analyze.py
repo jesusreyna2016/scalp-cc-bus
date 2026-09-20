@@ -390,6 +390,28 @@ def counterfactual(rows):
         "note": "fixed_XR: R esperado si el objetivo fuera XR fijo con SL=struct. altSL: SL a mult del SL struct.",
     }
 
+def rr1_threshold_cut(pairs, thresholds=(1.0, 1.2, 1.3, 1.5, 2.0)):
+    """Contrafactual de ENTRADA (no de gestion): que E[R]/WR/PF tendria cada
+    segmento RETEST si sc_min_rr exigiera rr1 >= X desde el origen de la senal,
+    en vez de tomar la senal cruda. Ataca directo la causa de SL dominante
+    'RR-bajo' (ver sl_post_mortem). Compara cada corte contra el segmento
+    completo (baseline, sin filtro). Solo se listan cortes con n>=20."""
+    out = {}
+    segs = sorted({f"{r['tf']}/{r['kind']}/{r['side']}" for r in pairs if r["kind"] == "RETEST"})
+    for seg in segs:
+        seg_rows = [r for r in pairs if f"{r['tf']}/{r['kind']}/{r['side']}" == seg and r["rr1"] is not None]
+        cuts = {}
+        for th in thresholds:
+            sub = [r for r in seg_rows if r["rr1"] >= th]
+            m = seg_metrics(sub)
+            if m.get("n", 0) >= 20:
+                m["ci90"] = bootstrap_er_ci(sub)
+                cuts[str(th)] = m
+        base = seg_metrics(seg_rows)
+        base["ci90"] = bootstrap_er_ci(seg_rows)
+        out[seg] = {"baseline": base, "cuts": cuts}
+    return out
+
 # --------------------------------------------------- decay (WR semanal)
 def decay(rows):
     res = [r for r in rows if r["resolved"] and r["result"]]
@@ -645,6 +667,76 @@ def session_analyst_cross(pairs, sa_base):
                 "libre del resumen SA (linea 'SYM: ...'), no de un campo estructurado; "
                 "by_verdict_ci90/avoid_vs_rest_ci90 = bootstrap 90% CI de E[R] (null si n<8); "
                 "by_kind_side = mismo cruce desglosado por kind/side (solo celdas con n>=5).",
+    }
+
+# ============================================================ MODO SOMBRA
+# v1 (2026-09-20): primer borrador del bloque shadowRules que pide
+# agent-instructions.md ("Modo sombra"). El agente decide el criterio con
+# la evidencia mas robusta que hay hoy (segment_significance + el cruce con
+# Session Analyst); analyze.py solo aplica ese criterio y mide. Cuando el
+# agente cambie el criterio en una revision semanal, actualiza esta
+# constante (no la recalcules a mano fuera de aqui).
+SHADOW_RULES_V1 = {
+    "version": 1,
+    "definedAt": "2026-09-20",
+    "criteria": {
+        "kind": ["RETEST"],
+        "tf_side": ["1/LONG", "1/SHORT", "2/SHORT", "5/LONG"],
+        "excludeSaVerdict": ["AVOID"],
+    },
+    "rationale": (
+        "kind=RETEST (prioridad 1; INV no tiene ningun segmento con survives_fdr10=true "
+        "todavia). tf/side limitado a los 4 segmentos que hoy sobreviven FDR10 en "
+        "segment_significance (1m LONG, 1m SHORT, 2m SHORT, 5m LONG) -- 2m LONG y 5m SHORT "
+        "quedan fuera porque su CI90 de E[R] cruza o roza cero. Se excluyen senales del dia/sesion "
+        "en un instrumento con veredicto Session Analyst=AVOID: avoid_vs_rest_ci90.AVOID no es "
+        "significativo (p_mean_le_0 alto) mientras GO y WAIT si lo son (session_analyst_cross). "
+        "SL/objetivo = el mismo del indicador (3 capas); el SL estructural de "
+        "experiments.json (sl-retest-wick) sigue 'proposed' sin changeDate, no se incorpora a la "
+        "sombra hasta que tenga muestra post-cambio."
+    ),
+}
+
+def shadow_rules_apply(pairs, sa_base, rule=None):
+    rule = rule or SHADOW_RULES_V1
+    verdicts = _sa_plan_verdicts(sa_base) if sa_base else {}
+    seg_ok = set(rule["criteria"]["tf_side"])
+    kinds_ok = set(rule["criteria"]["kind"])
+    exclude_sa = set(rule["criteria"]["excludeSaVerdict"])
+
+    def sa_verdict(r):
+        session = _SA_KZ_TO_RUNTYPE.get(r["kz"])
+        if not session:
+            return None
+        sym = r["sigId"].split("-")[0]
+        return verdicts.get((r["recvDate"], session, sym))
+
+    def matches(r):
+        if r["kind"] not in kinds_ok:
+            return False
+        if f"{r['tf']}/{r['side']}" not in seg_ok:
+            return False
+        if sa_verdict(r) in exclude_sa:
+            return False
+        return True
+
+    shadow_rows = [r for r in pairs if matches(r)]
+    raw_rows = [r for r in pairs if r["kind"] in kinds_ok]
+    tier_rows = [r for r in pairs if r["kind"] in kinds_ok and r["tier"] in ("A+", "B")]
+    return {
+        "rule": rule,
+        "shadow": seg_metrics(shadow_rows),
+        "shadow_ci90": bootstrap_er_ci(shadow_rows),
+        "raw_indicator": seg_metrics(raw_rows),
+        "raw_indicator_ci90": bootstrap_er_ci(raw_rows),
+        "tier_ap_b_only": seg_metrics(tier_rows),
+        "tier_ap_b_only_ci90": bootstrap_er_ci(tier_rows),
+        "note": (
+            "compara el conjunto de reglas condicionales (shadow) contra (a) el indicador crudo "
+            "(todo RETEST) y (b) RETEST tier A+/B solo. Gate peldano 0->1 de execution-ladder.md: "
+            "shadow debe batir a raw_indicator en E[R] durante 3 semanas seguidas, n>=60 en el "
+            "segmento objetivo. bootstrap_er_ci requiere n>=8, si no devuelve null."
+        ),
     }
 
 # ================================================================= RIGOR
@@ -1138,10 +1230,13 @@ def main():
         "expR_ci_overall": bootstrap_er_ci(pairs),
         "managed_vs_naive": managed_vs_naive(pairs),
         "sl_origin_vs_layer": sl_origin_vs_layer(pairs),
+        "rr1_threshold_cut": rr1_threshold_cut(pairs),
     }
     sa = sa_context()
     report["session_analyst"] = sa
-    report["session_analyst_cross"] = session_analyst_cross(pairs, _sa_base_dir())
+    sa_base = _sa_base_dir()
+    report["session_analyst_cross"] = session_analyst_cross(pairs, sa_base)
+    report["shadow_rules"] = shadow_rules_apply(pairs, sa_base)
     report["news_context"] = news_context(pairs, sa)
     report["gate"] = exec_gate(report)
     causes, detail, causes_by_kind_side = sl_causes(pairs)
@@ -1208,6 +1303,7 @@ def main():
     state["gate"] = report["gate"]
     state["managed_vs_naive"] = report["managed_vs_naive"]
     state["sl_origin_vs_layer"] = report["sl_origin_vs_layer"]
+    state["shadowRules"] = report["shadow_rules"]
     state["alerts"] = report["alerts"]
     state["file_line_counts"] = file_line_counts
     state["segment_n_history"] = segment_n_history
@@ -1263,6 +1359,8 @@ def main():
              + json.dumps(report["managed_vs_naive"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## SL de 3 capas vs SL = vela 1 del FVG (medicion paralela, mismos TP)\n```json\n"
              + json.dumps(report["sl_origin_vs_layer"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Contrafactual de entrada por RR minimo (candidato sc_min_rr, ataca causa RR-bajo)\n```json\n"
+             + json.dumps(report["rr1_threshold_cut"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Decaimiento semanal\n```json\n"
              + json.dumps(report["decay_weekly"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Decaimiento semanal por segmento (tf/kind/side)\n```json\n"
@@ -1296,6 +1394,8 @@ def main():
             L.append("\n### narrative.md\n" + sa["narrative"][:2000] + "\n")
     L.append("\n## Session Analyst x resultado scalp (hipotesis AVOID rinde peor)\n```json\n"
              + json.dumps(report["session_analyst_cross"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Modo sombra (peldano 0->1, gate en execution-ladder.md)\n```json\n"
+             + json.dumps(report["shadow_rules"], indent=2, ensure_ascii=False) + "\n```\n")
     with open(os.path.join(ROOT, "report.md"), "w", encoding="utf-8") as f:
         f.write("".join(L))
 

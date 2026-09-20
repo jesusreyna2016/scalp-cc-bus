@@ -3,30 +3,29 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-19 · n: 4937)
+## Sección viva  (última revisión: 2026-09-20 (domingo, revisión semanal) · n: 4952)
 
 ### Nota de proceso — ver `buy-retest.md`
-Mismo incidente de repo que `buy-retest.md` (`origin/main` reescrito río
-arriba, verificado sin pérdida, resuelto con `checkout main` + `git
-reset --hard origin/main`). n 4498→4937 (**+439**; 1m 2831→3123, 2m
-1220→1328, 5m 447→486) — dato genuino, el bus asentó de una vez los
-archivos de 2026-09-18.
+Mismo incidente de repo de siempre (resuelto sin pérdida). **Hoy no
+llegó ningún archivo `signals/outcomes` nuevo** (fin de semana): n
+4937→4952 (+15; 1m+10, 2m+3, 5m+2) son enteramente TIMEOUT forzado de
+señales pendientes desde el viernes, no trades reales nuevos — ver
+`buy-retest.md` para el detalle. Todas las cifras de outcome real
+(significancia, SL estructural, gestión, cruce SA) son idénticas a
+ayer.
 
 ### Veredicto global
-1m n=3123 (+292) WR 44.0% E[R]=**+0.051** PF=1.1 (prácticamente
-idéntico a ayer); 2m n=1328 (+108) WR 47.7% E[R]=**+0.074** PF=1.16
-(baja de +0.088); 5m n=486 (+39) WR 47.3% E[R]=**+0.081** PF=1.17 (baja
-de +0.089) — 1m estable, 2m y 5m ceden un poco, ningún cambio de signo.
-`segment_significance`: **1m CI90=[0.012,0.09] p=0.012 n=2941 —
-sostiene `survives_fdr10=true`** (quinta lectura seguida), el límite
-inferior sube un poco (0.01→0.012); **2m CI90=[0.018,0.132] p=0.015
-n=1271 — sostiene `survives_fdr10=true`** (octava lectura seguida,
-sigue siendo la certificación SHORT más duradera del bus), el límite
-inferior baja de 0.031 a 0.018 pero se mantiene lejos de cero; 5m
-CI90=[-0.015,0.185] p=0.084 n=446 (sigue sin certificar, prácticamente
-sin cambio). Veredicto actualizado: **1m y 2m siguen certificando FDR
-simultáneamente**, sin sobresaltos; 5m sigue siendo el único TF SHORT
-sin edge estadístico demostrado.
+1m n=3133 (+10) WR 43.9% E[R]=**+0.051** PF=1.1; 2m n=1333 (+5) WR
+47.6% E[R]=**+0.074** PF=1.16; 5m n=486 (+0) WR 47.3% E[R]=**+0.081**
+PF=1.17 — sin cambio de fondo.
+`segment_significance` (n idéntico a ayer, el bootstrap no cuenta
+TIMEOUT forzado): **1m CI90=[0.012,0.09] p=0.012 n=2941 — sostiene
+`survives_fdr10=true`** (sexta lectura seguida); **2m CI90=[0.018,0.132]
+p=0.015 n=1271 — sostiene `survives_fdr10=true`** (novena lectura
+seguida, sigue siendo la certificación SHORT más duradera del bus); 5m
+CI90=[-0.015,0.185] p=0.084 n=446 sigue sin certificar. Veredicto sin
+cambios: **1m y 2m siguen certificando FDR simultáneamente**; 5m sigue
+siendo el único TF SHORT sin edge estadístico demostrado.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
@@ -53,52 +52,55 @@ era, en retrospectiva, todavía ruido de muestra chica.
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara.
 
 ### Gestión
-- **La escalera + parciales (`managed_vs_naive`) sigue ayudando en los
-  tres TF**: 1m n=2934 delta=**+0.107** (idéntico a ayer); 2m n=1271
-  delta=**+0.069** (sube de +0.058); 5m n=445 delta=**+0.046** (baja de
-  +0.059, pero sigue positivo). Sigue positivo y estable en los tres TF.
-- **SL estructural (`sl_origin_vs_layer`)**: 1m sigue certificando,
-  n=2432 (+253) delta=**+0.153** CI90=**[0.063,0.244]** (prácticamente
-  idéntico a ayer, +0.155) — DUODÉCIMA confirmación independiente; **2m
-  sostiene la certificación** con su mejor lectura hasta ahora: n=1092
-  (+108) delta=+0.134 CI90=**[0.039,0.234]** (sube de +0.123, el límite
-  inferior sigue alejándose de cero: 0.031→0.039) — todavía se mantiene
-  un día más antes de promoverlo a la propuesta formal; 5m sigue siendo
-  el más sólido: n=408 (+39) delta=**+0.49** CI90=[0.142,0.909] (baja un
-  poco de +0.546, sigue muy lejos de cero). Los 2 segmentos SHORT
-  propuestos el 09-13 (1m y 5m) se mantienen ambos con
-  `delta_beats_zero=true`, sin retroceso; 2m SHORT sigue fuera de la
-  propuesta formal por ahora, aunque cada vez más cerca. Ver
-  `experiments.json` (`sl-retest-wick-2026-09-03`) y
-  `reviews/2026-week-37.md`.
-- `revAfterSL_rate` por corte: sin desglose nuevo relevante hoy.
+- **La escalera + parciales (`managed_vs_naive`)** sigue ayudando en los
+  tres TF, cifras idénticas a ayer (sin dato real nuevo): 1m n=2934
+  delta=**+0.107**; 2m n=1271 delta=**+0.069**; 5m n=445
+  delta=**+0.046**.
+- **SL estructural (`sl_origin_vs_layer`)**: sin lectura nueva
+  independiente hoy (mismos números que ayer): 1m n=2432 delta=**+0.153**
+  CI90=[0.063,0.244] — sigue en su duodécima confirmación; 2m n=1092
+  delta=**+0.134** CI90=[0.039,0.234] — sigue a un paso de la propuesta
+  formal, todavía sin una tercera lectura con muestra genuinamente
+  nueva; 5m n=408 delta=**+0.49** CI90=[0.142,0.909] — sigue siendo el
+  efecto más grande del experimento. Ver `experiments.json`
+  (`sl-retest-wick-2026-09-03`) y `reviews/2026-week-38.md`.
+- **Modo sombra (`shadow_rules`, nuevo en `analyze.py` hoy)** — ver
+  `buy-retest.md` para el detalle del criterio; incluye `1/SHORT` y
+  `2/SHORT` de este playbook (los dos segmentos SHORT que certifican
+  FDR) en el conjunto que hoy bate al indicador crudo en E[R] (0.066 vs
+  0.056).
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 2252 pérdidas SHORT (+229 vs ayer): mismo
-  orden — `RR-bajo` 838/2252 (37.2%), `stop-en-el-minimo` 765/2252
+- Autopsia de SL sobre las 2252 pérdidas SHORT (sin cambio, sin dato
+  real nuevo): `RR-bajo` 838/2252 (37.2%), `stop-en-el-minimo` 765/2252
   (34.0%), `contra-estructura` 703/2252 (31.2%). Ninguna causa mitigada
   todavía por un experimento `confirmed`.
-- **Cruce con Session Analyst**. Desglose por kind/side en RETEST/SHORT
-  (`by_kind_side`): `AVOID` n=563 (+30) E[R]=**+0.053** (sube de
-  +0.026) PF=1.1; `GO` n=197 (+1) E[R]=**+0.224** (~idéntico, sigue
-  siendo la mejor rama por lejos) PF=1.58; `WAIT` n=1203 (+171)
-  E[R]=**-0.009** (**cruza a negativo por primera vez**, venía de
-  +0.021) PF=0.98. El orden relativo "GO mejor, WAIT peor" se sostiene
-  y se acentúa — patrón sigue siendo **opuesto** al de `buy-retest.md`
-  (donde `WAIT` es la mejor rama). El hallazgo agregado "WAIT rinde
-  mejor" de `agent-instructions.md` sigue sin generalizarse a SELL
-  RETEST sin mirar esta tabla; aquí `WAIT` acaba de volverse la peor
-  rama en términos absolutos, no sólo relativos.
+- **Cruce con Session Analyst** (sin plan SA nuevo hoy, cifras idénticas
+  a ayer): `AVOID` n=563 E[R]=**+0.053** PF=1.1; `GO` n=197
+  E[R]=**+0.224** (sigue siendo la mejor rama por lejos) PF=1.58; `WAIT`
+  n=1203 E[R]=**-0.009** PF=0.98. El orden "GO mejor, WAIT peor" se
+  mantiene — patrón sigue siendo **opuesto** al de `buy-retest.md`
+  (donde `WAIT` es la mejor rama). No generalizar el hallazgo agregado
+  "WAIT rinde mejor" a SELL RETEST sin mirar esta tabla.
 
 ### Decaimiento
 `decay_weekly` (global, no por segmento): 2026-W36 n=2994 WR 44.6%
-E[R]=-0.021 (bajó de n=3121 por -127, sigue perdiendo muestra por dedup,
-sin evidencia de pérdida real de archivo); 2026-W37 n=5279 WR 46.8%
-E[R]=**+0.071** (bajó de n=5315 por -36, se desacelera la caída);
-2026-W38 n=4819 (subió fuerte de 3016) WR 46.6% E[R]=**+0.087** —
-semana en curso.
+E[R]=-0.021; 2026-W37 n=5279 WR 46.8% E[R]=**+0.071**; **2026-W38
+n=4859 WR 46.2% E[R]=+0.087 — cierra hoy** (domingo). Ver
+`reviews/2026-week-38.md` para el desglose por segmento SHORT (2m
+RETEST/SHORT y 5m RETEST/SHORT) de las 3 semanas ya cerradas.
 
 ## Histórico de cambios
+- 2026-09-20 (domingo, REVISIÓN SEMANAL, cierre de 2026-W38): primer fin
+  de semana sin ningún archivo `signals/outcomes` nuevo (ver
+  `buy-retest.md` para el detalle) — los +15 pares de este playbook son
+  TIMEOUT forzado, sin trade real nuevo. Todas las métricas de outcome
+  real quedan idénticas a ayer. Mejora permanente en `analyze.py`:
+  primer borrador de `shadow_rules` (ver `buy-retest.md` y
+  `reviews/2026-week-38.md`), que incluye los dos segmentos SHORT de
+  este playbook que certifican FDR (1m y 2m). Revisión semanal completa
+  de 2026-W38 en `reviews/2026-week-38.md`: sin cambios de dirección en
+  ninguna regla condicional de este playbook.
 - 2026-09-19 (sábado): mismo patrón de "forced update" en `origin/main`
   (verificado sin pérdida). Salto de dato grande (n 4498→4937, +439; el
   bus asentó de una vez los archivos de 2026-09-18). **Hallazgo más

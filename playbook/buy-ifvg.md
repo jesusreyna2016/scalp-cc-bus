@@ -3,13 +3,17 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-19 · n: 186)
+## Sección viva  (última revisión: 2026-09-20 (domingo, revisión semanal) · n: 186)
 
 ### Nota de proceso
-Mismo incidente de repo que `buy-retest.md` (`origin/main` reescrito río
-arriba, verificado sin pérdida). Segmento de prioridad 2: n 162→186
-(**+24**; 1m+18, 2m+5, 5m+1) — salto algo mayor a lo habitual de este
-playbook, en línea con el salto grande de dato agregado de hoy.
+Sin archivo `signals/outcomes` nuevo hoy (fin de semana, ver
+`buy-retest.md`) y las 37 señales que se resolvieron por TIMEOUT forzado
+cayeron todas en segmentos RETEST — **este playbook queda con n y
+métricas exactamente idénticas a ayer** (n=186, sin cambio en ningún
+TF). Todo lo de abajo es la misma lectura de ayer, sin retroceso ni
+avance. Sección viva sin reescritura de fondo esta corrida; ver
+`reviews/2026-week-38.md` para el cierre de la semana 2026-W38 a nivel
+de todo el bus.
 
 ### Veredicto global
 1m n=130 (+18, WR 42.3%, E[R]=**0.011** PF=1.02, 59 SL — cae fuerte
@@ -85,6 +89,11 @@ este playbook — vigilar si es sólo ruido de muestra chica.
 _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
 
 ## Histórico de cambios
+- 2026-09-20 (domingo, revisión semanal): sin archivo de datos nuevo
+  (fin de semana) y las 37 señales resueltas por TIMEOUT forzado en todo
+  el bus cayeron todas en RETEST — este playbook queda con n=186 y todas
+  sus métricas idénticas a ayer, sin excepción. Ver `reviews/2026-week-38.md`
+  para el cierre de semana del bus completo.
 - 2026-09-19 (sábado): mismo incidente de repo que `buy-retest.md`
   (`origin/main` reescrito río arriba, sin pérdida). n 162→186 (+24;
   1m+18, 2m+5, 5m+1) — salto algo mayor a lo habitual para este
