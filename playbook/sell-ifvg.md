@@ -3,14 +3,16 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-20 (domingo, revisión semanal) · n: 146)
+## Sección viva  (última revisión: 2026-09-21 (lunes) · n: 146)
 
 ### Nota de proceso
-Sin archivo `signals/outcomes` nuevo hoy (fin de semana, ver
-`buy-retest.md`); las 37 señales resueltas por TIMEOUT forzado en todo
-el bus cayeron todas en RETEST — **este playbook queda con n y métricas
-idénticas a ayer** (n=146, sin cambio en ningún TF). Ver
-`reviews/2026-week-38.md` para el cierre de semana del bus completo.
+Aunque hoy sí llegó dato nuevo genuino al bus (ver `buy-retest.md`,
++72 pares), **ninguna de las 72 cayó en INV/SHORT** — este playbook
+queda con n y métricas idénticas a ayer en los tres TF (n=146, 96/41/9
+sin cambio). Es la primera vez en varios días que un día hábil completo
+deja este playbook exactamente plano; no es un fallo de pipeline (el
+resto del bus sí se movió), simplemente no hubo señales INV/SHORT hoy.
+Todo lo de abajo es la misma lectura de ayer.
 
 ### Veredicto global
 1m n=96 (+8, WR 47.9%, E[R]=**+0.064** PF=1.14 — baja de +0.091); 2m
@@ -87,6 +89,11 @@ grande vista hasta ahora) E[R]=+0.071; 2026-W38 n=3016 (subió fuerte de
 por semana para medir decaimiento aislado.
 
 ## Histórico de cambios
+- 2026-09-21 (lunes): primer día hábil completo con dato nuevo genuino
+  en el resto del bus (+72 pares, ver `buy-retest.md`) que deja este
+  playbook exactamente plano (n=146, 96/41/9 por TF, cero señales
+  INV/SHORT nuevas) — sin fallo de pipeline, simplemente no hubo señales
+  de este tipo hoy. Nada accionable nuevo.
 - 2026-09-20 (domingo, revisión semanal): sin archivo de datos nuevo
   (fin de semana); los 37 TIMEOUT forzados de todo el bus cayeron todos
   en RETEST — este playbook queda con n=146 y todas sus métricas
