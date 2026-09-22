@@ -3,100 +3,111 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-21 (lunes) · n: 4962)
+## Sección viva  (última revisión: 2026-09-22 (martes) · n: 5245)
 
 ### Nota de proceso — ver `buy-retest.md`
-Mismo incidente de repo de siempre (`origin/main` forced update, `HEAD`
-detached pero ya en el mismo commit, resuelto sin pérdida). **Hoy sí
-llegó dato nuevo genuino**: n 4952→4962 (+10; 1m+8, 2m+1, 5m+1) — poco
-volumen SHORT hoy comparado con LONG, pero todos son trades reales, no
-TIMEOUT.
+`git pull` limpio hoy. **Salto de dato grande y genuino**: el bus
+asentó el lote de outcomes de 2026-09-21 (+1027 en todo el bus). En
+este playbook: 1m+192, 2m+74, 5m+17 (n 4962→5245) — mucho más volumen
+SHORT que ayer, todos trades reales.
 
 ### Veredicto global
-1m n=3141 (+8) WR 44.0% E[R]=**+0.059** PF=1.12 (sube de 0.051); 2m
-n=1334 (+1) WR 47.6% E[R]=**+0.071** PF=1.15 (baja un poco de 0.074);
-5m n=487 (+1) WR 47.4% E[R]=**+0.082** PF=1.18 (estable).
-`segment_significance`: **1m CI90=[0.021,0.098] p=0.005 n=2949 —
-sostiene `survives_fdr10=true`** (séptima lectura seguida); **2m
-CI90=[0.016,0.128] p=0.021 n=1277 — sostiene `survives_fdr10=true`**
-(décima lectura seguida, sigue siendo la certificación SHORT más
-duradera del bus); 5m CI90=[-0.016,0.187] p=0.083 n=447 sigue sin
-certificar. Veredicto sin cambios: **1m y 2m siguen certificando FDR
-simultáneamente**; 5m sigue siendo el único TF SHORT sin edge
-estadístico demostrado en E[R] crudo (aunque su SL estructural es el
-efecto más grande del bus, ver Gestión).
+1m n=3333 (+192) WR 44.4% E[R]=**+0.055** PF=1.11 (baja un poco de
+0.059); 2m n=1408 (+74) WR 47.7% E[R]=**+0.062** PF=1.13 (baja un poco
+de 0.071); 5m n=504 (+17) WR 47.8% E[R]=**+0.091** PF=1.2 (sube de
+0.082).
+`segment_significance`: **1m CI90=[0.017,0.093] p=0.006 n=3141 —
+sostiene `survives_fdr10=true`** (octava lectura seguida); **2m
+CI90=[0.008,0.118] p=0.032 n=1351 — sostiene `survives_fdr10=true`**
+(undécima lectura seguida, sigue siendo la certificación SHORT más
+duradera del bus); **5m CI90=[-0.001,0.19] p=0.053 n=464 — el sistema
+marca `survives_fdr10=true` por primera vez, pero el límite inferior
+del CI90 queda en -0.001, prácticamente tocando cero** — por
+`agent-instructions.md` (`survives_fdr10=true` Y CI90 que no cruce 0)
+esto **no cuenta todavía como certificación real**, tratar como "al
+filo, vigilar la próxima lectura". Veredicto sin cambios de fondo: 1m y
+2m siguen certificando FDR simultáneamente con margen claro; 5m sigue
+sin ser una certificación usable en E[R] crudo (aunque su SL
+estructural es el efecto más grande del bus, ver Gestión).
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 2949 (+8) | E[R]=**0.059** CI90=[0.021,0.098] | alta — séptima lectura seguida certificando |
-| 2 | `tf=2m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido, la certificación SHORT más duradera del bus | 1277 (+6) | E[R]=**0.071** CI90=[0.016,0.128] | alta — décima lectura seguida |
-| 3 | `nearEdge=0` | sigue como la mejor rama en magnitud | 2186 (+0, sin señales nuevas en este corte) | WR 46.8%, E[R]=**0.09** (idéntico a ayer) | alta — corte más estable de esta tabla, sin cambio hoy |
-| 4 | `nearEdge=1` | estable, sin señales nuevas en este corte hoy | 149 (+0) | WR 55.0%, E[R]=**0.057** (idéntico a ayer) | baja — n todavía chico |
-| 5 | símbolo (`cross_instrument`), **1m** | sigue `universal`, CL sigue mejorando hacia la media | CL n=289 (+18) E[R]=**-0.029** (mejora más, de -0.122) — spread 0.134 | alta — cuarto día seguido diluyéndose, cada vez más lejos de justificar una regla condicional |
-| 6 | símbolo (`cross_instrument`), 2m y 5m | siguen `universal` | 2m CL n=100 (+6) E[R]=-0.196 (empeora un poco de -0.168, spread 0.328); 5m CL n=44 (+1) E[R]=**0.01** (spread 0.189, NQ el símbolo más débil hoy con E[R]=-0.017) | baja — sin regla condicional utilizable, ruido normal de n chico |
-| 7 | `tier=A+` | sigue subiendo | 338 (+6) | WR 28.1%, E[R]=**0.214** (sube fuerte de 0.152) | baja-moderada — sexta lectura seguida subiendo |
-| 8 | `tier=B` | se mantiene débil | 2100 (+16) | WR 46.2% E[R]=**0.017** (~idéntico a 0.018), PF=1.03 | baja — sigue sin recuperar el nivel previo al retroceso del 09-19 |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 3141 (+192) | E[R]=**0.055** CI90=[0.017,0.093] | alta — octava lectura seguida certificando |
+| 2 | `tf=2m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido, la certificación SHORT más duradera del bus | 1351 (+74) | E[R]=**0.062** CI90=[0.008,0.118] | alta — undécima lectura seguida |
+| 3 | `tf=5m` (al filo) | NO tratar como certificado todavía | 464 (+17) | CI90=[-0.001,0.19], límite inferior toca cero | baja — primera vez que la bandera FDR se enciende, pero el criterio compuesto del playbook (FDR + CI90) todavía no se cumple |
+| 4 | `tier=A+` | sigue subiendo | 341 (+3) | WR 28.2%, E[R]=**0.21** (estable vs 0.214) | baja-moderada — séptima lectura seguida en zona alta |
+| 5 | `tier=B` | recupera un poco | 2204 (+104) | WR 46.4% E[R]=**0.014** (~idéntico a 0.017), PF=1.03 | baja — sigue sin recuperar el nivel previo al retroceso del 09-19 |
+| 6 | símbolo (`cross_instrument`), **1m** | sigue `universal` | spread 0.139 (sube un poco de 0.134) | alta — sin cambio de veredicto |
+| 7 | símbolo (`cross_instrument`), 2m y 5m | siguen `universal` | 2m spread 0.31 (baja de 0.328); 5m spread 0.181 (baja de 0.189) | baja — sin regla condicional utilizable |
 
 **Lectura de método**: la regla condicional "evitar CL en 1m SHORT" que
-se venía endureciendo desde el 09-11 quedó revertida el 09-19 — con n
-casi cuatriplicado (96→271 en esa corrida, hoy ya 289) el efecto se
-diluyó del todo (-0.517→-0.122→-0.029) y el `verdict` sigue en
-`universal`. Ejemplo textual de por qué `n>=20` mínimo y "no generalizar
-sin walk-forward" son la regla del método, no un formalismo: una lectura
-que parecía sólida durante 8 corridas seguidas era, en retrospectiva,
-todavía ruido de muestra chica.
+se venía endureciendo desde el 09-11 quedó revertida el 09-19 y sigue
+diluida hoy — ejemplo textual de por qué `n>=20` mínimo y "no
+generalizar sin walk-forward" son la regla del método, no un formalismo.
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara.
 
 ### Gestión
 - **La escalera + parciales (`managed_vs_naive`)** sigue ayudando en los
-  tres TF: 1m n=2942 delta=**+0.104** (baja un poco de 0.107); 2m
-  n=1277 delta=**+0.069** (estable); 5m n=446 delta=**+0.047**
-  (estable).
-- **SL estructural (`sl_origin_vs_layer`)**: 1m n=2440 (+8)
-  delta=**+0.153** CI90=[0.066,0.244] — sigue sin reversión, decimotercera
-  confirmación; 2m n=1097 (+5) delta=**+0.134** CI90=[0.04,0.232] —
-  sigue a un paso de la propuesta formal, la lectura de hoy no mueve el
-  límite inferior del CI90 lo suficiente para promoverlo (0.039→0.04);
-  5m n=409 (+1) delta=**+0.489** CI90=[0.138,0.896] — sigue siendo el
-  efecto más grande del experimento. Recordatorio: **2m LONG (ver
-  `buy-retest.md`) sí se graduó hoy a candidato de la propuesta tras su
-  tercera lectura consecutiva** — 2m SHORT de este playbook sigue sin
-  alcanzar ese mismo umbral. Ver `experiments.json`
-  (`sl-retest-wick-2026-09-03`, next_steps 2026-09-21) y
+  tres TF: 1m n=3134 delta=**+0.102** (estable); 2m n=1351
+  delta=**+0.072** (estable); 5m n=463 delta=**+0.041** (estable).
+- **SL estructural (`sl_origin_vs_layer`)**: 1m n=2611 (+171)
+  delta=**+0.142** CI90=[0.063,0.23] — sigue sin reversión, decimoquinta
+  confirmación; 2m n=1167 (+70) delta=**+0.15** CI90=[0.057,0.246] —
+  **el límite inferior del CI90 sube de 0.04 a 0.057** (+42%), la
+  lectura más fuerte hasta ahora, pero todavía por debajo del rango
+  típico de graduación de este experimento (~0.07-0.08 en los segmentos
+  ya promovidos) — se mantiene un día más como candidato débil/al filo,
+  vigilar si el límite inferior sigue subiendo; 5m n=426 (+17)
+  delta=**+0.455** CI90=[0.119,0.842] — sigue siendo el efecto más
+  grande del experimento, primera lectura con dato nuevo en varios días.
+  Ver `experiments.json` (`sl-retest-wick-2026-09-03`) y
   `reviews/2026-week-38.md`.
 - **Modo sombra (`shadow_rules`)** — ver `buy-retest.md` para el detalle
   del criterio; incluye `1/SHORT` y `2/SHORT` de este playbook (los dos
-  segmentos SHORT que certifican FDR) en el conjunto que hoy, segundo
-  día seguido, bate al indicador crudo en E[R] (0.07 vs 0.059).
+  segmentos SHORT que certifican FDR) en el conjunto que hoy, tercer día
+  seguido, bate al indicador crudo en E[R] (0.087 vs 0.08).
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 2257 pérdidas SHORT (+5): `RR-bajo` 839/2257
-  (37.2%), `stop-en-el-minimo` 765/2257 (33.9%), `contra-estructura`
-  703/2257 (31.1%) — mismo orden que ayer, sin cambios de fondo. Ninguna
-  causa mitigada todavía por un experimento `confirmed`.
+- Autopsia de SL sobre las 2389 pérdidas SHORT (+132): `RR-bajo`
+  893/2389 (37.4%), `stop-en-el-minimo` 818/2389 (34.2%),
+  `contra-estructura` 750/2389 (31.4%) — mismo orden que ayer,
+  porcentajes prácticamente idénticos. Ninguna causa mitigada todavía
+  por un experimento `confirmed`.
 - **Cruce con Session Analyst** (sin dato SA nuevo que caiga en el join
-  de hoy, cifras idénticas a ayer): `AVOID` n=563 E[R]=**+0.053** PF=1.1;
-  `GO` n=197 E[R]=**+0.224** (sigue siendo la mejor rama por lejos)
-  PF=1.58; `WAIT` n=1203 E[R]=**-0.009** PF=0.98. El orden "GO mejor,
+  de hoy, cifras idénticas a ayer): `AVOID` n=562 E[R]=**+0.055** PF=1.11;
+  `GO` n=232 E[R]=**+0.234** (sigue siendo la mejor rama por lejos)
+  PF=1.62; `WAIT` n=1202 E[R]=**-0.009** PF=0.98. El orden "GO mejor,
   WAIT peor" se mantiene — patrón sigue siendo **opuesto** al de
-  `buy-retest.md` (donde `WAIT` es la mejor rama). No generalizar el
-  hallazgo agregado "WAIT rinde mejor" a SELL RETEST sin mirar esta
-  tabla.
+  `buy-retest.md` (donde `WAIT` es la mejor rama, aunque hoy GO también
+  subió por encima de WAIT en ese playbook — ver nota allí). No
+  generalizar el hallazgo agregado "WAIT rinde mejor" a SELL RETEST sin
+  mirar esta tabla.
 
 ### Decaimiento
-`decay_weekly` (global, no por segmento): 2026-W36 n=2994 WR 44.6%
-E[R]=-0.021; 2026-W37 n=5279 WR 46.8% E[R]=**+0.071**; 2026-W38 n=4911
-WR 46.3% E[R]=**+0.087** (revisión al alza de +52 pares por dedup/late
-outcome, sin cambio de lectura); **2026-W39 n=20 WR 85.0% E[R]=1.451 —
-primer día de semana nueva, muestra demasiado chica para leer nada
-todavía**. Ver `reviews/2026-week-38.md` para el desglose por segmento
-SHORT (2m RETEST/SHORT y 5m RETEST/SHORT) de las 3 semanas ya cerradas.
+`decay_weekly` (global, no por segmento): 2026-W36 n=2991 WR 44.6%
+E[R]=**-0.02**; 2026-W37 n=5243 WR 46.8% E[R]=**+0.072**; 2026-W38
+n=4894 WR 46.3% E[R]=**+0.089** (los tres bajan 1-3 pares por corrida
+por dedup benigno, ver `report.alerts`); **2026-W39 n=1032 WR 53.2%
+E[R]=+0.367 — la semana en curso ya tiene muestra real, prematuro leerla
+como estable**. Ver `reviews/2026-week-38.md` para el desglose por
+segmento SHORT (2m RETEST/SHORT y 5m RETEST/SHORT) de las 3 semanas ya
+cerradas.
 
 ## Histórico de cambios
+- 2026-09-22 (martes): salto de dato grande y genuino (+1027 outcomes en
+  todo el bus; +192/+74/+17 en 1m/2m/5m de este playbook). 1m y 2m
+  siguen certificando FDR sin cambios de fondo (octava/undécima lectura).
+  **5m marca `survives_fdr10=true` por primera vez pero con CI90 que
+  todavía toca cero por abajo (-0.001)** — no se trata como certificación
+  real hasta que el límite inferior quede claramente por encima de cero.
+  El SL estructural en 2m SHORT tiene su mejor lectura hasta ahora
+  (límite inferior del CI90 0.04→0.057) pero sigue sin alcanzar el
+  umbral de graduación que ya cruzaron 1m LONG/SHORT, 2m LONG y 5m
+  LONG/SHORT. Sin cambios en la propuesta formal de `experiments.json`.
 - 2026-09-21 (lunes, primer día hábil con dato nuevo genuino tras el fin
   de semana, +10 pares en este playbook — volumen SHORT bajo hoy frente
   a LONG): mismo incidente de repo inofensivo de siempre. 1m suma su
