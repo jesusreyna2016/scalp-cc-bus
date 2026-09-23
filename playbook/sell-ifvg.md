@@ -3,45 +3,47 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-22 (martes) · n: 152)
+## Sección viva  (última revisión: 2026-09-23 (miércoles) · n: 161)
 
 ### Nota de proceso
-`git pull` limpio. **Poco dato nuevo de nuevo**: n 146→152 (+6: 1m+5,
-2m+1, 5m+0) — bajo volumen INV/SHORT comparado con el resto del bus,
-pero al menos no quedó totalmente plano como ayer.
+`git pull` limpio. Dato nuevo chico otra vez: n 152→161 (+9: 1m+4,
+2m+0, 5m+1) — bajo volumen INV/SHORT comparado con el resto del bus,
+patrón habitual de este playbook.
 
 ### Veredicto global
-1m n=101 (+5, WR 49.5%, E[R]=**+0.077** PF=1.17 — sube de +0.064); 2m
-n=42 (+1, WR 33.3%, E[R]=**-0.056** PF=0.9 — sigue negativo, un poco
-peor que -0.033); 5m n=9 (+0, sin señales nuevas, WR 66.7%, E[R]=+0.436
-PF=2.31 — idéntico a ayer). `segment_significance`: 1m CI90=[-0.116,0.283]
-p=0.273 n=97 (sigue lejos de certificar); 2m CI90=[-0.39,0.323] p=0.613
-n=42 (sin cambio de fondo); 5m CI90=[-0.218,1.126] p=0.138 n=9 (sigue
-sin certificar) — ningún TF de este playbook certifica FDR hoy, mismo
-recordatorio de que con n<20 la bandera FDR no es señal real en ninguno
-de los dos playbooks INV.
+1m n=107 (+4, WR 46.7%, E[R]=**+0.018** PF=1.04 — baja bastante de
++0.077); 2m n=44 (+0, sin señales nuevas, WR 36.4%, E[R]=**-0.04**
+PF=0.93 — mejora un poco de -0.056 pese a no tener dato nuevo propio,
+por reponderación del agregado); 5m n=10 (+1, WR 60.0%, E[R]=+0.436
+PF=2.31 — mismo valor exacto de E[R] que ayer con una señal nueva).
+`segment_significance`: 1m CI90=[-0.171,0.211] p=0.418 n=103 (sigue
+lejos de certificar, empeora respecto a ayer); 2m CI90=[-0.365,0.313]
+p=0.586 n=44 (sin cambio de fondo); 5m CI90=[-0.218,1.126] p=0.138 n=9
+(sigue sin certificar) — ningún TF de este playbook certifica FDR hoy,
+mismo recordatorio de que con n<20 la bandera FDR no es señal real en
+ninguno de los dos playbooks INV.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=-1` | recupera un poco | 89 (+2) | E[R]=**+0.035** (baja un poco de +0.043) | baja — sigue débil tras el retroceso del 09-21 |
-| 2 | `nearEdge=0` | recupera, vuelve a positivo | 54 (+4) | E[R]=**-0.006** (mejora de -0.03, casi plano) | baja — vaivén, n todavía chico |
-| 3 | `tier=B` | recupera un poco | 46 (+1) | E[R]=**-0.007** (mejora de +0.015... nota: cruza a negativo por primera vez) | baja — sigue débil, ahora cruza a negativo |
-| 4 | `tier=C` | se mantiene positivo | 106 (+5) | E[R]=**+0.092** (sube de +0.08) | baja-moderada — séptima lectura positiva seguida |
+| 1 | `nearEdge=-1` | vuelve a plano | 91 (+2) | E[R]=**-0.0** (baja de +0.035) | baja — sigue débil, tercer vaivén distinto en pocas corridas |
+| 2 | `nearEdge=0` | vuelve a negativo | 61 (+7) | E[R]=**-0.037** (empeora de -0.006) | baja — vaivén, n todavía chico |
+| 3 | `tier=B` | sigue negativo | 46 (+0) | E[R]=**-0.054** (empeora de -0.007, sin dato nuevo) | baja — segunda lectura seguida negativa |
+| 4 | `tier=C` | se mantiene positivo | 115 (+9) | E[R]=**+0.059** (baja de +0.092) | baja-moderada — octava lectura positiva seguida |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
 
 ### Gestión
-- `managed_vs_naive`: 1m n=97 delta=**+0.179** (baja de +0.207, sigue
-  ayudando bastante); 2m n=42 delta=**-0.056** (idéntico, sigue
-  negativo); 5m n=9 delta=+0.037 (sin cambio, sin dato nuevo).
-- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=87 (+5)
-  delta=**-0.085** CI90=[-0.42,0.291] (mejora de -0.154, sigue sin
-  certificar); 2m n=41 (+1) delta=**+0.381** CI90=[-0.058,0.957]
-  (prácticamente idéntico a +0.39, sigue sin certificar, límite
-  inferior sigue casi tocando cero); 5m n=8 (+0) delta=**-0.719**
+- `managed_vs_naive`: 1m n=103 delta=**+0.145** (baja de +0.179, sigue
+  ayudando bastante); 2m n=44 delta=**-0.039** (sin cambio de fondo,
+  sigue negativo); 5m n=9 delta=+0.037 (sin cambio, sin dato nuevo neto).
+- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=93 (+6)
+  delta=**-0.084** CI90=[-0.412,0.262] (prácticamente idéntico a
+  -0.085, sigue sin certificar); 2m n=43 (+2) delta=**+0.303**
+  CI90=[-0.12,0.851] (baja de +0.381, límite inferior cruza más de lleno
+  a negativo, sigue sin certificar); 5m n=8 (+0) delta=**-0.719**
   CI90=[-1.204,-0.241] sin cambio, sin dato nuevo — sigue siendo la
   única lectura de este playbook con CI90 que no cruza cero, pero n=8
   sigue por debajo del piso n≥20 del playbook. Ninguno certifica de
@@ -49,31 +51,44 @@ de los dos playbooks INV.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Cruce con Session Analyst
-Sin cruce SA nuevo hoy — cifras idénticas a ayer: `AVOID` n=23
-E[R]=**-0.333** PF=0.44 y `WAIT` n=31 E[R]=**-0.183** PF=0.63 — sigue
+`AVOID` n=22 (-1, ver nota) E[R]=**-0.403** PF=0.35 (empeora de -0.333)
+y `WAIT` n=38 (+7) E[R]=**-0.232** PF=0.55 (empeora de -0.183) — sigue
 siendo el único playbook del bus que no muestra el patrón agregado
 "WAIT/GO mejor que AVOID" de `buy-retest.md`/`sell-retest.md`; aquí las
-dos ramas con muestra utilizable siguen rindiendo negativo.
+dos ramas con muestra utilizable siguen rindiendo negativo, y hoy
+empeoran ambas. Nota menor de método: `AVOID` bajó de n=23 a n=22 pese
+a ser un agregado que normalmente no encoge — probablemente un
+re-pareo de fecha/sesión en el join con el Session Analyst, no pérdida
+de archivo (`file_integrity_check` limpio); vigilar si se repite.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 71 pérdidas INV/SHORT (+2 vs ayer): mismo
-  orden — `RR-bajo` 35/71 (49.3%) sigue siendo la causa dominante,
-  idéntico porcentaje a ayer; `contra-estructura` 20/71 (28.2%) y
-  `stop-en-el-minimo` 19/71 (26.8%) se mantienen segundo/tercer lugar.
-- `cross_instrument` (1m) **baja a spread 0.756** (desde 1.126, se
-  diluye el salto de ayer) y sigue `instrument-specific`: CL n=10 (+4)
-  E[R]=**-0.186** (mejora mucho de -0.556, confirma que fue ruido de
-  n=6); YM n=55 (sin cambio) E[R]=0.044, GC n=20 (+1) E[R]=0.139 (sube
-  de 0.122), NQ n=10 (sin cambio) E[R]=0.071, ES n=6 (sin cambio)
-  E[R]=0.57 — n por símbolo sigue chico (6-55), no generalizar.
+- Autopsia de SL sobre las 75 pérdidas INV/SHORT (+4 vs ayer): mismo
+  orden — `RR-bajo` 37/75 (49.3%) sigue siendo la causa dominante,
+  idéntico porcentaje a ayer; `contra-estructura` 22/75 (29.3%) y
+  `stop-en-el-minimo` 19/75 (25.3%) se mantienen segundo/tercer lugar.
+- `cross_instrument` (1m) **baja a spread 0.748** (desde 0.756, estable)
+  y sigue `instrument-specific`: CL n=12 (+2) E[R]=**-0.178** (empeora
+  un poco de -0.186), YM n=59 (+4) E[R]=-0.052 (baja de 0.044, cruza a
+  negativo), GC n=20 (+0) E[R]=0.139 (sin cambio), NQ n=10 (+0)
+  E[R]=0.071 (sin cambio), ES n=6 (+0) E[R]=0.57 (sin cambio) — n por
+  símbolo sigue chico (6-59), no generalizar.
 
 ### Decaimiento
 `decay_weekly` (global): 2026-W36 n=2991 (sigue bajando por dedup, ver
-`buy-retest.md`); 2026-W37 n=5243 E[R]=+0.072; 2026-W38 n=4894
+`buy-retest.md`); 2026-W37 n=5199 E[R]=+0.072; 2026-W38 n=4847
 E[R]=+0.089 — este segmento sigue sin suficiente muestra propia por
 semana para medir decaimiento aislado.
 
 ## Histórico de cambios
+- 2026-09-23 (miércoles): dato nuevo chico (+9), sin hallazgos nuevos
+  de fondo. Todas las ramas de Session Analyst empeoran un poco (AVOID
+  y WAIT ambas más negativas) pero sin significancia — sigue siendo el
+  único playbook sin el patrón "WAIT/GO mejor que AVOID". Nota de método:
+  el agregado `AVOID` del cruce con Session Analyst bajó de n=23 a n=22
+  (un agregado normalmente no encoge) — probablemente re-pareo de
+  fecha/sesión, `file_integrity_check` sigue limpio, vigilar si se
+  repite. Sin n suficiente en ningún TF para proponer nada en
+  `experiments.json`.
 - 2026-09-22 (martes): dato nuevo escaso otra vez (n 146→152, +6) pese
   al lote grande que asentó el resto del bus (+1027 outcomes, ver
   `buy-retest.md`) — INV/SHORT sigue siendo la señal de menor volumen

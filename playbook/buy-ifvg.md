@@ -3,81 +3,81 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-22 (martes) · n: 208)
+## Sección viva  (última revisión: 2026-09-23 (miércoles) · n: 221)
 
 ### Nota de proceso
-`git pull` limpio hoy. Llegó dato INV/LONG genuino y notable esta vez:
-n 191→208 (+17: 1m+10, 2m+7, 5m+0) — mucho más volumen que el día
-anterior, y con mejora marcada en E[R] (ver abajo).
+`git pull` limpio hoy. Dato nuevo chico: n 208→221 (+13: 1m+8, 2m+4,
+5m+1).
 
 ### Veredicto global
-1m n=141 (+10, WR 44.0%, E[R]=**0.121** PF=1.26, 61 SL — salto grande
-desde el 0.002 casi plano de ayer); 2m n=50 (+7, WR 52.0%,
-E[R]=**0.02** PF=1.05, 19 SL — sale de terreno negativo por primera vez
-en varios días, aunque sigue siendo la rama más débil); 5m n=17 (+0, sin
-señales nuevas, WR 64.7%, E[R]=0.407 PF=3.03 — idéntico a ayer).
-`segment_significance`: 1m CI90=[-0.093,0.36] p=0.192 n=132 (mejora
-pero sigue sin certificar); 2m CI90=[-0.221,0.276] p=0.444 n=48 (sin
-cambio de fondo); **5m CI90=[0.031,0.819] p=0.04 n=15 — sostiene
-`survives_fdr10=true`** — con n=15, sigue muy por debajo del piso n≥20
-del playbook: **no usable**.
+1m n=149 (+8, WR 44.3%, E[R]=**0.159** PF=1.35, 62 SL — sigue subiendo
+desde 0.121); 2m n=54 (+4, WR 51.9%, E[R]=**0.012** PF=1.03, 21 SL —
+baja de 0.02, sigue siendo la rama más débil, casi plana); 5m n=18
+(+1, WR 66.7%, E[R]=0.396 PF=3.11 — prácticamente idéntico a 0.407).
+`segment_significance`: 1m CI90=[-0.044,0.38] p=0.102 n=140 (sigue sin
+certificar, aunque el límite inferior sube); 2m CI90=[-0.218,0.262]
+p=0.464 n=52 (sin cambio de fondo); **5m CI90=[0.023,0.769] p=0.039
+n=16 — sostiene `survives_fdr10=true`** — con n=16, sigue muy por
+debajo del piso n≥20 del playbook: **no usable**.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en ninguna rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=1` | sube con el dato nuevo | 121 (+13) | E[R]=**0.107** (sube fuerte de -0.05) | baja — primer cruce a positivo en varios días, vigilar si se sostiene |
-| 2 | `tier=B` vs `tier=C` | **se invierte: B pasa a ser mejor que C**, primera vez en varias corridas | 64 (+12) vs 144 (+5) | E[R] **0.158** (B, sube fuerte de -0.149) vs +0.1 (C, sube de +0.075) | baja — ambas ramas mejoran mucho con el lote nuevo, el orden se invierte, no generalizar con un solo día |
+| 1 | `nearEdge=1` | sigue positivo | 128 (+7) | E[R]=**0.111** (baja un poco de 0.107) | baja — segunda lectura seguida positiva |
+| 2 | `tier=B` vs `tier=C` | B sigue mejor que C, segunda lectura seguida | 69 (+5) vs 152 (+8) | E[R] **0.173** (B, sube de 0.158) vs 0.125 (C, sube de 0.1) | baja — ambas ramas suben, orden se sostiene un día más |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`; ver `entryZoneTk` de ganadores vs perdedores)
 
 ### Gestión
-- `managed_vs_naive`: 1m n=132 delta=**+0.116** (baja de +0.209, sigue
-  positivo); 2m n=48 delta=**-0.02** (cruza a negativo, baja de +0.035);
-  5m n=15 delta=**-0.132** (sin cambio, sin dato nuevo).
-- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): **1m n=132
-  (+10) delta=-0.323 CI90=[-0.617,-0.025] — CERTIFICA por primera vez
-  (`delta_below_zero=true`)**: el SL de 3 capas gana con significancia
-  sobre el SL de vela-1 del FVG en 1m INV/LONG (sube fuerte desde
-  -0.177, que no certificaba); **2m n=48 (+7) delta=+1.169
-  CI90=[0.077,2.491] — CERTIFICA por primera vez en sentido contrario
-  (`delta_beats_zero=true`)**: aquí el SL de vela-1 gana, pero el delta
-  es enorme y el CI90 muy ancho (n=48 sigue chico, probablemente
-  dominado por pocos trades con recorrido grande) — tratar como hallazgo
-  nuevo y frágil, no accionable todavía; 5m n=15 (+0) delta=**-0.809**
-  CI90=[-1.327,-0.334] sin cambio (sigue `delta_below_zero=true`, sin
-  dato nuevo). Nota de método: 1m y 2m INV/LONG certifican hoy en
-  **direcciones opuestas** entre sí (y ambas opuestas al patrón de
-  RETEST, donde el SL de vela gana) — con n todavía moderado (132/48),
-  no construir una regla de Pine sobre esto sin más lecturas. Sin
-  propuesta en `experiments.json` para INV/LONG.
+- `managed_vs_naive`: 1m n=140 delta=**+0.09** (baja de +0.116, sigue
+  positivo); 2m n=52 delta=**-0.027** (sigue negativo, similar a
+  -0.02); 5m n=16 delta=**-0.131** (sin cambio de fondo).
+- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): **1m n=140
+  (+8) delta=-0.205 CI90=[-0.515,0.101] — PIERDE la certificación de
+  ayer** (el CI90 vuelve a cruzar cero; ayer certificaba
+  `delta_below_zero=true` con CI90=[-0.617,-0.025]) — con n todavía
+  moderado, tratar como reversión de muestra chica, no como cambio real,
+  vigilar la próxima lectura antes de sacar conclusiones; 2m n=52 (+4)
+  delta=**+1.115** CI90=[0.118,2.378] — sigue certificando en sentido
+  contrario (`delta_beats_zero=true`, prácticamente igual a 1.169), CI90
+  sigue muy ancho, no accionable; 5m n=16 (+1) delta=**-0.711**
+  CI90=[-1.239,-0.218] sin cambio de fondo (sigue `delta_below_zero=true`).
+  Sin propuesta en `experiments.json` para INV/LONG.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Cruce con Session Analyst
-Casi sin dato SA nuevo hoy — cifras casi idénticas a ayer: `WAIT` n=47
-E[R]=**-0.216**, `AVOID` n=13 E[R]=**-0.028**, `GO` n=11 (+1)
-E[R]=**-0.071** (mejora de -0.126 con la única señal nueva). Con
-n=11-47 sigue siendo muestra chica sin patrón estable — no usar todavía
-para nada accionable.
+`WAIT` n=56 (+9) E[R]=**-0.089** (mejora de -0.216); `AVOID` n=13 (+0)
+E[R]=**-0.028** (sin cambio); `GO` n=11 (+0) E[R]=**-0.071** (sin
+cambio). Con n=11-56 sigue siendo muestra chica sin patrón estable — no
+usar todavía para nada accionable.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 83 pérdidas INV/LONG (+3 vs ayer): `RR-bajo`
-  37/83 (44.6%) se mantiene como causa dominante, `killzone-Asia-largo`
-  34/83 (41.0%) segundo, `contra-estructura` 23/83 (27.7%) tercero —
+- Autopsia de SL sobre las 86 pérdidas INV/LONG (+3 vs ayer): `RR-bajo`
+  38/86 (44.2%) se mantiene como causa dominante, `killzone-Asia-largo`
+  36/86 (41.9%) segundo, `contra-estructura` 24/86 (27.9%) tercero —
   mismo orden que ayer.
-- `cross_instrument` (1m) sigue `instrument-specific`, spread baja un
-  poco a 0.921 (desde 0.967): CL n=30 (+0) E[R]=0.411 (sigue el mejor),
-  YM n=57 (+8) E[R]=**0.267** (salto grande desde 0.016), ES n=19 (+0)
-  E[R]=-0.01 (mejora de -0.112), NQ n=13 (+1) E[R]=0.116, GC n=22 (+1)
-  E[R]=**-0.51** (sigue el peor símbolo por lejos) — n por símbolo sigue
+- `cross_instrument` (1m) sigue `instrument-specific`, spread sube a
+  0.862 (desde 0.921, dentro del rango habitual): CL n=31 (+1)
+  E[R]=0.434 (sigue el mejor), YM n=58 (+1) E[R]=**0.283** (sube de
+  0.267), ES n=22 (+3) E[R]=0.192 (sube de -0.01), NQ n=14 (+1)
+  E[R]=0.036 (baja de 0.116), GC n=24 (+2) E[R]=**-0.428** (sigue el
+  peor símbolo por lejos, mejora un poco de -0.51) — n por símbolo sigue
   chico, no generalizar.
 
 ### Decaimiento
 _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
 
 ## Histórico de cambios
+- 2026-09-23 (miércoles): dato nuevo chico (+13). Único hallazgo
+  reseñable: `sl_origin_vs_layer` en **1m INV/LONG pierde la
+  certificación de ayer** (CI90 vuelve a cruzar cero, -0.515 a 0.101) —
+  tratado como reversión de muestra todavía moderada (n=140), no como
+  giro real; vigilar la próxima lectura. Resto de métricas sin cambios
+  de fondo, sigue sin n suficiente (todo <20 salvo 1m/2m) para proponer
+  nada en `experiments.json`.
 - 2026-09-22 (martes): dato nuevo notable para este playbook (+17, n
   186→208 vía el lote grande de outcomes de 2026-09-21). E[R] mejora
   fuerte en 1m (0.002→0.121) y 2m sale de negativo (-0.102→0.02).
