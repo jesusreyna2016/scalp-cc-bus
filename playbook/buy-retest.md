@@ -3,137 +3,151 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-24 (jueves) · n: 9537)
+## Sección viva  (última revisión: 2026-09-25 (viernes) · n: 9641)
 
 ### Nota de proceso
-`git pull` limpio hoy (`Already up to date`, sin incidentes de repo).
-Dato nuevo moderado: 1m LONG +256 (5747→6003), 2m LONG +87
-(2534→2621), 5m LONG +28 (885→913).
+`git pull` reportó otra vez "forced update" de `origin/main` al inicio
+(mismo patrón habitual del shallow clone, verificado sin ancestro común
+pero mismo tip de datos esperado) — resuelto con `checkout -B main
+origin/main`, sin pérdida. Dato nuevo chico: 1m LONG +47 (6003→6050),
+2m LONG +29 (2621→2650), 5m LONG +28 (913→941).
 
 ### Veredicto global
-1m n=6003 (+256) WR 46.1% E[R]=**0.071** PF=1.15 (baja un poco de
-0.075); 2m n=2621 (+87) WR 48.0% E[R]=**0.072** PF=1.15 (baja un poco
-de 0.077); 5m n=913 (+28) WR 52.5% E[R]=**0.179** PF=1.42 (baja un
-poco de 0.189).
-`segment_significance`: **1m CI90=[0.044,0.1] p=0.0 n=5829 —
-sostiene `survives_fdr10=true`**; **2m CI90=[0.031,0.115] p=0.003
-n=2523 — sostiene `survives_fdr10=true`**, el límite inferior baja un
-poco (0.036→0.031) pero sigue lejos de cero; **5m CI90=[0.109,0.25]
-p=0.0 n=863 — sostiene `survives_fdr10=true`**. `gate.readyForLive`
-del sistema sigue en `true` con `segment=5m/RETEST/LONG`. Las tres
-semanas cerradas: W36 n=242 PF=**1.18** (bajo el umbral 1.3, sin
-cambio), W37 n=230 PF=**1.48** (sube de 1.46, pierde 1 par por dedup
-benigno), W38 n=311 PF=**1.43** (pierde 8 pares por el mismo mecanismo
-de dedup — la caída de muestra más grande vista en este segmento hasta
-ahora, vigilar que no se acelere) — sigue faltando la racha de "3
-semanas con PF≥1.3" y el experimento de SL estructural sigue
-`proposed`, sin `changeDate`. **2026-W39 (parcial) ya da n=130 WR
-56.9% PF=1.72** — fuerte pero todavía no es semana cerrada.
-Walk-forward OOS (`best_scheme_oos_expR`) da **0.113** positivo sobre
-W38-W39 (sube de 0.091) — coherente con que el edge sobrevive fuera de
-muestra. Veredicto sin cambio de fondo: los tres TF siguen certificando
-FDR en E[R] crudo, día de confirmación sin sorpresas.
+1m n=6050 (+47) WR 45.9% E[R]=**0.072** PF=1.15 (prácticamente sin
+cambio de 0.071); 2m n=2650 (+29) WR 47.7% E[R]=**0.074** PF=1.16
+(sube un poco de 0.072); 5m n=941 (+28) WR 51.2% E[R]=**0.17** PF=1.39
+(baja un poco de 0.179, sigue muy lejos de cero).
+`segment_significance`: **1m CI90=[0.045,0.1] p=0.0 n=5855 —
+sostiene `survives_fdr10=true`**; **2m CI90=[0.033,0.117] p=0.002
+n=2536 — sostiene `survives_fdr10=true`**, el límite inferior sube un
+poco (0.031→0.033); **5m CI90=[0.103,0.241] p=0.0 n=873 — sostiene
+`survives_fdr10=true`**. `gate.readyForLive` del sistema sigue en
+`true` con `segment=5m/RETEST/LONG`. Las tres semanas cerradas sin
+cambio: W36 n=242 PF=**1.18** (bajo el umbral 1.3, sigue siendo la que
+frena el gate), W37 n=230 PF=**1.48**, W38 n=311 PF=**1.43** — sigue
+faltando la racha de "3 semanas con PF≥1.3" y el experimento de SL
+estructural sigue `proposed`, sin `changeDate`. **2026-W39 (parcial) ya
+da n=158 WR 48.7% E[R]=0.236 PF=1.54** — sigue fuerte pero todavía no
+es semana cerrada. Walk-forward sigue `ready=true` (`testWeeks` W38-W39,
+`best_scheme_oos_expR`=0.114, prácticamente igual a ayer) — coherente
+con que el edge sobrevive fuera de muestra. Veredicto sin cambio de
+fondo: los tres TF siguen certificando FDR en E[R] crudo, día de
+confirmación de bajo volumen sin sorpresas de dirección.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 5829 (+245) | E[R]=**0.071** CI90=[0.044,0.1] | alta — certifica de forma sostenida desde 2026-09-19 |
-| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido, el más grande de los tres TF | 863 (+28) | E[R]=**0.179** CI90=[0.109,0.25] | alta — certifica de forma sostenida desde 2026-09-13 |
-| 3 | `tf=2m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 2523 (+82) | E[R]=**0.072** CI90=[0.031,0.115] | moderada-alta — certifica de forma sostenida desde 2026-09-21 |
-| 4 | `tier=A+` | sigue positivo, WR bajo típico del tier | 733 (+40) | WR 25.4%, E[R]=**0.109** (baja de 0.129), PF=1.17 | moderada |
-| 5 | `tier=B` | TOMAR, prioridad sobre A+ y C | 3982 (+131) vs 4822 (+200) tier C | WR 47.6% E[R]=**0.111** PF=1.24 vs tier C WR 50.2% E[R]=0.053 PF=1.12 | alta — B sigue siendo la rama más fuerte |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 5855 (+26) | E[R]=**0.072** CI90=[0.045,0.1] | alta — certifica de forma sostenida desde 2026-09-19 |
+| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido, el más grande de los tres TF | 873 (+10) | E[R]=**0.17** CI90=[0.103,0.241] | alta — certifica de forma sostenida desde 2026-09-13 |
+| 3 | `tf=2m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 2536 (+13) | E[R]=**0.074** CI90=[0.033,0.117] | moderada-alta — certifica de forma sostenida desde 2026-09-21 |
+| 4 | `tier=A+` | sigue positivo, WR bajo típico del tier | 742 (+9) | WR 25.2%, E[R]=**0.111** (sube un poco de 0.109), PF=1.17 | moderada |
+| 5 | `tier=B` | TOMAR, prioridad sobre A+ y C | 4014 (+32) vs 4885 (+63) tier C | WR 47.4% E[R]=**0.11** PF=1.24 vs tier C WR 49.8% E[R]=0.054 PF=1.12 | alta — B sigue siendo la rama más fuerte |
 | 6 | símbolo (`cross_instrument`), 1m/2m/5m | los tres siguen `universal` | — | sin spread reportado hoy (ver nota) | moderada — sin cambio de veredicto |
-| 7 | `nearEdge=-1` | sigue la mejor rama de edge | 343 (+20) | E[R]=**0.169** (sube de 0.149) | moderada |
-| 8 | `aligned=0` (contra-tendencia HTF) | mejor que `aligned=1`, muestra **bajó de n=9 a n=8** (parte de la alerta MUESTRA de hoy, ver `report.alerts`) | 8 vs 9529 (+372) | E[R] +0.408 vs +0.081, WR 50.0% vs 47.2%, PF 3.04 vs 1.17 | baja — n sigue demasiado chico para usar, y hoy encogió en vez de crecer (dedup, no pérdida de archivo) |
+| 7 | `nearEdge=-1` | sigue la mejor rama de edge | 343 (+0, sin señales nuevas hoy) | E[R]=**0.169** (idéntico a ayer) | moderada |
+| 8 | `aligned=0` (contra-tendencia HTF) | mejor que `aligned=1`, muestra sin cambio (n=8, sin señales nuevas hoy) | 8 vs 9633 (+104) | E[R] +0.408 vs +0.082, WR 50.0% vs 46.9%, PF 3.04 vs 1.17 | baja — n sigue demasiado chico para usar |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara de calidad
   de entrada en este segmento.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=5825 delta=**+0.076**
-  (sin cambio); 2m n=2522 delta=**+0.021** (baja un poco de 0.022);
-  5m n=863 delta=**-0.062** (sigue negativo, sigue siendo el único TF
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=5851 delta=**+0.076**
+  (sin cambio); 2m n=2535 delta=**+0.02** (prácticamente igual);
+  5m n=873 delta=**-0.059** (sigue negativo, sigue siendo el único TF
   donde la gestión resta en LONG). Regla sin cambios: escalera en
   1m/2m, mercado simple en 5m LONG.
-- **SL estructural (`sl_origin_vs_layer`)**: 1m LONG n=5025 (+189)
-  delta=**+0.13** CI90=[0.076,0.188] — sin reversión, sube un poco de
-  0.126; **5m LONG** n=827 delta=**+0.297** CI90=[0.146,0.468] — sube
-  de 0.272, sigue siendo el efecto más grande de los tres TF LONG;
-  **2m LONG** n=2299 delta=**+0.153** CI90=[0.086,0.224] — sube de
-  0.151, sigue sólido. Propuesta formal sin cambios: **1m LONG, 1m
-  SHORT, 2m LONG, 2m SHORT, 5m LONG, 5m SHORT** (los 6 segmentos RETEST,
-  desde que 2m SHORT se graduó el 09-23 — ver `sell-retest.md`). Ver
-  `experiments.json` (`sl-retest-wick-2026-09-03`) y
-  `reviews/2026-week-38.md`. Sigue sin aplicarse en TradingView
-  (`changeDate` null). **Hallazgo de hoy que ataña al gate de
-  ejecución**: con 6/6 segmentos RETEST y muestras ya en los miles
-  (n≥827 en el más chico), este experimento lleva semanas sin una sola
-  reversión — es el candidato más maduro del bus para que Jesús lo
-  aplique en `scalp_command.pine`.
-- **Modo sombra (`shadow_rules`)**: shadow E[R]=**0.077** (n=11273)
-  sigue batiendo apenas al indicador crudo E[R]=**0.074** (n=15542,
-  +0.003), pero **tier A+/B solo (E[R]=0.086, n=7644) sigue siendo el
-  mejor de los tres conjuntos** por segundo día seguido — los CI90 de
-  los tres se solapan casi por completo. **Hallazgo de método a
-  vigilar para la revisión semanal del domingo 2026-09-27**: el
-  criterio `SHADOW_RULES_V1` (`definedAt: 2026-09-20`) excluye
-  `2/LONG` y `5/SHORT` de `tf_side` con el argumento de que "su CI90 de
-  E[R] cruza o roza cero" — pero `segment_significance` de HOY (y de
-  al menos las últimas 5 corridas revisadas) muestra que **los 6
-  segmentos RETEST certifican FDR con CI90 que no cruza cero**,
-  incluidos 2m/LONG (CI90=[0.031,0.115]) y 5m/SHORT
-  (CI90=[0.015,0.189]) — la justificación escrita del criterio de la
-  sombra quedó desactualizada. Revisar el domingo si ampliar
-  `tf_side` a los 6 segmentos certificados sube el E[R] de la sombra
-  por encima de tier A+/B de forma clara.
+- **SL estructural (`sl_origin_vs_layer`)**: 1m LONG n=5046 (+21)
+  delta=**+0.129** CI90=[0.076,0.185] — sin reversión, prácticamente
+  igual a 0.13; **5m LONG** n=837 (+10) delta=**+0.296**
+  CI90=[0.144,0.466] — prácticamente igual, sigue siendo el efecto
+  más grande de los tres TF LONG; **2m LONG** n=2311 (+12)
+  delta=**+0.153** CI90=[0.086,0.225] — flat, sigue sólido. Propuesta
+  formal sin cambios: **1m LONG, 1m SHORT, 2m LONG, 2m SHORT, 5m LONG,
+  5m SHORT** (los 6 segmentos RETEST, desde que 2m SHORT se graduó el
+  09-23 — ver `sell-retest.md`). Ver `experiments.json`
+  (`sl-retest-wick-2026-09-03`) y `reviews/2026-week-38.md`. Sigue sin
+  aplicarse en TradingView (`changeDate` null). **Este es hoy el
+  hallazgo más accionable del bus**: 6/6 segmentos RETEST certifican
+  con muestras de cientos a miles (n≥837 en el más chico), sin una sola
+  reversión en semanas — sigue esperando que Jesús lo aplique en
+  `scalp_command.pine`.
+- **Modo sombra (`shadow_rules`)**: shadow E[R]=**0.078** (n=11243)
+  sigue batiendo apenas al indicador crudo E[R]=**0.075** (n=15383,
+  +0.003) y a tier A+/B solo (E[R]=0.083, n=7566) — los tres siguen con
+  los CI90 solapados casi por completo. El hallazgo de método anotado
+  ayer sigue sin resolver: el criterio `SHADOW_RULES_V1`
+  (`definedAt: 2026-09-20`) sigue excluyendo `2/LONG` y `5/SHORT` de
+  `tf_side` con una justificación que `segment_significance` de hoy
+  vuelve a contradecir (los 6 segmentos RETEST certifican FDR con CI90
+  fuera de cero). Pendiente de decidir en la revisión semanal del
+  domingo 2026-09-27, no se toca hoy (no es domingo).
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 4382 pérdidas LONG (+186 vs ayer): `RR-bajo`
-  1645/4382 (37.5%) sigue como causa dominante, `killzone-Asia-largo`
-  1586/4382 (36.2%) segundo, `contra-estructura` 1560/4382 (35.6%)
-  tercero (diferencia con el segundo puesto de 0.6pp — siguen
-  prácticamente empatadas, no tratar el orden como señal real),
-  `stop-en-el-minimo` 1454/4382 (33.2%) cuarto, sin cambio de fondo. El
-  SL estructural (arriba) sigue siendo el candidato que mejor ataca
-  `RR-bajo` de las cuatro.
+- Autopsia de SL sobre las 4409 pérdidas LONG (+27 vs ayer): `RR-bajo`
+  1650/4409 (37.4%) sigue como causa dominante, `killzone-Asia-largo`
+  1601/4409 (36.3%) segundo, `contra-estructura` 1566/4409 (35.5%)
+  tercero (mismo casi-empate de siempre, no tratar el orden como señal
+  real), `stop-en-el-minimo` 1463/4409 (33.2%) cuarto, sin cambio de
+  fondo. El SL estructural (arriba) sigue siendo el candidato que mejor
+  ataca `RR-bajo` de las cuatro.
 
 ### Cruce con Session Analyst
-`WAIT` n=2330 (+14) E[R]=**+0.119** (sube de 0.115); `GO` n=519 (-38,
-dedup de agregado) E[R]=**+0.192** (sube de 0.177, sigue por encima de
-WAIT); `AVOID` n=796 (-7, dedup) sigue en terreno negativo:
+`WAIT` n=2380 (+50) E[R]=**+0.123** (sube un poco de 0.119); `GO` n=519
+(+0, sin señales nuevas hoy) E[R]=**+0.192** (sin cambio); `AVOID`
+n=796 (+0, sin señales nuevas hoy) sigue en terreno negativo:
 **-0.015**. **A nivel global (todo kind/side)**: la hipótesis original
 de `agent-instructions.md` era "AVOID rinde peor" — sigue SIN
 confirmarse con significancia (`by_verdict_ci90` AVOID E[R]=0.007
 CI90=[-0.048,0.064] p=0.427, cruza cero, n=1347); pero **WAIT y GO
-siguen certificando ambos con significancia**: WAIT (E[R]=0.068
-CI90=[0.035,0.102] p=0.0, n=3698) y GO (E[R]=0.202 CI90=[0.127,0.282]
-p=0.0, n=758) — ver `report.alerts`. No generalizar la hipótesis sin
+siguen certificando ambos con significancia**: WAIT (E[R]=0.074
+CI90=[0.043,0.103] p=0.0, n=4073) y GO (E[R]=0.209 CI90=[0.139,0.287]
+p=0.0, n=793) — ver `report.alerts`. No generalizar la hipótesis sin
 mirar el desglose por side (**SELL RETEST el orden histórico es GO
 mejor, WAIT peor**, ver `sell-retest.md`).
 
 ### Decaimiento
-`decay_weekly` (global, no por segmento): 2026-W36 n=2965 WR 44.6%
-E[R]=**-0.02**; 2026-W37 n=5153 WR 46.8% E[R]=**0.073**; 2026-W38
-n=4769 WR 46.2% E[R]=**0.091**; **2026-W39 n=3051 WR 50.1%
-E[R]=0.145 — la semana en curso ya tiene muestra grande y sigue
+`decay_weekly` (global, no por segmento): 2026-W36 n=2963 WR 44.6%
+E[R]=**-0.02**; 2026-W37 n=5131 WR 46.8% E[R]=**0.074**; 2026-W38
+n=4763 WR 46.2% E[R]=**0.093**; **2026-W39 n=3708 WR 48.3%
+E[R]=0.14 — la semana en curso ya tiene muestra grande y sigue
 mejorando, todavía prematuro leerla como estable hasta que cierre**.
-Las tres semanas cerradas siguen bajando pares por el mismo mecanismo
-de dedup benigno (ver alerta MUESTRA en `report.alerts` — sin evidencia
-de pérdida real de archivo). Por segmento (`decay_weekly_by_segment`),
-5m/RETEST/LONG: W36 n=242 WR 52.5% PF=**1.18** (bajo el umbral 1.3 —
-la que hoy frena el gate de ejecución); W37 n=230 WR 52.6% PF=**1.48**;
-W38 n=311 WR 50.5% PF=**1.43**. W39 ya suma n=130 (WR 56.9%,
-E[R]=0.297, PF=1.72 — muestra parcial de la semana en curso, sube
-fuerte pero no cuenta como semana cerrada). WR TP1 estable en las tres
-semanas cerradas (52.5/52.6/50.5%) y E[R]>0 en las tres, pero sólo 2 de
-3 con PF≥1.3 — no se cumplen todavía las "3 semanas estables" del gate.
-Sin caída de WR > 15 pts en ninguna semana cerrada, en ningún TF de este
-playbook — sin señal de decaimiento real.
+Las tres semanas cerradas siguen apareciendo en la alerta MUESTRA de
+`report.alerts` (bajaron de n vs la corrida previa otra vez hoy) — sin
+evidencia de pérdida real de archivo (`file_integrity_check` limpio),
+mismo mecanismo de dedup benigno de siempre; van ya varias corridas sin
+terminar de estabilizarse del todo, seguir vigilando. Por segmento
+(`decay_weekly_by_segment`), 5m/RETEST/LONG: W36 n=242 WR 52.5%
+PF=**1.18** (bajo el umbral 1.3 — la que hoy frena el gate de
+ejecución, sin cambio); W37 n=230 WR 52.6% PF=**1.48**; W38 n=311 WR
+50.5% PF=**1.43**. W39 ya suma n=158 (WR 48.7%, E[R]=0.236, PF=1.54 —
+muestra parcial de la semana en curso, no cuenta como semana cerrada).
+WR TP1 estable en las tres semanas cerradas y E[R]>0 en las tres, pero
+sólo 2 de 3 con PF≥1.3 — no se cumplen todavía las "3 semanas estables"
+del gate. Sin caída de WR > 15 pts en ninguna semana cerrada, en ningún
+TF de este playbook — sin señal de decaimiento real.
 
 ## Histórico de cambios
+- 2026-09-25 (viernes): `git pull` reportó "forced update" habitual en
+  `origin/main` (shallow clone, mismo tip esperado, sin pérdida),
+  resuelto con `checkout -B main origin/main`. Dato nuevo chico y parejo
+  en los tres TF (+47/+29/+28 en 1m/2m/5m). Día de confirmación de bajo
+  volumen sin sorpresas de dirección: los tres TF siguen certificando
+  FDR, el SL estructural sigue sólido en los seis segmentos RETEST sin
+  ninguna reversión y el walk-forward OOS se mantiene prácticamente
+  igual (0.113→0.114). **Hallazgo más accionable del bus (sin cambio de
+  fondo, pero cada vez más urgente)**: el experimento de SL estructural
+  (`sl-retest-wick-2026-09-03`) sigue `proposed` sin `changeDate` pese a
+  certificar en 6/6 segmentos RETEST desde hace semanas con muestras de
+  cientos a miles — sigue siendo el cambio de indicador con la evidencia
+  más madura y estable de todo el bus, pendiente de que Jesús lo aplique
+  en `scalp_command.pine`. Sin cambios en el gate de ejecución (sigue en
+  asesoría, W36 PF=1.18<1.3). El criterio de `modo sombra`
+  (`SHADOW_RULES_V1`) sigue con la justificación desactualizada anotada
+  ayer (excluye `2m LONG`/`5m SHORT` con un argumento que
+  `segment_significance` ya no sostiene) — queda para decidir en la
+  revisión semanal del domingo 2026-09-27, no hoy.
 - 2026-09-24 (jueves): `git pull` limpio, sin incidentes de repo. Dato
   nuevo moderado y parejo en los tres TF (+256/+87/+28 en 1m/2m/5m).
   Día de confirmación sin sorpresas de dirección: los tres TF siguen

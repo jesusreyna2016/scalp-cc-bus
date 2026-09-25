@@ -3,23 +3,26 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-24 (jueves) · n: 230)
+## Sección viva  (última revisión: 2026-09-25 (viernes) · n: 230)
 
 ### Nota de proceso
-`git pull` limpio hoy. Dato nuevo chico: n 221→230 (+9: 1m+4, 2m+5,
-5m+0).
+`git pull` con "forced update" habitual de `origin/main` (shallow
+clone, sin pérdida, ver `buy-retest.md`). **Sin señales INV/LONG nuevas
+hoy en ningún TF** (n idéntico a ayer, 230) — día de bajo volumen para
+`kind=INV` en general (ver `sell-ifvg.md` para el contraste, ahí sí
+llegó dato nuevo).
 
 ### Veredicto global
-1m n=153 (+4, WR 43.1%, E[R]=**0.141** PF=1.31, 65 SL — baja de 0.159);
-2m n=59 (+5, WR 52.5%, E[R]=**0.051** PF=1.13, 21 SL — sube de 0.012);
+1m n=153 (+0, WR 43.1%, E[R]=**0.141** PF=1.31, 65 SL — sin cambio);
+2m n=59 (+0, WR 52.5%, E[R]=**0.051** PF=1.13, 21 SL — sin cambio);
 5m n=18 (+0, sin señales nuevas, WR 66.7%, E[R]=0.396 PF=3.11 — sin
-cambio).
+cambio). Todas las cifras de esta sección coinciden con la corrida de
+ayer porque no llegó ningún par nuevo con outcome real.
 `segment_significance`: 1m CI90=[-0.048,0.357] p=0.114 n=144 (sigue sin
-certificar, prácticamente igual a ayer); 2m CI90=[-0.165,0.292] p=0.36
-n=55 (mejora un poco, sigue lejos de certificar); 5m CI90=[0.023,0.769]
-p=0.039 n=16 — sostiene `survives_fdr10=true` pero con n=16 sigue muy
-por debajo del piso n≥20 del playbook: **no usable**, sin dato nuevo
-hoy.
+certificar); 2m CI90=[-0.165,0.292] p=0.36 n=55 (sigue lejos de
+certificar); 5m CI90=[0.023,0.769] p=0.039 n=16 — sostiene
+`survives_fdr10=true` pero con n=16 sigue muy por debajo del piso
+n≥20 del playbook: **no usable**.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en ninguna rama:
@@ -72,6 +75,13 @@ n=13 (+0) E[R]=**-0.028** (sin cambio); `GO` n=11 (+0) E[R]=**-0.071**
 _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
 
 ## Histórico de cambios
+- 2026-09-25 (viernes): **sin ningún par INV/LONG nuevo hoy** (n
+  idéntico a ayer en los tres TF, 153/59/18) — todas las métricas de
+  esta sección son idénticas a la corrida del 09-24 porque no hay
+  outcome nuevo que mueva el número. `git pull` con el mismo "forced
+  update" habitual de `origin/main` (shallow clone, sin pérdida). Nada
+  accionable nuevo; ver `sell-ifvg.md` para el contraste del mismo día
+  (ahí sí llegó dato nuevo en INV/SHORT).
 - 2026-09-24 (jueves): dato nuevo chico (+9, sin señales 5m nuevas).
   Sin hallazgos de fondo: `sl_origin_vs_layer` en 1m INV/LONG sigue sin
   certificar (mismo estado que ayer), 2m INV/LONG sigue certificando en
