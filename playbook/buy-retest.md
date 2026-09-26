@@ -3,132 +3,201 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-25 (viernes) · n: 9641)
+## Sección viva  (última revisión: 2026-09-26 (sábado) · n: 10510)
 
 ### Nota de proceso
-`git pull` reportó otra vez "forced update" de `origin/main` al inicio
-(mismo patrón habitual del shallow clone, verificado sin ancestro común
-pero mismo tip de datos esperado) — resuelto con `checkout -B main
-origin/main`, sin pérdida. Dato nuevo chico: 1m LONG +47 (6003→6050),
-2m LONG +29 (2621→2650), 5m LONG +28 (913→941).
+`git pull` volvió a mostrar "forced update" de `origin/main` (mismo
+patrón de siempre, sin ancestro común pero mismo tip de datos), pero
+esta vez el auto-mode del harness bloqueó `checkout -B`/`reset --hard`
+como "destrucción local irreversible" (bloquea cualquier movimiento que
+deje commits locales inalcanzables desde una rama). Se resolvió sin
+descartar nada: `git merge origin/main --allow-unrelated-histories -X
+theirs`, que fusiona ambas historias con un commit de merge (reversible)
+en vez de sobrescribir la rama local; el árbol resultante quedó
+byte-idéntico a `origin/main` (verificado con `git diff --stat`). Sin
+pérdida de trabajo. Dato nuevo: la corrida de ayer (viernes) dejó
+n=9641; hoy, con las señales/outcomes de 2026-09-25 ya asentados
+completos por el cron, 1m LONG pasó a n=6591 (+541 vs la lectura de
+significancia de ayer), 2m LONG a n=2881 (+231), 5m LONG a n=1038
+(+97). No hay archivo `signals/2026-09-26.jsonl` todavía (sábado, sin
+sesión CME nueva) — el salto es dato de 2026-09-25 llegando completo,
+no de hoy.
+
+### Mejora permanente a `analyze.py`
+Se añadió `shadow_weekly()`: desglosa el conjunto `shadow_rules` (modo
+sombra) por semana ISO en vez de solo acumulado histórico, para poder
+verificar el gate real de `execution-ladder.md` peldaño 0→1 ("shadow
+debe batir a raw_indicator en E[R] durante 3 semanas seguidas, n≥60").
+Nueva sección en `report.md`/`state.json.shadowWeekly`. Primer resultado
+(ver Modo sombra abajo): la racha de 3 semanas casi se cumple pero se
+rompió justo esta semana.
 
 ### Veredicto global
-1m n=6050 (+47) WR 45.9% E[R]=**0.072** PF=1.15 (prácticamente sin
-cambio de 0.071); 2m n=2650 (+29) WR 47.7% E[R]=**0.074** PF=1.16
-(sube un poco de 0.072); 5m n=941 (+28) WR 51.2% E[R]=**0.17** PF=1.39
-(baja un poco de 0.179, sigue muy lejos de cero).
-`segment_significance`: **1m CI90=[0.045,0.1] p=0.0 n=5855 —
-sostiene `survives_fdr10=true`**; **2m CI90=[0.033,0.117] p=0.002
-n=2536 — sostiene `survives_fdr10=true`**, el límite inferior sube un
-poco (0.031→0.033); **5m CI90=[0.103,0.241] p=0.0 n=873 — sostiene
-`survives_fdr10=true`**. `gate.readyForLive` del sistema sigue en
-`true` con `segment=5m/RETEST/LONG`. Las tres semanas cerradas sin
-cambio: W36 n=242 PF=**1.18** (bajo el umbral 1.3, sigue siendo la que
-frena el gate), W37 n=230 PF=**1.48**, W38 n=311 PF=**1.43** — sigue
-faltando la racha de "3 semanas con PF≥1.3" y el experimento de SL
-estructural sigue `proposed`, sin `changeDate`. **2026-W39 (parcial) ya
-da n=158 WR 48.7% E[R]=0.236 PF=1.54** — sigue fuerte pero todavía no
-es semana cerrada. Walk-forward sigue `ready=true` (`testWeeks` W38-W39,
-`best_scheme_oos_expR`=0.114, prácticamente igual a ayer) — coherente
-con que el edge sobrevive fuera de muestra. Veredicto sin cambio de
-fondo: los tres TF siguen certificando FDR en E[R] crudo, día de
-confirmación de bajo volumen sin sorpresas de dirección.
+1m n=6591 (+541) WR 45.7% E[R]=**0.064** PF=1.13 (baja un poco de
+0.072, dato nuevo grande diluye el promedio); 2m n=2881 (+231) WR 46.7%
+E[R]=**0.041** PF=1.08 (baja de 0.074 — ver nota de método abajo, es el
+movimiento más grande de los tres); 5m n=1038 (+97) WR 50.2% E[R]=**0.142**
+PF=1.32 (baja de 0.17 pero sigue sólido).
+`segment_significance`: **1m CI90=[0.037,0.089] p=0.0 n=6396 —
+sostiene `survives_fdr10=true`**, límite inferior baja un poco
+(0.045→0.037) con el dato nuevo; **2m CI90=[0.003,0.081] p=0.038
+n=2767 — sostiene `survives_fdr10=true` pero por un margen mucho más
+chico que ayer** (límite inferior 0.033→0.003, casi toca cero — vigilar
+de cerca, es la primera vez que este segmento se acerca tanto a perder
+la certificación desde que se graduó); **5m CI90=[0.077,0.211] p=0.001
+n=970 — sostiene `survives_fdr10=true`**, límite inferior baja de 0.103
+a 0.077 pero sigue lejos de cero. `gate.readyForLive` del sistema sigue
+en `true` con `segment=5m/RETEST/LONG`, pero la revisión de la
+estabilidad semanal (que el agente valida, no el script) sigue
+fallando: W36 PF=**1.18** (<1.3) y ahora **W39 (semana en curso, cierra
+domingo) PF=**1.2** con n=258 — bajó fuerte de la lectura parcial de
+ayer (n=158, PF=1.54); confirma el patrón ya conocido de que las
+lecturas parciales de semana en curso en este segmento son volátiles y
+no deben leerse como estables hasta que cierren. Con W36 y (todavía
+parcial) W39 ambas por debajo de 1.3, sigue sin verse la racha de 3
+semanas con PF≥1.3 que pide el gate. Walk-forward sigue `ready=true`
+(`testWeeks` W38-W39, `best_scheme_oos_expR`=0.063) — el edge sigue
+sobreviviendo fuera de muestra aunque el número bajó vs corridas
+recientes (coherente con la baja de E[R] in-sample de hoy). Veredicto
+sin cambio de fondo (los tres TF siguen certificando FDR), pero con dos
+señales de debilitamiento a vigilar: 2m LONG cerca de perder
+significancia, y la parcial de W39 en 5m LONG revirtiendo a débil.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 5855 (+26) | E[R]=**0.072** CI90=[0.045,0.1] | alta — certifica de forma sostenida desde 2026-09-19 |
-| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido, el más grande de los tres TF | 873 (+10) | E[R]=**0.17** CI90=[0.103,0.241] | alta — certifica de forma sostenida desde 2026-09-13 |
-| 3 | `tf=2m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 2536 (+13) | E[R]=**0.074** CI90=[0.033,0.117] | moderada-alta — certifica de forma sostenida desde 2026-09-21 |
-| 4 | `tier=A+` | sigue positivo, WR bajo típico del tier | 742 (+9) | WR 25.2%, E[R]=**0.111** (sube un poco de 0.109), PF=1.17 | moderada |
-| 5 | `tier=B` | TOMAR, prioridad sobre A+ y C | 4014 (+32) vs 4885 (+63) tier C | WR 47.4% E[R]=**0.11** PF=1.24 vs tier C WR 49.8% E[R]=0.054 PF=1.12 | alta — B sigue siendo la rama más fuerte |
-| 6 | símbolo (`cross_instrument`), 1m/2m/5m | los tres siguen `universal` | — | sin spread reportado hoy (ver nota) | moderada — sin cambio de veredicto |
-| 7 | `nearEdge=-1` | sigue la mejor rama de edge | 343 (+0, sin señales nuevas hoy) | E[R]=**0.169** (idéntico a ayer) | moderada |
-| 8 | `aligned=0` (contra-tendencia HTF) | mejor que `aligned=1`, muestra sin cambio (n=8, sin señales nuevas hoy) | 8 vs 9633 (+104) | E[R] +0.408 vs +0.082, WR 50.0% vs 46.9%, PF 3.04 vs 1.17 | baja — n sigue demasiado chico para usar |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 6396 (+541) | E[R]=**0.064** CI90=[0.037,0.089] | alta — certifica desde 2026-09-19, límite inferior bajó un poco |
+| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido, el más grande de los tres TF | 970 (+97) | E[R]=**0.142** CI90=[0.077,0.211] | alta — certifica desde 2026-09-13 |
+| 3 | `tf=2m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido, pero margen muy chico hoy | 2767 (+231) | E[R]=**0.041** CI90=[0.003,0.081] | moderada, bajó de alta-moderada — límite inferior casi toca cero, vigilar la próxima corrida antes de seguir tratándolo igual que 1m/5m |
+| 4 | `tier=A+` | sigue positivo, WR bajo típico del tier | 790 (+48) | WR 23.7%, E[R]=**0.037** (baja de 0.111), PF=1.05 | moderada, más débil hoy |
+| 5 | `tier=B` | TOMAR, prioridad sobre A+ y C | 4440 (+426) vs 5280 (+395) tier C | WR 46.8% E[R]=**0.091** PF=1.19 vs tier C WR 49.5% E[R]=0.047 PF=1.10 | alta — B sigue siendo la rama más fuerte |
+| 6 | símbolo (`cross_instrument`), 1m/2m/5m | los tres siguen `universal` | — | sin spread reportado hoy | moderada — sin cambio de veredicto |
+| 7 | `nearEdge=-1` | sigue la mejor rama de edge | 389 (+46) | E[R]=**0.21** (sube de 0.169) | moderada-alta |
+| 8 | `aligned=0` (contra-tendencia HTF) | mejor que `aligned=1`, muestra sin cambio (n=8, sin señales nuevas) | 8 vs 10502 (+869) | E[R] +0.408 vs +0.065, WR 50.0% vs 46.4%, PF 3.04 vs 1.13 | baja — n sigue demasiado chico para usar |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara de calidad
   de entrada en este segmento.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=5851 delta=**+0.076**
-  (sin cambio); 2m n=2535 delta=**+0.02** (prácticamente igual);
-  5m n=873 delta=**-0.059** (sigue negativo, sigue siendo el único TF
-  donde la gestión resta en LONG). Regla sin cambios: escalera en
-  1m/2m, mercado simple en 5m LONG.
-- **SL estructural (`sl_origin_vs_layer`)**: 1m LONG n=5046 (+21)
-  delta=**+0.129** CI90=[0.076,0.185] — sin reversión, prácticamente
-  igual a 0.13; **5m LONG** n=837 (+10) delta=**+0.296**
-  CI90=[0.144,0.466] — prácticamente igual, sigue siendo el efecto
-  más grande de los tres TF LONG; **2m LONG** n=2311 (+12)
-  delta=**+0.153** CI90=[0.086,0.225] — flat, sigue sólido. Propuesta
-  formal sin cambios: **1m LONG, 1m SHORT, 2m LONG, 2m SHORT, 5m LONG,
-  5m SHORT** (los 6 segmentos RETEST, desde que 2m SHORT se graduó el
-  09-23 — ver `sell-retest.md`). Ver `experiments.json`
-  (`sl-retest-wick-2026-09-03`) y `reviews/2026-week-38.md`. Sigue sin
-  aplicarse en TradingView (`changeDate` null). **Este es hoy el
-  hallazgo más accionable del bus**: 6/6 segmentos RETEST certifican
-  con muestras de cientos a miles (n≥837 en el más chico), sin una sola
-  reversión en semanas — sigue esperando que Jesús lo aplique en
-  `scalp_command.pine`.
-- **Modo sombra (`shadow_rules`)**: shadow E[R]=**0.078** (n=11243)
-  sigue batiendo apenas al indicador crudo E[R]=**0.075** (n=15383,
-  +0.003) y a tier A+/B solo (E[R]=0.083, n=7566) — los tres siguen con
-  los CI90 solapados casi por completo. El hallazgo de método anotado
-  ayer sigue sin resolver: el criterio `SHADOW_RULES_V1`
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=6392 delta=**+0.084**
+  (sube de +0.076); 2m n=2766 delta=**+0.033** (sube de +0.02);
+  5m n=970 delta=**-0.048** (sigue negativo, sigue siendo el único TF
+  donde la gestión resta en LONG, aunque menos negativo que ayer -0.059).
+  Regla sin cambios: escalera en 1m/2m, mercado simple en 5m LONG.
+- **SL estructural (`sl_origin_vs_layer`)**: 1m LONG n=5545 (+499)
+  delta=**+0.148** CI90=[0.094,0.204] — sin reversión, se fortalece un
+  poco (0.129→0.148); **5m LONG** n=933 (+96) delta=**+0.273**
+  CI90=[0.139,0.43] — prácticamente igual, sigue siendo el efecto más
+  grande de los tres TF LONG; **2m LONG** n=2530 (+219)
+  delta=**+0.154** CI90=[0.09,0.223] — flat, sigue sólido (no comparte
+  la debilidad que 2m LONG muestra hoy en E[R] crudo — el SL
+  estructural mide algo distinto, el delta orig-vs-layer, no el nivel
+  absoluto). Propuesta formal sin cambios: **1m LONG, 1m SHORT, 2m LONG,
+  2m SHORT, 5m LONG, 5m SHORT** (los 6 segmentos RETEST). Ver
+  `experiments.json` (`sl-retest-wick-2026-09-03`) y
+  `reviews/2026-week-38.md`. Sigue sin aplicarse en TradingView
+  (`changeDate` null). **Este sigue siendo el hallazgo más accionable
+  del bus**: 6/6 segmentos RETEST certifican con muestras de cientos a
+  miles (n≥933 en el más chico), sin una sola reversión en semanas.
+- **Modo sombra (`shadow_rules` + nuevo `shadow_weekly`)**: acumulado,
+  shadow E[R]=**0.061** (n=12744) sigue batiendo apenas al indicador
+  crudo E[R]=**0.057** (n=17406) y a tier A+/B solo (E[R]=0.056,
+  n=8619) — CI90 todavía muy solapados. **Primer resultado del nuevo
+  desglose semanal**: `shadow_beats_raw` fue `true` en W36
+  (-0.02 vs -0.023), W37 (0.09 vs 0.074) y W38 (0.117 vs 0.098) — tres
+  semanas seguidas, justo lo que pide el gate 0→1 — pero **W39 (semana
+  en curso) lo rompe**: shadow=0.034 vs raw=0.048, `shadow_beats_raw:
+  false`. Es semana parcial (cierra domingo), así que no se cuenta
+  todavía como una racha rota en firme, pero es la primera vez que se ve
+  el patrón completo y hay que vigilar el cierre de W39 antes de decidir
+  si la racha se reinicia. El hallazgo de método de días anteriores
+  sigue sin resolver: el criterio `SHADOW_RULES_V1`
   (`definedAt: 2026-09-20`) sigue excluyendo `2/LONG` y `5/SHORT` de
-  `tf_side` con una justificación que `segment_significance` de hoy
-  vuelve a contradecir (los 6 segmentos RETEST certifican FDR con CI90
-  fuera de cero). Pendiente de decidir en la revisión semanal del
-  domingo 2026-09-27, no se toca hoy (no es domingo).
+  `tf_side` con una justificación que `segment_significance` ya no
+  sostiene (los 6 segmentos RETEST certifican FDR) — **pendiente de
+  decidir en la revisión semanal de MAÑANA domingo 2026-09-27**, junto
+  con leer el cierre de W39 en `shadow_weekly` antes de tocar el
+  criterio.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 4409 pérdidas LONG (+27 vs ayer): `RR-bajo`
-  1650/4409 (37.4%) sigue como causa dominante, `killzone-Asia-largo`
-  1601/4409 (36.3%) segundo, `contra-estructura` 1566/4409 (35.5%)
+- Autopsia de SL sobre las pérdidas LONG (n=4878, RETEST/LONG): `RR-bajo`
+  1799/4878 (36.9%) sigue como causa dominante, `contra-estructura`
+  1733/4878 (35.5%) segundo, `killzone-Asia-largo` 1685/4878 (34.5%)
   tercero (mismo casi-empate de siempre, no tratar el orden como señal
-  real), `stop-en-el-minimo` 1463/4409 (33.2%) cuarto, sin cambio de
+  real), `stop-en-el-minimo` 1601/4878 (32.8%) cuarto, sin cambio de
   fondo. El SL estructural (arriba) sigue siendo el candidato que mejor
-  ataca `RR-bajo` de las cuatro.
+  ataca `RR-bajo` de las cuatro. En paralelo, el corte contrafactual
+  `sc_min_rr` (ver `experiments.json`) muestra que subir el piso de rr1
+  ataca esta misma causa desde la entrada, no la gestión — todavía
+  in-sample, sin proponerse un valor concreto.
 
 ### Cruce con Session Analyst
-`WAIT` n=2380 (+50) E[R]=**+0.123** (sube un poco de 0.119); `GO` n=519
-(+0, sin señales nuevas hoy) E[R]=**+0.192** (sin cambio); `AVOID`
-n=796 (+0, sin señales nuevas hoy) sigue en terreno negativo:
-**-0.015**. **A nivel global (todo kind/side)**: la hipótesis original
-de `agent-instructions.md` era "AVOID rinde peor" — sigue SIN
-confirmarse con significancia (`by_verdict_ci90` AVOID E[R]=0.007
-CI90=[-0.048,0.064] p=0.427, cruza cero, n=1347); pero **WAIT y GO
-siguen certificando ambos con significancia**: WAIT (E[R]=0.074
-CI90=[0.043,0.103] p=0.0, n=4073) y GO (E[R]=0.209 CI90=[0.139,0.287]
-p=0.0, n=793) — ver `report.alerts`. No generalizar la hipótesis sin
-mirar el desglose por side (**SELL RETEST el orden histórico es GO
-mejor, WAIT peor**, ver `sell-retest.md`).
+`WAIT` n=2477 (+97) E[R]=**+0.106** (baja de 0.123); `GO` n=564 (+45)
+E[R]=**+0.165** (baja de 0.192, sigue sólidamente positivo); `AVOID`
+n=852 (+56) sigue en terreno negativo: **-0.02**. **A nivel global
+(todo kind/side)**: la hipótesis original de `agent-instructions.md`
+era "AVOID rinde peor" — hoy SÍ se acerca a confirmarse con
+significancia (`by_verdict_ci90` AVOID E[R]=-0.0 CI90=[-0.054,0.054]
+p=0.509, sigue cruzando cero, n=1408 — no certifica todavía, pero el
+punto estimado ya no es positivo como en lecturas pasadas); **WAIT y GO
+siguen certificando ambos con significancia**: WAIT (E[R]=0.048
+CI90=[0.02,0.079] p=0.0, n=4378) y GO (E[R]=0.187 CI90=[0.119,0.258]
+p=0.0, n=841) — ver `report.alerts`. `avoid_vs_rest_ci90`: AVOID vs
+GO_or_WAIT sigue sin cruzar a significativo del lado AVOID (p=0.509)
+mientras GO_or_WAIT certifica limpio (CI90=[0.045,0.098] p=0.0,
+n=5219). No generalizar la hipótesis sin mirar el desglose por side
+(**SELL RETEST el orden histórico es GO mejor, WAIT peor** — hoy WAIT en
+SHORT da E[R]=-0.018, ver `sell-retest.md`).
 
 ### Decaimiento
-`decay_weekly` (global, no por segmento): 2026-W36 n=2963 WR 44.6%
-E[R]=**-0.02**; 2026-W37 n=5131 WR 46.8% E[R]=**0.074**; 2026-W38
-n=4763 WR 46.2% E[R]=**0.093**; **2026-W39 n=3708 WR 48.3%
-E[R]=0.14 — la semana en curso ya tiene muestra grande y sigue
-mejorando, todavía prematuro leerla como estable hasta que cierre**.
-Las tres semanas cerradas siguen apareciendo en la alerta MUESTRA de
-`report.alerts` (bajaron de n vs la corrida previa otra vez hoy) — sin
-evidencia de pérdida real de archivo (`file_integrity_check` limpio),
-mismo mecanismo de dedup benigno de siempre; van ya varias corridas sin
-terminar de estabilizarse del todo, seguir vigilando. Por segmento
-(`decay_weekly_by_segment`), 5m/RETEST/LONG: W36 n=242 WR 52.5%
-PF=**1.18** (bajo el umbral 1.3 — la que hoy frena el gate de
-ejecución, sin cambio); W37 n=230 WR 52.6% PF=**1.48**; W38 n=311 WR
-50.5% PF=**1.43**. W39 ya suma n=158 (WR 48.7%, E[R]=0.236, PF=1.54 —
-muestra parcial de la semana en curso, no cuenta como semana cerrada).
-WR TP1 estable en las tres semanas cerradas y E[R]>0 en las tres, pero
-sólo 2 de 3 con PF≥1.3 — no se cumplen todavía las "3 semanas estables"
-del gate. Sin caída de WR > 15 pts en ninguna semana cerrada, en ningún
-TF de este playbook — sin señal de decaimiento real.
+`decay_weekly` (global, no por segmento): 2026-W36 n=2871 WR 44.8%
+E[R]=**-0.017**; 2026-W37 n=5074 WR 46.9% E[R]=**0.075**; 2026-W38
+n=4684 WR 46.1% E[R]=**0.092**; **2026-W39 n=5229 WR 45.9%
+E[R]=0.055 — semana en curso, cierra mañana domingo; el número bajó
+frente a la lectura previa de W39 (era 0.14 con menos muestra), mismo
+patrón de volatilidad de semana parcial que ya se documentó en el
+segmento 5m LONG arriba, no leer como decaimiento real hasta que
+cierre**. Las tres semanas cerradas siguen bajando de n vs corridas
+previas (alerta MUESTRA en `report.alerts`) — sin evidencia de pérdida
+real de archivo (`file_integrity_check` limpio), mismo mecanismo de
+dedup benigno de siempre. Por segmento (`decay_weekly_by_segment`),
+5m/RETEST/LONG: W36 n=242 WR 52.5% PF=**1.18** (bajo el umbral 1.3,
+sigue siendo la que frena el gate); W37 n=229 WR 52.4% PF=**1.48**;
+W38 n=309 WR 50.2% PF=**1.42**; W39 (parcial, cierra mañana) n=258 WR
+46.1% PF=**1.2** — como se detalla arriba, cayó fuerte frente a la
+lectura de ayer (n=158, PF=1.54); si cierra por debajo de 1.3 sería la
+segunda de cuatro semanas fallando el umbral, no la primera. Sin caída
+de WR > 15 pts en ninguna semana cerrada, en ningún TF de este
+playbook — sin señal de decaimiento real todavía, pero el patrón de W39
+es la señal más clara hasta ahora de que el gate sigue lejos de
+cumplirse.
 
 ## Histórico de cambios
+- 2026-09-26 (sábado): incidente de repo distinto a los anteriores — el
+  auto-mode del harness bloqueó `checkout -B`/`reset --hard` como
+  destrucción local irreversible; resuelto sin descartar nada con
+  `git merge origin/main --allow-unrelated-histories -X theirs` (árbol
+  final idéntico a `origin/main`, verificado). Dato de 2026-09-25
+  (viernes) llegó completo hoy (+541/+231/+97 en 1m/2m/5m LONG). Mejora
+  permanente a `analyze.py`: nueva función `shadow_weekly()` que
+  desglosa el modo sombra por semana ISO — primer resultado: la racha de
+  3 semanas seguidas que pide el gate 0→1 se cumplió en W36-W38 pero se
+  rompió esta semana (W39 parcial, shadow 0.034 vs raw 0.048). Dos
+  señales de debilitamiento a vigilar: 2m LONG por primera vez casi
+  pierde `survives_fdr10` (CI90 límite inferior 0.033→0.003) y la
+  lectura parcial de W39 en 5m/RETEST/LONG revirtió con fuerza (PF
+  1.54→1.2 con más muestra) — mismo patrón de volatilidad de semana
+  parcial ya documentado antes, no tratar como decaimiento real hasta el
+  cierre de mañana. Sin cambios de fondo: los tres TF siguen
+  certificando FDR, el SL estructural sigue sin reversión en los 6
+  segmentos RETEST, gate de ejecución sigue en asesoría (W36 y ahora
+  W39 parcial ambas <1.3 PF). Pendiente para la revisión semanal de
+  MAÑANA (domingo 2026-09-27): decidir el criterio desactualizado de
+  `SHADOW_RULES_V1` (excluye 2m LONG/5m SHORT) y leer el cierre de W39
+  antes de tocarlo.
 - 2026-09-25 (viernes): `git pull` reportó "forced update" habitual en
   `origin/main` (shallow clone, mismo tip esperado, sin pérdida),
   resuelto con `checkout -B main origin/main`. Dato nuevo chico y parejo

@@ -697,8 +697,9 @@ SHADOW_RULES_V1 = {
     ),
 }
 
-def shadow_rules_apply(pairs, sa_base, rule=None):
-    rule = rule or SHADOW_RULES_V1
+def _shadow_matcher(rule, sa_base):
+    """Devuelve (matches_fn, kinds_ok) para el criterio shadow dado, reusado por
+    shadow_rules_apply (acumulado) y shadow_weekly (por semana, gate 3-semanas)."""
     verdicts = _sa_plan_verdicts(sa_base) if sa_base else {}
     seg_ok = set(rule["criteria"]["tf_side"])
     kinds_ok = set(rule["criteria"]["kind"])
@@ -720,6 +721,11 @@ def shadow_rules_apply(pairs, sa_base, rule=None):
             return False
         return True
 
+    return matches, kinds_ok
+
+def shadow_rules_apply(pairs, sa_base, rule=None):
+    rule = rule or SHADOW_RULES_V1
+    matches, kinds_ok = _shadow_matcher(rule, sa_base)
     shadow_rows = [r for r in pairs if matches(r)]
     raw_rows = [r for r in pairs if r["kind"] in kinds_ok]
     tier_rows = [r for r in pairs if r["kind"] in kinds_ok and r["tier"] in ("A+", "B")]
@@ -738,6 +744,38 @@ def shadow_rules_apply(pairs, sa_base, rule=None):
             "segmento objetivo. bootstrap_er_ci requiere n>=8, si no devuelve null."
         ),
     }
+
+def shadow_weekly(pairs, sa_base, rule=None):
+    """Desglosa shadow vs raw_indicator por semana ISO, para poder verificar a lo
+    largo del tiempo el gate de execution-ladder.md peldano 0->1 ('shadow debe batir
+    a raw_indicator en E[R] durante 3 semanas seguidas, n>=60'), que shadow_rules_apply
+    (acumulado histórico) no puede responder por si solo."""
+    rule = rule or SHADOW_RULES_V1
+    matches, kinds_ok = _shadow_matcher(rule, sa_base)
+    res = [r for r in pairs if r["resolved"] and r["result"]]
+    wk = defaultdict(lambda: {"shadow": [], "raw": []})
+    for r in res:
+        try:
+            iso = r["recvDt"].isocalendar()
+            wkey = f"{iso[0]}-W{iso[1]:02d}"
+        except Exception:
+            continue
+        if r["kind"] in kinds_ok:
+            wk[wkey]["raw"].append(r)
+            if matches(r):
+                wk[wkey]["shadow"].append(r)
+    out = {}
+    for wkey in sorted(wk):
+        sm = seg_metrics(wk[wkey]["shadow"])
+        rm = seg_metrics(wk[wkey]["raw"])
+        beats = (sm.get("n", 0) >= 60 and sm.get("expR") is not None and rm.get("expR") is not None
+                 and sm["expR"] > rm["expR"])
+        out[wkey] = {
+            "shadow_n": sm.get("n", 0), "shadow_expR": sm.get("expR"),
+            "raw_n": rm.get("n", 0), "raw_expR": rm.get("expR"),
+            "shadow_beats_raw": beats,
+        }
+    return out
 
 # ================================================================= RIGOR
 def r_has_v3(rows):
@@ -1237,6 +1275,7 @@ def main():
     sa_base = _sa_base_dir()
     report["session_analyst_cross"] = session_analyst_cross(pairs, sa_base)
     report["shadow_rules"] = shadow_rules_apply(pairs, sa_base)
+    report["shadow_weekly"] = shadow_weekly(pairs, sa_base)
     report["news_context"] = news_context(pairs, sa)
     report["gate"] = exec_gate(report)
     causes, detail, causes_by_kind_side = sl_causes(pairs)
@@ -1304,6 +1343,7 @@ def main():
     state["managed_vs_naive"] = report["managed_vs_naive"]
     state["sl_origin_vs_layer"] = report["sl_origin_vs_layer"]
     state["shadowRules"] = report["shadow_rules"]
+    state["shadowWeekly"] = report["shadow_weekly"]
     state["alerts"] = report["alerts"]
     state["file_line_counts"] = file_line_counts
     state["segment_n_history"] = segment_n_history
@@ -1396,6 +1436,8 @@ def main():
              + json.dumps(report["session_analyst_cross"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Modo sombra (peldano 0->1, gate en execution-ladder.md)\n```json\n"
              + json.dumps(report["shadow_rules"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Modo sombra por semana (gate: shadow_beats_raw 3 semanas seguidas, n>=60)\n```json\n"
+             + json.dumps(report["shadow_weekly"], indent=2, ensure_ascii=False) + "\n```\n")
     with open(os.path.join(ROOT, "report.md"), "w", encoding="utf-8") as f:
         f.write("".join(L))
 
