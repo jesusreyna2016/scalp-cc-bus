@@ -1,8 +1,9 @@
 {
-  "updatedAt": "2026-09-26T01:37:40.926752+00:00",
+  "updatedAt": "2026-09-27T01:40:09.125300+00:00",
   "recommendedParams": {
-    "note": "vacio hasta que algun segmento tenga n>=20 (revision semanal)",
+    "note": "vacio salvo un candidato experimental de la revision semanal 2026-W39 (rr1_threshold_cut_oos confirmado solo en 5m/RETEST/LONG)",
     "sc_min_rr": null,
+    "sc_aplus_rr_5m_retest_long_experimental": 1.2,
     "sc_slbuf": null,
     "sc_floor_atr5": null,
     "alert_cooldown": null,
@@ -11,13 +12,13 @@
   },
   "executionGate": {
     "phase": "advisor",
-    "readyForLive": true
+    "readyForLive": false
   },
   "totals": {
     "signals": 17904,
     "outcomes": 17109,
-    "pairs_resolved": 17858,
-    "pending": 46,
+    "pairs_resolved": 17904,
+    "pending": 0,
     "orphan_outcomes": 37
   },
   "metrics_by_tf_kind_side": {
@@ -58,10 +59,10 @@
       "revAfterSL_rate": 16.4
     },
     "1m/RETEST/LONG": {
-      "n": 6591,
-      "wrTP1": 45.7,
+      "n": 6618,
+      "wrTP1": 45.5,
       "nSL": 3096,
-      "nTO": 483,
+      "nTO": 510,
       "expR": 0.064,
       "pf": 1.13,
       "mfe_p25": 6.0,
@@ -130,10 +131,10 @@
       "revAfterSL_rate": 34.6
     },
     "2m/RETEST/LONG": {
-      "n": 2881,
-      "wrTP1": 46.7,
+      "n": 2891,
+      "wrTP1": 46.5,
       "nSL": 1349,
-      "nTO": 188,
+      "nTO": 198,
       "expR": 0.041,
       "pf": 1.08,
       "mfe_p25": 8.0,
@@ -202,10 +203,10 @@
       "revAfterSL_rate": 66.7
     },
     "5m/RETEST/LONG": {
-      "n": 1038,
-      "wrTP1": 50.2,
+      "n": 1046,
+      "wrTP1": 49.8,
       "nSL": 433,
-      "nTO": 84,
+      "nTO": 92,
       "expR": 0.142,
       "pf": 1.32,
       "mfe_p25": 13.0,
@@ -220,10 +221,10 @@
       "revAfterSL_rate": 49.7
     },
     "5m/RETEST/SHORT": {
-      "n": 670,
-      "wrTP1": 47.3,
+      "n": 671,
+      "wrTP1": 47.2,
       "nSL": 291,
-      "nTO": 62,
+      "nTO": 63,
       "expR": 0.084,
       "pf": 1.18,
       "mfe_p25": 14.0,
@@ -252,10 +253,10 @@
   },
   "metrics_by_symbol": {
     "CL": {
-      "n": 3345,
+      "n": 3349,
       "wrTP1": 46.4,
       "nSL": 1544,
-      "nTO": 248,
+      "nTO": 252,
       "expR": 0.047,
       "pf": 1.1,
       "mfe_p25": 7.0,
@@ -270,10 +271,10 @@
       "revAfterSL_rate": 33.0
     },
     "ES": {
-      "n": 3788,
-      "wrTP1": 47.8,
+      "n": 3802,
+      "wrTP1": 47.7,
       "nSL": 1683,
-      "nTO": 293,
+      "nTO": 307,
       "expR": 0.061,
       "pf": 1.13,
       "mfe_p25": 4.0,
@@ -288,10 +289,10 @@
       "revAfterSL_rate": 33.8
     },
     "GC": {
-      "n": 3501,
+      "n": 3506,
       "wrTP1": 45.1,
       "nSL": 1600,
-      "nTO": 321,
+      "nTO": 326,
       "expR": 0.044,
       "pf": 1.09,
       "mfe_p25": 16.0,
@@ -306,10 +307,10 @@
       "revAfterSL_rate": 32.2
     },
     "NQ": {
-      "n": 3259,
-      "wrTP1": 45.6,
+      "n": 3276,
+      "wrTP1": 45.4,
       "nSL": 1533,
-      "nTO": 240,
+      "nTO": 257,
       "expR": 0.048,
       "pf": 1.1,
       "mfe_p25": 28.0,
@@ -324,10 +325,10 @@
       "revAfterSL_rate": 31.6
     },
     "YM": {
-      "n": 3965,
-      "wrTP1": 45.3,
+      "n": 3971,
+      "wrTP1": 45.2,
       "nSL": 1834,
-      "nTO": 335,
+      "nTO": 341,
       "expR": 0.087,
       "pf": 1.18,
       "mfe_p25": 7.0,
@@ -359,21 +360,21 @@
       "expR": 0.092
     },
     "2026-W39": {
-      "n": 5229,
-      "wrTP1": 45.9,
+      "n": 5275,
+      "wrTP1": 45.5,
       "expR": 0.055
     }
   },
   "walk_forward": {
     "ready": true,
     "trainN": 7945,
-    "testN": 9913,
+    "testN": 9959,
     "testWeeks": [
       "2026-W38",
       "2026-W39"
     ],
-    "model_oos_brier": 0.2218,
-    "model_oos_n": 9913,
+    "model_oos_brier": 0.2216,
+    "model_oos_n": 9959,
     "best_scheme_in_sample": {
       "scheme": "fixed_2R",
       "trainExpR": 0.042
@@ -381,19 +382,18 @@
     "best_scheme_oos_expR": 0.063
   },
   "gate": {
-    "readyForLive": true,
-    "segment": "5m/RETEST/LONG",
+    "readyForLive": false,
+    "segment": null,
     "note": "n>=100 & E[R]>0 & PF>=1.3 & WR>=50 en un segmento tf/kind/side. Falta ademas: estabilidad 3 semanas + causa de SL dominante mitigada (lo valida el agente)."
   },
   "alerts": [
-    "GATE: el segmento objetivo cumple el gate de ejecucion. Revisar escalera.",
     "SL: SL en la mecha de la vela del retest BATE al de 3 capas fuera de ruido (E[R] 0.238 vs 0.065, delta 0.172 CI90 [0.133, 0.214], n 11273). Candidato para experiments.json + revision semanal.",
     "SL: SL en la mecha del retest + vela previa (1m short) BATE al de 3 capas fuera de ruido (E[R] 0.181 vs 0.035, delta 0.146 CI90 [0.08, 0.218], n 3349). Candidato para experiments.json + revision semanal.",
     "SESSION ANALYST: senales scalp con veredicto SA=GO rinden MEJOR de forma no-random (E[R] 0.187 CI90 [0.119, 0.258], n 841). Consistente con la hipotesis original de agent-instructions.md.",
     "SESSION ANALYST: senales scalp con veredicto SA=WAIT rinden MEJOR de forma no-random (E[R] 0.048 CI90 [0.02, 0.079], n 4378). Consistente con la hipotesis original de agent-instructions.md."
   ],
   "prediction_scoreboard": {
-    "n": 4,
+    "n": 7,
     "scored": 0,
     "mae_deltaER": null,
     "hit_direction_rate": null
@@ -681,10 +681,10 @@
       "revAfterSL_rate": 0.0
     },
     "RETEST/LONG|edge=-1": {
-      "n": 389,
-      "wrTP1": 54.5,
+      "n": 392,
+      "wrTP1": 54.1,
       "nSL": 155,
-      "nTO": 22,
+      "nTO": 25,
       "expR": 0.21,
       "pf": 1.51,
       "mfe_p25": 7.0,
@@ -695,14 +695,14 @@
       "loserMFEbeforeSL_p50": 4.0,
       "bars_win_p50": 3.0,
       "bars_loss_p50": 4.0,
-      "entryZoneTk_p50": -10.0,
+      "entryZoneTk_p50": -9.0,
       "revAfterSL_rate": 43.9
     },
     "RETEST/LONG|edge=0": {
-      "n": 4648,
-      "wrTP1": 49.2,
+      "n": 4668,
+      "wrTP1": 49.0,
       "nSL": 2111,
-      "nTO": 251,
+      "nTO": 271,
       "expR": 0.047,
       "pf": 1.1,
       "mfe_p25": 6.0,
@@ -717,10 +717,10 @@
       "revAfterSL_rate": 37.6
     },
     "RETEST/LONG|edge=1": {
-      "n": 5473,
-      "wrTP1": 43.5,
+      "n": 5495,
+      "wrTP1": 43.3,
       "nSL": 2612,
-      "nTO": 482,
+      "nTO": 504,
       "expR": 0.07,
       "pf": 1.14,
       "mfe_p25": 8.0,
@@ -753,10 +753,10 @@
       "revAfterSL_rate": 29.2
     },
     "RETEST/SHORT|edge=0": {
-      "n": 3034,
-      "wrTP1": 47.9,
+      "n": 3035,
+      "wrTP1": 47.8,
       "nSL": 1327,
-      "nTO": 255,
+      "nTO": 256,
       "expR": 0.081,
       "pf": 1.17,
       "mfe_p25": 8.0,
@@ -845,10 +845,10 @@
       "revAfterSL_rate": 0.0
     },
     "RETEST/LONG|aligned=1": {
-      "n": 10502,
-      "wrTP1": 46.4,
+      "n": 10547,
+      "wrTP1": 46.2,
       "nSL": 4877,
-      "nTO": 752,
+      "nTO": 797,
       "expR": 0.065,
       "pf": 1.13,
       "mfe_p25": 7.0,
@@ -863,10 +863,10 @@
       "revAfterSL_rate": 32.8
     },
     "RETEST/SHORT|aligned=1": {
-      "n": 6896,
+      "n": 6897,
       "wrTP1": 45.5,
       "nSL": 3136,
-      "nTO": 623,
+      "nTO": 624,
       "expR": 0.044,
       "pf": 1.09,
       "mfe_p25": 9.0,
@@ -955,10 +955,10 @@
       "revAfterSL_rate": 33.3
     },
     "RETEST/LONG|tier=A+": {
-      "n": 790,
-      "wrTP1": 23.7,
+      "n": 791,
+      "wrTP1": 23.6,
       "nSL": 510,
-      "nTO": 93,
+      "nTO": 94,
       "expR": 0.037,
       "pf": 1.05,
       "mfe_p25": 10.0,
@@ -973,10 +973,10 @@
       "revAfterSL_rate": 19.0
     },
     "RETEST/LONG|tier=B": {
-      "n": 4440,
-      "wrTP1": 46.8,
+      "n": 4462,
+      "wrTP1": 46.6,
       "nSL": 2018,
-      "nTO": 343,
+      "nTO": 365,
       "expR": 0.091,
       "pf": 1.19,
       "mfe_p25": 7.0,
@@ -991,10 +991,10 @@
       "revAfterSL_rate": 32.6
     },
     "RETEST/LONG|tier=C": {
-      "n": 5280,
-      "wrTP1": 49.5,
+      "n": 5302,
+      "wrTP1": 49.2,
       "nSL": 2350,
-      "nTO": 319,
+      "nTO": 341,
       "expR": 0.047,
       "pf": 1.1,
       "mfe_p25": 7.0,
@@ -1005,7 +1005,7 @@
       "loserMFEbeforeSL_p50": 3.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 4.0,
-      "entryZoneTk_p50": -14.0,
+      "entryZoneTk_p50": -15.0,
       "revAfterSL_rate": 36.0
     },
     "RETEST/SHORT|tier=A+": {
@@ -1045,10 +1045,10 @@
       "revAfterSL_rate": 33.4
     },
     "RETEST/SHORT|tier=C": {
-      "n": 3507,
-      "wrTP1": 47.6,
+      "n": 3508,
+      "wrTP1": 47.5,
       "nSL": 1523,
-      "nTO": 316,
+      "nTO": 317,
       "expR": 0.074,
       "pf": 1.16,
       "mfe_p25": 8.0,
@@ -1064,8 +1064,8 @@
     }
   },
   "narrative": {
-    "es": "Sábado 26 de septiembre. Dato nuevo grande: el bus sumó 1293 pares nuevos (los datos del viernes 2026-09-25 llegando completos), ya lleva 17858 medidos (16565 ayer). De media, cada operación gana 0.058 veces lo arriesgado, y no es ruido estadístico. Acierto global cerca del 46%. La causa principal de los stops sigue siendo un objetivo demasiado cerca del stop (RR-bajo, ~37% de las pérdidas), muy cerca de operar contra la estructura del precio y de que el stop caiga justo en el mínimo/máximo de la vela. La gestión con escalera y parciales sigue ganando más que la simple (+0.076 de media). Dos hallazgos nuevos hoy: los tres marcos de tiempo de SELL RETEST se debilitaron a la vez (el de 1 minuto incluso perdió por primera vez la certificación estadística completa, aunque se lee como una sesión floja, no un cambio de fondo); y se añadió una medición nueva y permanente al sistema que muestra que el 'modo sombra' (el conjunto de reglas que el agente usaría si operara) venía ganándole al indicador crudo durante tres semanas seguidas, pero rompió la racha justo esta semana. Seguimos en el primer peldaño de la escalera de ejecución (solo asesoría): el segmento de referencia (5 minutos RETEST LONG) cumple los números mínimos pero no la estabilidad de 3 semanas, y el cambio de stop propuesto (mover el stop a la mecha de la vela del retest) sigue sin aplicarse en TradingView pese a certificar en los 6 segmentos desde hace semanas. Vigilar: si la debilidad de SELL RETEST de hoy persiste el lunes con dato genuinamente nuevo, o si fue solo un viernes flojo.",
-    "en": "Saturday, September 26. Large new data batch: the bus added 1,293 new pairs (Friday 2026-09-25's data arriving in full), now 17,858 measured in total (up from 16,565 yesterday). On average each trade gains 0.058 times what was risked, and this isn't statistical noise. Overall win rate is around 46%. The main cause of stop-outs remains a target set too close to the stop (low RR, ~37% of losses), closely tied with entering against price structure and stops landing right at the candle's low/high. The managed ladder-plus-partials approach keeps beating the simple one (+0.076 on average). Two new findings today: all three SELL RETEST timeframes weakened at once (the 1-minute one even lost full statistical certification for the first time, though this reads as a soft session rather than a real shift); and a new permanent measurement was added to the system showing that 'shadow mode' (the rule set the agent would trade if it traded) had been beating the raw indicator for three straight weeks, but broke that streak this very week. We remain at the first rung of the execution ladder (advisor only): the reference segment (5-minute RETEST LONG) meets the minimum numbers but not the 3-week stability requirement, and the proposed stop-loss change (moving the stop to the retest candle's wick) still hasn't been applied in TradingView despite certifying across all 6 segments for weeks. Watch item: whether today's SELL RETEST weakness persists Monday with genuinely new data, or was just a soft Friday."
+    "es": "Domingo 27 de septiembre, revision semanal. Llevamos 17904 operaciones medidas (pares señal+resultado). En promedio el sistema SI gana: por cada operacion se obtiene de media 0.058 veces lo que se arriesgo (el E[R] global), y esto ya no es casualidad estadistica. El acierto (win rate) ronda el 46%: se pierde mas veces de las que se gana, pero cuando gana paga bastante mas de lo que arriesga en cada perdida, y por eso el promedio es positivo. La razon principal por la que las operaciones tocan el stop sigue siendo la misma de siempre: el objetivo queda demasiado cerca del stop desde el origen de la señal (RR-bajo, ~35% de las perdidas esta semana). La gestion con escalera de entrada y parciales sigue rindiendo mejor que la simple. Noticia grande de la semana: ayer sabado Jesus aplico en TradingView el cambio de stop que llevabamos semanas midiendo (mover el stop del calculo de '3 capas' a la mecha real de la vela del retest) - certificaba en los 6 segmentos principales sin una sola marcha atras. Todavia no hay ni un solo trade con el stop nuevo (se aplico en fin de semana), asi que el primer chequeo real llega mañana lunes. Seguimos en el primer peldaño de la escalera de ejecucion (solo asesoria, no se conecta a cuenta real): esta semana el numero minimo de acierto en el segmento de referencia (5 minutos RETEST largo) cayo justo por debajo del umbral que pedimos. Vigilar: si el stop nuevo mejora las cosas de verdad cuando empiece a haber datos reales con el, a partir de mañana.",
+    "en": "Sunday September 27, weekly review. We have measured 17,904 trades (signal+outcome pairs) so far. On average the system DOES make money: each trade nets about 0.058 times what was risked (the overall E[R]), and this is no longer statistical noise. The win rate is around 46%: it loses more often than it wins, but when it wins it pays back well more than each loss costs, so the average comes out positive. The main reason trades hit the stop is still the same as always: the target sits too close to the stop from the moment the signal fires (low-RR, ~35% of this week's losses). The staged-entry-plus-partials management style keeps outperforming the simple one-shot approach. Big news this week: yesterday (Saturday) Jesus applied the stop-loss change in TradingView that we've been measuring for weeks (moving the stop from the '3-layer' formula to the actual wick of the retest candle) - it had certified in all 6 main segments without a single reversal. There isn't a single trade with the new stop yet (it was applied over the weekend), so the first real check comes tomorrow, Monday. We're still on the first rung of the execution ladder (advisor only, no live account): this week the minimum win-rate check on the reference segment (5-minute RETEST long) dipped just below the threshold we require. Watch for: whether the new stop actually helps once real post-change data starts coming in tomorrow."
   },
   "sl_origin_vs_layer": {
     "overall": {
@@ -1450,21 +1450,21 @@
   "segment_n_history": {
     "by_tf_kind_side/1m/INV/LONG": 163,
     "by_tf_kind_side/1m/INV/SHORT": 134,
-    "by_tf_kind_side/1m/RETEST/LONG": 6591,
+    "by_tf_kind_side/1m/RETEST/LONG": 6618,
     "by_tf_kind_side/1m/RETEST/SHORT": 4361,
     "by_tf_kind_side/2m/INV/LONG": 65,
     "by_tf_kind_side/2m/INV/SHORT": 58,
-    "by_tf_kind_side/2m/RETEST/LONG": 2881,
+    "by_tf_kind_side/2m/RETEST/LONG": 2891,
     "by_tf_kind_side/2m/RETEST/SHORT": 1865,
     "by_tf_kind_side/5m/INV/LONG": 20,
     "by_tf_kind_side/5m/INV/SHORT": 12,
-    "by_tf_kind_side/5m/RETEST/LONG": 1038,
-    "by_tf_kind_side/5m/RETEST/SHORT": 670,
+    "by_tf_kind_side/5m/RETEST/LONG": 1046,
+    "by_tf_kind_side/5m/RETEST/SHORT": 671,
     "by_kindside_aligned/INV/LONG|aligned=1": 248,
     "by_kindside_aligned/INV/SHORT|aligned=1": 204,
     "by_kindside_aligned/RETEST/LONG|aligned=0": 10,
-    "by_kindside_aligned/RETEST/LONG|aligned=1": 10502,
-    "by_kindside_aligned/RETEST/SHORT|aligned=1": 6896,
+    "by_kindside_aligned/RETEST/LONG|aligned=1": 10547,
+    "by_kindside_aligned/RETEST/SHORT|aligned=1": 6897,
     "decay_weekly/2026-W36": 3183,
     "decay_weekly/2026-W37": 5389,
     "decay_weekly/2026-W38": 4911
@@ -1706,8 +1706,8 @@
         "pf": 1.03
       },
       "1m/RETEST/LONG": {
-        "n": 1980,
-        "wrTP1": 45.3,
+        "n": 2007,
+        "wrTP1": 44.7,
         "expR": 0.059,
         "pf": 1.12
       },
@@ -1730,8 +1730,8 @@
         "pf": 3.54
       },
       "2m/RETEST/LONG": {
-        "n": 765,
-        "wrTP1": 46.7,
+        "n": 775,
+        "wrTP1": 46.1,
         "expR": 0.127,
         "pf": 1.26
       },
@@ -1754,14 +1754,14 @@
         "pf": 99.0
       },
       "5m/RETEST/LONG": {
-        "n": 258,
-        "wrTP1": 46.1,
+        "n": 266,
+        "wrTP1": 44.7,
         "expR": 0.097,
         "pf": 1.2
       },
       "5m/RETEST/SHORT": {
-        "n": 203,
-        "wrTP1": 46.8,
+        "n": 204,
+        "wrTP1": 46.6,
         "expR": 0.06,
         "pf": 1.12
       }
@@ -1770,29 +1770,29 @@
   "segment_n_last": {
     "by_tf_kind_side/1m/INV/LONG": 163,
     "by_tf_kind_side/1m/INV/SHORT": 134,
-    "by_tf_kind_side/1m/RETEST/LONG": 6591,
+    "by_tf_kind_side/1m/RETEST/LONG": 6618,
     "by_tf_kind_side/1m/RETEST/SHORT": 4361,
     "by_tf_kind_side/2m/INV/LONG": 65,
     "by_tf_kind_side/2m/INV/SHORT": 58,
-    "by_tf_kind_side/2m/RETEST/LONG": 2881,
+    "by_tf_kind_side/2m/RETEST/LONG": 2891,
     "by_tf_kind_side/2m/RETEST/SHORT": 1865,
     "by_tf_kind_side/5m/INV/LONG": 20,
     "by_tf_kind_side/5m/INV/SHORT": 12,
-    "by_tf_kind_side/5m/RETEST/LONG": 1038,
-    "by_tf_kind_side/5m/RETEST/SHORT": 670,
+    "by_tf_kind_side/5m/RETEST/LONG": 1046,
+    "by_tf_kind_side/5m/RETEST/SHORT": 671,
     "by_kindside_aligned/INV/LONG|aligned=1": 248,
     "by_kindside_aligned/INV/SHORT|aligned=1": 204,
     "by_kindside_aligned/RETEST/LONG|aligned=0": 8,
-    "by_kindside_aligned/RETEST/LONG|aligned=1": 10502,
-    "by_kindside_aligned/RETEST/SHORT|aligned=1": 6896,
+    "by_kindside_aligned/RETEST/LONG|aligned=1": 10547,
+    "by_kindside_aligned/RETEST/SHORT|aligned=1": 6897,
     "decay_weekly/2026-W36": 2871,
     "decay_weekly/2026-W37": 5074,
     "decay_weekly/2026-W38": 4684
   },
   "shadowRules": {
     "rule": {
-      "version": 1,
-      "definedAt": "2026-09-20",
+      "version": 2,
+      "definedAt": "2026-09-27",
       "criteria": {
         "kind": [
           "RETEST"
@@ -1800,47 +1800,49 @@
         "tf_side": [
           "1/LONG",
           "1/SHORT",
+          "2/LONG",
           "2/SHORT",
-          "5/LONG"
+          "5/LONG",
+          "5/SHORT"
         ],
         "excludeSaVerdict": [
           "AVOID"
         ]
       },
-      "rationale": "kind=RETEST (prioridad 1; INV no tiene ningun segmento con survives_fdr10=true todavia). tf/side limitado a los 4 segmentos que hoy sobreviven FDR10 en segment_significance (1m LONG, 1m SHORT, 2m SHORT, 5m LONG) -- 2m LONG y 5m SHORT quedan fuera porque su CI90 de E[R] cruza o roza cero. Se excluyen senales del dia/sesion en un instrumento con veredicto Session Analyst=AVOID: avoid_vs_rest_ci90.AVOID no es significativo (p_mean_le_0 alto) mientras GO y WAIT si lo son (session_analyst_cross). SL/objetivo = el mismo del indicador (3 capas); el SL estructural de experiments.json (sl-retest-wick) sigue 'proposed' sin changeDate, no se incorpora a la sombra hasta que tenga muestra post-cambio."
+      "rationale": "kind=RETEST (prioridad 1; INV no tiene ningun segmento con survives_fdr10=true todavia). REVISION SEMANAL 2026-09-27 (v1->v2): v1 (2026-09-20) limitaba tf_side a 4 segmentos (1/LONG, 1/SHORT, 2/SHORT, 5/LONG) porque 2m LONG y 5m SHORT todavia cruzaban/rozaban cero en ese momento. Desde entonces segment_significance certifico ambos de forma sostenida durante varias corridas seguidas (2m LONG desde 2026-09-18, 5m SHORT desde antes) sin ninguna reversion, y hoy los 6 segmentos RETEST (1m/2m/5m x LONG/SHORT) tienen survives_fdr10=true con CI90 que no cruza cero -- ver segment_significance de hoy. Se amplia tf_side a los 6 segmentos certificados; la justificacion vieja de v1 (excluir 2m LONG/5m SHORT por CI90 rozando cero) ya no la sostiene el dato, quedaba pendiente de esta revision semanal desde 2026-09-24 (ver playbook buy-retest.md, historico). Se excluyen senales del dia/sesion en un instrumento con veredicto Session Analyst=AVOID: avoid_vs_rest_ci90.AVOID no es significativo (p_mean_le_0 alto) mientras GO y WAIT si lo son (session_analyst_cross). SL/objetivo = el mismo del indicador (3 capas); el SL estructural de experiments.json (sl-retest-wick) SE APLICO en TradingView el 2026-09-26 pero el feed sigue registrando el 3-capas como rMultiple (el SL real ya cambio, la medicion paralela sigue corriendo en sl_origin_vs_layer) -- no se incorpora a la sombra hasta que haya muestra post-cambio suficiente para decidir si usar rOrig en vez de rMultiple."
     },
     "shadow": {
-      "n": 12744,
-      "wrTP1": 45.9,
-      "nSL": 5828,
-      "nTO": 1064,
+      "n": 16034,
+      "wrTP1": 46.0,
+      "nSL": 7305,
+      "nTO": 1351,
       "expR": 0.061,
       "pf": 1.13,
       "mfe_p25": 8.0,
       "mfe_p50": 18.0,
-      "mfe_p75": 40.0,
+      "mfe_p75": 41.0,
       "winnerMAE_p75": 12.0,
-      "winnerMAE_p90": 23.900000000000546,
+      "winnerMAE_p90": 25.0,
       "loserMFEbeforeSL_p50": 4.0,
-      "bars_win_p50": 3.0,
+      "bars_win_p50": 2.0,
       "bars_loss_p50": 4.0,
-      "entryZoneTk_p50": -14.0,
-      "revAfterSL_rate": 31.9
+      "entryZoneTk_p50": -15.0,
+      "revAfterSL_rate": 32.9
     },
     "shadow_ci90": {
       "expR": 0.061,
       "ci90": [
-        0.042,
-        0.079
+        0.046,
+        0.078
       ],
       "p_mean_le_0": 0.0,
-      "n": 12185
+      "n": 15271
     },
     "raw_indicator": {
-      "n": 17406,
-      "wrTP1": 46.0,
+      "n": 17452,
+      "wrTP1": 45.9,
       "nSL": 8014,
-      "nTO": 1378,
+      "nTO": 1424,
       "expR": 0.057,
       "pf": 1.12,
       "mfe_p25": 8.0,
@@ -1864,10 +1866,10 @@
       "n": 16644
     },
     "tier_ap_b_only": {
-      "n": 8619,
-      "wrTP1": 43.3,
+      "n": 8642,
+      "wrTP1": 43.2,
       "nSL": 4141,
-      "nTO": 743,
+      "nTO": 766,
       "expR": 0.056,
       "pf": 1.11,
       "mfe_p25": 8.0,
@@ -1894,32 +1896,32 @@
   },
   "shadowWeekly": {
     "2026-W36": {
-      "shadow_n": 2016,
-      "shadow_expR": -0.02,
+      "shadow_n": 2707,
+      "shadow_expR": -0.03,
       "raw_n": 2787,
       "raw_expR": -0.023,
-      "shadow_beats_raw": true
+      "shadow_beats_raw": false
     },
     "2026-W37": {
-      "shadow_n": 3469,
-      "shadow_expR": 0.09,
+      "shadow_n": 4174,
+      "shadow_expR": 0.088,
       "raw_n": 4936,
       "raw_expR": 0.074,
       "shadow_beats_raw": true
     },
     "2026-W38": {
-      "shadow_n": 3179,
-      "shadow_expR": 0.117,
+      "shadow_n": 4079,
+      "shadow_expR": 0.11,
       "raw_n": 4579,
       "raw_expR": 0.098,
       "shadow_beats_raw": true
     },
     "2026-W39": {
-      "shadow_n": 4080,
-      "shadow_expR": 0.034,
-      "raw_n": 5104,
+      "shadow_n": 5074,
+      "shadow_expR": 0.051,
+      "raw_n": 5150,
       "raw_expR": 0.048,
-      "shadow_beats_raw": false
+      "shadow_beats_raw": true
     }
   }
 }

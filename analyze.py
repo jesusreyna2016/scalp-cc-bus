@@ -412,6 +412,39 @@ def rr1_threshold_cut(pairs, thresholds=(1.0, 1.2, 1.3, 1.5, 2.0)):
         out[seg] = {"baseline": base, "cuts": cuts}
     return out
 
+def rr1_threshold_cut_oos(pairs, test_weeks=2, thresholds=(1.2, 1.3, 1.5, 2.0)):
+    """Evalua rr1_threshold_cut fuera de muestra: usa el MISMO split temporal
+    que walk_forward (ultimas test_weeks semanas = test) y aplica el filtro
+    rr1>=X solo dentro del test set, sin re-ajustar nada con el train. Si el
+    corte sigue subiendo E[R]/PF en el test set aislado, el patron in-sample
+    de rr1_threshold_cut no es sobreajuste del periodo completo. Solo se
+    listan cortes con n>=20 en el test set."""
+    res = sorted([r for r in pairs if r["resolved"] and r["result"]], key=lambda r: r["recvDt"])
+    if len(res) < 60:
+        return {"ready": False, "n": len(res), "need": 60}
+    weeks = sorted({_wk(r["recvDt"]) for r in res})
+    if len(weeks) < test_weeks + 2:
+        return {"ready": False, "reason": "pocas semanas", "weeks": len(weeks)}
+    cut_weeks = set(weeks[-test_weeks:])
+    test = [r for r in res if _wk(r["recvDt"]) in cut_weeks and r["kind"] == "RETEST"]
+    out = {"testWeeks": sorted(cut_weeks)}
+    segs = sorted({f"{r['tf']}/{r['kind']}/{r['side']}" for r in test})
+    for seg in segs:
+        seg_rows = [r for r in test if f"{r['tf']}/{r['kind']}/{r['side']}" == seg and r["rr1"] is not None]
+        base = seg_metrics(seg_rows)
+        if base.get("n", 0) < 20:
+            continue
+        base["ci90"] = bootstrap_er_ci(seg_rows)
+        cuts = {}
+        for th in thresholds:
+            sub = [r for r in seg_rows if r["rr1"] >= th]
+            m = seg_metrics(sub)
+            if m.get("n", 0) >= 20:
+                m["ci90"] = bootstrap_er_ci(sub)
+                cuts[str(th)] = m
+        out[seg] = {"baseline": base, "cuts": cuts}
+    return out
+
 # --------------------------------------------------- decay (WR semanal)
 def decay(rows):
     res = [r for r in rows if r["resolved"] and r["result"]]
@@ -677,23 +710,32 @@ def session_analyst_cross(pairs, sa_base):
 # agente cambie el criterio en una revision semanal, actualiza esta
 # constante (no la recalcules a mano fuera de aqui).
 SHADOW_RULES_V1 = {
-    "version": 1,
-    "definedAt": "2026-09-20",
+    "version": 2,
+    "definedAt": "2026-09-27",
     "criteria": {
         "kind": ["RETEST"],
-        "tf_side": ["1/LONG", "1/SHORT", "2/SHORT", "5/LONG"],
+        "tf_side": ["1/LONG", "1/SHORT", "2/LONG", "2/SHORT", "5/LONG", "5/SHORT"],
         "excludeSaVerdict": ["AVOID"],
     },
     "rationale": (
         "kind=RETEST (prioridad 1; INV no tiene ningun segmento con survives_fdr10=true "
-        "todavia). tf/side limitado a los 4 segmentos que hoy sobreviven FDR10 en "
-        "segment_significance (1m LONG, 1m SHORT, 2m SHORT, 5m LONG) -- 2m LONG y 5m SHORT "
-        "quedan fuera porque su CI90 de E[R] cruza o roza cero. Se excluyen senales del dia/sesion "
-        "en un instrumento con veredicto Session Analyst=AVOID: avoid_vs_rest_ci90.AVOID no es "
+        "todavia). REVISION SEMANAL 2026-09-27 (v1->v2): v1 (2026-09-20) limitaba tf_side a "
+        "4 segmentos (1/LONG, 1/SHORT, 2/SHORT, 5/LONG) porque 2m LONG y 5m SHORT todavia "
+        "cruzaban/rozaban cero en ese momento. Desde entonces segment_significance certifico "
+        "ambos de forma sostenida durante varias corridas seguidas (2m LONG desde 2026-09-18, "
+        "5m SHORT desde antes) sin ninguna reversion, y hoy los 6 segmentos RETEST (1m/2m/5m x "
+        "LONG/SHORT) tienen survives_fdr10=true con CI90 que no cruza cero -- ver "
+        "segment_significance de hoy. Se amplia tf_side a los 6 segmentos certificados; la "
+        "justificacion vieja de v1 (excluir 2m LONG/5m SHORT por CI90 rozando cero) ya no la "
+        "sostiene el dato, quedaba pendiente de esta revision semanal desde 2026-09-24 (ver "
+        "playbook buy-retest.md, historico). Se excluyen senales del dia/sesion en un "
+        "instrumento con veredicto Session Analyst=AVOID: avoid_vs_rest_ci90.AVOID no es "
         "significativo (p_mean_le_0 alto) mientras GO y WAIT si lo son (session_analyst_cross). "
         "SL/objetivo = el mismo del indicador (3 capas); el SL estructural de "
-        "experiments.json (sl-retest-wick) sigue 'proposed' sin changeDate, no se incorpora a la "
-        "sombra hasta que tenga muestra post-cambio."
+        "experiments.json (sl-retest-wick) SE APLICO en TradingView el 2026-09-26 pero el feed "
+        "sigue registrando el 3-capas como rMultiple (el SL real ya cambio, la medicion "
+        "paralela sigue corriendo en sl_origin_vs_layer) -- no se incorpora a la sombra hasta "
+        "que haya muestra post-cambio suficiente para decidir si usar rOrig en vez de rMultiple."
     ),
 }
 
@@ -1269,6 +1311,7 @@ def main():
         "managed_vs_naive": managed_vs_naive(pairs),
         "sl_origin_vs_layer": sl_origin_vs_layer(pairs),
         "rr1_threshold_cut": rr1_threshold_cut(pairs),
+        "rr1_threshold_cut_oos": rr1_threshold_cut_oos(pairs),
     }
     sa = sa_context()
     report["session_analyst"] = sa
@@ -1401,6 +1444,8 @@ def main():
              + json.dumps(report["sl_origin_vs_layer"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Contrafactual de entrada por RR minimo (candidato sc_min_rr, ataca causa RR-bajo)\n```json\n"
              + json.dumps(report["rr1_threshold_cut"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Contrafactual RR minimo · fuera de muestra (mismo split que walk_forward)\n```json\n"
+             + json.dumps(report["rr1_threshold_cut_oos"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Decaimiento semanal\n```json\n"
              + json.dumps(report["decay_weekly"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Decaimiento semanal por segmento (tf/kind/side)\n```json\n"

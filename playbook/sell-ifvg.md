@@ -3,12 +3,16 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-26 (sábado) · n: 204)
+## Sección viva  (última revisión: 2026-09-27 (domingo, REVISIÓN SEMANAL) · n: 204)
 
 ### Nota de proceso
-Mismo incidente de repo de hoy que `buy-retest.md` (merge en vez de
-reset/checkout, sin pérdida). Dato de 2026-09-25 llegando completo:
-n 193→204 (+11: 1m+9, 2m+2, 5m+0).
+`git pull` limpio. Fin de semana sin sesión CME nueva — **cero señales
+INV/SHORT nuevas desde ayer** (n=134/58/12 en 1m/2m/5m, idéntico a la
+lectura de ayer). Las tres decisiones de la revisión semanal de hoy (SL
+estructural aplicado, `rr1_threshold_cut_oos`, `SHADOW_RULES_V1` v2 —
+ver `buy-retest.md` y `reviews/2026-week-39.md`) son todas sobre
+`kind=RETEST`; ninguna toca INV. Ningún TF de este playbook certifica
+FDR — sigue fuera de `shadow_rules` y de cualquier propuesta formal.
 
 ### Veredicto global
 1m n=134 (+9, WR 47.8%, E[R]=**+0.036** PF=1.08 — **revierte casi todo
@@ -85,6 +89,13 @@ mañana) — este segmento sigue sin suficiente muestra propia por semana
 para medir decaimiento aislado.
 
 ## Histórico de cambios
+- 2026-09-27 (domingo, REVISIÓN SEMANAL): sin dato nuevo (fin de semana,
+  n idéntico a ayer en los tres TF: 134/58/12). La revisión semanal de
+  hoy no afecta a este playbook (las tres decisiones — SL estructural
+  aplicado, `rr1_threshold_cut_oos`, `SHADOW_RULES_V1` v2 — son todas de
+  `kind=RETEST`, ver `buy-retest.md`). Sin cambios de veredicto: ningún
+  TF certifica FDR, INV/SHORT sigue siendo el único playbook donde
+  "WAIT/GO mejor que AVOID" no se sostiene. Nada accionable nuevo.
 - 2026-09-26 (sábado): **confirma la cautela de ayer**: tanto 1m
   INV/SHORT (E[R] +0.072→+0.036) como el cruce con Session Analyst
   (`WAIT` +0.052→-0.01) revirtieron casi por completo el salto positivo

@@ -3,12 +3,18 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-26 (sábado) · n: 248)
+## Sección viva  (última revisión: 2026-09-27 (domingo, REVISIÓN SEMANAL) · n: 248)
 
 ### Nota de proceso
-Mismo incidente de repo de hoy que `buy-retest.md` (merge en vez de
-reset/checkout, sin pérdida, ver ahí el detalle). Dato de 2026-09-25
-llegando completo: 1m+10, 2m+6, 5m+2 (n 230→248).
+`git pull` limpio. Fin de semana sin sesión CME nueva — **cero señales
+INV/LONG nuevas desde ayer** (n=163/65/20 en 1m/2m/5m, idéntico byte a
+byte a la lectura de ayer). Las tres decisiones de la revisión semanal de
+hoy (SL estructural aplicado, `rr1_threshold_cut_oos`, `SHADOW_RULES_V1`
+v2 — ver `buy-retest.md` y `reviews/2026-week-39.md`) son todas sobre
+`kind=RETEST`; ninguna toca INV directamente. INV sigue sin ningún
+segmento con `survives_fdr10=true` **y** CI90 fuera de cero a la vez
+(criterio compuesto de `agent-instructions.md`), así que sigue fuera de
+`shadow_rules` y de cualquier propuesta formal.
 
 ### Veredicto global
 1m n=163 (+10, WR 44.2%, E[R]=**0.182** PF=1.41, 67 SL — sube bastante
@@ -79,6 +85,15 @@ usar todavía para nada accionable.
 _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
 
 ## Histórico de cambios
+- 2026-09-27 (domingo, REVISIÓN SEMANAL): sin dato nuevo (fin de semana,
+  n idéntico a ayer en los tres TF). La revisión semanal de hoy no afecta
+  a este playbook (las tres decisiones — SL estructural aplicado,
+  `rr1_threshold_cut_oos`, `SHADOW_RULES_V1` v2 — son todas de
+  `kind=RETEST`, ver `buy-retest.md`). Sin cambios en el veredicto: 1m
+  sigue con `survives_fdr10=true` pero CI90 rozando cero
+  ([-0.007,0.393]), 2m sigue sin certificar y en negativo, 5m certifica
+  pero bajo el piso n≥20 de este playbook. Nada accionable nuevo — a
+  vigilar el lunes si llega dato genuinamente nuevo.
 - 2026-09-26 (sábado): dato de 2026-09-25 llegando completo (+10/+6/+2
   en 1m/2m/5m). **1m INV/LONG certifica FDR por primera vez**
   (CI90=[-0.007,0.393], p=0.057) aunque el límite inferior todavía

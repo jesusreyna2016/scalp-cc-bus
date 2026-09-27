@@ -3,40 +3,58 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-26 (sábado) · n: 6896)
+## Sección viva  (última revisión: 2026-09-27 (domingo, REVISIÓN SEMANAL) · n: 6897)
 
-### Nota de proceso — ver `buy-retest.md`
-Mismo incidente de hoy: `origin/main` reescrito sin ancestro común, pero
-el harness bloqueó `checkout -B`/`reset --hard`; resuelto con
-`git merge origin/main --allow-unrelated-histories -X theirs` (sin
-pérdida, árbol final idéntico a `origin/main`). Dato de 2026-09-25
-llegando completo: 1m+436, 2m+214, 5m+77 (n 6501→6896 en significancia).
+### Nota de proceso
+`git pull` limpio. Fin de semana sin sesión CME nueva — SELL RETEST
+prácticamente no se movió desde ayer (n 6896→6897, +1; los 46 pendientes
+que cruzaron 24h en todo el bus cayeron casi todos del lado LONG, ver
+`buy-retest.md`). `segment_significance` da exactamente los mismos
+números que ayer en los tres TF (n=4102/1789/620 sin cambio) — el
+bootstrap todavía no incorpora el único par nuevo de hoy.
+
+### Revisión semanal de hoy — ver `reviews/2026-week-39.md`
+1. **`sl-retest-wick-2026-09-03` SE APLICÓ ayer sábado 2026-09-26** en
+   `scalp_command.pine`, incluidos los 3 TF SHORT de este playbook (1m
+   suma la vela previa del retest, `retestBar2`). Deja de ser propuesta.
+2. **Mejora permanente `rr1_threshold_cut_oos`**: evalúa el corte de
+   `rr1` mínimo contra el split walk-forward (`testWeeks` W38-W39).
+   **Hallazgo específico de este playbook: 2m SHORT SE REVIERTE fuera de
+   muestra** — el patrón in-sample (3+ lecturas consistentes desde el
+   09-22, certificaba con CI90 no cruzando cero en cada corte) no
+   sobrevive el test set aislado: baseline test E[R]=0.058 (ya al filo,
+   CI90=[-0.001,0.118]) y los 4 cortes de `rr1` dan E[R] **negativo**
+   (-0.02 a -0.162, el corte 2.0 con CI90=[-0.382,0.05] casi enteramente
+   del lado negativo). **1m SHORT** queda direccionalmente a favor
+   (E[R] sube de 0.052 a 0.073-0.094 con los cortes) pero el CI90 sigue
+   cruzando cero en el test set aislado — no certifica, tampoco se
+   descarta. Se retira 2m SHORT como candidato de `sc_min_rr`/`sc_aplus_rr`
+   (ver `experiments.json`, `sc-min-rr-cut-2026-09-20`) — es el caso de
+   estudio de la semana sobre por qué el walk-forward manda sobre el
+   contrafactual in-sample.
+3. **`SHADOW_RULES_V1` actualizado a v2**: amplía `tf_side` a los 6
+   segmentos RETEST, incluyendo ahora `2/SHORT` explícitamente (ya
+   estaba en v1) y sin cambio para `1/SHORT` (también ya incluido). El
+   único lado de este playbook que se agrega de nuevo es ninguno — los 3
+   TF SHORT ya estaban en v1; el cambio de v2 fue del lado LONG (ver
+   `buy-retest.md`).
 
 ### Veredicto global
-1m n=4361 WR 44.0% E[R]=**+0.03** PF=1.06 (baja de 0.051 — ver alerta
-abajo, es el movimiento más importante del playbook hoy); 2m n=1865
-WR 48.3% E[R]=**+0.064** PF=1.14 (baja de 0.086); 5m n=670 WR 47.3%
-E[R]=**+0.084** PF=1.18 (baja de 0.101).
-`segment_significance`: **1m CI90=[-0.001,0.062] p=0.054 n=4102 —
-sigue marcado `survives_fdr10=true` pero el CI90 YA CRUZA CERO** (límite
-inferior -0.001, bajó de 0.019). Por la regla compuesta de
-`agent-instructions.md` ("sólo trata como real un segmento con
-`survives_fdr10=true` **Y** CI90 que no cruce 0"), **1m SHORT deja de
-cumplir el criterio completo hoy** — es la primera vez que pasa en este
-playbook desde que se empezó a trackear. Tratar como "vigilar, no
-tratar como certificado" hasta que el CI90 vuelva a quedar por encima de
-cero, no como TOMAR sin reservas. **2m CI90=[0.017,0.111] p=0.013
-n=1789 — sostiene el criterio completo, pero se debilita** (límite
-inferior 0.038→0.017, la baja más grande del segmento en semanas).
-**5m CI90=[0.004,0.162] p=0.043 n=620 — sostiene el criterio completo
-por un margen mínimo** (límite inferior 0.016→0.004, casi toca cero).
-**Los tres TF de SELL RETEST se debilitaron a la vez hoy** — coincide
-con el dato grande de 2026-09-25 llegando completo; no hay indicio de
-problema de pipeline (`orphan_outcomes` 36→37, sin salto), así que se
-lee como una sesión de viernes floja para SHORT en los tres marcos, no
-como un cambio de régimen — pero es la primera vez que los tres bajan
-juntos y el más chico (1m) pierde el criterio compuesto, así que se
-marca como hallazgo del día, no se descarta.
+1m n=4361 WR 44.0% E[R]=**+0.03** PF=1.06; 2m n=1865 WR 48.3%
+E[R]=**+0.064** PF=1.14; 5m n=671 WR 47.2% E[R]=**+0.084** PF=1.18 — sin
+cambio real frente a ayer (fin de semana, ver Nota de proceso).
+`segment_significance` idéntico a ayer: **1m CI90=[-0.001,0.062]
+p=0.054 n=4102 — sigue sin cumplir el criterio compuesto completo**
+(`survives_fdr10=true` pero CI90 cruza cero) desde ayer, primera vez que
+pasa en este playbook; **2m CI90=[0.017,0.111] p=0.013 n=1789** y **5m
+CI90=[0.004,0.162] p=0.043 n=620** sostienen el criterio completo pero
+con margen mínimo. Sin dato genuinamente nuevo desde el viernes, no se
+puede saber todavía si la debilidad de ayer en los tres TF SHORT era una
+sesión floja de un día o el inicio de algo más — **el chequeo real llega
+mañana lunes con el primer dato hábil de la semana**, y coincide con que
+mañana también empiezan a llegar los primeros trades con el SL nuevo ya
+aplicado (ver Revisión semanal arriba) — dos cosas que vigilar a la vez
+en la corrida de mañana.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
@@ -60,52 +78,78 @@ marca como hallazgo del día, no se descarta.
   positivo, sube un poco de 0.013). La gestión sigue amortiguando la
   debilidad de hoy en el E[R] crudo — otra razón para no sobre-reaccionar
   al movimiento de 1m/2m/5m de arriba.
-- **SL estructural (`sl_origin_vs_layer`)**: 1m n=3468 (+224)
-  delta=**+0.15** CI90=[0.083,0.222] — sin reversión, prácticamente
-  igual a 0.145 (este experimento mide algo distinto al E[R] crudo — el
-  delta orig-vs-layer sigue intacto pese a la debilidad de hoy); **2m
-  n=1571 (+99) delta=+0.151 CI90=[0.064,0.244]** — flat, sigue sólido;
-  5m n=575 (+42) delta=**+0.363** CI90=[0.097,0.653] — sigue siendo el
-  efecto más grande del experimento (prácticamente igual a 0.359).
-  Propuesta formal sin cambios: los 6 segmentos RETEST (ver
-  `buy-retest.md`). Ver `experiments.json` (`sl-retest-wick-2026-09-03`)
-  y `reviews/2026-week-38.md`.
-- **Modo sombra (`shadow_rules` + nuevo `shadow_weekly`, ver
-  `buy-retest.md` para el detalle)**: el criterio fijo de la sombra
-  (`SHADOW_RULES_V1`) sigue excluyendo `2m LONG` y `5m SHORT` con una
-  justificación desactualizada — pendiente de decidir MAÑANA domingo
-  2026-09-27, junto con el resultado del nuevo `shadow_weekly` (la racha
-  de 3 semanas seguidas se cumplió en W36-W38 y se rompió esta semana en
-  curso, W39).
+- **SL estructural (`sl_origin_vs_layer`)**: 1m n=3468 delta=**+0.15**
+  CI90=[0.083,0.222]; 2m n=1571 delta=**+0.151** CI90=[0.064,0.244]; 5m
+  n=575 delta=**+0.363** CI90=[0.097,0.653] — el efecto más grande del
+  experimento. **SE APLICÓ EN TRADINGVIEW AYER 2026-09-26** (ver Revisión
+  semanal arriba, `sl-retest-wick-2026-09-03` ya no es propuesta). La
+  medición paralela sigue corriendo para comparar producción vs lo medido
+  in-sample una vez haya trades post-cambio.
+- **Modo sombra (`shadow_rules` + `shadow_weekly`, ver `buy-retest.md`
+  para el detalle completo)**: `SHADOW_RULES_V1` se actualizó a v2 hoy —
+  los 3 TF SHORT de este playbook ya estaban incluidos en v1, sin cambio
+  para ellos; el cambio fue del lado LONG (agregó 2m LONG). Bajo v2 hay
+  una racha de 3 semanas (W37-W39) pero no se cuenta como gate cumplido
+  todavía (criterio recién cambiado hoy).
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 3136 pérdidas SHORT (+235): `RR-bajo`
-  1142/3136 (36.4%), `stop-en-el-minimo` 1041/3136 (33.2%),
-  `contra-estructura` 1022/3136 (32.6%) — mismo orden que ayer,
-  porcentajes prácticamente idénticos. Ninguna causa mitigada todavía
-  por un experimento `confirmed`.
-- **Cruce con Session Analyst**: `AVOID` n=566 (+4) E[R]=**+0.044**
-  (baja un poco de 0.055) PF=1.08; `GO` n=326 (+4) E[R]=**+0.223**
-  (baja de 0.24 pero sigue siendo la mejor rama por lejos) PF=1.57;
-  `WAIT` n=1978 (+197) E[R]=**-0.018** PF=0.96 (vuelve a terreno
-  negativo, revierte el cruce a positivo de ayer — tercer vaivén de este
-  segmento en pocos días, tratar `WAIT` en SHORT como inestable/ruidoso,
-  no como una tendencia). El orden "GO mejor, WAIT peor" se mantiene —
-  patrón sigue siendo **opuesto** al de `buy-retest.md`. No generalizar
-  el hallazgo agregado "WAIT rinde mejor" a SELL RETEST sin mirar esta
-  tabla.
+- Autopsia de SL sobre las 3136 pérdidas SHORT: `RR-bajo` 1142/3136
+  (36.4%), `stop-en-el-minimo` 1041/3136 (33.2%), `contra-estructura`
+  1022/3136 (32.6%) — sin cambio de fondo. `RR-bajo` sigue sin un
+  ataque confirmado desde la entrada en SHORT: el corte `rr1_threshold_cut_oos`
+  de hoy retira a 2m SHORT como candidato (se revierte fuera de muestra,
+  ver Revisión semanal arriba) y deja a 1m SHORT como "débil, sin
+  certificar" — el SL estructural (ya aplicado) sigue siendo el único
+  ataque real y confirmado a esta causa en SELL RETEST.
+- **Cruce con Session Analyst**: sin dato nuevo desde ayer (fin de
+  semana): `AVOID` n=566 E[R]=**+0.044** PF=1.08; `GO` n=326
+  E[R]=**+0.223** (la mejor rama por lejos) PF=1.57; `WAIT` n=1978
+  E[R]=**-0.018** PF=0.96. El orden "GO mejor, WAIT peor" se mantiene —
+  patrón **opuesto** al de `buy-retest.md`. `WAIT` en SHORT lleva varios
+  vaivenes de signo en las últimas semanas — seguir tratándolo como
+  inestable, no como tendencia, hasta que se sostenga 2-3 lecturas
+  seguidas con dato genuinamente nuevo.
 
 ### Decaimiento
 `decay_weekly` (global, no por segmento): 2026-W36 n=2871 WR 44.8%
 E[R]=**-0.017**; 2026-W37 n=5074 WR 46.9% E[R]=**+0.075**; 2026-W38
-n=4684 WR 46.1% E[R]=**+0.092**; **2026-W39 n=5229 WR 45.9%
-E[R]=+0.055 — semana en curso (cierra mañana domingo), bajó frente a la
-lectura anterior (era +0.14), coherente con la debilidad de hoy en los
-tres TF SHORT, no leer como decaimiento real hasta que cierre**.
-Ver `reviews/2026-week-38.md` para el desglose por segmento SHORT (2m
-RETEST/SHORT y 5m RETEST/SHORT) de las 3 semanas ya cerradas.
+n=4684 WR 46.1% E[R]=**+0.092**; **2026-W39 n=5275 WR 45.5%
+E[R]=+0.055 — semana que cierra hoy**. Por segmento
+(`decay_weekly_by_segment`): **1m/RETEST/SHORT cerró su primera semana
+con E[R] negativo desde que existe el bus** (W38 +0.114→W39 **-0.021**,
+PF 1.25→0.96) — sin caída de WR correspondiente (42.6%→44.2%, prácticamente
+plano), así que es el E[R] el que se movió, no el acierto; primera
+reversión de signo semanal de un segmento RETEST certificado en todo el
+bus, vigilar el cierre de 2026-W40 antes de tratarlo como algo más que
+una semana floja. 2m/RETEST/SHORT mejora (E[R] 0.013→0.035, su mejor
+semana en varias) y 5m/RETEST/SHORT retrocede un poco (E[R]
+0.096→0.060), ninguno cruza a negativo. Sin caída de WR > 15pts en
+ningún TF de este playbook — no dispara la alerta formal de decaimiento,
+pero la reversión de signo de 1m SHORT es el hallazgo real de la semana
+en este playbook. Ver `reviews/2026-week-39.md` para la tabla completa
+(tf, kind, side) de 2026-W38 vs 2026-W39.
 
 ## Histórico de cambios
+- 2026-09-27 (domingo, REVISIÓN SEMANAL): `git pull` limpio. Fin de
+  semana sin sesión CME nueva (n 6896→6897, +1). Tres decisiones de la
+  revisión semanal (detalle en `reviews/2026-week-39.md`): (1) **el SL
+  estructural se aplicó ayer en TradingView**, incluidos los 3 TF SHORT
+  de este playbook — deja de ser propuesta; (2) **mejora permanente
+  `rr1_threshold_cut_oos`**: hallazgo específico de este playbook, **2m
+  SHORT se revierte fuera de muestra** (el patrón in-sample de 3+
+  lecturas consistentes no sobrevive el test set aislado — el corte de
+  `rr1` da E[R] negativo en las 4 lecturas), se retira como candidato de
+  `sc_min_rr`; 1m SHORT queda direccionalmente a favor pero sin
+  certificar (CI90 cruza cero, falta potencia); (3) `SHADOW_RULES_V1`
+  actualizado a v2 (sin cambio para los TF SHORT, ya estaban incluidos en
+  v1). Hallazgo de decaimiento: **1m/RETEST/SHORT cerró su primera semana
+  con E[R] negativo desde que existe el bus** (W39: E[R]=-0.021, PF=0.96)
+  sin caída de WR correspondiente — primera reversión de signo semanal de
+  un segmento RETEST certificado en todo el bus, vigilar el cierre de
+  2026-W40. La debilidad de los tres TF SHORT notada ayer sigue sin
+  poder confirmarse ni descartarse por falta de dato nuevo (fin de
+  semana) — el chequeo real llega mañana lunes, junto con los primeros
+  trades con el SL nuevo ya aplicado.
 - 2026-09-26 (sábado): **hallazgo principal del playbook**: los tres TF
   de SELL RETEST se debilitaron a la vez con el dato completo de
   2026-09-25 — 1m SHORT es el más afectado: su CI90 de E[R] cruza cero
