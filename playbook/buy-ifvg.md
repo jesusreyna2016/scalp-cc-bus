@@ -3,80 +3,68 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-27 (domingo, REVISIÓN SEMANAL) · n: 248)
+## Sección viva  (última revisión: 2026-09-28 (lunes) · n: 249)
 
 ### Nota de proceso
-`git pull` limpio. Fin de semana sin sesión CME nueva — **cero señales
-INV/LONG nuevas desde ayer** (n=163/65/20 en 1m/2m/5m, idéntico byte a
-byte a la lectura de ayer). Las tres decisiones de la revisión semanal de
-hoy (SL estructural aplicado, `rr1_threshold_cut_oos`, `SHADOW_RULES_V1`
-v2 — ver `buy-retest.md` y `reviews/2026-week-39.md`) son todas sobre
-`kind=RETEST`; ninguna toca INV directamente. INV sigue sin ningún
-segmento con `survives_fdr10=true` **y** CI90 fuera de cero a la vez
-(criterio compuesto de `agent-instructions.md`), así que sigue fuera de
-`shadow_rules` y de cualquier propuesta formal.
+`git pull` con "forced update" habitual en `origin/main`, sin pérdida
+(ver `buy-retest.md`). Primer día hábil: **sólo 1 señal INV/LONG nueva**
+(n 163/65/20→163/66/20, +1 en 2m) — INV sigue siendo un segmento de
+monitoreo de bajo volumen. El fix de hoy a `analyze.py`
+(`eval_experiments` para experimentos `applied`) y el hallazgo del SL
+estructural son sobre `kind=RETEST` (ver `buy-retest.md`); no tocan INV.
+INV sigue sin ningún segmento con `survives_fdr10=true` **y** CI90 fuera
+de cero a la vez, fuera de `shadow_rules` y de cualquier propuesta
+formal.
 
 ### Veredicto global
-1m n=163 (+10, WR 44.2%, E[R]=**0.182** PF=1.41, 67 SL — sube bastante
-de 0.141); 2m n=65 (+6, WR 47.7%, E[R]=**-0.01** PF=0.98, 26 SL — cruza
-a negativo desde +0.051, primera vez en varias corridas); 5m n=20 (+2,
-WR 70.0%, E[R]=**0.437** PF=3.62 — sube de 0.396, sigue el más fuerte
-de los tres).
-`segment_significance`: **1m CI90=[-0.007,0.393] p=0.057 n=154 — ahora
-sostiene `survives_fdr10=true`** (antes no certificaba), pero el CI90
-todavía cruza cero por un margen mínimo (-0.007) — no tratarlo como
-certificado completo todavía, es la primera vez que se acerca tanto; 2m
-CI90=[-0.223,0.21] p=0.536 n=61 — sigue sin certificar, y el punto
-estimado cruzó a negativo; **5m CI90=[0.108,0.763] p=0.017 n=18 —
-sostiene `survives_fdr10=true`** pero n=18 sigue bajo el piso n≥20 de
-este playbook: **no usable todavía**, un par más de señales y se podría
-evaluar en firme.
+1m n=163 (sin cambio, WR 44.2%, E[R]=**0.182** PF=1.41); 2m n=66 (+1, WR
+48.5%, E[R]=**0.01** PF=1.02 — vuelve a positivo desde -0.01); 5m n=20
+(sin cambio, WR 70.0%, E[R]=**0.429** PF=3.58).
+`segment_significance`: 1m CI90=[-0.007,0.393] p=0.057 n=154 —
+`survives_fdr10=true` pero el CI90 sigue cruzando cero por el mismo
+margen mínimo de ayer, sin cambio; 2m CI90=[-0.205,0.232] p=0.475 n=62 —
+sigue sin certificar; 5m CI90=[0.099,0.756] p=0.018 n=18 — sostiene
+`survives_fdr10=true` pero n=18 sigue bajo el piso n≥20 de este
+playbook, no usable todavía.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en ninguna rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=1` | sigue positivo | 147 (+13) | E[R]=**0.126** (sube de 0.115) | baja — cuarta lectura seguida positiva |
-| 2 | `tier=B` vs `tier=C` | B sigue mejor que C | 80 (+7) vs 168 (+11) | E[R] **0.221** (B, sube de 0.164) vs 0.118 (C, baja de 0.124) | baja — orden se sostiene, spread se amplía |
+| 1 | `nearEdge=1` | sigue positivo | 147 (sin cambio) | E[R]=**0.128** | baja — quinta lectura seguida positiva |
+| 2 | `tier=B` vs `tier=C` | B sigue mejor que C | 80 (sin cambio) vs 169 (+1) | E[R] **0.221** (B) vs 0.124 (C) | baja — orden se sostiene |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`; ver `entryZoneTk` de ganadores vs perdedores)
 
 ### Gestión
-- `managed_vs_naive`: 1m n=154 delta=**+0.109** (sube de +0.104, sigue
-  positivo); 2m n=61 delta=**-0.003** (mejora hacia cero, sigue
-  negativo pero casi plano); 5m n=18 delta=**-0.043** (mejora de -0.131,
-  sigue negativo).
-- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): **1m n=154
-  (+10) delta=-0.231 CI90=[-0.51,0.051] — sigue sin certificar**, CI90
-  sigue cruzando cero, un poco más negativo que ayer (-0.189→-0.231);
-  **2m n=61 (+6) delta=+0.889 CI90=[-0.003,2.032] — PIERDE hoy
-  `delta_beats_zero`** (el límite inferior del CI90 cruza a -0.003,
-  bajó de +0.042) — deja de certificar en sentido contrario por primera
-  vez desde que se graduó el 09-22, CI muy ancho de todas formas, nunca
-  fue accionable; 5m n=18 (+2) delta=**-0.827** CI90=[-1.283,-0.364]
-  — sostiene `delta_below_zero=true` (a favor del SL de 3 capas, en
-  sentido contrario a RETEST), n sigue chico.
+- `managed_vs_naive`: 1m n=154 delta=**+0.109** (sin cambio); 2m n=62
+  delta=**-0.017** (sigue negativo, casi plano); 5m n=18 delta=**-0.031**
+  (mejora un poco de -0.043, sigue negativo).
+- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=154
+  delta=-0.231 CI90=[-0.51,0.051] — sigue sin certificar, sin cambio; 2m
+  n=62 delta=**+0.932** CI90=[0.063,1.996] — recupera `delta_beats_zero`
+  (el límite inferior volvió a positivo, +0.063, tras perderlo ayer),
+  CI muy ancho, nunca fue accionable; 5m n=18 delta=-0.818
+  CI90=[-1.274,-0.353] — sostiene `delta_below_zero=true` (a favor del
+  SL de 3 capas, en sentido contrario a RETEST), sin cambio.
   Sin propuesta en `experiments.json` para INV/LONG.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Cruce con Session Analyst
-`WAIT` n=60 (+2) E[R]=**-0.081** (sin cambio de fondo); `AVOID` n=13
-(+0) E[R]=**-0.028** (sin cambio); `GO` n=11 (+0) E[R]=**-0.071** (sin
-cambio). Con n=11-60 sigue siendo muestra chica sin patrón estable — no
-usar todavía para nada accionable.
+`WAIT` n=60 E[R]=**-0.081**; `AVOID` n=13 E[R]=**-0.028**; `GO` n=11
+E[R]=**-0.071** — sin cambio de fondo, n sigue chico sin patrón estable.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 96 pérdidas INV/LONG (+7 vs ayer): `RR-bajo`
-  39/96 (40.6%) vuelve a ser causa dominante en solitario,
-  `killzone-Asia-largo` 38/96 (39.6%) segundo (ya no empatado),
-  `contra-estructura` 27/96 (28.1%) tercero sin cambio de fondo.
-- `cross_instrument` (1m) sigue `instrument-specific`, spread sube a
-  0.951 (de 0.862): CL n=34 (+3) E[R]=**0.549** (sube de 0.434, sigue
-  el mejor), YM n=63 (+3) E[R]=**0.231** (baja de 0.274), ES n=25 (+2)
-  E[R]=0.13 (prácticamente sin cambio), NQ n=18 (+3) E[R]=**0.157**
-  (vuelve a positivo, revierte el cruce a negativo de ayer — tercer
+- Autopsia de SL sobre las 96 pérdidas INV/LONG (sin cambio, la única
+  señal nueva de hoy fue en 2m y no tocó el SL): `RR-bajo` 39/96 (40.6%)
+  causa dominante, `killzone-Asia-largo` 38/96 (39.6%) segundo,
+  `contra-estructura` 27/96 (28.1%) tercero.
+- `cross_instrument` (1m) sigue `instrument-specific`, spread=0.951 (sin
+  cambio, sin señales 1m nuevas hoy): CL n=34 E[R]=**0.549** (sigue el
+  mejor), YM n=63 E[R]=**0.231**, ES n=25 E[R]=0.13, NQ n=18
+  E[R]=**0.157** (tercer
   vaivén de este símbolo en pocos días, tratar como ruidoso, no
   generalizar con n=18), GC n=23 (-1, dedup) E[R]=**-0.402** (sigue el
   peor símbolo por lejos) — n por símbolo sigue chico, no generalizar.
@@ -85,6 +73,12 @@ usar todavía para nada accionable.
 _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
 
 ## Histórico de cambios
+- 2026-09-28 (lunes): primer día hábil, sólo +1 señal INV/LONG nueva (2m).
+  Sin cambios de fondo: sigue sin ningún segmento con el criterio
+  compuesto completo. 2m/INV/LONG vuelve a E[R] positivo (-0.01→0.01) y
+  su SL alternativo (`candle1` vs vela-1) recupera `delta_beats_zero`.
+  El fix de `analyze.py` y el hallazgo del SL estructural de hoy (ver
+  `buy-retest.md`) son de `kind=RETEST`, no tocan este playbook.
 - 2026-09-27 (domingo, REVISIÓN SEMANAL): sin dato nuevo (fin de semana,
   n idéntico a ayer en los tres TF). La revisión semanal de hoy no afecta
   a este playbook (las tres decisiones — SL estructural aplicado,

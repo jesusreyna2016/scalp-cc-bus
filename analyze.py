@@ -553,7 +553,10 @@ def eval_experiments(pairs):
         return []
     out = []
     for e in exps.get("experiments", []):
-        if e.get("status") not in ("running", "proposed"):
+        # "applied" = ya vive en TradingView (tiene changeDate real): sin esto en la
+        # lista, beforeN/afterN/verdict nunca se calculan y el experimento queda
+        # huerfano de medicion para siempre una vez que Jesus lo aplica.
+        if e.get("status") not in ("running", "proposed", "applied"):
             out.append(e)
             continue
         cd = e.get("changeDate")
