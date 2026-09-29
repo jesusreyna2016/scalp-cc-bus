@@ -3,58 +3,60 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-28 (lunes) · n: 249)
+## Sección viva  (última revisión: 2026-09-29 (martes) · n: 250)
 
 ### Nota de proceso
 `git pull` con "forced update" habitual en `origin/main`, sin pérdida
-(ver `buy-retest.md`). Primer día hábil: **sólo 1 señal INV/LONG nueva**
-(n 163/65/20→163/66/20, +1 en 2m) — INV sigue siendo un segmento de
-monitoreo de bajo volumen. El fix de hoy a `analyze.py`
-(`eval_experiments` para experimentos `applied`) y el hallazgo del SL
-estructural son sobre `kind=RETEST` (ver `buy-retest.md`); no tocan INV.
-INV sigue sin ningún segmento con `survives_fdr10=true` **y** CI90 fuera
-de cero a la vez, fuera de `shadow_rules` y de cualquier propuesta
-formal.
+(ver `buy-retest.md`). **+1 señal INV/LONG nueva** (n 164/66/20, +1 en
+1m) — INV sigue siendo un segmento de monitoreo de bajo volumen. El
+hallazgo grande de hoy (reversión del SL estructural en 4/6 segmentos
+RETEST) es sobre `kind=RETEST` (ver `buy-retest.md`); no toca INV. INV
+sigue sin ningún segmento con `survives_fdr10=true` **y** CI90 fuera de
+cero a la vez, fuera de `shadow_rules` y de cualquier propuesta formal.
 
 ### Veredicto global
-1m n=163 (sin cambio, WR 44.2%, E[R]=**0.182** PF=1.41); 2m n=66 (+1, WR
-48.5%, E[R]=**0.01** PF=1.02 — vuelve a positivo desde -0.01); 5m n=20
-(sin cambio, WR 70.0%, E[R]=**0.429** PF=3.58).
-`segment_significance`: 1m CI90=[-0.007,0.393] p=0.057 n=154 —
-`survives_fdr10=true` pero el CI90 sigue cruzando cero por el mismo
-margen mínimo de ayer, sin cambio; 2m CI90=[-0.205,0.232] p=0.475 n=62 —
-sigue sin certificar; 5m CI90=[0.099,0.756] p=0.018 n=18 — sostiene
-`survives_fdr10=true` pero n=18 sigue bajo el piso n≥20 de este
-playbook, no usable todavía.
+1m n=164 (+1, WR 43.9%, E[R]=**0.175** PF=1.39 — baja un poco de
+0.182); 2m n=66 (sin cambio, WR 50.0%, E[R]=**0.031** PF=1.08 — sube de
+0.01); 5m n=20 (sin cambio, WR 70.0%, E[R]=**0.429** PF=3.58).
+`segment_significance`: **1m CI90=[-0.018,0.383] p=0.066 n=155 —
+PIERDE `survives_fdr10` hoy** (ayer certificaba al filo, hoy la
+corrección FDR ya no lo deja pasar aunque el CI90 en sí casi no se movió
+— recordatorio de método: `survives_fdr10` depende del ranking de
+p-valores de TODOS los segmentos del día, no sólo del propio, así que
+puede voltear sin que el segmento cambie mucho); 2m CI90=[-0.181,0.25]
+p=0.402 n=62 — sigue sin certificar; 5m CI90=[0.099,0.756] p=0.018
+n=18 — sostiene `survives_fdr10=true` pero n=18 sigue bajo el piso
+n≥20 de este playbook, no usable todavía.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en ninguna rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=1` | sigue positivo | 147 (sin cambio) | E[R]=**0.128** | baja — quinta lectura seguida positiva |
-| 2 | `tier=B` vs `tier=C` | B sigue mejor que C | 80 (sin cambio) vs 169 (+1) | E[R] **0.221** (B) vs 0.124 (C) | baja — orden se sostiene |
+| 1 | `nearEdge=1` | sigue positivo | 146 (-1, dedup) | E[R]=**0.137** | baja — sexta lectura seguida positiva |
+| 2 | `tier=B` vs `tier=C` | B sigue mejor que C | 80 (sin cambio) vs 170 (+1) | E[R] **0.221** (B) vs 0.125 (C) | baja — orden se sostiene |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`; ver `entryZoneTk` de ganadores vs perdedores)
 
 ### Gestión
-- `managed_vs_naive`: 1m n=154 delta=**+0.109** (sin cambio); 2m n=62
-  delta=**-0.017** (sigue negativo, casi plano); 5m n=18 delta=**-0.031**
-  (mejora un poco de -0.043, sigue negativo).
-- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=154
-  delta=-0.231 CI90=[-0.51,0.051] — sigue sin certificar, sin cambio; 2m
-  n=62 delta=**+0.932** CI90=[0.063,1.996] — recupera `delta_beats_zero`
-  (el límite inferior volvió a positivo, +0.063, tras perderlo ayer),
-  CI muy ancho, nunca fue accionable; 5m n=18 delta=-0.818
-  CI90=[-1.274,-0.353] — sostiene `delta_below_zero=true` (a favor del
-  SL de 3 capas, en sentido contrario a RETEST), sin cambio.
-  Sin propuesta en `experiments.json` para INV/LONG.
+- `managed_vs_naive`: 1m n=155 delta=**+0.116** (sin cambio real); 2m
+  n=62 delta=**-0.015** (sigue negativo, casi plano); 5m n=18
+  delta=**-0.031** (sin cambio, sigue negativo).
+- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=155
+  delta=**-0.229** CI90=[-0.506,0.051] — sigue sin certificar, sin
+  cambio real; 2m n=62 delta=**+0.948** CI90=[0.05,2.026] — sostiene
+  `delta_beats_zero=true`, CI muy ancho, nunca fue accionable; 5m n=18
+  delta=**-0.818** CI90=[-1.274,-0.353] — sostiene `delta_below_zero=true`
+  (a favor del SL de 3 capas, en sentido contrario a RETEST), sin
+  cambio. Sin propuesta en `experiments.json` para INV/LONG.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Cruce con Session Analyst
-`WAIT` n=60 E[R]=**-0.081**; `AVOID` n=13 E[R]=**-0.028**; `GO` n=11
-E[R]=**-0.071** — sin cambio de fondo, n sigue chico sin patrón estable.
+`WAIT` n=60 (sin cambio) E[R]=**-0.081**; `AVOID` n=13 (sin cambio)
+E[R]=**-0.028**; `GO` n=11 (sin cambio) E[R]=**-0.071** — sin cambio de
+fondo, sin dato nuevo en el join de hoy, n sigue chico sin patrón
+estable.
 
 ### Contextos a evitar
 - Autopsia de SL sobre las 96 pérdidas INV/LONG (sin cambio, la única
@@ -73,6 +75,15 @@ E[R]=**-0.071** — sin cambio de fondo, n sigue chico sin patrón estable.
 _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
 
 ## Histórico de cambios
+- 2026-09-29 (martes): +1 señal INV/LONG nueva (1m), volumen mínimo como
+  de costumbre en este playbook. **1m/INV/LONG PIERDE `survives_fdr10`
+  hoy** (la corrección FDR ya no lo deja pasar pese a que su propio CI90
+  casi no cambió — es un efecto del ranking de p-valores de todos los
+  segmentos del día, no un cambio real de este segmento; nota de método
+  para no sobre-interpretarlo). 2m/INV/LONG sigue mejorando (E[R]
+  0.01→0.031). El hallazgo grande del día (reversión del SL estructural
+  en el lado LONG de RETEST) es de `kind=RETEST` y no aplica aquí — ver
+  `buy-retest.md`. Resto sin cambios de fondo.
 - 2026-09-28 (lunes): primer día hábil, sólo +1 señal INV/LONG nueva (2m).
   Sin cambios de fondo: sigue sin ningún segmento con el criterio
   compuesto completo. 2m/INV/LONG vuelve a E[R] positivo (-0.01→0.01) y
