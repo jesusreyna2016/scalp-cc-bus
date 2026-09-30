@@ -3,30 +3,30 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-09-29 (martes) · n: 250)
+## Sección viva  (última revisión: 2026-09-30 (miércoles) · n: 258)
 
 ### Nota de proceso
-`git pull` con "forced update" habitual en `origin/main`, sin pérdida
-(ver `buy-retest.md`). **+1 señal INV/LONG nueva** (n 164/66/20, +1 en
-1m) — INV sigue siendo un segmento de monitoreo de bajo volumen. El
-hallazgo grande de hoy (reversión del SL estructural en 4/6 segmentos
-RETEST) es sobre `kind=RETEST` (ver `buy-retest.md`); no toca INV. INV
-sigue sin ningún segmento con `survives_fdr10=true` **y** CI90 fuera de
-cero a la vez, fuera de `shadow_rules` y de cualquier propuesta formal.
+`git pull` mostró historia divergente sin ancestro común en `origin/main`
+(ver `buy-retest.md`). **+7 señales INV/LONG nuevas** (n 171/67/20, +7
+en 1m) — sigue siendo un segmento de monitoreo de bajo volumen. El
+hallazgo grande de hoy (SL estructural revirtiendo en LONG) es sobre
+`kind=RETEST` (ver `buy-retest.md`); no toca INV, que usa un SL
+distinto (`basis=candle1`) y no forma parte de ese experimento. INV
+sigue sin ningún segmento con `survives_fdr10=true` **y** n≥20 a la vez
+de forma sostenida, fuera de `shadow_rules` y de cualquier propuesta
+formal.
 
 ### Veredicto global
-1m n=164 (+1, WR 43.9%, E[R]=**0.175** PF=1.39 — baja un poco de
-0.182); 2m n=66 (sin cambio, WR 50.0%, E[R]=**0.031** PF=1.08 — sube de
-0.01); 5m n=20 (sin cambio, WR 70.0%, E[R]=**0.429** PF=3.58).
-`segment_significance`: **1m CI90=[-0.018,0.383] p=0.066 n=155 —
-PIERDE `survives_fdr10` hoy** (ayer certificaba al filo, hoy la
-corrección FDR ya no lo deja pasar aunque el CI90 en sí casi no se movió
-— recordatorio de método: `survives_fdr10` depende del ranking de
-p-valores de TODOS los segmentos del día, no sólo del propio, así que
-puede voltear sin que el segmento cambie mucho); 2m CI90=[-0.181,0.25]
-p=0.402 n=62 — sigue sin certificar; 5m CI90=[0.099,0.756] p=0.018
-n=18 — sostiene `survives_fdr10=true` pero n=18 sigue bajo el piso
-n≥20 de este playbook, no usable todavía.
+1m n=171 (+7, WR 45.0%, E[R]=**0.193** PF=1.45 — sube de 0.175); 2m
+n=67 (+1, WR 49.3%, E[R]=**0.015** PF=1.03 — baja de 0.031); 5m n=20
+(sin cambio, WR 70.0%, E[R]=**0.421** PF=3.52). `segment_significance`:
+**1m CI90=[0.024,0.385] n=162 — RECUPERA `survives_fdr10=true`** (lo
+había perdido ayer por el ranking FDR del día, hoy vuelve a pasar; el
+CI90 en sí apenas cambió — mismo recordatorio de método que ayer: este
+flag depende del conjunto completo de segmentos del día, no sólo de
+éste); 2m CI90=[-0.194,0.236] n=63 — sigue sin certificar; 5m
+CI90=[0.091,0.759] n=18 — sostiene `survives_fdr10=true` pero n=18
+sigue bajo el piso n≥20 de este playbook, no usable todavía.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en ninguna rama:
@@ -40,41 +40,48 @@ Sin n suficiente todavía para certificar en ninguna rama:
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`; ver `entryZoneTk` de ganadores vs perdedores)
 
 ### Gestión
-- `managed_vs_naive`: 1m n=155 delta=**+0.116** (sin cambio real); 2m
-  n=62 delta=**-0.015** (sigue negativo, casi plano); 5m n=18
-  delta=**-0.031** (sin cambio, sigue negativo).
-- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=155
-  delta=**-0.229** CI90=[-0.506,0.051] — sigue sin certificar, sin
-  cambio real; 2m n=62 delta=**+0.948** CI90=[0.05,2.026] — sostiene
+- `managed_vs_naive`: 1m n=162 delta=**+0.106** (sin cambio real); 2m
+  n=63 delta=**-0.015** (sigue negativo, casi plano); 5m n=18
+  delta=**-0.052** (sin cambio, sigue negativo).
+- `sl_origin_vs_layer` (basis `candle1`, vela 1 del FVG): 1m n=162
+  delta=**-0.115** CI90=[-0.423,0.181] — sigue sin certificar en ningún
+  sentido; 2m n=63 delta=**+0.933** CI90=[0.064,1.997] — sostiene
   `delta_beats_zero=true`, CI muy ancho, nunca fue accionable; 5m n=18
-  delta=**-0.818** CI90=[-1.274,-0.353] — sostiene `delta_below_zero=true`
+  delta=**-0.821** CI90=[-1.32,-0.376] — sostiene `delta_below_zero=true`
   (a favor del SL de 3 capas, en sentido contrario a RETEST), sin
   cambio. Sin propuesta en `experiments.json` para INV/LONG.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Cruce con Session Analyst
-`WAIT` n=60 (sin cambio) E[R]=**-0.081**; `AVOID` n=13 (sin cambio)
-E[R]=**-0.028**; `GO` n=11 (sin cambio) E[R]=**-0.071** — sin cambio de
-fondo, sin dato nuevo en el join de hoy, n sigue chico sin patrón
-estable.
+`WAIT` n=71 (+11) E[R]=**-0.053**; `AVOID` n=16 (+3) E[R]=**-0.077**;
+`GO` n=10 (-1, dedup) E[R]=**+0.032** — sigue sin patrón estable, las
+tres ramas con n todavía chico y el orden se mueve de una corrida a
+otra; no generalizar.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las 96 pérdidas INV/LONG (sin cambio, la única
-  señal nueva de hoy fue en 2m y no tocó el SL): `RR-bajo` 39/96 (40.6%)
-  causa dominante, `killzone-Asia-largo` 38/96 (39.6%) segundo,
-  `contra-estructura` 27/96 (28.1%) tercero.
-- `cross_instrument` (1m) sigue `instrument-specific`, spread=0.951 (sin
-  cambio, sin señales 1m nuevas hoy): CL n=34 E[R]=**0.549** (sigue el
-  mejor), YM n=63 E[R]=**0.231**, ES n=25 E[R]=0.13, NQ n=18
-  E[R]=**0.157** (tercer
-  vaivén de este símbolo en pocos días, tratar como ruidoso, no
-  generalizar con n=18), GC n=23 (-1, dedup) E[R]=**-0.402** (sigue el
-  peor símbolo por lejos) — n por símbolo sigue chico, no generalizar.
+- Autopsia de SL sobre las 98 pérdidas INV/LONG: `killzone-Asia-largo`
+  40/98 (40.8%) pasa a causa dominante (antes empatada con `RR-bajo`),
+  `RR-bajo` 39/98 (39.8%) segundo por un solo caso, `contra-estructura`
+  27/98 (27.6%) tercero — casi sin cambio de fondo, sigue siendo
+  esencialmente un empate entre las dos primeras causas.
+- `cross_instrument` (1m) sigue `instrument-specific`, spread=1.039
+  (sube de 0.951): CL n=38 E[R]=**0.611** (sigue el mejor), YM n=63
+  E[R]=**0.231**, ES n=26 E[R]=0.132, NQ n=20 E[R]=**0.118** (baja de
+  0.157, sigue moviéndose de una corrida a otra con n chico), GC n=24
+  (+1) E[R]=**-0.428** (sigue el peor símbolo por lejos) — n por símbolo
+  sigue chico, no generalizar.
 
 ### Decaimiento
 _pendiente_ (WR TP1 por semana; marcar si cae > 15 pts en ventana de 3 semanas)
 
 ## Histórico de cambios
+- 2026-09-30 (miércoles): +8 señales INV/LONG nuevas (7 en 1m, 1 en 2m),
+  volumen bajo como de costumbre. **1m/INV/LONG RECUPERA
+  `survives_fdr10=true`** hoy (mismo efecto de ranking FDR que ayer, en
+  sentido contrario). Sin cambios de fondo en el resto: 2m sigue sin
+  certificar, 5m sigue con n=18 insuficiente. El hallazgo grande del día
+  (reversión del SL estructural en el lado LONG de RETEST, cuarto día
+  seguido) es de `kind=RETEST` y no aplica aquí — ver `buy-retest.md`.
 - 2026-09-29 (martes): +1 señal INV/LONG nueva (1m), volumen mínimo como
   de costumbre en este playbook. **1m/INV/LONG PIERDE `survives_fdr10`
   hoy** (la corrección FDR ya no lo deja pasar pese a que su propio CI90
