@@ -134,6 +134,59 @@ def _i(d, k):
     v = _f(d, k)
     return None if v is None else int(round(v))
 
+def sigid_collision_report():
+    """Detecta sigId NO unicos: el mismo sigId aparece en mas de un archivo
+    signals/*.jsonl (o outcomes/*.jsonl) con receivedAt distinto. build_pairs()
+    hace 'last wins' por sigId, asi que una colision silenciosamente descarta
+    una de las dos ocurrencias y, si el receivedAt del sobreviviente es de una
+    fecha mas reciente, saca ese par de su semana real y lo mete en una semana
+    posterior -> esto es la causa mas probable de las alertas MUESTRA (semana
+    ya cerrada que baja de n). Hallazgo 2026-10-01: 1308/20790 sigId de senales
+    (~6.3%) y 1208/19819 de outcomes colisionan, el delta en dias es casi
+    siempre multiplo de 7 (bar_index del Pine probablemente se reinicia en un
+    ciclo semanal), y varias colisiones tienen result DISTINTO (TP1 vs SL,
+    TIMEOUT vs TP1) entre ocurrencias -> no es un reenvio idempotente del mismo
+    evento, son DOS señales/outcomes reales distintos fusionados en un sigId.
+    Esto hay que arreglarlo en el generador de sigId del Pine (que no reuse
+    bar_index periodico), aqui solo lo medimos y alertamos."""
+    def _scan(kind):
+        by_sid = defaultdict(list)
+        for p in sorted(glob.glob(os.path.join(ROOT, kind, "*.jsonl"))):
+            fname = os.path.basename(p)
+            for r in _load_jsonl(p):
+                sid = r.get("sigId") or r.get("raw", {}).get("sigId")
+                if not sid or sid.startswith("TEST-"):
+                    continue
+                by_sid[sid].append((fname, r.get("receivedAt"), r.get("raw", {}).get("result")))
+        collided = {sid: e for sid, e in by_sid.items() if len({f for f, _, _ in e}) > 1}
+        delta_days = Counter()
+        conflicting = []
+        for sid, entries in collided.items():
+            files = sorted({f for f, _, _ in entries})
+            try:
+                d1 = datetime.strptime(files[0][:10], "%Y-%m-%d")
+                d2 = datetime.strptime(files[-1][:10], "%Y-%m-%d")
+                delta_days[(d2 - d1).days] += 1
+            except Exception:
+                pass
+            results = {res for _, _, res in entries if res is not None}
+            if len(results) > 1:
+                conflicting.append(sid)
+        return {
+            "total_sigIds": len(by_sid),
+            "collided_sigIds": len(collided),
+            "collided_pct": round(100 * len(collided) / len(by_sid), 2) if by_sid else 0.0,
+            "delta_days_histogram": dict(delta_days.most_common(10)),
+            "conflicting_result_n": len(conflicting),
+            "conflicting_result_examples": conflicting[:8],
+        }
+    sig_r = _scan("signals")
+    out_r = _scan("outcomes")
+    return {"signals": sig_r, "outcomes": out_r,
+            "note": "colision = mismo sigId en >1 archivo diario con receivedAt distinto. "
+                    "'last wins' en build_pairs() descarta una ocurrencia; si conflicting_result_n>0 "
+                    "confirma que son pares reales distintos, no un reenvio del mismo evento."}
+
 # ------------------------------------------------------------------ pair & typed
 def build_pairs():
     sig_raw = load_events("signals")
@@ -1204,6 +1257,16 @@ def material_alerts(rep, prev_state=None):
     # huerfanos: solo alertar si SUBEN vs la corrida previa, o si el % es alto.
     # un stock estable de huerfanos = artefacto de recompilar el indicador
     # (señal en barra historica no dispara alert, su outcome si) -> no es fallo.
+    sid = rep.get("sigid_integrity", {}) or {}
+    sid_sig, sid_out = sid.get("signals", {}), sid.get("outcomes", {})
+    if sid_sig.get("conflicting_result_n", 0) >= 5 or sid_out.get("conflicting_result_n", 0) >= 5:
+        a.append(f"SIGID: {sid_sig.get('collided_sigIds',0)} sigId de senales y {sid_out.get('collided_sigIds',0)} "
+                 f"de outcomes colisionan (mismo sigId, receivedAt distinto); "
+                 f"{sid_out.get('conflicting_result_n',0)} tienen result DISTINTO entre ocurrencias -> no es reenvio, "
+                 f"son pares reales distintos fusionados en un sigId (ver nota en sigid_collision_report). "
+                 f"'last wins' descarta una ocurrencia y desplaza la otra a una semana posterior: probable causa de "
+                 f"las alertas MUESTRA. Arreglar la generacion de sigId en el Pine (deltas en dias casi siempre "
+                 f"multiplo de 7, sugiere bar_index que se reinicia semanalmente).")
     orph = t["orphan_outcomes"]
     prev_orph = (prev_state or {}).get("totals", {}).get("orphan_outcomes", orph)
     resolved = max(1, t.get("pairs_resolved", 0) + orph)
@@ -1315,6 +1378,7 @@ def main():
         "sl_origin_vs_layer": sl_origin_vs_layer(pairs),
         "rr1_threshold_cut": rr1_threshold_cut(pairs),
         "rr1_threshold_cut_oos": rr1_threshold_cut_oos(pairs),
+        "sigid_integrity": sigid_collision_report(),
     }
     sa = sa_context()
     report["session_analyst"] = sa
@@ -1382,6 +1446,7 @@ def main():
     state["metrics_by_kindside_tier"] = report["by_kindside_tier"]
     state["metrics_by_kindside_aligned"] = report["by_kindside_aligned"]
     state["sl_causes"] = causes
+    state["sigid_integrity"] = report["sigid_integrity"]
     state["decay_weekly"] = report["decay_weekly"]
     state["decay_weekly_by_segment"] = report["decay_weekly_by_segment"]
     state["walk_forward"] = report["walk_forward"]
@@ -1413,6 +1478,8 @@ def main():
             L.append(f"- {a}\n")
     L.append(f"\n- E[R] global: {json.dumps(report['expR_ci_overall'], ensure_ascii=False)}\n")
     L.append(f"- gate ejecucion: {json.dumps(report['gate'], ensure_ascii=False)}\n")
+    L.append("\n## Integridad de sigId (colisiones, posible causa de alertas MUESTRA)\n```json\n"
+             + json.dumps(report["sigid_integrity"], indent=2, ensure_ascii=False) + "\n```\n")
     def tbl(title, d):
         L.append(f"\n## {title}\n")
         L.append("| seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |\n|---|--|--|--|--|--|--|--|--|\n")
