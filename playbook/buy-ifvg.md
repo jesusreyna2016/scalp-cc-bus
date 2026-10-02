@@ -3,42 +3,42 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-01 (jueves) · n: 275)
+## Sección viva  (última revisión: 2026-10-02 (viernes) · n: 282)
 
 ### Nota de proceso
-`git pull` limpio. Dato nuevo chico, como siempre en INV (+12/+5/+0 en
-1m/2m/5m). Ver `buy-retest.md` → "Hallazgo de pipeline" para la nueva
-función `sigid_collision_report()` en `analyze.py` (aplica a todo el
-bus, incluido INV, aunque con n tan chico aquí el efecto absoluto es
-mínimo).
+`git pull` limpio (fast-forward). Dato nuevo chico, como siempre en INV
+(1m/2m estables, 5m sin dato nuevo). Ver `buy-retest.md` → "Nota de
+proceso": la colisión de `sigId` sigue creciendo, pero con n tan chico
+aquí el efecto absoluto sigue siendo mínimo.
 
 ### Veredicto global
-1m n=183 (+12) WR 45.9% E[R]=**0.185** PF=1.43 (baja un poco, 0.193→0.185);
-2m n=72 (+5) WR 52.8% E[R]=**0.087** PF=1.22 (sube fuerte, 0.015→0.087);
-5m n=20 (sin cambio) WR 70.0% E[R]=**0.421** PF=3.52 (sin dato nuevo).
-`segment_significance`: 1m CI90=[0.011,0.364] n=173 sigue
-`survives_fdr10=true`; 2m CI90=[-0.121,0.292] n=68 sigue sin certificar;
-5m CI90=[0.091,0.759] n=18 sostiene `survives_fdr10=true` pero n=18
-sigue bajo el piso n≥20 de este playbook, no usable todavía.
+1m n=188 (+5) WR 44.7% E[R]=**0.183** PF=1.42 (estable, 0.185→0.183); 2m
+n=74 (+2) WR 52.7% E[R]=**0.066** PF=1.17 (baja, 0.087→0.066); 5m n=20
+(sin cambio) WR 75.0% E[R]=**0.483** PF=5.35 (sube, sin dato nuevo real,
+redondeo). `segment_significance`: 1m CI90=[-0.002,0.381] n=178 sigue
+`survives_fdr10=true` al filo (p=0.052, roza cero por abajo); 2m
+CI90=[-0.133,0.27] n=70 sigue sin certificar; 5m CI90=[0.174,0.794] n=18
+sostiene `survives_fdr10=true` pero n=18 sigue bajo el piso n≥20 de este
+playbook, no usable todavía.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en más de una rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar salvo 1m) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, único segmento de este playbook con n usable y certificado | 173 (+10) | E[R]=**0.185** CI90=[0.011,0.364] | moderada-alta — certifica pero CI90 sigue ancho |
-| 2 | `tier=B` vs `tier=C` | B sigue mejor que C | 87 (+7) vs 188 (+18) | E[R] **0.231** (B) vs 0.149 (C) | baja — n chico en ambos |
-| 3 | `nearEdge=1` | sigue positivo | 164 | E[R]=**0.154** | baja |
-| 4 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` (spread 1m=0.927, 2m=0.623, 5m=1.446) — NO generalizar, ver por símbolo en `report.json` antes de usar | — | sin veredicto único | baja — regla explícitamente no generalizable |
+| 1 | `tf=1m` (`survives_fdr10=true`, al filo) | TOMAR, único segmento de este playbook con n usable, pero CI90 ya toca cero | 178 (+5) | E[R]=**0.183** CI90=[-0.002,0.381] | moderada — certifica pero más débil que días previos |
+| 2 | `tier=B` vs `tier=C` | B sigue mejor que C | 88 vs 194 | E[R] **0.283** (B) vs 0.121 (C) | baja — n chico en ambos |
+| 3 | `nearEdge=1` | sigue positivo | 170 | E[R]=**0.168** | baja |
+| 4 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar, ver por símbolo en `report.json` antes de usar | — | sin veredicto único | baja — regla explícitamente no generalizable |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`; ver
   `entryZoneTk` de ganadores vs perdedores).
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=173 delta=**+0.11**
-  (gestión ayuda); 2m n=68 delta=**-0.016** (casi neutro); 5m n=18
-  delta=**-0.052** (gestión resta, n mínimo). Sin cambio de regla.
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=178 delta=**+0.103**
+  (gestión ayuda); 2m n=70 delta=**-0.018** (casi neutro); 5m n=18
+  delta=**-0.051** (gestión resta, n mínimo). Sin cambio de regla.
 - **SL de 3 capas vs SL = vela 1 del FVG (`sl_origin_vs_layer`,
   `by_basis=candle1`, combina INV LONG+SHORT, n=485)**: delta=**-0.006**
   CI90=[-0.195,0.209] — no certifica en ninguna dirección, sigue
@@ -47,26 +47,25 @@ Sin n suficiente todavía para certificar en más de una rama:
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (n=102, INV/LONG): `killzone-Asia-largo` 43/102 (42.2%)
-  causa dominante, `RR-bajo` 41/102 (40.2%) segundo, `contra-estructura`
-  28/102 (27.5%) tercero — sin cambio de fondo frente a corridas previas.
+- Autopsia de SL (n=106, INV/LONG): `killzone-Asia-largo` 45/106 (42.5%)
+  causa dominante, `RR-bajo` 42/106 (39.6%) segundo, `contra-estructura`
+  32/106 (30.2%) tercero — sin cambio de fondo frente a corridas previas.
 
 ### Cruce con Session Analyst
-INV/LONG hoy: `AVOID` n=29 E[R]=**0.115**, `GO` n=10 E[R]=**0.032**,
-`WAIT` n=73 E[R]=**-0.031** — orden invertido respecto a la hipótesis
-(`AVOID` rinde mejor aquí), pero con n=10-73 no es usable como regla,
-sólo se deja anotado por si se sostiene con más muestra. A nivel global
-ver `buy-retest.md`.
+Sin desglose propio por `kind/side` en el script (ver cifras globales en
+`buy-retest.md`); n de este playbook demasiado chico para una lectura
+propia confiable.
 
 ### Decaimiento
-`decay_weekly_by_segment`: 1m W39 n=36 E[R]=0.749 → W40 n=22 E[R]=0.17
-(baja fuerte pero sigue positivo, n chico, típico de este segmento muy
-volátil); 2m W39 n=25 E[R]=0.267 → W40 n=7 E[R]=0.619 (n demasiado chico
-para leer); 5m sin dato nuevo esta semana (n=1 en W40). Nada accionable:
-las tres ramas siguen con n insuficiente para distinguir señal de ruido
-semana a semana.
+`decay_weekly_by_segment`: sin cambio de fondo frente a ayer, n sigue
+insuficiente en 2m/5m para distinguir señal de ruido semana a semana.
 
 ## Histórico de cambios
+- 2026-10-02 (viernes): `git pull` limpio (fast-forward). Dato nuevo
+  mínimo (+5/+2/+0 en 1m/2m/5m), típico de INV. 1m sigue siendo el único
+  segmento de este playbook con n usable, pero `survives_fdr10=true` hoy
+  está más al filo (p=0.052, CI90 roza cero) que en corridas previas —
+  vigilar si se cae a `false`. Sin cambios de fondo en el resto.
 - 2026-10-01 (jueves): `git pull` limpio. Dato nuevo minimo (+12/+5/+0 en
   1m/2m/5m), tipico de INV. 1m sigue siendo el unico segmento de este
   playbook con n usable y `survives_fdr10=true`. `sl_origin_vs_layer`

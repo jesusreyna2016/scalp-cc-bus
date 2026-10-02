@@ -3,98 +3,109 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-01 (jueves) · n: 8458)
+## Sección viva  (última revisión: 2026-10-02 (viernes) · n: 8790)
 
 ### Nota de proceso
-`git pull` limpio. Dato nuevo sólido en los tres TF (+246/+145/+41 en
-1m/2m/5m). **Ver `buy-retest.md` → "Hallazgo de pipeline"**: nueva función
-`sigid_collision_report()` en `analyze.py` (mejora permanente, aplica a
-todo el bus) detecta que 6.1-6.3% de `sigId` colisionan entre archivos
-distintos (delta casi siempre múltiplo de 7 días), con varias colisiones
-de `result` distinto entre ocurrencias — causa raíz más probable de las
-alertas MUESTRA que venían repitiéndose. No afecta materialmente las
-conclusiones de este playbook hoy, pero explica por qué las semanas
-cerradas siguen goteando n.
+`git pull` limpio (fast-forward). Dato nuevo sólido en los tres TF
+(+197/+103/+32 en 1m/2m/5m). **Ver `buy-retest.md` → "Nota de proceso"**:
+la colisión de `sigId` sigue creciendo día a día (1308→1473 señales,
+690→778 outcomes con `result` distinto) — bug activo del Pine, no un
+evento puntual.
 
 ### Veredicto global
-1m n=5372 (+246) WR 44.9% E[R]=**0.048** PF=1.1 (sin cambio real,
-0.054→0.048); 2m n=2277 (+145) WR 47.7% E[R]=**0.074** PF=1.16 (baja un
-poco, 0.086→0.074); 5m n=809 (+41) WR 47.5% E[R]=**0.092** PF=1.2 (sube,
-0.083→0.092). `segment_significance`: **los TRES TF siguen
-`survives_fdr10=true`** sin cambio de fondo — 1m CI90=[0.02,0.076]
-n=5065, 2m CI90=[0.028,0.12] n=2176, 5m CI90=[0.017,0.168] n=738.
-`gate.readyForLive` sigue `false`. Escalera de ejecución sigue en
-asesoría.
+1m n=5569 (+197) WR 44.6% E[R]=**0.032** PF=1.06 (baja, 0.048→0.032); 2m
+n=2380 (+103) WR 47.5% E[R]=**0.07** PF=1.15 (estable, 0.074→0.07); 5m
+n=841 (+32) WR 46.6% E[R]=**0.074** PF=1.16 (baja, 0.092→0.074).
+`segment_significance`: **los TRES TF siguen `survives_fdr10=true`** sin
+cambio de fondo — 1m CI90=[0.004,0.059] n=5261, 2m CI90=[0.025,0.116]
+n=2279, 5m CI90=[0.002,0.148] n=770 (el CI90 de 5m se acerca más a cero
+que ayer, vigilar). `gate.readyForLive` sigue `false`. Escalera de
+ejecución sigue en asesoría.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 5065 (+339) | E[R]=**0.048** CI90=[0.02,0.076] | alta |
-| 2 | `tf=2m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 2176 (+135) | E[R]=**0.074** CI90=[0.028,0.12] | alta |
-| 3 | `tf=5m` (`survives_fdr10=true`) | TOMAR | 738 (+41) | E[R]=**0.092** CI90=[0.017,0.168] | alta |
-| 4 | `tier=A+` | sigue positivo | 580 | WR 25.2%, E[R]=**0.08** PF=1.12 | moderada |
-| 5 | `tier=C` | mejor que B hoy | 3998 vs 3880 (tier B) | WR 47.6% E[R]=**0.066** PF=1.14 vs tier B WR 47.2% E[R]=0.049 PF=1.1 | baja-moderada |
-| 6 | símbolo (`cross_instrument`), 1m/2m/5m | los tres `universal` (spread 1m=0.176, 2m=0.303, 5m=0.179) | — | sin cambio de veredicto | moderada |
-| 7 | `nearEdge=0` | mejor rama de edge | 3447 | E[R]=**0.071** vs edge=-1 0.052 vs edge=1 -0.006 (n=176, chico) | moderada |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 5261 (+196) | E[R]=**0.032** CI90=[0.004,0.059] | alta |
+| 2 | `tf=2m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 2279 (+103) | E[R]=**0.07** CI90=[0.025,0.116] | alta |
+| 3 | `tf=5m` (`survives_fdr10=true`, CI90 se acerca a cero) | TOMAR, vigilar un día más | 770 (+32) | E[R]=**0.074** CI90=[0.002,0.148] | alta pero debilitándose |
+| 4 | `tier=A+` | sigue positivo | 598 | WR 25.1%, E[R]=**0.086** PF=1.13 | moderada |
+| 5 | `tier=C` | mejor que B hoy | 4139 vs 4053 (tier B) | WR 47.3% E[R]=**0.052** PF=1.11 vs tier B WR 46.8% E[R]=0.035 PF=1.07 | baja-moderada |
+| 6 | símbolo (`cross_instrument`), 1m/2m/5m | los tres `universal` | — | sin cambio de veredicto | moderada |
+| 7 | `nearEdge=0` | mejor rama de edge | 3550 | E[R]=**0.059** vs edge=-1 0.039 vs edge=1 -0.006 (n=176, chico) | moderada |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara de
   calidad de entrada en este segmento.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=5058 delta=**+0.127**;
-  2m n=2176 delta=**+0.066**; 5m n=737 delta=**+0.021** — los tres
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=5254 delta=**+0.128**;
+  2m n=2279 delta=**+0.067**; 5m n=769 delta=**+0.019** — los tres
   positivos, SHORT se beneficia más de la gestión que LONG en 1m/2m.
 - **SL de 3 capas vs SL = mecha del retest, REAL post-cambio
-  (`prediction_scoreboard`)**: de los 6 segmentos RETEST, **los 3 SHORT
-  confirman la dirección predicha** del cambio `sl_basis_retest`
-  (aplicado 2026-09-26): 1m `realDeltaER=+0.081` vs +0.143 predicho
-  (afterN=1097); 2m `realDeltaER=+0.061` vs +0.151 predicho (afterN=485);
-  5m `realDeltaER=-0.072` vs +0.567 predicho (afterN=167) — 5m SHORT es
-  el único de los tres que todavía no confirma la dirección, aunque su
-  magnitud predicha era la más extrema de las 6 y la más fácil de fallar
-  por exceso. `decay_weekly_by_segment` de la semana en curso (W40)
-  confirma con muestra ya sustancial: **los tres TF SHORT mejoran esta
-  semana** — 1m n=1064 E[R]=+0.096, 2m n=484 E[R]=+0.125, 5m n=165
-  E[R]=+0.034 — mientras los tres LONG se dan vuelta a negativo (ver
-  `buy-retest.md`). **Esto es la otra mitad del hallazgo más accionable
-  del bus hoy**: la evidencia para mantener la mecha del retest en SHORT
-  y proponer revertir a 3-capas en LONG ya tiene 2 semanas consecutivas
-  en la misma dirección — se formalizará en la revisión semanal del
-  domingo 2026-10-04 (detalle completo en `buy-retest.md` → "Gestión").
+  (`prediction_scoreboard`)** — **⚠ cambia el patrón que venía
+  sosteniéndose, vigilar de cerca**: el lado SHORT YA NO confirma con la
+  fuerza de los últimos días. Con `afterN` grande (1323 en 1m, 593 en
+  2m): 1m `realDeltaER=+0.003` vs +0.143 predicho (afterN=1323) — **casi
+  plano, perdió casi toda la mejora que mostraba ayer (+0.081)**; 2m
+  `realDeltaER=+0.038` vs +0.151 predicho (afterN=593) — sigue positivo
+  pero se debilita (ayer +0.061); 5m `realDeltaER=-0.139` vs +0.567
+  predicho (afterN=203) — sigue sin confirmar, empeora (ayer -0.072).
+  `decay_weekly_by_segment` de la semana en curso (W40) ya no muestra el
+  barrido limpio de ayer: 1m sigue positivo pero débil (n=1290
+  E[R]=+0.019), 2m sigue fuerte (n=592 E[R]=+0.1), **pero 5m SHORT se dio
+  la vuelta a negativo esta semana** (n=201 E[R]=-0.033, la semana pasada
+  era +0.034) — simétrico al giro de 5m LONG a positivo en
+  `buy-retest.md`, consistente con que 5m (menor n) es el TF más
+  ruidoso de los tres. **Lectura de hoy: sólo 2m SHORT sigue
+  confirmando con claridad; 1m SHORT pasó de "confirma" a "plano" y 5m
+  SHORT pasó a negativo.** Esto no cambia la recomendación de
+  `buy-retest.md` de esperar al domingo 2026-10-04 para decidir — si
+  algo, hace más necesario mirar el desglose fino por TF en vez de
+  tratar "SHORT mejora" como un bloque, porque ya no es cierto para los
+  3 TF por igual.
 - **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)**: mismo resultado
-  de todo el bus, ver `buy-retest.md` — 3 semanas cerradas seguidas
-  (W37-W39) batiendo al crudo, gate 0→1 cumplido a la espera de la
-  revisión semanal.
+  de todo el bus, ver `buy-retest.md` — cuatro semanas seguidas (W37-W40)
+  batiendo al crudo, gate 0→1 cumplido con las 3 cerradas, pendiente de
+  confirmarlo en la revisión semanal.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las pérdidas SHORT (n=3806, RETEST/SHORT):
-  `RR-bajo` 1375/3806 (36.1%) causa dominante, `stop-en-el-minimo`
-  1293/3806 (34.0%) segundo, `contra-estructura` 1172/3806 (30.8%)
-  tercero — sin cambio de fondo. A diferencia de LONG, el SL estructural
-  parece estar ayudando aquí (ver "Gestión"), consistente con que
-  `stop-en-el-minimo` es relativamente más chico que en LONG.
+- Autopsia de SL sobre las pérdidas SHORT (n=4018, RETEST/SHORT):
+  `RR-bajo` 1480/4018 (36.8%) causa dominante, `stop-en-el-minimo`
+  1342/4018 (33.4%) segundo, `contra-estructura` 1253/4018 (31.2%)
+  tercero — sin cambio de fondo.
 
 ### Cruce con Session Analyst
-RETEST/SHORT hoy: `AVOID` n=730 E[R]=**0.064**, `GO` n=387 E[R]=**0.17**,
-`WAIT` n=2609 E[R]=**0.037**. Orden hoy: GO > AVOID > WAIT — distinto del
-orden limpio "GO>WAIT>AVOID" de LONG; en SHORT, AVOID no se comporta tan
-mal como la hipótesis original esperaría, aunque GO sigue siendo
-claramente la mejor rama. A nivel global ver `buy-retest.md` (mismas
-cifras, no se repiten por `kind/side`).
+Ver cifras globales en `buy-retest.md` (mismo cruce, no se repite por
+`kind/side` — `by_verdict` de `session_analyst_cross` no separa SHORT de
+LONG en el agregado que usa el script).
 
 ### Decaimiento
 `decay_weekly` global: ver `buy-retest.md` (misma serie, no es por
 kind/side). Por segmento (`decay_weekly_by_segment`), SHORT de este
-playbook mejora en la semana en curso W40 vs W39: 1m 1064 vs 1330
-(E[R] 0.096 vs -0.007), 2m 484 vs 557 (0.125 vs 0.031), 5m 165 vs 197
-(0.034 vs 0.097, único que baja un poco pero sigue positivo) — ningún
-segmento cruza el umbral de decaimiento negativo, la dirección es de
-mejora, no de deterioro.
+playbook en la semana en curso W40: 1m n=1290 E[R]=+0.019 (débil, bajó
+de +0.096 la semana pasada), 2m n=592 E[R]=+0.1 (fuerte, sube de
++0.125... prácticamente igual), 5m n=201 E[R]=-0.033 (se da vuelta a
+negativo, la semana pasada era +0.034) — ningún segmento cruza el umbral
+formal de decaimiento (>15pts WR vs media 3 semanas), pero 5m SHORT es
+el primer giro negativo del lado SHORT desde que se aplicó el SL nuevo.
 
 ## Histórico de cambios
+- 2026-10-02 (viernes): `git pull` limpio (fast-forward). Dato nuevo
+  sólido (+197/+103/+32 en 1m/2m/5m), los tres TF siguen certificando
+  FDR (5m con el CI90 acercándose a cero, vigilar). **Cambio de patrón en
+  el experimento `sl_basis_retest`**: el lado SHORT, que venía
+  confirmando con claridad, se debilita en los tres TF con `afterN` ya
+  grande — 1m pasa de +0.081 a +0.003 (casi plano), 2m de +0.061 a
+  +0.038 (sigue positivo pero más débil), 5m de -0.072 a -0.139 (empeora).
+  `decay_weekly_by_segment` W40 confirma que 5m SHORT se dio vuelta a
+  negativo esta semana (era positivo la semana pasada), simétrico al
+  giro de 5m LONG a positivo en `buy-retest.md`. Sólo 2m SHORT sigue
+  confirmando con claridad hoy; ya no es correcto describir "SHORT
+  mejora" como un bloque de 3 TF. No cambia la recomendación de esperar
+  al domingo 2026-10-04 para la decisión formal, pero el desglose fino
+  por TF importa más que ayer.
 - 2026-10-01 (jueves): `git pull` limpio. Dato nuevo solido (+246/+145/+41
   en 1m/2m/5m), los tres TF siguen certificando FDR sin cambio. Ver
   `buy-retest.md` para el hallazgo de pipeline del dia (colisiones de
