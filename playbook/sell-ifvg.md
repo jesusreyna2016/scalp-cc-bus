@@ -3,20 +3,20 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-02 (viernes) · n: 266)
+## Sección viva  (última revisión: 2026-10-03 (sábado) · n: 273)
 
 ### Nota de proceso
-`git pull` limpio (fast-forward). Dato nuevo mínimo, como siempre en INV
-(+7/+5/+1 en 1m/2m/5m). Ver `buy-retest.md` → "Nota de proceso" para el
-bug de colisión de `sigId` (con n tan chico aquí el efecto absoluto
-sigue siendo mínimo).
+`git pull` necesitó resolverse (HEAD detached al iniciar el contenedor;
+ver `buy-retest.md`). Dato nuevo mínimo, como siempre en INV (+3/+4/+0 en
+1m/2m/5m). Ver `buy-retest.md` → "Nota de proceso" para el bug de colisión
+de `sigId` (con n tan chico aquí el efecto absoluto sigue siendo mínimo).
 
 ### Veredicto global
-1m n=178 (+7) WR 45.5% E[R]=**-0.002** PF=1.0 (sube desde negativo,
--0.013→-0.002, prácticamente neutro); 2m n=73 (+5) WR 42.5% E[R]=**0.042**
-PF=1.09 (baja un poco, 0.064→0.042); 5m n=15 (+1) WR 60.0% E[R]=**0.276**
-PF=1.9 (baja, 0.383→0.276). `segment_significance`: 1m CI90=[-0.141,0.145]
-n=168 (sin cambio real); 2m CI90=[-0.2,0.291] n=70 (sin cambio real); 5m
+1m n=181 (+3) WR 45.9% E[R]=**0.005** PF=1.01 (sube, -0.002→0.005, cruza a
+positivo pero prácticamente neutro); 2m n=77 (+4) WR 44.2% E[R]=**0.061**
+PF=1.14 (sube, 0.042→0.061); 5m n=15 (sin cambio) WR 60.0% E[R]=**0.276**
+PF=1.9 (sin dato nuevo). `segment_significance`: 1m CI90=[-0.135,0.146]
+n=171 (sin cambio real); 2m CI90=[-0.159,0.296] n=74 (sin cambio real); 5m
 CI90=[-0.19,0.803] n=13 (sin cambio real) — ningún TF de este playbook
 certifica FDR hoy. Sigue siendo el playbook con menos edge estadístico
 confirmado de los cuatro.
@@ -51,14 +51,14 @@ Sin n suficiente todavía para certificar en ninguna rama:
   dominante, `contra-estructura` 32/112 (28.6%) segundo, `estirado`
   27/112 (24.1%) tercero — sin cambio de fondo.
 - **Decaimiento a vigilar (sigue sin ser formal)**: `decay_weekly_by_segment`
-  W40 (ya casi cerrada): 1m/INV/SHORT se recupera un poco frente a la
-  alerta de ayer (WR 32.4%→37.0%, E[R] -0.229→**-0.112**, n=37→46) pero
-  sigue negativo vs W39 (WR 52.5%, E[R]=0.031); 2m/INV/SHORT **empeora**
-  frente a ayer (E[R] -0.165→**-0.193**, n=11→16, WR 50.0%) vs W39
-  (E[R]=0.511, n=16). Con n todavía en las decenas y un historial errático
-  en este playbook, no se trata como decaimiento confirmado, pero ya son
-  2 corridas seguidas con el mismo signo en ambos TF — revisar de nuevo
-  cuando cierre W40 el domingo.
+  W40 (ya casi cerrada, se cierra mañana): 1m/INV/SHORT sigue recuperándose
+  (WR 37.0%→38.8%, E[R] -0.112→**-0.08**, n=46→49) pero sigue negativo vs
+  W39 (WR 52.5%, E[R]=0.031); 2m/INV/SHORT **también se recupera hoy**
+  (E[R] -0.193→**-0.07**, n=16→20, WR 50.0%→55.0%) — se corrige la
+  dirección de "empeora" de ayer. Con n todavía en las decenas y un
+  historial errático en este playbook, sigue sin tratarse como decaimiento
+  confirmado; los dos TF ahora recuperando a la vez sugiere ruido de
+  semana más que una tendencia — revisar de nuevo cuando cierre W40 mañana.
 
 ### Cruce con Session Analyst
 Sin desglose propio por `kind/side` en el script (ver cifras globales en
@@ -70,6 +70,11 @@ Ver "Contextos a evitar" arriba — sigue siendo el punto a vigilar de
 este playbook.
 
 ## Histórico de cambios
+- 2026-10-03 (sábado): dato nuevo mínimo (+3/+4/+0 en 1m/2m/5m). Ningún TF
+  certifica FDR, sin cambio de fondo. El punto a vigilar (1m/2m INV/SHORT
+  negativos en W40) se recupera en ambos TF hoy — se corrige la nota de
+  ayer que decía que 2m empeoraba. Ver `buy-retest.md` → Histórico de hoy
+  para el hallazgo metodológico del día (no aplica a este playbook).
 - 2026-10-02 (viernes): `git pull` limpio (fast-forward). Dato nuevo
   minimo (+7/+5/+1 en 1m/2m/5m). Sigue siendo el playbook con menos edge
   estadistico confirmado de los cuatro. El punto a vigilar de ayer

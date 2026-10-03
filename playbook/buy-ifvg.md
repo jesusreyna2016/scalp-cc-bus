@@ -3,32 +3,35 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-02 (viernes) · n: 282)
+## Sección viva  (última revisión: 2026-10-03 (sábado) · n: 295)
 
 ### Nota de proceso
-`git pull` limpio (fast-forward). Dato nuevo chico, como siempre en INV
-(1m/2m estables, 5m sin dato nuevo). Ver `buy-retest.md` → "Nota de
-proceso": la colisión de `sigId` sigue creciendo, pero con n tan chico
-aquí el efecto absoluto sigue siendo mínimo.
+`git pull` necesitó resolverse (HEAD detached al iniciar el contenedor;
+resuelto con `checkout main` + `reset --hard origin/main`, sin pérdida de
+nada — ver `buy-retest.md`). Dato nuevo chico, como siempre en INV (1m/2m/5m
+con algo de movimiento). Ver `buy-retest.md` → "Nota de proceso": la
+colisión de `sigId` sigue creciendo, pero con n tan chico aquí el efecto
+absoluto sigue siendo mínimo.
 
 ### Veredicto global
-1m n=188 (+5) WR 44.7% E[R]=**0.183** PF=1.42 (estable, 0.185→0.183); 2m
-n=74 (+2) WR 52.7% E[R]=**0.066** PF=1.17 (baja, 0.087→0.066); 5m n=20
-(sin cambio) WR 75.0% E[R]=**0.483** PF=5.35 (sube, sin dato nuevo real,
-redondeo). `segment_significance`: 1m CI90=[-0.002,0.381] n=178 sigue
-`survives_fdr10=true` al filo (p=0.052, roza cero por abajo); 2m
-CI90=[-0.133,0.27] n=70 sigue sin certificar; 5m CI90=[0.174,0.794] n=18
-sostiene `survives_fdr10=true` pero n=18 sigue bajo el piso n≥20 de este
-playbook, no usable todavía.
+1m n=198 (+10) WR 46.5% E[R]=**0.204** PF=1.48 (sube, 0.183→0.204); 2m
+n=74 (sin cambio neto) WR 51.4% E[R]=**0.049** PF=1.12 (baja, 0.066→0.049);
+5m n=23 (+3) WR 78.3% E[R]=**0.49** PF=6.14 (estable). `segment_significance`:
+**1m mejora de "al filo" a certificación limpia** — CI90=[0.03,0.388]
+n=188, p=0.028 (ayer p=0.052); 2m CI90=[-0.154,0.255] n=70 sigue sin
+certificar; 5m CI90=[0.215,0.76] n=21 sostiene `survives_fdr10=true` y
+**cruza por primera vez el piso n≥20 de este playbook** — sigue siendo el
+TF con menos muestra, tratar con cautela un par de lecturas más antes de
+usarlo con confianza plena.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en más de una rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar salvo 1m) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`, al filo) | TOMAR, único segmento de este playbook con n usable, pero CI90 ya toca cero | 178 (+5) | E[R]=**0.183** CI90=[-0.002,0.381] | moderada — certifica pero más débil que días previos |
-| 2 | `tier=B` vs `tier=C` | B sigue mejor que C | 88 vs 194 | E[R] **0.283** (B) vs 0.121 (C) | baja — n chico en ambos |
-| 3 | `nearEdge=1` | sigue positivo | 170 | E[R]=**0.168** | baja |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, único segmento de este playbook con n usable, certifica con más margen que ayer | 188 (+10) | E[R]=**0.204** CI90=[0.03,0.388] | moderada-alta — mejora vs ayer |
+| 2 | `tier=B` vs `tier=C` | sin revisión fina hoy, ver nota | — | — | baja — n chico en ambos |
+| 3 | `nearEdge=1` | sin revisión fina hoy | — | — | baja |
 | 4 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar, ver por símbolo en `report.json` antes de usar | — | sin veredicto único | baja — regla explícitamente no generalizable |
 
 ### Entrada
@@ -61,6 +64,14 @@ propia confiable.
 insuficiente en 2m/5m para distinguir señal de ruido semana a semana.
 
 ## Histórico de cambios
+- 2026-10-03 (sábado): dato nuevo chico (+10/+0/+3 en 1m/2m/5m). 1m mejora
+  de "al filo" a certificación limpia (CI90=[0.03,0.388], p=0.028 vs 0.052
+  ayer). 5m cruza por primera vez el piso n≥20 (n=21) aunque sigue siendo
+  el TF más ruidoso de los tres. Ver `buy-retest.md` → Histórico de hoy
+  para el hallazgo metodológico del día (`sl_origin_vs_layer.since_change`),
+  que no aplica a este playbook (INV usa slBasis=`candle1`, sin experimento
+  abierto ahí). Filas 2-3 de la tabla de reglas no se revisaron hoy a fondo
+  por foco en RETEST (prioridad 1); sin motivo para pensar que cambiaron.
 - 2026-10-02 (viernes): `git pull` limpio (fast-forward). Dato nuevo
   mínimo (+5/+2/+0 en 1m/2m/5m), típico de INV. 1m sigue siendo el único
   segmento de este playbook con n usable, pero `survives_fdr10=true` hoy

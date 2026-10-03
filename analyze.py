@@ -1006,6 +1006,39 @@ def sl_origin_vs_layer(pairs):
     for k, rs in sorted(g.items()):
         if len(rs) >= 5:
             out["by_tf_kind_side"][k] = blk(rs)
+
+    # since_change: validacion emparejada (mismo par, rOrig vs rMultiple
+    # simultaneos) restringida a recvDate >= changeDate de un experimento
+    # "applied" de este mismo parametro. A diferencia de eval_experiments()/
+    # prediction_scoreboard() -- que comparan expR de rMultiple antes vs
+    # despues del cambio, un numero que NO puede reflejar el efecto del
+    # cambio de SL porque rMultiple siempre se calcula con el stop de 3
+    # capas sin importar cual input este activo en el Pine (ver appliedNote
+    # del experimento) -- esto compara rOrig contra rMultiple EN LA MISMA
+    # ventana post-cambio, por lo que aisla el efecto real sin mezclarlo con
+    # el regimen de mercado del periodo. Es la lectura que de verdad valida
+    # o refuta el experimento fuera de muestra temporal.
+    try:
+        with open(os.path.join(ROOT, "experiments.json")) as f:
+            _exps = json.load(f).get("experiments", [])
+    except Exception:
+        _exps = []
+    since = {}
+    for e in _exps:
+        if e.get("param") == "sl_basis_retest" and e.get("status") == "applied" and e.get("changeDate"):
+            cd = e["changeDate"]
+            rows_since = [r for r in res if r["recvDate"] >= cd]
+            gS = defaultdict(list)
+            for r in rows_since:
+                gS[f"{r['tf']}m/{r['kind']}/{r['side']}"].append(r)
+            by_seg = {k: blk(rs) for k, rs in sorted(gS.items()) if len(rs) >= 5}
+            since = {"changeDate": cd, "n": len(rows_since), "by_tf_kind_side": by_seg,
+                     "note": "emparejado (rOrig vs rMultiple) solo con recvDate >= changeDate; "
+                             "compara contra by_tf_kind_side (todo el historico) para ver si el "
+                             "efecto se mantiene, se encoge (optimismo in-sample esperable) o se "
+                             "invierte en la ventana nueva. NO confundir con prediction_scoreboard."}
+            break
+    out["since_change"] = since
     return out
 
 def bootstrap_er_ci(rows, iters=2000, seed=12345):
