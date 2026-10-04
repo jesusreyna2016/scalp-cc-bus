@@ -3,15 +3,15 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-03 (sábado) · n: 295)
+## Sección viva  (última revisión: 2026-10-04 (domingo, REVISIÓN SEMANAL) · n: 296)
 
 ### Nota de proceso
-`git pull` necesitó resolverse (HEAD detached al iniciar el contenedor;
-resuelto con `checkout main` + `reset --hard origin/main`, sin pérdida de
-nada — ver `buy-retest.md`). Dato nuevo chico, como siempre en INV (1m/2m/5m
-con algo de movimiento). Ver `buy-retest.md` → "Nota de proceso": la
-colisión de `sigId` sigue creciendo, pero con n tan chico aquí el efecto
-absoluto sigue siendo mínimo.
+Ver `buy-retest.md` → "Nota de proceso" (merge de historias divergentes,
+sin pérdida). **Sin jsonl nuevo del cron hoy**; +1 en 1m (timeout
+resuelto), 0 en 2m/5m. Modo sombra cumple el gate 0→1 hoy a nivel de todo
+el bus (ver `buy-retest.md`); no afecta a este playbook (INV queda fuera
+de `shadowRules`, sólo RETEST califica — ver `shadow_rules.rule.rationale`
+en `state.json`).
 
 ### Veredicto global
 1m n=198 (+10) WR 46.5% E[R]=**0.204** PF=1.48 (sube, 0.183→0.204); 2m
@@ -64,6 +64,15 @@ propia confiable.
 insuficiente en 2m/5m para distinguir señal de ruido semana a semana.
 
 ## Histórico de cambios
+- 2026-10-04 (domingo, REVISIÓN SEMANAL): sin jsonl nuevo del cron (+1/+0/+0
+  en 1m/2m/5m, timeout resuelto). Sin cambios de fondo en este playbook; el
+  foco de la revisión semanal fue RETEST (ver `buy-retest.md` y
+  `reviews/2026-week-40.md`): gate 0→1 de modo sombra cumplido a nivel de
+  todo el bus (no aplica a INV, fuera de `shadowRules`) y baja de confianza
+  del "cambio del mes" `sl_basis_retest` (tampoco aplica aquí, INV usa
+  `slBasis=candle1`, sin experimento abierto). `sl_origin_vs_layer`
+  `by_basis=candle1` sigue inconcluso (ver "Gestión", sin revisión fina
+  hoy por foco en RETEST).
 - 2026-10-03 (sábado): dato nuevo chico (+10/+0/+3 en 1m/2m/5m). 1m mejora
   de "al filo" a certificación limpia (CI90=[0.03,0.388], p=0.028 vs 0.052
   ayer). 5m cruza por primera vez el piso n≥20 (n=21) aunque sigue siendo

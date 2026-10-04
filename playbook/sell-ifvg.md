@@ -3,13 +3,13 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-03 (sábado) · n: 273)
+## Sección viva  (última revisión: 2026-10-04 (domingo, REVISIÓN SEMANAL) · n: 273)
 
 ### Nota de proceso
-`git pull` necesitó resolverse (HEAD detached al iniciar el contenedor;
-ver `buy-retest.md`). Dato nuevo mínimo, como siempre en INV (+3/+4/+0 en
-1m/2m/5m). Ver `buy-retest.md` → "Nota de proceso" para el bug de colisión
-de `sigId` (con n tan chico aquí el efecto absoluto sigue siendo mínimo).
+Ver `buy-retest.md` → "Nota de proceso". **Sin jsonl nuevo del cron hoy**,
+n sin cambio en los tres TF. Gate 0→1 de modo sombra cumplido hoy a nivel
+de todo el bus (ver `buy-retest.md`); no aplica a este playbook (INV fuera
+de `shadowRules`).
 
 ### Veredicto global
 1m n=181 (+3) WR 45.9% E[R]=**0.005** PF=1.01 (sube, -0.002→0.005, cruza a
@@ -70,6 +70,11 @@ Ver "Contextos a evitar" arriba — sigue siendo el punto a vigilar de
 este playbook.
 
 ## Histórico de cambios
+- 2026-10-04 (domingo, REVISIÓN SEMANAL): sin jsonl nuevo del cron, n sin
+  cambio en los tres TF. Sin cambios de fondo en este playbook; foco de la
+  revisión semanal en RETEST (ver `buy-retest.md` y
+  `reviews/2026-week-40.md`) — gate 0→1 de modo sombra y baja de confianza
+  del "cambio del mes" `sl_basis_retest`, ninguno aplica a INV.
 - 2026-10-03 (sábado): dato nuevo mínimo (+3/+4/+0 en 1m/2m/5m). Ningún TF
   certifica FDR, sin cambio de fondo. El punto a vigilar (1m/2m INV/SHORT
   negativos en W40) se recupera en ambos TF hoy — se corrige la nota de

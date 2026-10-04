@@ -1360,6 +1360,30 @@ def material_alerts(rep, prev_state=None):
             a.append(f"SESSION ANALYST: senales scalp con veredicto SA={_v} rinden {signo} de forma no-random "
                      f"(E[R] {_ci['expR']} CI90 {_ci['ci90']}, n {_ci['n']}). "
                      f"{'Contrario a' if (_v == 'AVOID') == (lo > 0) else 'Consistente con'} la hipotesis original de agent-instructions.md.")
+    # since_change (medicion pareada rOrig-vs-rMultiple SOLO en la ventana post-cambio,
+    # ver nota en sl_origin_vs_layer): si un parametro "applied" certificaba fuerte en
+    # by_basis (todo el historico, mezcla pre+post cambio) pero la mayoria de sus
+    # segmentos con potencia razonable (n>=100) no confirman (CI90 cruza cero) en la
+    # ventana since_change, el optimismo in-sample se esta encogiendo -> avisar antes
+    # de llamarlo "cambio del mes" confirmado otra vez.
+    since = (rep.get("sl_origin_vs_layer", {}) or {}).get("since_change", {}) or {}
+    since_segs = since.get("by_tf_kind_side", {}) or {}
+    powered = {k: v for k, v in since_segs.items() if v.get("n", 0) >= 100}
+    if powered:
+        confirmed = [k for k, v in powered.items() if v.get("delta_beats_zero")]
+        reversed_ = [k for k, v in powered.items() if v.get("delta_below_zero")]
+        if len(confirmed) < len(powered) / 2:
+            verbo = "sigue" if len(confirmed) == 1 else "siguen"
+            a.append(f"EXPERIMENTO: el efecto de sl_basis_retest se encoge desde que se aplico "
+                     f"({since.get('changeDate')}): de {len(powered)} segmentos con n>=100 post-cambio, "
+                     f"solo {len(confirmed)} {verbo} confirmando (CI90 no cruza cero) y {len(reversed_)} se "
+                     f"invierten -- ver since_change vs by_basis (historico completo). No revertir sin mas "
+                     f"evidencia, pero no tratar como confirmado fuera del/los segmento(s) que si certifican.")
+    psb = rep.get("prediction_scoreboard", {}) or {}
+    if (psb.get("scored") or 0) >= 4 and psb.get("hit_direction_rate") is not None and psb["hit_direction_rate"] < 50:
+        a.append(f"METODO: tus predicciones de direccion aciertan {psb['hit_direction_rate']}% "
+                 f"(peor que un volado, n={psb['scored']}, MAE={psb.get('mae_deltaER')}). Se mas conservador "
+                 f"con 'cambio del mes' y marcar experimental mas tiempo antes de subir confianza.")
     return a
 
 def exec_gate(rep):
