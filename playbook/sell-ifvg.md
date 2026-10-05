@@ -3,13 +3,15 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-04 (domingo, REVISIÓN SEMANAL) · n: 273)
+## Sección viva  (última revisión: 2026-10-05 (lunes) · n: 273)
 
 ### Nota de proceso
-Ver `buy-retest.md` → "Nota de proceso". **Sin jsonl nuevo del cron hoy**,
-n sin cambio en los tres TF. Gate 0→1 de modo sombra cumplido hoy a nivel
-de todo el bus (ver `buy-retest.md`); no aplica a este playbook (INV fuera
-de `shadowRules`).
+Ver `buy-retest.md` → "Nota de proceso" (`git pull` fast-forward limpio,
+llegó jsonl nuevo real al bus). **Cero trades nuevos en INV/SHORT hoy
+igualmente** — n sin cambio en los tres TF, mismas cifras que el domingo.
+Sin alerta `MUESTRA` en este playbook (a diferencia de `buy-ifvg.md`, que
+sí tiene una celda afectada por el bug de `sigId` hoy). Gate de ejecución
+sin cambio: INV sigue fuera de `shadowRules`.
 
 ### Veredicto global
 1m n=181 (+3) WR 45.9% E[R]=**0.005** PF=1.01 (sube, -0.002→0.005, cruza a
@@ -70,6 +72,10 @@ Ver "Contextos a evitar" arriba — sigue siendo el punto a vigilar de
 este playbook.
 
 ## Histórico de cambios
+- 2026-10-05 (lunes): `git pull` trajo jsonl nuevo real al bus pero cero
+  trades nuevos en INV/SHORT (n sin cambio en los tres TF). Sin alerta
+  `MUESTRA` en este playbook hoy (sí la tiene `buy-ifvg.md`, ver ahí).
+  Sin cambios de fondo.
 - 2026-10-04 (domingo, REVISIÓN SEMANAL): sin jsonl nuevo del cron, n sin
   cambio en los tres TF. Sin cambios de fondo en este playbook; foco de la
   revisión semanal en RETEST (ver `buy-retest.md` y

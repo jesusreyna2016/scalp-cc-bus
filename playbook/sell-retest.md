@@ -3,74 +3,66 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-04 (domingo, REVISIÓN SEMANAL) · n: 8948)
+## Sección viva  (última revisión: 2026-10-05 (lunes) · n: 8970)
 
 ### Nota de proceso
-Ver `buy-retest.md` → "Nota de proceso" (mismo `git pull`/merge, mismo
-hallazgo de sigId sin dato nuevo). **No llegó jsonl nuevo del cron de
-Netlify hoy**; el delta de hoy (+3 en 1m, 0 en 2m/5m) son señales
-pendientes resueltas por timeout de 24h, no trades nuevos — esperado un
-domingo sin sesión CME.
+Ver `buy-retest.md` → "Nota de proceso" (mismo `git pull` fast-forward
+limpio, mismo bug de `sigId` con más alertas `MUESTRA` hoy). Llegó jsonl
+nuevo real del cron (primer día hábil desde el 10-02); delta de hoy
++39/+1/+0 en 1m/2m/5m de este playbook. Sin incidentes de repo.
 
-**Revisión semanal — ver "Gestión"**: con W40 ya cerrada, `since_change`
-confirma que SHORT tampoco se revierte en ningún TF, pero igual que en
-LONG (`buy-retest.md`) el efecto se encogió frente al agregado histórico
-y hoy **ningún segmento SHORT confirma limpio post-cambio** (los 3 TF
-quedan "plano", CI90 cruza cero en los dos sentidos). Modo sombra cumple
-el gate 0→1 hoy (4 semanas cerradas, ver `buy-retest.md`).
+**Nada nuevo sobre el gate de ejecución para SHORT**: el `GATE` nuevo de
+hoy en `report.alerts` apunta a `5m/RETEST/LONG`, no a SHORT — ver
+`buy-retest.md` para el detalle completo de por qué el agente no lo
+certifica todavía. SHORT sigue en peldaño 1 (Sombra), igual que LONG.
 
 ### Veredicto global
-1m n=5663 (+3) WR 44.7% E[R]=**0.034** PF=1.07; 2m n=2415 (+0) WR 47.6%
-E[R]=**0.074** PF=1.16; 5m n=870 (+0) WR 46.9% E[R]=**0.089** PF=1.19 —
-prácticamente sin cambio vs ayer (sin dato nuevo real).
+1m n=5678 (+15) WR 44.7% E[R]=**0.035** PF=1.07; 2m n=2422 (+1) WR 47.6%
+E[R]=**0.072** PF=1.15; 5m n=870 (+0) WR 46.9% E[R]=**0.089** PF=1.19 —
+prácticamente sin cambio vs el domingo.
 `segment_significance`: **los TRES TF siguen `survives_fdr10=true`** —
-1m CI90=[0.007,0.062] n=5351, 2m CI90=[0.029,0.12] n=2314, 5m
-CI90=[0.019,0.159] n=799. `gate.readyForLive` sigue `false`. Escalera de
-ejecución: peldaño 0→1 (Sombra) cumplido hoy (ver `buy-retest.md`), cero
-ejecución real.
+1m CI90=[0.007,0.062] n=5369, 2m CI90=[0.029,0.119] n=2321, 5m
+CI90=[0.019,0.159] n=799. `gate.readyForLive` sigue apuntando al
+segmento LONG (ver `buy-retest.md`), no a SHORT. Escalera de ejecución:
+sigue en peldaño 1 (Sombra), cero ejecución real.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 5351 | E[R]=**0.034** CI90=[0.007,0.062] | alta |
-| 2 | `tf=2m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 2314 | E[R]=**0.074** CI90=[0.029,0.12] | alta |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 5369 | E[R]=**0.035** CI90=[0.007,0.062] | alta |
+| 2 | `tf=2m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 2321 | E[R]=**0.072** CI90=[0.029,0.119] | alta |
 | 3 | `tf=5m` (`survives_fdr10=true`) | TOMAR, vigilar | 799 | E[R]=**0.089** CI90=[0.019,0.159] | alta |
-| 4 | `tier=A+` | sigue positivo | 615 | WR 24.7%, E[R]=**0.075** PF=1.11 | moderada |
-| 5 | `tier=C` | mejor que B hoy | 4235 vs 4098 (tier B) | WR 47.5% E[R]=**0.056** PF=1.12 vs tier B WR 47.0% E[R]=0.041 PF=1.09 | baja-moderada |
+| 4 | `tier=A+` | sigue positivo | 615 | WR 24.9%, E[R]=**0.079** PF=1.12 | moderada |
+| 5 | `tier=C` | mejor que B hoy | 4236 vs 4119 (tier B) | WR 47.5% E[R]=**0.055** PF=1.12 vs tier B WR 47.0% E[R]=0.04 PF=1.08 | baja-moderada |
 | 6 | símbolo (`cross_instrument`), 1m/2m/5m | los tres `universal` | — | sin cambio de veredicto | moderada |
-| 7 | `nearEdge=0` | mejor rama de edge | 3630 | E[R]=**0.06** vs edge=-1 0.046 vs edge=1 -0.029 (n=180, chico) | moderada |
+| 7 | `nearEdge=0` | mejor rama de edge | 3630 | E[R]=**0.06** vs edge=-1 0.045 vs edge=1 -0.029 (n=180, chico) | moderada |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara de
   calidad de entrada en este segmento.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=5344 delta=**+0.131**;
-  2m n=2314 delta=**+0.065**; 5m n=798 delta=**+0.012** — los tres
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=5362 delta=**+0.129**;
+  2m n=2321 delta=**+0.065**; 5m n=798 delta=**+0.012** — los tres
   positivos, SHORT sigue beneficiándose más de la gestión que LONG en 1m/2m.
-- **SL de 3 capas vs SL = mecha del retest — igual que en `buy-retest.md`
-  (leer esa sección completa, aquí sólo el resumen para SHORT).** Con W40
-  cerrada, `sl_origin_vs_layer.since_change` (`recvDate>=2026-09-26`) en
-  SHORT: 1m n=1236 delta=**+0.055** CI90=[-0.025,0.137] (plano); 2m n=559
-  delta=**+0.025** CI90=[-0.093,0.144] (plano); 5m n=208 delta=**+0.075**
-  CI90=[-0.05,0.21] (plano). Ningún `delta_below_zero=true`, pero tampoco
-  ningún SHORT confirma limpio post-cambio (a diferencia de 2m LONG, que
-  sí lo hace, ver `buy-retest.md`) — el efecto se encogió frente al
-  agregado histórico en los 6 segmentos RETEST, no sólo en LONG. **No hay
-  caso para revertir nada en SHORT.** Ver `experiments.json` para el
-  detalle completo y la nueva alerta permanente agregada hoy a
-  `analyze.py`.
-- **Modo sombra (`shadow_rules` v2 + `shadow_weekly`) — GATE 0→1 CUMPLIDO
-  HOY**: mismo resultado de todo el bus, ver `buy-retest.md` — 4 semanas
-  cerradas consecutivas (W37-W40) batiendo al crudo con n≫60,
-  `state.json.executionGate.phase` pasa de `advisor` a `shadow`.
+- **SL de 3 capas vs SL = mecha del retest — sin cambio de fondo vs el
+  domingo (ver `buy-retest.md` para el contraste con 2m LONG, que sí
+  confirma).** `sl_origin_vs_layer.since_change` (`recvDate>=2026-09-26`)
+  en SHORT: 1m n=1251 delta=**+0.065** CI90=[-0.014,0.147] (plano); 2m
+  n=564 delta=**+0.025** CI90=[-0.09,0.143] (plano); 5m n=208
+  delta=**+0.075** CI90=[-0.05,0.21] (plano). Ningún
+  `delta_below_zero=true`, pero tampoco ningún SHORT confirma limpio
+  post-cambio. **No hay caso para revertir nada en SHORT.**
+- **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)** — gate 0→1 ya
+  cumplido desde el 2026-10-04 (ver `buy-retest.md`), sin cambio hoy. W41
+  en curso con n=39 todavía, insuficiente para leer.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las pérdidas SHORT (n=4080, RETEST/SHORT):
-  `RR-bajo` 1496/4080 (36.7%) causa dominante, `stop-en-el-minimo`
-  1355/4080 (33.2%) segundo, `contra-estructura` 1276/4080 (31.3%)
+- Autopsia de SL sobre las pérdidas SHORT (n=4092, RETEST/SHORT):
+  `RR-bajo` 1502/4092 (36.7%) causa dominante, `stop-en-el-minimo`
+  1360/4092 (33.2%) segundo, `contra-estructura` 1276/4092 (31.2%)
   tercero — sin cambio de fondo.
 
 ### Cruce con Session Analyst
@@ -85,15 +77,21 @@ no generalizar sin más muestra. Cifras globales (todo kind/side) en
 ### Decaimiento
 `decay_weekly` global: ver `buy-retest.md` (misma serie, no es por
 kind/side). Por segmento (`decay_weekly_by_segment`), SHORT de este
-playbook en la semana cerrada W40: 1m n=1396 E[R]=**+0.025** (recupera
-algo vs W39 -0.003, pero sigue débil vs W37/W38), 2m n=629 E[R]=**+0.113**
+playbook en la semana cerrada W40: 1m n=1399 E[R]=**+0.027** (recupera
+algo vs W39 -0.003, pero sigue débil vs W37/W38), 2m n=631 E[R]=**+0.111**
 (fuerte, mejor semana del segmento), 5m n=232 E[R]=**+0.029** — ningún
 segmento SHORT cruza el umbral formal de decaimiento, y a diferencia de
-1m/RETEST/LONG (ver `buy-retest.md`), ningún SHORT cerró la semana en
-negativo. Se lee como ruido normal de régimen por TF, no como el SL nuevo
-fallando en SHORT.
+5m/RETEST/LONG (ver `buy-retest.md`, PF cae bajo 1.3 dos semanas
+seguidas), 5m SHORT tiene PF estable 1.2/1.06/1.06 en W38-W40 — SHORT no
+muestra la misma inestabilidad que LONG en 5m esta semana.
 
 ## Histórico de cambios
+- 2026-10-05 (lunes): primer dato real del cron desde el 10-02
+  (+15/+1/+0 en 1m/2m/5m). Sin hallazgos nuevos propios de SHORT — el
+  `GATE` nuevo de `report.alerts` y las alertas `MUESTRA` de hoy aplican
+  al bus completo / a `5m/RETEST/LONG` específicamente, ver
+  `buy-retest.md` para el detalle. SHORT sigue sin inestabilidad semanal
+  marcada en 5m (a diferencia de LONG). `huérfanos` estable en 40.
 - 2026-10-04 (domingo, REVISIÓN SEMANAL): sin dato nuevo real (ver "Nota
   de proceso"). Con W40 cerrada, `since_change` confirma que ningún TF
   SHORT sale negativo, pero tampoco ninguno confirma limpio post-cambio

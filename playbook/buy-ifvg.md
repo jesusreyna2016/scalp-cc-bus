@@ -3,26 +3,28 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-04 (domingo, REVISIÓN SEMANAL) · n: 296)
+## Sección viva  (última revisión: 2026-10-05 (lunes) · n: 296)
 
 ### Nota de proceso
-Ver `buy-retest.md` → "Nota de proceso" (merge de historias divergentes,
-sin pérdida). **Sin jsonl nuevo del cron hoy**; +1 en 1m (timeout
-resuelto), 0 en 2m/5m. Modo sombra cumple el gate 0→1 hoy a nivel de todo
-el bus (ver `buy-retest.md`); no afecta a este playbook (INV queda fuera
-de `shadowRules`, sólo RETEST califica — ver `shadow_rules.rule.rationale`
-en `state.json`).
+Ver `buy-retest.md` → "Nota de proceso" (`git pull` fast-forward limpio).
+Llegó jsonl nuevo real, pero **cero trades nuevos en INV/LONG hoy** (0 en
+1m/2m, +0 en 5m) — INV sigue siendo mucho más esporádico que RETEST.
+**Nota: `report.alerts` de hoy marca `by_tf_kind_side/1m/INV/LONG` bajando
+de n=199 a n=198 entre corridas** — es este playbook específicamente el
+afectado por la alerta `MUESTRA` (consecuencia del bug de `sigId`, ver
+`buy-retest.md`); no es que se perdiera un trade real, es un par que se
+desplazó de semana por la colisión "last wins". Mismo gate de ejecución
+que ayer: INV queda fuera de `shadowRules` (sólo RETEST califica).
 
 ### Veredicto global
-1m n=198 (+10) WR 46.5% E[R]=**0.204** PF=1.48 (sube, 0.183→0.204); 2m
-n=74 (sin cambio neto) WR 51.4% E[R]=**0.049** PF=1.12 (baja, 0.066→0.049);
-5m n=23 (+3) WR 78.3% E[R]=**0.49** PF=6.14 (estable). `segment_significance`:
-**1m mejora de "al filo" a certificación limpia** — CI90=[0.03,0.388]
-n=188, p=0.028 (ayer p=0.052); 2m CI90=[-0.154,0.255] n=70 sigue sin
-certificar; 5m CI90=[0.215,0.76] n=21 sostiene `survives_fdr10=true` y
-**cruza por primera vez el piso n≥20 de este playbook** — sigue siendo el
-TF con menos muestra, tratar con cautela un par de lecturas más antes de
-usarlo con confianza plena.
+1m n=198 (-1 por el reajuste de arriba, no por timeout) WR 47.0%
+E[R]=**0.187** PF=1.43 (baja un poco frente a ayer, 0.204→0.187, por el
+mismo reajuste); 2m n=75 WR 52.0% E[R]=**0.051** PF=1.13; 5m n=23 WR
+78.3% E[R]=**0.49** PF=6.14 (sin cambio). `segment_significance`: 1m
+CI90=[0.014,0.37] n=188 sigue `survives_fdr10=true`; 2m CI90=[-0.139,0.248]
+n=71 sigue sin certificar; 5m CI90=[0.215,0.76] n=21 sostiene
+`survives_fdr10=true`, sigue siendo el TF con menos muestra de este
+playbook.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en más de una rama:
@@ -64,6 +66,10 @@ propia confiable.
 insuficiente en 2m/5m para distinguir señal de ruido semana a semana.
 
 ## Histórico de cambios
+- 2026-10-05 (lunes): cero trades reales nuevos en INV/LONG hoy. Único
+  punto de interés: la alerta `MUESTRA` de `by_tf_kind_side/1m/INV/LONG`
+  (n 199→198) del bug de `sigId` aterriza justo en este playbook — ver
+  "Nota de proceso". Sin cambios de regla.
 - 2026-10-04 (domingo, REVISIÓN SEMANAL): sin jsonl nuevo del cron (+1/+0/+0
   en 1m/2m/5m, timeout resuelto). Sin cambios de fondo en este playbook; el
   foco de la revisión semanal fue RETEST (ver `buy-retest.md` y
