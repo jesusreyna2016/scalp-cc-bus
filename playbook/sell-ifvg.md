@@ -3,23 +3,20 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-05 (lunes) · n: 273)
+## Sección viva  (última revisión: 2026-10-06 (martes) · n: 286)
 
 ### Nota de proceso
-Ver `buy-retest.md` → "Nota de proceso" (`git pull` fast-forward limpio,
-llegó jsonl nuevo real al bus). **Cero trades nuevos en INV/SHORT hoy
-igualmente** — n sin cambio en los tres TF, mismas cifras que el domingo.
-Sin alerta `MUESTRA` en este playbook (a diferencia de `buy-ifvg.md`, que
-sí tiene una celda afectada por el bug de `sigId` hoy). Gate de ejecución
-sin cambio: INV sigue fuera de `shadowRules`.
+Ver `buy-retest.md` → "Nota de proceso" (incidente de repo del día,
+resuelto sin pérdida). Dato nuevo chico (+9/+3/+1 en 1m/2m/5m). Gate de
+ejecución sin cambio: INV sigue fuera de `shadowRules`.
 
 ### Veredicto global
-1m n=181 (+3) WR 45.9% E[R]=**0.005** PF=1.01 (sube, -0.002→0.005, cruza a
-positivo pero prácticamente neutro); 2m n=77 (+4) WR 44.2% E[R]=**0.061**
-PF=1.14 (sube, 0.042→0.061); 5m n=15 (sin cambio) WR 60.0% E[R]=**0.276**
-PF=1.9 (sin dato nuevo). `segment_significance`: 1m CI90=[-0.135,0.146]
-n=171 (sin cambio real); 2m CI90=[-0.159,0.296] n=74 (sin cambio real); 5m
-CI90=[-0.19,0.803] n=13 (sin cambio real) — ningún TF de este playbook
+1m n=190 (+9) WR 44.7% E[R]=**-0.002** PF=1.0 (vuelve a cruzar a
+negativo/plano, dentro de ruido con n chico); 2m n=80 (+3) WR 43.8%
+E[R]=**0.129** PF=1.29 (sube); 5m n=16 (+1) WR 56.2% E[R]=**0.185**
+PF=1.52. `segment_significance`: 1m CI90=[-0.132,0.136] n=180 (sigue sin
+certificar); 2m CI90=[-0.119,0.405] n=77 (sin certificar); 5m
+CI90=[-0.278,0.695] n=14 (sin certificar) — ningún TF de este playbook
 certifica FDR hoy. Sigue siendo el playbook con menos edge estadístico
 confirmado de los cuatro.
 
@@ -72,6 +69,12 @@ Ver "Contextos a evitar" arriba — sigue siendo el punto a vigilar de
 este playbook.
 
 ## Histórico de cambios
+- 2026-10-06 (martes): incidente de repo del día (ver `buy-retest.md`),
+  sin pérdida. Dato nuevo chico (+9/+3/+1 en 1m/2m/5m). 1m vuelve a
+  cruzar a E[R] ligeramente negativo (-0.002), dentro del ruido habitual
+  de este playbook (sigue sin certificar FDR en ningún TF). Sin cambios
+  de fondo ni relación clara con el deterioro de RETEST reportado en
+  `buy-retest.md` — muestra demasiado chica para una lectura propia.
 - 2026-10-05 (lunes): `git pull` trajo jsonl nuevo real al bus pero cero
   trades nuevos en INV/SHORT (n sin cambio en los tres TF). Sin alerta
   `MUESTRA` en este playbook hoy (sí la tiene `buy-ifvg.md`, ver ahí).

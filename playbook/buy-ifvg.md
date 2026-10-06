@@ -3,35 +3,28 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-05 (lunes) · n: 296)
+## Sección viva  (última revisión: 2026-10-06 (martes) · n: 304)
 
 ### Nota de proceso
-Ver `buy-retest.md` → "Nota de proceso" (`git pull` fast-forward limpio).
-Llegó jsonl nuevo real, pero **cero trades nuevos en INV/LONG hoy** (0 en
-1m/2m, +0 en 5m) — INV sigue siendo mucho más esporádico que RETEST.
-**Nota: `report.alerts` de hoy marca `by_tf_kind_side/1m/INV/LONG` bajando
-de n=199 a n=198 entre corridas** — es este playbook específicamente el
-afectado por la alerta `MUESTRA` (consecuencia del bug de `sigId`, ver
-`buy-retest.md`); no es que se perdiera un trade real, es un par que se
-desplazó de semana por la colisión "last wins". Mismo gate de ejecución
-que ayer: INV queda fuera de `shadowRules` (sólo RETEST califica).
+Ver `buy-retest.md` → "Nota de proceso" (incidente de repo del día,
+resuelto sin pérdida). Dato nuevo chico (+7/+1/+0 en 1m/2m/5m) — INV
+sigue siendo mucho más esporádico que RETEST. INV queda fuera de
+`shadowRules` (sólo RETEST califica), sin cambio.
 
 ### Veredicto global
-1m n=198 (-1 por el reajuste de arriba, no por timeout) WR 47.0%
-E[R]=**0.187** PF=1.43 (baja un poco frente a ayer, 0.204→0.187, por el
-mismo reajuste); 2m n=75 WR 52.0% E[R]=**0.051** PF=1.13; 5m n=23 WR
-78.3% E[R]=**0.49** PF=6.14 (sin cambio). `segment_significance`: 1m
-CI90=[0.014,0.37] n=188 sigue `survives_fdr10=true`; 2m CI90=[-0.139,0.248]
-n=71 sigue sin certificar; 5m CI90=[0.215,0.76] n=21 sostiene
-`survives_fdr10=true`, sigue siendo el TF con menos muestra de este
-playbook.
+1m n=205 (+7) WR 46.8% E[R]=**0.173** PF=1.4 (baja un poco frente a
+0.187 de ayer, dentro de ruido normal de n chico); 2m n=76 (+1) WR 52.6%
+E[R]=**0.063** PF=1.16; 5m n=23 (+0) WR 78.3% E[R]=**0.49** PF=6.14 (sin
+cambio). `segment_significance`: 1m CI90=[0.008,0.353] n=195 sigue
+`survives_fdr10=true`; 2m CI90=[-0.128,0.259] n=72 sigue sin certificar;
+5m CI90=[0.215,0.76] n=21 sostiene `survives_fdr10=true`.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en más de una rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar salvo 1m) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, único segmento de este playbook con n usable, certifica con más margen que ayer | 188 (+10) | E[R]=**0.204** CI90=[0.03,0.388] | moderada-alta — mejora vs ayer |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, único segmento de este playbook con n usable | 195 | E[R]=**0.173** CI90=[0.008,0.353] | moderada-alta |
 | 2 | `tier=B` vs `tier=C` | sin revisión fina hoy, ver nota | — | — | baja — n chico en ambos |
 | 3 | `nearEdge=1` | sin revisión fina hoy | — | — | baja |
 | 4 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar, ver por símbolo en `report.json` antes de usar | — | sin veredicto único | baja — regla explícitamente no generalizable |
@@ -41,20 +34,18 @@ Sin n suficiente todavía para certificar en más de una rama:
   `entryZoneTk` de ganadores vs perdedores).
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=178 delta=**+0.103**
-  (gestión ayuda); 2m n=70 delta=**-0.018** (casi neutro); 5m n=18
-  delta=**-0.051** (gestión resta, n mínimo). Sin cambio de regla.
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=195 delta=**+0.078**
+  (gestión ayuda); 2m n=72 delta=**-0.003** (casi neutro); 5m n=21
+  delta=**+0.062** (sin cambio de fondo). Sin cambio de regla.
 - **SL de 3 capas vs SL = vela 1 del FVG (`sl_origin_vs_layer`,
-  `by_basis=candle1`, combina INV LONG+SHORT, n=485)**: delta=**-0.006**
-  CI90=[-0.195,0.209] — no certifica en ninguna dirección, sigue
-  inconcluso. A diferencia de RETEST, el cambio de SL estructural no
-  tiene evidencia clara todavía en INV.
+  `by_basis=candle1`)**: sin revisión fina hoy, sin evidencia clara
+  todavía en INV (foco de la corrida en RETEST, prioridad 1).
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (n=106, INV/LONG): `killzone-Asia-largo` 45/106 (42.5%)
-  causa dominante, `RR-bajo` 42/106 (39.6%) segundo, `contra-estructura`
-  32/106 (30.2%) tercero — sin cambio de fondo frente a corridas previas.
+- Autopsia de SL (INV/LONG): sin cambio de fondo frente a corridas
+  previas (`killzone-Asia-largo` y `RR-bajo` siguen cerca entre sí como
+  causas dominantes).
 
 ### Cruce con Session Analyst
 Sin desglose propio por `kind/side` en el script (ver cifras globales en
@@ -66,6 +57,12 @@ propia confiable.
 insuficiente en 2m/5m para distinguir señal de ruido semana a semana.
 
 ## Histórico de cambios
+- 2026-10-06 (martes): incidente de repo del día (ver `buy-retest.md`),
+  sin pérdida. Dato nuevo chico (+7/+1/+0 en 1m/2m/5m). Sin hallazgos
+  propios nuevos — el deterioro semanal reportado en `buy-retest.md`
+  (RETEST/LONG) no tiene equivalente medible aquí por falta de muestra
+  semanal (INV es demasiado esporádico para `decay_weekly_by_segment`
+  confiable). Sin cambios de regla.
 - 2026-10-05 (lunes): cero trades reales nuevos en INV/LONG hoy. Único
   punto de interés: la alerta `MUESTRA` de `by_tf_kind_side/1m/INV/LONG`
   (n 199→198) del bug de `sigId` aterriza justo en este playbook — ver
