@@ -1398,6 +1398,31 @@ def exec_gate(rep):
                     "estabilidad 3 semanas + causa de SL dominante mitigada (lo valida el agente)."}
 
 # ---------------------------------------------------------------------- main
+def exit_baseline(pairs):
+    """Exit base rates per symbol for the shared trader profile (Session Analyst bus).
+    How often an entry reaches 1R / TP2, and how many stops were green first."""
+    out = {}
+    res = [r for r in pairs if r["resolved"] and r["result"]]
+    groups = {"ALL": res}
+    for r in res:
+        groups.setdefault(r["sigId"].split("-")[0], []).append(r)
+    for sym, rows in sorted(groups.items()):
+        n = len(rows)
+        sl = [r for r in rows if r["result"] == "SL"]
+        rate = lambda k: round(k / n, 3) if n else None
+        sl_rate = lambda k: round(k / len(sl), 3) if sl else None
+        out[sym] = {
+            "n": n,
+            "hit1R": rate(sum(1 for r in rows if r["hit1R"] == 1)),
+            "stoppedOut": rate(len(sl)),
+            "slWasGreenHalfRFirst": sl_rate(sum(1 for r in sl if (r["maxRbeforeSL"] or 0) >= 0.5)),
+            "slWasGreen1RFirst": sl_rate(sum(1 for r in sl if (r["maxRbeforeSL"] or 0) >= 1)),
+            "reachedTP2": rate(sum(1 for r in rows if r["result"] == "TP2")),
+        }
+    return {"schema": "exit-baseline-1", "generatedAt": datetime.now(timezone.utc).isoformat(),
+            "source": "scalp-cc-bus outcomes, all kinds and TFs", "bySymbol": out}
+
+
 def main():
     pairs, orphan_out, n_sig, n_out = build_pairs()
     resolved = [r for r in pairs if r["resolved"] and r["result"]]
@@ -1476,6 +1501,10 @@ def main():
 
     with open(os.path.join(ROOT, "report.json"), "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
+
+    # exit-baseline.json: read by the Session Analyst weekly run to refresh trader-profile.exitBaseline
+    with open(os.path.join(ROOT, "exit-baseline.json"), "w", encoding="utf-8") as f:
+        json.dump(exit_baseline(pairs), f, indent=2, ensure_ascii=False)
 
     # dataset.jsonl: una linea plana y tipada por par resuelto (training set / dashboard)
     with open(os.path.join(ROOT, "dataset.jsonl"), "w", encoding="utf-8") as f:

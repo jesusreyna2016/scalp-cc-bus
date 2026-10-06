@@ -13,6 +13,9 @@ En cada corrida:
    - `report.md` — legible, para ti
    - `report.json` — estructurado
    - `state.json` — contadores + métricas por segmento (lo actualiza el script)
+   - `exit-baseline.json` — tasas de salida por símbolo (1R, TP2, SL que estuvieron en
+     verde antes). Lo lee la rutina semanal del Session Analyst para el perfil compartido
+     de Jesus (`state/trader-profile.json` del bus SA). Commitéalo siempre, no lo edites.
 3. **Lee `report.md`.** Tu trabajo es lo que un script no puede: narrar qué está
    pasando, decidir qué proponer, y **detectar lo raro** (un segmento que se
    desploma, una causa de SL nueva, un feature que el modelo pondera fuerte y no
