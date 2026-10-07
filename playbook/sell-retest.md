@@ -3,30 +3,38 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-06 (martes) · n: 9524)
+## Sección viva  (última revisión: 2026-10-07 (miércoles) · n: 9626)
 
 ### Nota de proceso
-Ver `buy-retest.md` → "Nota de proceso" (incidente de repo hoy: `main`
-local y `origin/main` divergieron 50 commits cada una, resuelto con
-`git reset --hard origin/main` tras verificar que el local era
-subconjunto estricto, sin pérdida). Dato nuevo real +335/+151/+69 en
-1m/2m/5m de este playbook.
+`git pull` limpio, sin incidentes de repo (ver `buy-retest.md`). Dato
+nuevo real +102 en este playbook. `pendientes`=9, `huérfanos`=40 en todo
+el bus, estable.
 
-**Nada nuevo sobre el gate de ejecución para SHORT**: el flip-flop del
-`GATE` de hoy (`report.alerts`) apunta a `5m/RETEST/LONG`, no a SHORT —
-ver `buy-retest.md`. SHORT sigue en peldaño 1 (Sombra), igual que LONG.
-**SHORT sí se ve notablemente más fuerte que LONG esta semana (W41,
-parcial) — ver "Decaimiento" abajo, es el hallazgo nuevo de hoy.**
+**Hallazgo nuevo más importante de hoy (compartido con `buy-retest.md`):
+el contrafactual `rr1_threshold_cut_oos` contra la ventana OOS actual
+([W40,W41]) muestra que NINGÚN segmento SHORT confirma positivo** —
+`1m/RETEST/SHORT` baseline n=1765 E[R]=0.045 CI90=[-0.001,0.094] (ya al
+filo) cae a plano/negativo en los cortes; `2m/RETEST/SHORT` es el único
+baseline que certifica (n=789 E[R]=0.082 CI90=[0.012,0.159]) pero el
+corte lo EMPEORA de forma monótona hasta E[R]=-0.03/-0.022 en los
+escalones altos (CI90 cruza cero); `5m/RETEST/SHORT` (n=289,
+E[R]=0.048, CI90 cruza cero) sube con el corte pero con muestra chica y
+CI90 que nunca deja de cruzar cero. Es la segunda ventana OOS consecutiva
+en que 1m/2m SHORT (los dos que sí certificaban in-sample) no replican —
+ver detalle completo del lado LONG (incluye el hallazgo nuevo de
+`2m/RETEST/LONG` saliendo negativo con significancia) en
+`experiments.json` (`sc-min-rr-cut-2026-09-20`). **Decisión compartida:
+no se propondrá `sc_min_rr`/`sc_aplus_rr` en la revisión semanal mientras
+esto se sostenga.**
 
 ### Veredicto global
-1m n=6013 (+335) WR 44.8% E[R]=**0.039** PF=1.08; 2m n=2572 (+151) WR
-47.7% E[R]=**0.075** PF=1.16; 5m n=939 (+69) WR 47.0% E[R]=**0.067**
-PF=1.14 — los tres prácticamente estables vs ayer, 5m algo más débil
-(0.089→0.067) por la cola negativa de W41 (ver Decaimiento).
+1m n=6075 (+62) WR 44.7% E[R]=**0.04** PF=1.08 (estable); 2m n=2602
+(+30) WR 47.8% E[R]=**0.078** PF=1.17 (estable); 5m n=949 (+10) WR
+47.4% E[R]=**0.074** PF=1.16 (recupera un poco vs ayer 0.067).
 `segment_significance`: **los TRES TF siguen `survives_fdr10=true`** —
-1m CI90=[0.013,0.066] n=5704, 2m CI90=[0.033,0.121] n=2471, 5m
-CI90=[-0.001,0.136] n=868 (éste al filo, p=0.051, primera vez que se
-acerca a cruzar cero). `gate.readyForLive` sigue apuntando al segmento
+1m CI90=[0.014,0.067] n=5752, 2m CI90=[0.036,0.125] n=2501, 5m
+CI90=[0.006,0.143] n=878 (deja de estar al filo, p ya no ronda 0.05 —
+mejora leve vs ayer). `gate.readyForLive` sigue apuntando al segmento
 LONG (ver `buy-retest.md`), no a SHORT. Escalera de ejecución: sigue en
 peldaño 1 (Sombra), cero ejecución real.
 
@@ -36,10 +44,11 @@ peldaño 1 (Sombra), cero ejecución real.
 |---|----|----------|---|--------|-----------|
 | 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido | 5704 | E[R]=**0.039** CI90=[0.013,0.066] | alta |
 | 2 | `tf=2m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido, mejorando esta semana (ver Decaimiento) | 2471 | E[R]=**0.075** CI90=[0.033,0.121] | alta |
-| 3 | `tf=5m` (`survives_fdr10=true`, p=0.051 al filo) | TOMAR, vigilar — CI90 se acerca a cero por primera vez | 868 | E[R]=**0.067** CI90=[-0.001,0.136] | alta en agregado, bajando |
-| 4 | `tier=A+` | sigue positivo | 660 (RETEST/SHORT, ver tier) | sin cambio de veredicto | moderada |
+| 3 | `tf=5m` (`survives_fdr10=true`) | TOMAR — CI90 ya no roza cero, mejora leve vs ayer | 878 | E[R]=**0.074** CI90=[0.006,0.143] | alta |
+| 4 | `tier=A+` | sigue positivo | 691 (RETEST/SHORT, ver tier) | sin cambio de veredicto | moderada |
 | 5 | símbolo (`cross_instrument`), 1m/2m/5m | los tres `universal` | — | sin cambio de veredicto | moderada |
 | 6 | `nearEdge=0` | mejor rama de edge | — | sin revisión hoy, sin cambio de fondo | moderada |
+| 7 | subir `rr1` mínimo (candidato `sc_min_rr`) en SHORT | **NO proponer** — ningún TF SHORT confirma positivo en la ventana OOS actual; 2m SHORT incluso empeora con el corte (aunque sin significancia) | 789 (2m baseline) | E[R] 0.082→-0.03/-0.022 según corte | alta — evidencia nueva de hoy, ver `experiments.json` |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara de
@@ -59,12 +68,10 @@ peldaño 1 (Sombra), cero ejecución real.
   post-cambio. El verdict agregado formal del experimento bajó a `flat`
   hoy (ver `buy-retest.md`) — sin cambio para SHORT en concreto, sigue
   sin caso para revertir nada.
-- **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)** — gate 0→1 ya
-  cumplido desde el 2026-10-04 (ver `buy-retest.md`), sin cambio hoy. W41
-  en curso global (ambos lados mezclados) n=1157, shadow empata con raw
-  (**-0.011** ambos) — primera lectura semanal negativa desde que arrancó
-  la racha, arrastrada por LONG (ver `buy-retest.md`); no hay desglose
-  por side en `shadow_weekly` todavía.
+- **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)** — ver
+  `buy-retest.md` (sin desglose por side en `shadow_weekly`). W41 en
+  curso global n=1540 shadow/1545 raw, ambos positivos (0.009/0.011),
+  mejora vs el empate negativo de ayer.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
@@ -79,22 +86,35 @@ Analyst `AVOID` sigue sin confirmar la hipótesis para este lado concreto
 kind/side) en `buy-retest.md`.
 
 ### Decaimiento
-`decay_weekly` global: ver `buy-retest.md` (misma serie, no es por
-kind/side; 4 semanas cayendo, W41 parcial ya negativo en agregado).
-**Hallazgo nuevo de hoy — por segmento, SHORT se sostiene mucho mejor
-que LONG esta semana:** 1m/RETEST/SHORT W40 E[R]=0.028 → W41 (parcial,
-n=376) E[R]=**+0.087** (mejora); 2m/RETEST/SHORT W40 E[R]=0.111 → W41
-(n=164) E[R]=**+0.087** (sigue positivo, leve baja); **5m/RETEST/SHORT
-es la excepción — W40 E[R]=0.024 → W41 (n=68, muestra chica) E[R]=**-0.171**
-PF=0.67, la lectura más débil del segmento en semanas**, pero el n es el
-más chico de los seis (RETEST, ambos lados) de W41 — tratar como ruido
-de muestra hasta que crezca. **Contraste principal con `buy-retest.md`:
-mientras 1m/2m/RETEST/LONG se deterioran por tercera semana consecutiva,
-1m/2m/RETEST/SHORT mejoran la misma semana** — la decadencia de esta
-semana no es un problema del indicador en general, parece concentrada en
-el lado LONG (y puntualmente en 5m SHORT, a vigilar con más muestra).
+`decay_weekly` global: ver `buy-retest.md` (W41 sube de -0.009 ayer a
++0.011 hoy con más muestra). **Por segmento, SHORT sigue más fuerte que
+LONG esta semana, con la excepción de 5m:** 1m/RETEST/SHORT W41 (n=439)
+E[R]=**0.096** (sigue mejorando vs los 0.087 de ayer); 2m/RETEST/SHORT
+W41 (n=196) E[R]=**0.113** (estable, sigue fuerte); **5m/RETEST/SHORT
+sigue siendo la excepción negativa — W41 (n=78) E[R]=**-0.062**, mejora
+algo vs el -0.171 de ayer pero sigue en terreno negativo con muestra
+todavía chica** — tratar como ruido hasta que crezca más. Contraste con
+`buy-retest.md` sin cambio de fondo: 1m/2m SHORT siguen mejor que
+1m/2m/5m LONG en la semana en curso.
 
 ## Histórico de cambios
+- 2026-10-07 (miércoles): `git pull` limpio. Dato nuevo +62/+30/+10 en
+  1m/2m/5m. **Hallazgo nuevo más importante (compartido con
+  `buy-retest.md`): `rr1_threshold_cut_oos` contra la ventana OOS actual
+  ([W40,W41]) muestra que NINGÚN segmento SHORT confirma positivo** —
+  `2m/RETEST/SHORT` (el único baseline que certifica, E[R]=0.082) se
+  EMPEORA con el corte en todos los escalones (hasta -0.03), `1m SHORT`
+  cae a plano/negativo, `5m SHORT` sigue sin salir de cero con muestra
+  chica. Es la segunda ventana OOS consecutiva sin replicar la racha
+  in-sample. El hallazgo más fuerte del día está en LONG
+  (`2m/RETEST/LONG` sale negativo con significancia real, ver
+  `buy-retest.md`/`experiments.json`). **Decisión compartida: no
+  proponer `sc_min_rr`/`sc_aplus_rr` mientras esto se sostenga.** Sin
+  cambio de fondo en `sl_basis_retest` (sigue `flat`, ningún TF SHORT
+  confirma limpio post-cambio pero tampoco negativo). `decay_weekly` por
+  segmento: 1m/2m SHORT siguen mejor que LONG en W41, 5m SHORT sigue en
+  negativo (-0.062, mejorando vs -0.171 de ayer) con muestra todavía
+  chica (n=78). `huérfanos` estable en 40.
 - 2026-10-06 (martes): incidente de repo (ver `buy-retest.md` para el
   detalle de la divergencia de 50 commits y su resolución sin pérdida).
   Dato nuevo sólido (+335/+151/+69 en 1m/2m/5m). **Hallazgo propio de

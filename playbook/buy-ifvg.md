@@ -3,21 +3,21 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-06 (martes) · n: 304)
+## Sección viva  (última revisión: 2026-10-07 (miércoles) · n: 312)
 
 ### Nota de proceso
-Ver `buy-retest.md` → "Nota de proceso" (incidente de repo del día,
-resuelto sin pérdida). Dato nuevo chico (+7/+1/+0 en 1m/2m/5m) — INV
-sigue siendo mucho más esporádico que RETEST. INV queda fuera de
+`git pull` limpio. Dato nuevo chico (+5/+1/+2 en 1m/2m/5m) — INV sigue
+siendo mucho más esporádico que RETEST. INV queda fuera de
 `shadowRules` (sólo RETEST califica), sin cambio.
 
 ### Veredicto global
-1m n=205 (+7) WR 46.8% E[R]=**0.173** PF=1.4 (baja un poco frente a
-0.187 de ayer, dentro de ruido normal de n chico); 2m n=76 (+1) WR 52.6%
-E[R]=**0.063** PF=1.16; 5m n=23 (+0) WR 78.3% E[R]=**0.49** PF=6.14 (sin
-cambio). `segment_significance`: 1m CI90=[0.008,0.353] n=195 sigue
-`survives_fdr10=true`; 2m CI90=[-0.128,0.259] n=72 sigue sin certificar;
-5m CI90=[0.215,0.76] n=21 sostiene `survives_fdr10=true`.
+1m n=210 (+5) WR 46.7% E[R]=**0.162** PF=1.37 (baja un poco vs 0.173 de
+ayer, dentro de ruido normal de n chico); 2m n=77 (+1) WR 51.9%
+E[R]=**0.049** PF=1.12; 5m n=25 (+2) WR 76.0% E[R]=**0.408** PF=4.13
+(sube de 0.49/6.14, los 2 nuevos pares pesan mucho con n tan chico).
+`segment_significance`: 1m CI90=[0.002,0.342] n=200 sigue
+`survives_fdr10=true`; 2m CI90=[-0.141,0.25] n=73 sigue sin certificar;
+5m CI90=[0.14,0.678] n=23 sostiene `survives_fdr10=true`.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en más de una rama:
@@ -57,6 +57,11 @@ propia confiable.
 insuficiente en 2m/5m para distinguir señal de ruido semana a semana.
 
 ## Histórico de cambios
+- 2026-10-07 (miércoles): `git pull` limpio. Dato nuevo chico
+  (+5/+1/+2 en 1m/2m/5m). Sin hallazgos propios nuevos — el deterioro de
+  RETEST/LONG y el hallazgo de `rr1_threshold_cut_oos` (ver
+  `buy-retest.md`) no tienen equivalente medible aquí. Sin cambios de
+  regla.
 - 2026-10-06 (martes): incidente de repo del día (ver `buy-retest.md`),
   sin pérdida. Dato nuevo chico (+7/+1/+0 en 1m/2m/5m). Sin hallazgos
   propios nuevos — el deterioro semanal reportado en `buy-retest.md`

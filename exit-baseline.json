@@ -1,0 +1,55 @@
+{
+  "schema": "exit-baseline-1",
+  "generatedAt": "2026-10-07T01:18:16.592677+00:00",
+  "source": "scalp-cc-bus outcomes, all kinds and TFs",
+  "bySymbol": {
+    "ALL": {
+      "n": 24004,
+      "hit1R": 0.331,
+      "stoppedOut": 0.462,
+      "slWasGreenHalfRFirst": 0.318,
+      "slWasGreen1RFirst": 0.125,
+      "reachedTP2": 0.044
+    },
+    "CL": {
+      "n": 4574,
+      "hit1R": 0.338,
+      "stoppedOut": 0.469,
+      "slWasGreenHalfRFirst": 0.326,
+      "slWasGreen1RFirst": 0.142,
+      "reachedTP2": 0.048
+    },
+    "ES": {
+      "n": 5030,
+      "hit1R": 0.316,
+      "stoppedOut": 0.451,
+      "slWasGreenHalfRFirst": 0.322,
+      "slWasGreen1RFirst": 0.13,
+      "reachedTP2": 0.04
+    },
+    "GC": {
+      "n": 4806,
+      "hit1R": 0.33,
+      "stoppedOut": 0.467,
+      "slWasGreenHalfRFirst": 0.337,
+      "slWasGreen1RFirst": 0.124,
+      "reachedTP2": 0.038
+    },
+    "NQ": {
+      "n": 4272,
+      "hit1R": 0.328,
+      "stoppedOut": 0.464,
+      "slWasGreenHalfRFirst": 0.31,
+      "slWasGreen1RFirst": 0.104,
+      "reachedTP2": 0.044
+    },
+    "YM": {
+      "n": 5322,
+      "hit1R": 0.344,
+      "stoppedOut": 0.461,
+      "slWasGreenHalfRFirst": 0.295,
+      "slWasGreen1RFirst": 0.125,
+      "reachedTP2": 0.05
+    }
+  }
+}

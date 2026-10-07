@@ -3,22 +3,21 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-06 (martes) · n: 286)
+## Sección viva  (última revisión: 2026-10-07 (miércoles) · n: 288)
 
 ### Nota de proceso
-Ver `buy-retest.md` → "Nota de proceso" (incidente de repo del día,
-resuelto sin pérdida). Dato nuevo chico (+9/+3/+1 en 1m/2m/5m). Gate de
-ejecución sin cambio: INV sigue fuera de `shadowRules`.
+`git pull` limpio, sin incidentes de repo. Dato nuevo mínimo (+2/+0/+0
+en 1m/2m/5m) — normal, INV sigue siendo mucho más esporádico que
+RETEST. Gate de ejecución sin cambio: INV sigue fuera de `shadowRules`.
 
 ### Veredicto global
-1m n=190 (+9) WR 44.7% E[R]=**-0.002** PF=1.0 (vuelve a cruzar a
-negativo/plano, dentro de ruido con n chico); 2m n=80 (+3) WR 43.8%
-E[R]=**0.129** PF=1.29 (sube); 5m n=16 (+1) WR 56.2% E[R]=**0.185**
-PF=1.52. `segment_significance`: 1m CI90=[-0.132,0.136] n=180 (sigue sin
+1m n=192 (+2) WR 44.8% E[R]=**0.004** PF=1.01 (cruza de vuelta a casi
+cero, dentro de ruido); 2m n=80 (+0) WR 43.8% E[R]=**0.129** PF=1.29
+(sin cambio); 5m n=16 (+0) WR 56.2% E[R]=**0.185** PF=1.52 (sin cambio).
+`segment_significance`: 1m CI90=[-0.125,0.139] n=181 (sigue sin
 certificar); 2m CI90=[-0.119,0.405] n=77 (sin certificar); 5m
 CI90=[-0.278,0.695] n=14 (sin certificar) — ningún TF de este playbook
-certifica FDR hoy. Sigue siendo el playbook con menos edge estadístico
-confirmado de los cuatro.
+certifica FDR hoy, sin cambio de fondo.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en ninguna rama:
@@ -69,6 +68,12 @@ Ver "Contextos a evitar" arriba — sigue siendo el punto a vigilar de
 este playbook.
 
 ## Histórico de cambios
+- 2026-10-07 (miércoles): `git pull` limpio. Dato mínimo (+2/+0/+0 en
+  1m/2m/5m), normal para INV. 1m cruza de vuelta a E[R]≈0 (-0.002→0.004),
+  ruido de n chico, sin cambio de fondo — ningún TF certifica FDR.
+  `rr1_threshold_cut_oos` (hallazgo del día en RETEST, ver
+  `buy-retest.md`/`sell-retest.md`) no aplica a INV. Sin hallazgos
+  propios nuevos hoy.
 - 2026-10-06 (martes): incidente de repo del día (ver `buy-retest.md`),
   sin pérdida. Dato nuevo chico (+9/+3/+1 en 1m/2m/5m). 1m vuelve a
   cruzar a E[R] ligeramente negativo (-0.002), dentro del ruido habitual
