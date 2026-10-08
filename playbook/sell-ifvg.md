@@ -3,71 +3,103 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-07 (miércoles) · n: 288)
+## Sección viva  (última revisión: 2026-10-08 (jueves) · n: 298)
 
 ### Nota de proceso
-`git pull` limpio, sin incidentes de repo. Dato nuevo mínimo (+2/+0/+0
-en 1m/2m/5m) — normal, INV sigue siendo mucho más esporádico que
-RETEST. Gate de ejecución sin cambio: INV sigue fuera de `shadowRules`.
+`git pull` sin incidente real (ver `buy-retest.md`). Dato nuevo mínimo
+(+8/+2/+0 en 1m/2m/5m) — normal, INV sigue siendo mucho más esporádico
+que RETEST. Gate de ejecución sin cambio: INV sigue fuera de
+`shadowRules`.
+
+**Hallazgo del día (método, compartido con `buy-ifvg.md`): primera
+lectura con muestra real de `sl_origin_vs_layer.since_change` para
+INV/SHORT — niega mover el SL a la vela 1 del FVG aquí también.** 1m
+INV/SHORT: n=69, delta=**-0.341** CI90=[-0.61,-0.066],
+`delta_below_zero=true` — significativamente peor con el SL `candle1`.
+2m: n=24, delta=-0.05 CI90=[-0.942,1.0], demasiado ancho para concluir.
+5m: todavía sin muestra post-cambio. Entre este playbook y
+`buy-ifvg.md`, el SL `candle1` sólo ayudaría en 1m INV/LONG y
+perjudicaría o es inconcluso en los otros 4 segmentos INV — **conclusión
+cruzada: no extender `sl-retest-wick`/`candle1` a ningún segmento INV**,
+confirma que la exclusión original de `kind=INV` en el experimento fue
+correcta.
 
 ### Veredicto global
-1m n=192 (+2) WR 44.8% E[R]=**0.004** PF=1.01 (cruza de vuelta a casi
-cero, dentro de ruido); 2m n=80 (+0) WR 43.8% E[R]=**0.129** PF=1.29
-(sin cambio); 5m n=16 (+0) WR 56.2% E[R]=**0.185** PF=1.52 (sin cambio).
-`segment_significance`: 1m CI90=[-0.125,0.139] n=181 (sigue sin
-certificar); 2m CI90=[-0.119,0.405] n=77 (sin certificar); 5m
-CI90=[-0.278,0.695] n=14 (sin certificar) — ningún TF de este playbook
-certifica FDR hoy, sin cambio de fondo.
+1m n=200 (+8) WR 44.5% E[R]=**-0.009** PF=0.98 (cruza a negativo, dentro
+de ruido de n chico — ya había estado ahí antes); 2m n=82 (+2) WR 43.9%
+E[R]=**0.126** PF=1.28 (sin cambio de fondo); 5m n=16 (+0) WR 56.2%
+E[R]=**0.185** PF=1.52 (sin dato nuevo). `segment_significance`: 1m
+CI90=[-0.133,0.128] n=189 (sigue sin certificar); 2m
+CI90=[-0.114,0.394] n=79 (sin certificar); 5m CI90=[-0.278,0.695] n=14
+(sin certificar) — ningún TF de este playbook certifica FDR hoy, sin
+cambio de fondo.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en ninguna rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=-1` | sigue negativo | 164 | E[R]=**-0.017** | baja |
-| 2 | `nearEdge=0` | positivo | 93 | E[R]=**+0.032** | baja — n todavía chico |
-| 3 | `nearEdge=1` | positivo fuerte, n mínimo | 9 (sin cambio) | E[R]=**+0.69** | muy baja — n=9, no usable |
-| 4 | `tier=B` | sigue negativo | 92 | E[R]=**-0.043** PF=0.91 | baja |
-| 5 | `tier=C` | positivo, sigue mejor que B | 174 | E[R]=**+0.062** | baja-moderada |
+| 1 | `nearEdge=-1` | sigue negativo | 178 | E[R]=**-0.023** | baja |
+| 2 | `nearEdge=0` | positivo | 110 | E[R]=**+0.095** | baja — n todavía chico |
+| 3 | `nearEdge=1` | positivo fuerte, n mínimo | 10 | E[R]=**+0.521** | muy baja — n=10, no usable |
+| 4 | `tier=B` | sigue negativo | 103 | E[R]=**-0.052** PF=0.9 | baja |
+| 5 | `tier=C` | positivo, sigue mejor que B | 195 | E[R]=**+0.088** PF=1.2 | baja-moderada |
 | 6 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar | — | sin veredicto único | baja |
+| 7 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — perjudica con significancia en 1m, inconcluso en 2m | 69 (1m) / 24 (2m) | delta -0.341 (1m, confirma negativo) / -0.05 (2m, CI90 demasiado ancho) | moderada — ver Nota de proceso |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=168 delta=**+0.194**
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=189 delta=**+0.206**
   (la gestión sigue ayudando mucho más que en cualquier otro segmento del
-  bus, sobre E[R] base cercano a cero); 2m n=70 delta=**+0.081**; 5m n=13
-  delta=**+0.071**. Sin cambio de regla.
-- **SL de 3 capas vs SL = vela 1 del FVG (`sl_origin_vs_layer`,
-  `by_basis=candle1`, combina INV LONG+SHORT, n=505)**: delta=**+0.004**
-  CI90=[-0.188,0.221] — no certifica, ver detalle en `buy-ifvg.md`.
+  bus, sobre E[R] base cercano a cero); 2m n=79 delta=**+0.016**; 5m n=14
+  delta=**+0.066**. Sin cambio de regla.
+- **SL de 3 capas vs SL = vela 1 del FVG**: ver Nota de proceso arriba —
+  perjudica en 1m, no proponer.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (n=112, INV/SHORT): `RR-bajo` 51/112 (45.5%) causa
-  dominante, `contra-estructura` 32/112 (28.6%) segundo, `estirado`
-  27/112 (24.1%) tercero — sin cambio de fondo.
+- Autopsia de SL (n=126, INV/SHORT): `RR-bajo` 57/126 (45.2%) causa
+  dominante, `contra-estructura` 38/126 (30.2%) segundo, `estirado`
+  30/126 (23.8%) tercero — sin cambio de fondo.
 - **Decaimiento a vigilar (sigue sin ser formal)**: `decay_weekly_by_segment`
-  W40 (ya casi cerrada, se cierra mañana): 1m/INV/SHORT sigue recuperándose
-  (WR 37.0%→38.8%, E[R] -0.112→**-0.08**, n=46→49) pero sigue negativo vs
-  W39 (WR 52.5%, E[R]=0.031); 2m/INV/SHORT **también se recupera hoy**
-  (E[R] -0.193→**-0.07**, n=16→20, WR 50.0%→55.0%) — se corrige la
-  dirección de "empeora" de ayer. Con n todavía en las decenas y un
-  historial errático en este playbook, sigue sin tratarse como decaimiento
-  confirmado; los dos TF ahora recuperando a la vez sugiere ruido de
-  semana más que una tendencia — revisar de nuevo cuando cierre W40 mañana.
+  W40 (cerrada): 1m/INV/SHORT E[R]=**-0.08**; W41 (parcial, n=23)
+  E[R]=**-0.038** — mejora un poco pero sigue negativo, segunda semana
+  débil seguida en este TF. 2m/INV/SHORT W40 E[R]=-0.018 → W41 (n=6)
+  E[R]=**+0.74** — se recupera pero n=6 es ruido puro, no leer como
+  tendencia. 5m sin muestra utilizable (n=1 en W41).
 
 ### Cruce con Session Analyst
-Sin desglose propio por `kind/side` en el script (ver cifras globales en
-`buy-retest.md`); n de este playbook demasiado chico para una lectura
-propia confiable.
+Primera lectura propia por `kind/side` hoy
+(`session_analyst_cross.by_kind_side`): `AVOID` n=28 E[R]=**-0.447**
+PF=0.3 — la caída más fuerte de los cuatro playbooks, confirma la
+hipótesis "AVOID rinde peor" de forma muy clara para este lado
+específico; `GO` n=6 E[R]=**0.513** (n mínimo); `WAIT` n=124
+E[R]=**0.024**. Orden GO > WAIT >> AVOID, con AVOID muy por debajo —
+aunque el n de AVOID (28) y GO (6) siguen chicos para certificar con
+CI90 propio, es la lectura por side más alineada con la hipótesis
+original de todo el bus.
 
 ### Decaimiento
 Ver "Contextos a evitar" arriba — sigue siendo el punto a vigilar de
 este playbook.
 
 ## Histórico de cambios
+- 2026-10-08 (jueves): `git pull` sin incidente real (ver
+  `buy-retest.md`). Dato +8/+2/+0 en 1m/2m/5m. **Hallazgo nuevo
+  (compartido con `buy-ifvg.md`): primera lectura con muestra real de
+  `sl_origin_vs_layer.since_change` para INV/SHORT — mover el SL a la
+  vela 1 del FVG perjudicaría con significancia en 1m** (delta=-0.341,
+  CI90=[-0.61,-0.066], `delta_below_zero=true`); 2m inconcluso (CI muy
+  ancho). Entre los dos playbooks INV, el cambio sólo ayudaría en 1m
+  INV/LONG — conclusión cruzada: no extender el cambio de SL aplicado en
+  RETEST a ningún segmento INV. Primera lectura propia del cruce con
+  Session Analyst por `kind/side`: `AVOID` sale muy negativo aquí
+  (E[R]=-0.447, PF=0.3, n=28) — la confirmación más clara de la
+  hipótesis "AVOID rinde peor" de los cuatro playbooks, aunque con n
+  todavía chico. 1m INV/SHORT cruza a E[R] ligeramente negativo
+  (-0.009), sin significancia, dentro del ruido habitual.
 - 2026-10-07 (miércoles): `git pull` limpio. Dato mínimo (+2/+0/+0 en
   1m/2m/5m), normal para INV. 1m cruza de vuelta a E[R]≈0 (-0.002→0.004),
   ruido de n chico, sin cambio de fondo — ningún TF certifica FDR.
