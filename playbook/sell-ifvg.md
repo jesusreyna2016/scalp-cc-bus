@@ -3,89 +3,101 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-08 (jueves) · n: 298)
+## Sección viva  (última revisión: 2026-10-09 (viernes) · n: 312)
 
 ### Nota de proceso
-`git pull` sin incidente real (ver `buy-retest.md`). Dato nuevo mínimo
-(+8/+2/+0 en 1m/2m/5m) — normal, INV sigue siendo mucho más esporádico
-que RETEST. Gate de ejecución sin cambio: INV sigue fuera de
-`shadowRules`.
+`origin/main` llegó con el historial git reescrito — ver nota completa
+en `buy-retest.md`, sin pérdida de contenido. Dato nuevo mínimo (+11/+1/+2
+en 1m/2m/5m) — normal, INV sigue siendo mucho más esporádico que RETEST.
+Gate de ejecución sin cambio: INV sigue fuera de `shadowRules`.
 
-**Hallazgo del día (método, compartido con `buy-ifvg.md`): primera
-lectura con muestra real de `sl_origin_vs_layer.since_change` para
-INV/SHORT — niega mover el SL a la vela 1 del FVG aquí también.** 1m
-INV/SHORT: n=69, delta=**-0.341** CI90=[-0.61,-0.066],
-`delta_below_zero=true` — significativamente peor con el SL `candle1`.
-2m: n=24, delta=-0.05 CI90=[-0.942,1.0], demasiado ancho para concluir.
-5m: todavía sin muestra post-cambio. Entre este playbook y
-`buy-ifvg.md`, el SL `candle1` sólo ayudaría en 1m INV/LONG y
-perjudicaría o es inconcluso en los otros 4 segmentos INV — **conclusión
-cruzada: no extender `sl-retest-wick`/`candle1` a ningún segmento INV**,
-confirma que la exclusión original de `kind=INV` en el experimento fue
-correcta.
+Sin hallazgo nuevo material hoy — `sl_origin_vs_layer.since_change`
+(`candle1`) confirma el mismo patrón de ayer: 1m INV/SHORT sigue
+perjudicado con significancia (n=79, delta=**-0.382**
+CI90=[-0.627,-0.126], antes -0.341); 2m sigue inconcluso (n=26,
+delta=-0.046 CI90=[-0.832,0.889], CI90 demasiado ancho); 5m tiene su
+primera lectura, n=5, inconcluyente (n insuficiente para bootstrap).
+Sin cambio en la conclusión cruzada: no extender `sl-retest-wick`/`candle1`
+a ningún segmento INV.
 
 ### Veredicto global
-1m n=200 (+8) WR 44.5% E[R]=**-0.009** PF=0.98 (cruza a negativo, dentro
-de ruido de n chico — ya había estado ahí antes); 2m n=82 (+2) WR 43.9%
-E[R]=**0.126** PF=1.28 (sin cambio de fondo); 5m n=16 (+0) WR 56.2%
-E[R]=**0.185** PF=1.52 (sin dato nuevo). `segment_significance`: 1m
-CI90=[-0.133,0.128] n=189 (sigue sin certificar); 2m
-CI90=[-0.114,0.394] n=79 (sin certificar); 5m CI90=[-0.278,0.695] n=14
-(sin certificar) — ningún TF de este playbook certifica FDR hoy, sin
-cambio de fondo.
+1m n=211 (+11) WR 45.0% E[R]=**0.028** PF=1.06 (vuelve a positivo, vs
+-0.009 de ayer — confirma que era ruido de n chico, no una tendencia
+real); 2m n=83 (+1) WR 42.2% E[R]=**0.083** PF=1.18 (baja vs 0.126,
+dentro de ruido de n chico); 5m n=18 (+2) WR 55.6% E[R]=**0.128** PF=1.34
+(baja vs 0.185, n chico). `segment_significance`: 1m CI90=[-0.105,0.155]
+n=199 (sigue sin certificar); 2m CI90=[-0.156,0.347] n=80 (sin
+certificar); 5m CI90=[-0.304,0.572] n=16 (sin certificar) — ningún TF de
+este playbook certifica FDR hoy, sin cambio de fondo.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en ninguna rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `nearEdge=-1` | sigue negativo | 178 | E[R]=**-0.023** | baja |
-| 2 | `nearEdge=0` | positivo | 110 | E[R]=**+0.095** | baja — n todavía chico |
+| 1 | `nearEdge=-1` | sigue negativo | 187 | E[R]=**-0.025** | baja |
+| 2 | `nearEdge=0` | positivo | 115 | E[R]=**+0.128** | baja — n todavía chico |
 | 3 | `nearEdge=1` | positivo fuerte, n mínimo | 10 | E[R]=**+0.521** | muy baja — n=10, no usable |
-| 4 | `tier=B` | sigue negativo | 103 | E[R]=**-0.052** PF=0.9 | baja |
-| 5 | `tier=C` | positivo, sigue mejor que B | 195 | E[R]=**+0.088** PF=1.2 | baja-moderada |
+| 4 | `tier=B` | sigue negativo | 105 | E[R]=**-0.016** PF=0.97 | baja |
+| 5 | `tier=C` | positivo, sigue mejor que B | 207 | E[R]=**+0.083** PF=1.19 | baja-moderada |
 | 6 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar | — | sin veredicto único | baja |
-| 7 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — perjudica con significancia en 1m, inconcluso en 2m | 69 (1m) / 24 (2m) | delta -0.341 (1m, confirma negativo) / -0.05 (2m, CI90 demasiado ancho) | moderada — ver Nota de proceso |
+| 7 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — perjudica con significancia en 1m, inconcluso en 2m/5m | 79 (1m) / 26 (2m) / 5 (5m) | delta -0.382 (1m, confirma negativo) / -0.046 (2m, CI90 ancho) / -0.214 (5m, n mínimo) | moderada — ver Nota de proceso |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=189 delta=**+0.206**
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=199 delta=**+0.213**
   (la gestión sigue ayudando mucho más que en cualquier otro segmento del
-  bus, sobre E[R] base cercano a cero); 2m n=79 delta=**+0.016**; 5m n=14
-  delta=**+0.066**. Sin cambio de regla.
+  bus, sobre E[R] base cercano a cero); 2m n=80 delta=**+0.074** (sube
+  harto vs +0.016 de ayer con sólo +1 n — volatilidad típica de muestra
+  chica, no leer como tendencia); 5m n=16 delta=**+0.08**. Sin cambio de
+  regla.
 - **SL de 3 capas vs SL = vela 1 del FVG**: ver Nota de proceso arriba —
   perjudica en 1m, no proponer.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (n=126, INV/SHORT): `RR-bajo` 57/126 (45.2%) causa
-  dominante, `contra-estructura` 38/126 (30.2%) segundo, `estirado`
-  30/126 (23.8%) tercero — sin cambio de fondo.
+- Autopsia de SL (n=132, INV/SHORT): `RR-bajo` 56/132 (42.4%) causa
+  dominante, `contra-estructura` 39/132 (29.5%) segundo, `estirado`
+  31/132 (23.5%) tercero — sin cambio de fondo (el conteo absoluto de
+  `RR-bajo` bajó de 57 a 56 pese a que n subió, probablemente por el
+  reordenamiento de pares que causa la colisión de `sigId` — ver
+  `report.alerts`, no es una señal real de mejora).
 - **Decaimiento a vigilar (sigue sin ser formal)**: `decay_weekly_by_segment`
-  W40 (cerrada): 1m/INV/SHORT E[R]=**-0.08**; W41 (parcial, n=23)
-  E[R]=**-0.038** — mejora un poco pero sigue negativo, segunda semana
-  débil seguida en este TF. 2m/INV/SHORT W40 E[R]=-0.018 → W41 (n=6)
-  E[R]=**+0.74** — se recupera pero n=6 es ruido puro, no leer como
-  tendencia. 5m sin muestra utilizable (n=1 en W41).
+  1m/INV/SHORT W40 (cerrada) E[R]=**-0.059** → W41 (n=35)
+  E[R]=**+0.165** — se recupera con la semana ya casi cerrada, deja de
+  ser una racha negativa de dos semanas. 2m/INV/SHORT W40 E[R]=-0.018 →
+  W41 (n=8) E[R]=**+0.305** — sigue siendo n chico, no leer como
+  tendencia. 5m sigue negativo ambas semanas (W40 -0.36, W41 -0.513) con
+  n=3 cada una — ruido puro, sin muestra para decidir.
 
 ### Cruce con Session Analyst
-Primera lectura propia por `kind/side` hoy
-(`session_analyst_cross.by_kind_side`): `AVOID` n=28 E[R]=**-0.447**
-PF=0.3 — la caída más fuerte de los cuatro playbooks, confirma la
-hipótesis "AVOID rinde peor" de forma muy clara para este lado
-específico; `GO` n=6 E[R]=**0.513** (n mínimo); `WAIT` n=124
-E[R]=**0.024**. Orden GO > WAIT >> AVOID, con AVOID muy por debajo —
-aunque el n de AVOID (28) y GO (6) siguen chicos para certificar con
-CI90 propio, es la lectura por side más alineada con la hipótesis
-original de todo el bus.
+`session_analyst_cross.by_kind_side`: `AVOID` n=28 E[R]=**-0.447** PF=0.3
+— la caída más fuerte de los cuatro playbooks, confirma la hipótesis
+"AVOID rinde peor" de forma muy clara para este lado específico; `GO`
+n=7 E[R]=**0.531** (n mínimo); `WAIT` n=135 E[R]=**0.058**. Orden
+GO > WAIT >> AVOID, con AVOID muy por debajo — aunque el n de AVOID (28)
+y GO (7) siguen chicos para certificar con CI90 propio, es la lectura
+por side más alineada con la hipótesis original de todo el bus.
 
 ### Decaimiento
-Ver "Contextos a evitar" arriba — sigue siendo el punto a vigilar de
-este playbook.
+Ver "Contextos a evitar" arriba — 1m mejora, ya no hay racha negativa
+clara en este playbook.
 
 ## Histórico de cambios
+- 2026-10-09 (viernes): `origin/main` llegó con el historial git
+  reescrito — ver nota completa en `buy-retest.md`, sin pérdida de
+  contenido. Dato +11/+1/+2 en 1m/2m/5m. 1m INV/SHORT vuelve a positivo
+  (E[R]=0.028, vs -0.009 ayer) confirmando que el cruce a negativo de
+  ayer era ruido de n chico, no tendencia. `decay_weekly_by_segment`
+  de 1m también se recupera (W41 E[R]=+0.165 vs W40 -0.059) — ya no hay
+  racha negativa de dos semanas en este TF. Sin hallazgo nuevo en
+  `sl_origin_vs_layer` (mismo patrón, 1m sigue perjudicado con
+  significancia). Nota menor: el conteo absoluto de la causa de SL
+  `RR-bajo` bajó de 57 a 56 pese a que n subió — consistente con el
+  reordenamiento de pares por la colisión de `sigId` que señala
+  `report.alerts`, no una mejora real.
 - 2026-10-08 (jueves): `git pull` sin incidente real (ver
   `buy-retest.md`). Dato +8/+2/+0 en 1m/2m/5m. **Hallazgo nuevo
   (compartido con `buy-ifvg.md`): primera lectura con muestra real de

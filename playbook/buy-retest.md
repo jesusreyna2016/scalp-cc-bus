@@ -3,68 +3,78 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-08 (jueves) · n: 14732)
+## Sección viva  (última revisión: 2026-10-09 (viernes) · n: 15120)
 
 ### Nota de proceso
-`git pull` traía el repo en `HEAD` detached sobre el mismo commit de
-`origin/main` (sin incidente real, sólo `checkout main` + fast-forward).
-Dato nuevo real +954 en este playbook (1m+569, 2m+277, 5m+108).
-`pendientes`=89 en todo el bus (sube de 9 — esperado tras el salto grande
-de señales nuevas de hoy, se resuelven solas por timeout de 24h si no
-llega outcome; no es señal de fallo de pipeline), `huérfanos`=40 —
-estable, octavo día seguido sin subir. La alerta `SIGID` sigue activa (1819 señales / 1691 outcomes
-colisionan, 978 con `result` distinto en outcomes — ver `report.alerts`)
-sin que Jesús haya tocado el generador de `sigId` en el Pine todavía
-(el propio script ahora documenta la hipótesis concreta: `bar_index` que
-se reinicia semanalmente, deltas casi siempre múltiplo de 7 días). Sigue
-siendo la causa más probable de las alertas `MUESTRA` en semanas ya
-cerradas (W36-W40 todas bajaron de n vs la corrida previa).
+`git pull` encontró el bus (`scalp-cc-bus`) con `HEAD` detached y el
+historial de `origin/main` **reescrito por completo** (force-push): no
+hay ancestro común entre el `main` local y `origin/main` (50 commits en
+cada rama, cero overlap), y `origin/main` ahora sólo cubre
+2026-10-07 23:31 → 2026-10-08 20:02 — ningún commit `agent:` visible en
+ese historial. El contenido en disco (este playbook, `state.json`,
+`experiments.json`) sí refleja correctamente la revisión de ayer, así
+que no hay pérdida de datos de medición, sólo de historial git previo a
+esa ventana (probable mantenimiento de tamaño del repo del lado del cron
+de Netlify). Se resolvió sin tocar el `main` local (rama nueva
+`work-sync` sobre `origin/main`, push normal desde ahí) — avisar a Jesús,
+no es algo que el agente deba decidir solo. Dato nuevo real +241/+99/+48
+en este playbook (1m/2m/5m). `pendientes`=68 en todo el bus (baja de 89,
+se resolvieron por timeout de 24h, esperado), `huérfanos`=40 — estable,
+sin subir. La alerta `SIGID` sigue activa y crece con el dataset (2000
+señales / 1855 outcomes colisionan, 1074 con `result` distinto — ver
+`report.alerts`), sin que Jesús haya tocado el generador de `sigId` en
+el Pine todavía. Sigue siendo la causa más probable de las alertas
+`MUESTRA` en semanas ya cerradas (W36-W40 todas bajaron de n otra vez
+vs la corrida previa — previsible mientras el `sigId` no sea único).
 
-**Hallazgo nuevo más importante de hoy: `rr1_threshold_cut_oos` (ventana
-OOS = W40+W41) muestra que el BASELINE de `1m/RETEST/LONG` — sin ningún
-corte de `rr1`, la señal cruda tal como sale hoy del indicador — ya es
-NEGATIVO con significancia real**: n=2841 E[R]=**-0.047**
-CI90=**[-0.081,-0.009]** (no cruza cero, p_mean_le_0=0.98). No es un
-artefacto de exigir más RR: cada escalón de corte lo empeora más
-(cut≥1.2 E[R]=-0.105; cut≥2.0 E[R]=-0.208, todos CI90 negativos). Esto es
-consistente con "Decaimiento" abajo (1m/RETEST/LONG lleva ya W40 y W41
-en E[R] semanal negativo) — ya no es sólo una lectura de semana parcial
-chica, es el número que cuenta (walk-forward) confirmándolo con n=2841.
-**`2m/RETEST/LONG` en la misma ventana OOS está plano** (n=1348
-E[R]=-0.005 CI90=[-0.051,0.044], cruza cero) pero cualquier corte de
-`rr1` lo vuelve negativo con significancia (cut≥1.2 E[R]=-0.137
-CI90=[-0.237,-0.03]). **`5m/RETEST/LONG` es el único de los tres que
-sigue positivo y significativo OOS** (n=483 E[R]=**0.123**
-CI90=[0.031,0.215]). Conclusión sin cambio respecto a la decisión de
-ayer pero con evidencia más fuerte: **no proponer `sc_min_rr`/
-`sc_aplus_rr` al alza en ningún TF LONG** — en 1m/2m ni siquiera el
-baseline sin filtro aguanta la ventana OOS actual, filtrar más no genera
-una señal positiva donde no la hay, la agrava.
+**Hallazgo más importante de hoy: con la ventana OOS (W40+W41) ya se
+puede evaluar el corte de `rr1` en los SEIS segmentos RETEST, y en
+NINGUNO mejora — incluidos los tres (1m SHORT, 2m SHORT, 5m LONG) que sí
+parecían prometedores in-sample** (ver `experiments.json`,
+`sc-min-rr-cut-2026-09-20`, status `proposed`). En LONG la historia
+empeora un poco más: `1m/RETEST/LONG` baseline OOS sube de
+E[R]=-0.047 (ayer) a **E[R]=-0.033 CI90=[-0.066,0.001]** (n=3144, el
+límite superior ya casi toca cero, pero sigue siendo compatible con
+negativo: p_mean_le_0=0.943) y dos de los cuatro cortes (1.2 y 1.5 y 2.0)
+siguen negativos con significancia real (hasta E[R]=-0.17 en cut≥2.0).
+**`2m/RETEST/LONG` baseline OOS sigue plano** (n=1467 E[R]=0.007
+CI90=[-0.038,0.057]) **pero ahora los CUATRO cortes de `rr1` son
+negativos con significancia** (cut≥1.2 E[R]=-0.105 CI90=[-0.206,-0.006]
+hasta cut≥2.0 E[R]=-0.218 CI90=[-0.375,-0.047]) — evidencia más fuerte
+que ayer de que filtrar por RR no ayuda en 2m LONG tampoco. **`5m/RETEST/LONG`
+sigue siendo el único LONG positivo y significativo OOS** (n=535
+E[R]=**0.1** CI90=[0.015,0.185]). Conclusión: **no proponer `sc_min_rr`/
+`sc_aplus_rr` al alza en ningún TF, ni LONG ni SHORT** (ver
+`sell-retest.md` para la simetría en SHORT) — la propuesta `proposed` en
+`experiments.json` queda invalidada por el walk-forward en los tres
+segmentos donde in-sample se veía bien; recomendación: marcarla como
+`rejected_oos` en la próxima limpieza del archivo.
 
 **Segundo hallazgo: `sl_basis_retest` sigue `verdict="flat"` en
-agregado, pero `since_change` (recvDate≥2026-09-26, muestra más grande
-hoy) ahora certifica limpio en 3 de los 6 segmentos RETEST, no en 1**:
-`1m/RETEST/SHORT` delta=+0.084 CI90=[0.008,0.158]; `2m/RETEST/LONG`
-delta=+0.105 CI90=[0.025,0.198]; **`5m/RETEST/LONG` certifica por
-primera vez** delta=+0.245 CI90=[0.022,0.523] (n=485, antes plano con
-CI90=[-0.059,0.137]). `1m/RETEST/LONG` sigue plano (n=2542
-delta=+0.015 CI90=[-0.048,0.073], y ambos `layer_expR`/`orig_expR`
-negativos — el deterioro de 1m LONG no depende de qué SL se mida, ver
-abajo). Ningún segmento sale `delta_below_zero=true`. Mejora de
-confianza en 5m LONG específicamente; sin cambio en 1m LONG.
+agregado pero certifica en los mismos 3 de 6 segmentos que ayer, y
+`1m/RETEST/LONG` mejora de signo por primera vez**: delta
+`orig_minus_layer`=**+0.063** CI90=[-0.009,0.143] (todavía no certifica,
+pero ya no cruza tan al centro — antes +0.015 CI90=[-0.048,0.073]) y
+`orig_expR` pasó de negativo (-0.025) a **positivo (+0.028)** aunque
+`layer_expR` sigue negativo (-0.035, sin cambio de régimen). `2m/RETEST/LONG`
+confirma limpio (+0.078 CI90=[0.006,0.157]) y `5m/RETEST/LONG` sigue
+confirmando fuerte (+0.231 CI90=[0.023,0.468]). Ningún segmento LONG sale
+`delta_below_zero=true`. Lectura: el SL de mecha del retest no es la
+causa del deterioro de 1m LONG (es de régimen/entrada), pero tampoco lo
+empeora — y hay una señal temprana (sin certificar aún) de que podría
+estar ayudando un poco más que antes.
 
 ### Veredicto global
-1m n=9148 (+569) WR 44.9% E[R]=**0.033** PF=1.07 (bajó vs ayer 0.038,
-dentro de la tendencia de Decaimiento); 2m n=4100 (+277) WR 47.1%
-E[R]=**0.034** PF=1.07 (estable); 5m n=1484 (+108) WR 51.5%
-E[R]=**0.127** PF=**1.29** (sube un poco, sigue bajo el umbral de 1.3).
-`segment_significance`: 1m CI90=[0.011,0.055] n=8876 `survives_fdr10=true`
-p=0.009; **2m CI90=[0.002,0.065] n=3958 `survives_fdr10=true` p=0.043 —
-deja de estar "al filo", ya no cruza cero**; 5m CI90=[0.073,0.18]
-n=1407 `survives_fdr10=true` p=0.0. Los tres TF siguen con edge
-estadísticamente real en agregado histórico — pero ver el hallazgo de
-arriba: en la ventana OOS reciente (W40+W41) 1m ya es negativo y 2m está
-plano, sólo 5m sostiene el edge fuera de muestra ahora mismo.
+1m n=9389 (+241) WR 45.0% E[R]=**0.034** PF=1.07 (estable vs ayer 0.033);
+2m n=4199 (+99) WR 47.5% E[R]=**0.038** PF=1.08 (sube un poco); 5m n=1532
+(+48) WR 51.3% E[R]=**0.12** PF=1.27 (baja un poco vs 1.29, sigue bajo el
+umbral de 1.3). `segment_significance`: 1m CI90=[0.013,0.055] n=9102
+`survives_fdr10=true` p=0.004; 2m CI90=[0.006,0.07] n=4050
+`survives_fdr10=true` p=0.025; 5m CI90=[0.065,0.172] n=1452
+`survives_fdr10=true` p=0.0. Los tres TF siguen con edge estadísticamente
+real en agregado histórico — pero ver el hallazgo de arriba: en la
+ventana OOS reciente (W40+W41) 1m sigue al borde de negativo, 2m sigue
+plano, sólo 5m sostiene el edge fuera de muestra con holgura.
 **Escalera de ejecución: sigue en peldaño 1 (Sombra)**, cero ejecución
 real. `gate.readyForLive` sigue `false`/`segment=null`.
 
@@ -72,100 +82,112 @@ real. `gate.readyForLive` sigue `false`/`segment=null`.
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true` en histórico agregado) | TOMAR en agregado histórico, pero **OOS reciente (W40+W41) ya es negativo con significancia** — ver Nota de proceso | 8876 | histórico E[R]=**0.033** CI90=[0.011,0.055]; OOS E[R]=**-0.047** CI90=[-0.081,-0.009] | alta en agregado histórico, **baja en lo reciente — vigilar de cerca** |
-| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido y el único que sostiene OOS reciente — **PF sigue bajo 1.3 (1.29)** | 1407 | E[R]=**0.127** CI90=[0.073,0.18]; OOS E[R]=0.123 CI90=[0.031,0.215] | alta — el más confiable de los tres hoy |
-| 3 | `tf=2m` (`survives_fdr10=true`, ya no al filo) | TOMAR con cautela — histórico agregado positivo pero OOS reciente plano | 3958 | histórico E[R]=**0.034** CI90=[0.002,0.065]; OOS E[R]=-0.005 CI90=[-0.051,0.044] | moderada — mejoró en histórico, sin confirmar en lo reciente |
-| 4 | `tier=A+` | **negativo**, WR muy bajo (RR alto exige que el trade recorra mucho) | 1069 | WR 22.3%, E[R]=**-0.029** PF=0.96 | moderada — evitar, sin cambio de fondo |
-| 5 | `tier=B` | TOMAR, prioridad sobre A+ y C | 6325 | WR 46.9% E[R]=**0.063** PF=1.13 vs tier C WR 49.0% E[R]=0.035 PF=1.07 | alta |
-| 6 | símbolo (`cross_instrument`), 1m/2m/5m | los tres `universal` (GC el más débil en 1m, único símbolo NEGATIVO: E[R]=**-0.016**, n=1384, wrTP1=42.0 vs resto 45-46% — vigilar si se aísla más) | — | spread 0.09-0.169, bajo | moderada |
+| 1 | `tf=1m` (`survives_fdr10=true` en histórico agregado) | TOMAR en agregado histórico, pero **OOS reciente (W40+W41) sigue al borde de negativo** — ver Nota de proceso | 9102 | histórico E[R]=**0.034** CI90=[0.013,0.055]; OOS E[R]=**-0.033** CI90=[-0.066,0.001] | alta en agregado histórico, **baja en lo reciente — vigilar de cerca** |
+| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido y el único que sostiene OOS reciente — **PF sigue bajo 1.3 (1.27)** | 1452 | E[R]=**0.12** CI90=[0.065,0.172]; OOS E[R]=0.1 CI90=[0.015,0.185] | alta — el más confiable de los tres hoy |
+| 3 | `tf=2m` (`survives_fdr10=true`) | TOMAR con cautela — histórico agregado positivo pero OOS reciente plano, y cualquier filtro de `rr1` lo vuelve negativo | 4050 | histórico E[R]=**0.038** CI90=[0.006,0.07]; OOS E[R]=0.007 CI90=[-0.038,0.057] | moderada — sin confirmar en lo reciente |
+| 4 | `tier=A+` | **negativo**, WR muy bajo (RR alto exige que el trade recorra mucho) | 1113 | WR 22.3%, E[R]=**-0.025** PF=0.96 | moderada — evitar, sin cambio de fondo |
+| 5 | `tier=B` | TOMAR, por encima de A+; C sigue por detrás pero cerca | 6485 | WR 47.2% E[R]=**0.066** PF=1.14 vs tier C WR 49.1% E[R]=0.034 PF=1.07 | alta |
+| 6 | símbolo (`cross_instrument`), 1m/2m/5m | los tres `universal`; GC en 1m mejora a casi plano (E[R]=**-0.007**, n=1455, antes -0.016) — deja de ser el único símbolo claramente negativo | — | spread 0.09-0.156, bajo | moderada |
 | 7 | `aligned=0` (contra-tendencia HTF) | muestra demasiado chica para usar | — | sin revisión hoy | baja |
-| 8 | `tf=5m` + gate numérico puro | Sigue sin cumplirse (PF 1.29<1.3) — y aunque se cumpliera, el agente sigue sin certificar el peldaño 2: falta estabilidad semanal y un experimento `confirmed` sobre la causa de SL dominante | 1484 | PF 1.29, WR 51.5% | alta — gate de ejecución, no de señal |
-| 9 | subir `rr1` mínimo (candidato `sc_min_rr`) en LONG | **NO proponer, evidencia más fuerte hoy** — en 1m/2m ni el baseline sin filtro aguanta la ventana OOS, cualquier corte lo empeora con significancia | 2841 (1m) / 1348 (2m) | OOS E[R] baseline ya negativo o plano; todos los cortes lo empeoran, CI90 no cruza cero en los que empeoran | alta — ver `experiments.json` |
+| 8 | `tf=5m` + gate numérico puro | Sigue sin cumplirse (PF 1.27<1.3) — y aunque se cumpliera, el agente sigue sin certificar el peldaño 2: falta estabilidad semanal y un experimento `confirmed` sobre la causa de SL dominante | 1532 | PF 1.27, WR 51.3% | alta — gate de ejecución, no de señal |
+| 9 | subir `rr1` mínimo (candidato `sc_min_rr`) en LONG | **NO proponer** — ahora los 4 cortes empeoran 2m LONG con significancia (antes sólo se sabía de 1m), y 1m sigue negativo/al filo en baseline | 3144 (1m) / 1467 (2m) | OOS E[R] baseline negativo/plano; todos los cortes de 2m LONG salen negativos con CI90 que no cruza cero | alta — ver `experiments.json` |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara de calidad
   de entrada en este segmento.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=8872 delta=**+0.095**
-  (estable, sigue sumando); 2m n=3957 delta=**+0.045** (estable); 5m
-  n=1407 delta=**-0.029** (sigue siendo el único TF donde la gestión
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=9098 delta=**+0.093**
+  (estable, sigue sumando); 2m n=4049 delta=**+0.041** (estable); 5m
+  n=1452 delta=**-0.025** (sigue siendo el único TF donde la gestión
   resta en LONG, sin cambio de fondo). Regla sin cambios: escalera en
   1m/2m, mercado simple en 5m LONG.
 - **SL de 3 capas vs SL = mecha del retest.** `sl_origin_vs_layer.since_change`
-  (n=7610 total RETEST+INV, `recvDate≥2026-09-26`) en LONG: 1m n=2542
-  delta=**+0.015** CI90=[-0.048,0.073] (plano, y **tanto `layer_expR`
-  como `orig_expR` son negativos** -0.039 / -0.025 — el deterioro de
-  1m/RETEST/LONG post-cambio no depende de qué SL se mida, es del
-  régimen, consistente con el hallazgo OOS de arriba); 2m n=1272
-  delta=**+0.105** CI90=[0.025,0.198] (confirma limpio,
-  `orig_saved_from_SL`=1 vs `orig_caused_SL`=196 — gana por pagar más los
-  pocos que evita, no por evitar muchos); **5m n=485 delta=+0.245
-  CI90=[0.022,0.523] — confirma limpio por primera vez** (antes plano).
-  Ningún segmento LONG sale `delta_below_zero=true`. **Decisión sin
-  cambio: mantener aplicado en los 6 segmentos** — confianza sube en 5m
-  LONG, sigue siendo el único débil 1m LONG (y por régimen, no por el
-  SL). `prediction_scoreboard` sigue en hit_direction_rate=33.3% (n=6,
-  peor que un volado, sin dato nuevo hoy).
+  (n=8338 total RETEST+INV, `recvDate≥2026-09-26`) en LONG: 1m n=2801
+  delta=**+0.063** CI90=[-0.009,0.143] (todavía plano, pero mejora de
+  signo: **`orig_expR` pasó a positivo +0.028** mientras `layer_expR`
+  sigue negativo -0.035 — el deterioro de 1m/RETEST/LONG sigue siendo de
+  régimen, no del SL, pero el SL de mecha ya no se ve arrastrado por él);
+  2m n=1377 delta=**+0.078** CI90=[0.006,0.157] (confirma limpio,
+  `orig_saved_from_SL`=1 vs `orig_caused_SL`=215); **5m n=533
+  delta=+0.231 CI90=[0.023,0.468] — sigue confirmando fuerte**. Ningún
+  segmento LONG sale `delta_below_zero=true`. **Decisión sin cambio:
+  mantener aplicado en los 6 segmentos** — 1m LONG empieza a mostrar
+  mejora temprana sin certificar aún. `prediction_scoreboard` sigue en
+  hit_direction_rate=33.3% (n=6, peor que un volado, sin dato nuevo hoy).
 - **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)** — gate 0→1
   cumplido desde el 2026-10-04, sin cambio hoy. W41 (semana en curso,
-  global ambos lados) n=3023 shadow / n=3075 raw, shadow E[R]=**0.031**
-  vs raw **0.038** (`shadow_beats_raw=false`) — W41 sigue sin batir al
-  crudo con más muestra que ayer, pero **es semana en curso, no cerrada**
-  (no cuenta para el gate de 3 semanas, que ya se cumplió con W37-W40).
-  Histórico completo: shadow E[R]=**0.052** CI90=[0.039,0.066] n=22907
-  vs raw E[R]=0.049 CI90=[0.036,0.062] n=24836 — shadow sigue ganando en
-  agregado.
+  global ambos lados) n=3915 shadow / n=3967 raw, shadow E[R]=**0.033**
+  vs raw **0.038** (`shadow_beats_raw=false`) — sigue sin batir al crudo
+  con más muestra, pero **es semana en curso, no cerrada** (no cuenta
+  para el gate de 3 semanas, que ya se cumplió con W37-W40 (4 semanas
+  seguidas); de las 6 semanas con dato hasta hoy, sólo W36 y W41 (en
+  curso) no baten al crudo).
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las pérdidas LONG (n=6912, RETEST/LONG): `RR-bajo`
-  2574/6912 (37.2%) causa dominante, `killzone-Asia-largo` 2489/6912
-  (36.0%) segundo, `contra-estructura` 2366/6912 (34.2%) tercero,
-  `stop-en-el-minimo` 2265/6912 (32.8%) cuarto — sin cambio de fondo, las
+- Autopsia de SL sobre las pérdidas LONG (n=7068, RETEST/LONG): `RR-bajo`
+  2642/7068 (37.4%) causa dominante, `killzone-Asia-largo` 2576/7068
+  (36.4%) segundo, `contra-estructura` 2405/7068 (34.0%) tercero,
+  `stop-en-el-minimo` 2321/7068 (32.8%) cuarto — sin cambio de fondo, las
   cuatro causas siguen muy cerca entre sí (no hay una causa dominante
   clara y aislada, es una mezcla). El SL estructural (`sl_basis_retest`)
   es el candidato que mejor ataca `RR-bajo`; hoy confirma limpio en 2m y
-  5m LONG, sigue plano en 1m LONG — **esto sigue siendo exactamente lo
-  que le falta al gate del peldaño 2** (causa dominante mitigada en 2/3
-  TF, no en los 3).
+  5m LONG, con mejora temprana (sin certificar) en 1m LONG — **esto sigue
+  siendo exactamente lo que le falta al gate del peldaño 2** (causa
+  dominante mitigada en 2/3 TF, no en los 3).
 
 ### Cruce con Session Analyst
-RETEST/LONG específicamente: `AVOID` n=1197 E[R]=**-0.016** PF=0.97 —
+RETEST/LONG específicamente: `AVOID` n=1190 E[R]=**-0.014** PF=0.97 —
 peor que GO/WAIT del mismo kind/side, consistente con el patrón general.
-`GO` n=1092 E[R]=**0.102** PF=1.22; `WAIT` n=4227 E[R]=**0.038** PF=1.08
+`GO` n=1174 E[R]=**0.074** PF=1.16; `WAIT` n=4465 E[R]=**0.044** PF=1.09
 — orden GO > WAIT > AVOID sostenido dentro de RETEST/LONG mismo. A nivel
-global (todo kind/side): `AVOID` n=1990 E[R]=**0.005** CI90=[-0.04,0.05]
-(no significativo, cruza cero); `GO` n=1609 E[R]=**0.108**
-CI90=[0.056,0.16] y `WAIT` n=8068 E[R]=**0.047** CI90=[0.024,0.071]
+global (todo kind/side): `AVOID` n=1979 E[R]=**0.007** CI90=[-0.039,0.053]
+(no significativo, cruza cero); `GO` n=1715 E[R]=**0.094**
+CI90=[0.046,0.145] y `WAIT` n=8495 E[R]=**0.052** CI90=[0.03,0.075]
 (ambos certifican) — orden GO > WAIT > AVOID sostenido, sin cambio de
 fondo.
 
 ### Decaimiento
-`decay_weekly` (global, todo kind/side): 2026-W40 (cerrada) E[R]=0.017;
-**2026-W41 (parcial, n=3152) E[R]=0.038** — sube con más muestra de la
-semana, consistente con la lección de método de no leer semanas
-parciales chicas como decaimiento confirmado. Ninguna semana cruza el
-umbral formal (>15pts WR vs media 3 previas). **Por segmento,
-1m/RETEST/LONG es ahora el caso más claro de decaimiento real, no sólo
-sospecha**: W38 E[R]=0.12 → W39 E[R]=0.063 → **W40 (cerrada)
-E[R]=-0.039** → **W41 (parcial, n=1113) E[R]=-0.032** — dos semanas
-consecutivas negativas, la primera ya cerrada, confirmado también por el
-`rr1_threshold_cut_oos` de arriba (n=2841, CI90 no cruza cero). WR del
-mismo segmento sólo bajó de 48.2% (W38) a 42.6-44.8% (W40-W41) — **no
-cruza el umbral automático de >15pts de `analyze.py`, pero el E[R] sí es
-negativo con significancia real; el umbral de WR solo no es suficiente
-para detectar este caso.** 2m/RETEST/LONG mejoró: W40 E[R]=0.005 → W41
-E[R]=**0.017** (positivo, ya no es motivo de alarma). 5m/RETEST/LONG
-sigue sólido: W40 E[R]=0.101 → W41 E[R]=**0.113**. El `walk_forward`
-(test=W40+W41) da `best_scheme_oos_expR=0.025` agregado (todo RETEST
-ambos lados), sigue bajo el `trainExpR=0.063` in-sample, pero esa cifra
-agregada esconde que 1m LONG específicamente ya es negativo OOS.
-**Resumen: 1m/RETEST/LONG es el punto de decaimiento real de este
-playbook — vigilar de cerca en la revisión semanal del domingo
-2026-10-11; 2m y 5m LONG están sanos.**
+`decay_weekly` (global, todo kind/side): 2026-W40 (cerrada) E[R]=0.018;
+**2026-W41 (parcial, n=4075) E[R]=0.04** — sin cambio material vs ayer.
+Ninguna semana cruza el umbral formal (>15pts WR vs media 3 previas).
+**Por segmento, 1m/RETEST/LONG sigue siendo el caso de decaimiento real,
+pero se suaviza un poco**: W38 E[R]=0.122 → W39 E[R]=0.062 → **W40
+(cerrada) E[R]=-0.036** → **W41 (parcial, n=1437) E[R]=-0.013** — sigue
+siendo la segunda semana consecutiva negativa (la primera ya cerrada),
+pero menos negativa que la lectura parcial de ayer (-0.032). WR del
+mismo segmento se mantiene en 42.7-45.5% en W40-W41 (sin cruzar el
+umbral automático de >15pts, el E[R] sigue siendo la señal real aquí).
+2m/RETEST/LONG sigue sano: W40 E[R]=0.002 → W41 E[R]=**0.046**
+(mejora). 5m/RETEST/LONG sigue sólido aunque baja un poco: W40
+E[R]=0.101 → W41 E[R]=**0.065**. El `walk_forward` (test=W40+W41) da
+`best_scheme_oos_expR=0.028` agregado (todo RETEST ambos lados), sigue
+bajo el `trainExpR=0.064` in-sample, y esa cifra agregada sigue
+escondiendo que 1m LONG específicamente está al borde de negativo OOS.
+**Resumen: 1m/RETEST/LONG sigue siendo el punto a vigilar de este
+playbook — tema central de la revisión semanal del domingo 2026-10-11;
+2m y 5m LONG están sanos.**
 
 ## Histórico de cambios
+- 2026-10-09 (viernes): **anomalía de proceso**: `origin/main` del bus
+  llegó con el historial git reescrito (force-push), sin ancestro común
+  con el `main` local y cubriendo sólo ~20h (2026-10-07/08) — se resolvió
+  sin tocar refs existentes (rama `work-sync` sobre `origin/main`); el
+  contenido en disco no se perdió. Dato nuevo +241/+99/+48 (1m/2m/5m).
+  **Hallazgo más importante: con la ventana OOS ya se puede evaluar
+  `rr1_threshold_cut` en los 6 segmentos RETEST y en ninguno mejora**,
+  incluidos los 3 (1m SHORT, 2m SHORT, 5m LONG) que se veían bien
+  in-sample en el experimento `proposed` `sc-min-rr-cut-2026-09-20` — se
+  recomienda marcarlo `rejected_oos`. En LONG, `2m/RETEST/LONG` pasa a
+  tener los 4 cortes de `rr1` negativos con significancia (antes sólo se
+  sabía de 1m); `1m/RETEST/LONG` baseline OOS mejora ligeramente
+  (-0.047→-0.033) pero sigue compatible con negativo. Segundo hallazgo:
+  `sl_origin_vs_layer` en 1m LONG mejora de signo por primera vez
+  (`orig_expR` pasa a positivo) aunque el delta todavía no certifica.
+  1m/RETEST/LONG W41 (parcial) sube de E[R]=-0.032 a -0.013, menos
+  negativo que ayer pero sigue siendo la segunda semana cerrada+parcial
+  consecutiva en rojo.
 - 2026-10-08 (jueves): `git pull` sin incidente real (repo quedó en
   `HEAD` detached sobre el mismo commit remoto, se resolvió con
   `checkout main` + fast-forward). Dato nuevo grande (+954: 1m+569,
