@@ -3,112 +3,101 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-09 (viernes) · n: 10419)
+## Sección viva  (última revisión: 2026-10-10 (sábado) · n: 11211)
 
 ### Nota de proceso
-`origin/main` del bus llegó con el historial git reescrito — ver nota
-completa y detalle de la resolución en `buy-retest.md` (no hubo pérdida
-de contenido, sólo de historial git previo a 2026-10-07). Dato nuevo
-real +192/+85/+38 en este playbook (1m/2m/5m). `pendientes`=68 (baja de
-89, esperado), `huérfanos`=40, estable.
+`git pull` encontró `HEAD` detached por un `main` local desactualizado,
+sin incidente de fondo (ver nota completa en `buy-retest.md`). Dato
+nuevo real +60/+31/+6 en este playbook (1m/2m/5m, crecimiento más chico
+que LONG hoy). `pendientes` baja de 68 a 17, `huérfanos`=40, estable.
+`sigId` sigue colisionando y creciendo (ver `buy-retest.md`), sin tocar
+el Pine.
 
-**Hallazgo nuevo más importante de hoy (compartido con `buy-retest.md`):
-con la ventana OOS (W40+W41) ya se puede evaluar `rr1_threshold_cut` en
-los 3 TF SHORT, y en NINGUNO mejora — incluidos `1m` y `2m` SHORT que se
-veían bien in-sample en el experimento `proposed`
-`sc-min-rr-cut-2026-09-20`.** `2m/RETEST/SHORT` baseline sigue siendo
-el más fuerte: n=1013 E[R]=**0.087** CI90=[0.024,0.152] — pero con
-cualquier corte de `rr1` el CI90 pasa a cruzar cero (cut≥1.2 E[R]=0.069
-CI90=[-0.066,0.207] hasta cut≥2.0 E[R]=0.02 CI90=[-0.2,0.25]): filtrar
-no suma nada, sólo reduce la muestra. `1m/RETEST/SHORT` baseline sigue
-casi significativo: n=2292 E[R]=0.041 CI90=[0.002,0.083] (el límite
-inferior casi en cero) y todos los cortes lo empeoran o lo vuelven no
-significativo (cut≥2.0 incluso se va a E[R]=-0.041). `5m/RETEST/SHORT`
-baseline n=372 E[R]=0.077 CI90=[-0.023,0.178], no significativo, sin
-cambio. **Conclusión: la propuesta de subir `sc_min_rr`/`sc_aplus_rr`
-queda invalidada por el walk-forward tanto en SHORT como en LONG** (ver
-`buy-retest.md`) — recomendación: marcar
-`sc-min-rr-cut-2026-09-20` como `rejected_oos` en `experiments.json`.
+El hallazgo central de hoy (gate de `5m/RETEST/LONG`, recuperación de
+1m/RETEST/LONG) está en `buy-retest.md` — no aplica directamente a
+SHORT, que sigue siendo el lado más estable de RETEST sin sorpresas.
+`rr1_threshold_cut_oos` SHORT: `1m` baseline sigue sin significancia
+clara (n=2361 E[R]=0.03 CI90=[-0.008,0.072], p=0.106, ligeramente peor
+que ayer); `2m` baseline positivo pero ahora al filo (n=1051
+E[R]=0.075 CI90=[0.012,0.141], p=0.027 — sigue significativo, el CI90
+se acerca más a cero que ayer); `5m` baseline sigue sin significancia
+(n=378 E[R]=0.073 CI90=[-0.028,0.171], p=0.12). Sin evidencia nueva que
+reabra `sc_min_rr`/`sc_aplus_rr` en SHORT — sigue `rejected_oos`.
 
 ### Veredicto global
-1m n=6567 (+192) WR 44.5% E[R]=**0.043** PF=1.09 (estable); 2m n=2816
-(+85) WR 47.7% E[R]=**0.081** PF=1.17 (estable); 5m n=1036 (+38) WR
-47.6% E[R]=**0.088** PF=1.19 (estable). `segment_significance`:
-**los TRES TF siguen `survives_fdr10=true`** — 1m CI90=[0.016,0.068]
-n=6206 p=0.001, 2m CI90=[0.039,0.125] n=2703 p=0.0, 5m
-CI90=[0.024,0.151] n=956 p=0.011. Los tres TF SHORT sostienen el edge en
-agregado histórico Y (a diferencia de LONG) 2m también lo sostiene en la
-ventana OOS reciente — ver Nota de proceso. `gate.readyForLive` sigue
-apuntando al segmento LONG (ver `buy-retest.md`), no a SHORT. Escalera
-de ejecución: sigue en peldaño 1 (Sombra), cero ejecución real.
+1m n=6627 (+60) WR 44.2% E[R]=**0.038** PF=1.08 (estable); 2m n=2847
+(+31) WR 47.4% E[R]=**0.076** PF=1.16 (estable); 5m n=1042 (+6) WR
+47.5% E[R]=**0.086** PF=1.19 (estable, crecimiento mínimo hoy).
+`segment_significance`: **los TRES TF siguen `survives_fdr10=true`** —
+1m CI90=[0.011,0.064] n=6250 p=0.007, 2m CI90=[0.035,0.118] n=2725
+p=0.001, 5m CI90=[0.023,0.149] n=961 p=0.013. `gate.readyForLive` sigue
+apuntando sólo a `5m/RETEST/LONG` (ver `buy-retest.md`), no a ningún
+segmento SHORT. Escalera de ejecución: sigue en peldaño 1 (Sombra).
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true` histórico, al filo en OOS reciente) | TOMAR en agregado histórico | 6206 | histórico E[R]=**0.043** CI90=[0.016,0.068]; OOS E[R]=0.041 CI90=[0.002,0.083] | alta en histórico, moderada en lo reciente |
-| 2 | `tf=2m` (`survives_fdr10=true`, confirma también en OOS reciente) | TOMAR — el más confiable de los tres SHORT hoy | 2703 | histórico E[R]=**0.081** CI90=[0.039,0.125]; OOS E[R]=0.087 CI90=[0.024,0.152] | alta |
-| 3 | `tf=5m` (`survives_fdr10=true` histórico) | TOMAR en agregado — no confirma en la ventana OOS chica todavía | 956 | histórico E[R]=**0.088** CI90=[0.024,0.151]; OOS E[R]=0.077 CI90=[-0.023,0.178] | moderada-alta |
-| 4 | `tier=A+` | sigue positivo, a diferencia de LONG (ver `buy-retest.md`) | 745 | WR 24.0% E[R]=**0.036** PF=1.05 | moderada |
-| 5 | `tier=B` vs `tier=C` | C sigue mejor | 4816 (B) / 4858 (C) | B E[R]=0.034 PF=1.07; C E[R]=**0.084** PF=1.18 | moderada |
-| 6 | símbolo (`cross_instrument`), 1m/2m/5m | los tres `universal`; en 2m aparecen por primera vez dos símbolos ligeramente negativos (ES -0.033 n=479, CL -0.009 n=457) sin cambiar el veredicto | — | spread 0.1-0.204 | moderada — vigilar ES/CL en 2m |
-| 7 | subir `rr1` mínimo (candidato `sc_min_rr`) en SHORT | **NO proponer, evidencia más fuerte hoy** — ningún TF SHORT gana significancia con el corte, y 1m/2m que se veían bien in-sample pierden significancia OOS con cualquier corte | 2292 (1m) / 1013 (2m) | CI90 cruza cero en todos los cortes de 1m y 2m | alta — ver `experiments.json` |
+| 1 | `tf=1m` (`survives_fdr10=true` histórico, sin significancia en OOS) | TOMAR en agregado histórico | 6250 | histórico E[R]=**0.038** CI90=[0.011,0.064]; OOS E[R]=0.03 CI90=[-0.008,0.072] | alta en histórico, moderada en lo reciente |
+| 2 | `tf=2m` (`survives_fdr10=true`, confirma también en OOS) | TOMAR — el más confiable de los tres SHORT hoy | 2725 | histórico E[R]=**0.076** CI90=[0.035,0.118]; OOS E[R]=0.075 CI90=[0.012,0.141] | alta |
+| 3 | `tf=5m` (`survives_fdr10=true` histórico) | TOMAR en agregado — no confirma en la ventana OOS chica todavía | 961 | histórico E[R]=**0.086** CI90=[0.023,0.149]; OOS E[R]=0.073 CI90=[-0.028,0.171] | moderada-alta |
+| 4 | `tier=A+` | sigue positivo, a diferencia de LONG (ver `buy-retest.md`) | 748 | WR 23.8% E[R]=**0.028** PF=1.04 | moderada |
+| 5 | `tier=B` vs `tier=C` | C sigue mejor | 4867 (B) / 4901 (C) | B E[R]=0.032 PF=1.07; C E[R]=**0.078** PF=1.17 | moderada |
+| 6 | símbolo (`cross_instrument`) | sin revisión fina hoy, sin cambios de fondo reportados | — | — | moderada |
+| 7 | subir `rr1` mínimo (candidato `sc_min_rr`) en SHORT | **NO proponer** — sigue `rejected_oos`, sin evidencia nueva | 2361 (1m) / 1051 (2m) | sin cambio de lectura vs ayer | alta — ver `experiments.json` |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara de
   calidad de entrada en este segmento.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=6199 delta=**+0.121**;
-  2m n=2703 delta=**+0.064**; 5m n=955 delta=**+0.018** — los tres
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=6243 delta=**+0.12**;
+  2m n=2725 delta=**+0.064**; 5m n=960 delta=**+0.016** — los tres
   positivos, SHORT sigue beneficiándose más de la gestión que LONG en 1m/2m.
 - **SL de 3 capas vs SL = mecha del retest.** `sl_origin_vs_layer.since_change`
-  (`recvDate≥2026-09-26`) en SHORT: **1m n=2079 delta=+0.093
-  CI90=[0.022,0.166] — sigue confirmando limpio**; 2m n=952 delta=**+0.037**
-  CI90=[-0.05,0.123] (plano, sin cambio); 5m n=361 delta=**+0.034**
-  CI90=[-0.06,0.142] (plano, sin cambio). Ningún `delta_below_zero=true`.
-  Sin cambio respecto a ayer: 3 de 6 segmentos RETEST confirman limpio
-  (1m SHORT + 2m/5m LONG) — el verdict agregado formal sigue en `flat`
-  (ver `buy-retest.md`).
-- **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)** — ver
-  `buy-retest.md` (sin desglose por side en `shadow_weekly`). W41 en
-  curso global n=3915 shadow/3967 raw, shadow=0.033 vs raw=0.038
-  (`shadow_beats_raw=false`), semana en curso no cerrada, no afecta el
-  gate ya cumplido (W37-W40).
+  en SHORT: **1m n=2127 delta=+0.094 CI90=[0.027,0.168] — sigue
+  confirmando limpio**; 2m n=981 delta=**+0.033** CI90=[-0.054,0.12]
+  (plano); 5m n=366 delta=**+0.037** CI90=[-0.058,0.14] (plano). Ningún
+  `delta_below_zero=true`. Sin cambio respecto a ayer: 1m SHORT +
+  2m/5m LONG son los 2 de 6 segmentos que certifican limpio hoy mientras
+  el efecto agregado del experimento se encoge (ver `buy-retest.md`).
+- **Modo sombra** — ver `buy-retest.md` (sin desglose por side). W41 en
+  curso no bate al crudo (parcial, no afecta el gate ya cumplido en
+  W37-W40).
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las pérdidas SHORT (RETEST/SHORT, n=4751):
-  `RR-bajo` 1722/4751 (36.2%) dominante, `stop-en-el-minimo` 1543/4751
-  (32.5%) segundo, `contra-estructura` 1502/4751 (31.6%) tercero — mezcla
+- Autopsia de SL sobre las pérdidas SHORT (RETEST/SHORT, n=4805):
+  `RR-bajo` 1740/4805 (36.2%) dominante, `stop-en-el-minimo` 1557/4805
+  (32.4%) segundo, `contra-estructura` 1527/4805 (31.8%) tercero — mezcla
   cerrada, sin cambio de fondo. El SL estructural ataca `RR-bajo` y sigue
-  confirmando limpio en 1m SHORT (ver Gestión) — mejora la mitigación de
-  la causa dominante en este playbook específicamente.
+  confirmando limpio en 1m SHORT (ver Gestión).
 
 ### Cruce con Session Analyst
 RETEST/SHORT específicamente: `AVOID` n=728 E[R]=**0.06** PF=1.12;
-`GO` n=510 E[R]=**0.133** PF=1.32; `WAIT` n=3785 E[R]=**0.065** PF=1.13 —
-GO es claramente el mejor, pero `AVOID` y `WAIT` siguen casi empatados
-(0.06 vs 0.065): **la hipótesis "AVOID rinde peor" sigue sin confirmarse
-tan limpio en SHORT como en LONG** (ver `buy-retest.md`, donde AVOID sí
-es visiblemente el peor) — sin CI90 propio por kind/side para probar
-significancia, mantener como nota de side, no regla. Cifras globales
-(todo kind/side) en `buy-retest.md`: GO > WAIT > AVOID sí se sostiene
-ahí con CI90 que no cruza cero en los tres.
+`GO` n=556 E[R]=**0.118** PF=1.28; `WAIT` n=3843 E[R]=**0.056** PF=1.11 —
+GO sigue claramente el mejor, pero `AVOID` y `WAIT` siguen casi
+empatados (0.06 vs 0.056): la hipótesis "AVOID rinde peor" sigue sin
+confirmarse tan limpio en SHORT como en LONG (ver `buy-retest.md`).
+Cifras globales (todo kind/side) sí sostienen GO > WAIT > AVOID con
+CI90 que no cruza cero en los tres.
 
 ### Decaimiento
-`decay_weekly` global: ver `buy-retest.md` (W41 sube a 0.04 con más
-muestra). **Por segmento, SHORT sigue sano en los tres TF, sin ningún
-caso de decaimiento como el de 1m/RETEST/LONG:** 1m/RETEST/SHORT W40
-E[R]=0.03 → W41 (n=1007) E[R]=**0.073** (mejora); 2m/RETEST/SHORT W40
-E[R]=0.114 → W41 (n=443) E[R]=**0.084** (baja un poco, sigue sólido);
-5m/RETEST/SHORT W40 E[R]=0.024 → W41 (n=166) E[R]=**0.083** (mejora).
-Los tres TF SHORT están positivos tanto en la última semana cerrada
-(W40) como en la parcial (W41) — contraste claro con `buy-retest.md`,
-donde 1m/RETEST/LONG sigue en rojo dos semanas seguidas. **SHORT sigue
-siendo hoy el lado más sano de RETEST.**
+**SHORT sigue sano, sin sorpresas (contraste con el hallazgo de LONG
+en `buy-retest.md`):** 1m/RETEST/SHORT W40 E[R]=0.029 → W41 (n=1081)
+E[R]=**0.048** (mejora); 2m/RETEST/SHORT W40 E[R]=0.114 → W41 (n=481)
+E[R]=**0.058** (baja, sigue sólido); 5m/RETEST/SHORT W40 E[R]=0.024 →
+W41 (n=172) E[R]=**0.075** (mejora). Los tres TF SHORT positivos en la
+semana parcial. **Esta semana la novedad real está del lado LONG — ver
+`buy-retest.md` — SHORT se mantiene estable como viene siendo la norma.**
 
 ## Histórico de cambios
+- 2026-10-10 (sábado): sin novedad propia de SHORT — el hallazgo del día
+  (gate de `5m/RETEST/LONG`, recuperación de `1m/RETEST/LONG`) es de
+  `buy-retest.md`. SHORT crece poco (+60/+31/+6) y se mantiene estable
+  en los 3 TF, sin cambio de lectura en ninguna regla. `rr1_threshold_cut_oos`
+  de 2m SHORT sigue significativo pero el CI90 se acerca más a cero que
+  ayer (p 0.027, antes más bajo) — vigilar sin alarma todavía.
 - 2026-10-09 (viernes): `origin/main` llegó con el historial git
   reescrito — ver nota completa en `buy-retest.md`, sin pérdida de
   contenido. Dato nuevo +192/+85/+38 en 1m/2m/5m. **Hallazgo más

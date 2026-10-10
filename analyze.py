@@ -1326,8 +1326,13 @@ def material_alerts(rep, prev_state=None):
             a.append(f"GESTION: '{wf['best_scheme_in_sample']['scheme']}' bate al siguiente-nivel fuera de muestra "
                      f"({wf['best_scheme_oos_expR']} vs {base}).")
     g = rep.get("gate", {})
-    if g.get("readyForLive"):
-        a.append("GATE: el segmento objetivo cumple el gate de ejecucion. Revisar escalera.")
+    if g.get("fullyReady"):
+        a.append(f"GATE: {g.get('segment')} cumple el gate de ejecucion COMPLETO (numerico + 3 semanas "
+                 f"estables + SL mitigado por experimento confirmado). Revisar escalera para subir de peldano.")
+    elif g.get("readyForLive"):
+        a.append(f"GATE: {g.get('segment')} cumple el chequeo numerico agregado (n/PF/WR) pero NO el gate "
+                 f"completo todavia -- weeklyStable3={g.get('weeklyStable3')}, "
+                 f"slCauseMitigated={g.get('slCauseMitigated')}. Es un near-miss a vigilar, no subir de peldano.")
     mv = (rep.get("managed_vs_naive", {}) or {}).get("overall", {})
     if mv.get("n", 0) >= 30 and mv.get("delta") is not None and abs(mv["delta"]) >= 0.15:
         verbo = "bate a" if mv["delta"] > 0 else "pierde contra"
@@ -1386,16 +1391,62 @@ def material_alerts(rep, prev_state=None):
                  f"con 'cambio del mes' y marcar experimental mas tiempo antes de subir confianza.")
     return a
 
-def exec_gate(rep):
-    """Evalua el gate de ejecucion sobre el mejor segmento (tf/kind/side)."""
+def exec_gate(rep, decay_by_seg):
+    """Evalua el gate de ejecucion sobre el mejor segmento (tf/kind/side).
+
+    readyForLive es solo el chequeo numerico agregado (lo que medía antes).
+    fullyReady exige ademas, sobre ESE MISMO segmento: 3 semanas CERRADAS
+    seguidas (se excluye la semana en curso) con WR>=50 & PF>=1.3
+    (weeklyStable3), y al menos un experimento con verdict=confirmed cuyo
+    segmento cubra este tf/kind/side (slCauseMitigated) -- las dos patas
+    que agent-instructions.md pide validar a mano y que antes el agente
+    tenia que cruzar leyendo decay_weekly_by_segment + experiments.json por
+    separado cada corrida. Solo fullyReady=true es luz verde real."""
     best = None
     for k, m in rep["by_tf_kind_side"].items():
         if m["n"] >= 100 and (m.get("expR") or -9) > 0 and (m.get("pf") or 0) >= 1.3 and (m.get("wrTP1") or 0) >= 50:
             if not best or m["expR"] > rep["by_tf_kind_side"][best]["expR"]:
                 best = k
+
+    weekly_stable, weekly_detail = None, []
+    sl_mitigated = False
+    if best:
+        tf, kind, side = best.split("/")
+        tf_num = tf.rstrip("m")
+        now = datetime.now(timezone.utc).isocalendar()
+        cur_wk = f"{now[0]}-W{now[1]:02d}"
+        closed_weeks = sorted(w for w in decay_by_seg if w != cur_wk)
+        last3 = closed_weeks[-3:]
+        ok_count = 0
+        for w in last3:
+            seg_wk = decay_by_seg.get(w, {}).get(best) or {}
+            ok = (seg_wk.get("wrTP1") or 0) >= 50 and (seg_wk.get("pf") or 0) >= 1.3
+            ok_count += int(ok)
+            weekly_detail.append({"week": w, "wrTP1": seg_wk.get("wrTP1"), "pf": seg_wk.get("pf"), "ok": ok})
+        weekly_stable = len(last3) >= 3 and ok_count == 3
+
+        for exp in (rep.get("experiments") or []):
+            if exp.get("verdict") != "confirmed":
+                continue
+            seg = exp.get("segment") or {}
+            if seg.get("kind") and seg.get("kind") != kind:
+                continue
+            if seg.get("side") and seg.get("side") != side:
+                continue
+            if seg.get("tf") and str(seg.get("tf")) != tf_num:
+                continue
+            sl_mitigated = True
+            break
+
     return {"readyForLive": bool(best), "segment": best,
-            "note": "n>=100 & E[R]>0 & PF>=1.3 & WR>=50 en un segmento tf/kind/side. Falta ademas: "
-                    "estabilidad 3 semanas + causa de SL dominante mitigada (lo valida el agente)."}
+            "weeklyStable3": weekly_stable, "weeklyDetail": weekly_detail,
+            "slCauseMitigated": sl_mitigated,
+            "fullyReady": bool(best) and bool(weekly_stable) and sl_mitigated,
+            "note": "readyForLive: n>=100 & E[R]>0 & PF>=1.3 & WR>=50 en un segmento tf/kind/side (solo "
+                    "agregado historico). fullyReady exige ademas weeklyStable3 (3 semanas CERRADAS seguidas "
+                    "con WR>=50 & PF>=1.3 en ese mismo segmento) y slCauseMitigated (experimento con "
+                    "verdict=confirmed dirigido a ese segmento). Solo fullyReady=true es luz verde real para "
+                    "subir de peldano; readyForLive=true con fullyReady=false es un near-miss a vigilar."}
 
 # ---------------------------------------------------------------------- main
 def exit_baseline(pairs):
@@ -1469,7 +1520,7 @@ def main():
     report["shadow_rules"] = shadow_rules_apply(pairs, sa_base)
     report["shadow_weekly"] = shadow_weekly(pairs, sa_base)
     report["news_context"] = news_context(pairs, sa)
-    report["gate"] = exec_gate(report)
+    report["gate"] = exec_gate(report, report["decay_weekly_by_segment"])
     causes, detail, causes_by_kind_side = sl_causes(pairs)
     report["sl_post_mortem"] = {"causes": causes, "n_losses": sum(1 for r in resolved if r["result"] == "SL"),
                                 "detail": detail[:60], "causes_by_kind_side": causes_by_kind_side}
@@ -1549,6 +1600,8 @@ def main():
     state.setdefault("recommendedParams", {"note": "lo mantiene el agente en la revision semanal"})
     state.setdefault("executionGate", {"phase": "advisor", "readyForLive": False})
     state["executionGate"]["readyForLive"] = report["gate"]["readyForLive"]
+    state["executionGate"]["fullyReady"] = report["gate"]["fullyReady"]
+    state["executionGate"]["segment"] = report["gate"]["segment"]
     with open(os.path.join(ROOT, "state.json"), "w", encoding="utf-8") as f:
         json.dump(state, f, indent=2, ensure_ascii=False)
 
