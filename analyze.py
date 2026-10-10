@@ -191,29 +191,58 @@ def sigid_collision_report():
 def build_pairs():
     sig_raw = load_events("signals")
     out_raw = load_events("outcomes")
-    sigs, outs = {}, {}
-    for r in sig_raw:
-        sid = r.get("sigId") or r.get("raw", {}).get("sigId")
-        if not sid or sid.startswith("TEST-"):
-            continue
-        sigs[sid] = r  # last wins
-    for r in out_raw:
-        sid = r.get("sigId") or r.get("raw", {}).get("sigId")
-        if not sid or sid.startswith("TEST-"):
-            continue
-        outs[sid] = r
+    # sigId is NOT unique: the Pine builds it from a bar_index that repeats, so the same
+    # sigId comes back days or weeks later as a different trade (sigid_collision_report).
+    # Keep every occurrence and pair each outcome with the latest earlier signal of that
+    # sigId, instead of "last wins" (which dropped one trade and mis-dated the other).
+    def _when(r):
+        return r.get("receivedAt") or ""
+
+    def _collect(rows):
+        by, seen = defaultdict(list), set()
+        for r in rows:
+            sid = r.get("sigId") or r.get("raw", {}).get("sigId")
+            if not sid or sid.startswith("TEST-"):
+                continue
+            k = (sid, r.get("raw", {}).get("ts") or _when(r))
+            if k in seen:      # exact re-send of the same event
+                continue
+            seen.add(k)
+            by[sid].append(r)
+        for v in by.values():
+            v.sort(key=_when)
+        return by
+
+    sig_by, out_by = _collect(sig_raw), _collect(out_raw)
+    occurrences = []           # (sid, signal, outcome or None)
+    matched_out = 0
+    for sid, slist in sig_by.items():
+        olist = out_by.get(sid, [])
+        taken = {}
+        for o in olist:
+            idx = None
+            for i, sg in enumerate(slist):
+                if _when(sg) <= _when(o):
+                    idx = i
+                else:
+                    break
+            if idx is not None and idx not in taken:
+                taken[idx] = o
+                matched_out += 1
+        for i, sg in enumerate(slist):
+            occurrences.append((sid, sg, taken.get(i)))
+    outs = out_by              # only used below for the orphan count
 
     now = datetime.now(timezone.utc)
     pairs = []
     orphan_out = 0
-    for sid, sg in sigs.items():
+    for sid, sg, o in occurrences:
         raw = sg.get("raw", {})
         recv = sg.get("receivedAt", "")
         try:
             recv_dt = datetime.fromisoformat(recv.replace("Z", "+00:00"))
         except Exception:
             recv_dt = now
-        o = outs.get(sid)
         oraw = o.get("raw", {}) if o else {}
         resolved = bool(o)
         forced_timeout = False
@@ -281,10 +310,9 @@ def build_pairs():
         }
         pairs.append(rec)
 
-    for sid in outs:
-        if sid not in sigs:
-            orphan_out += 1
-    return pairs, orphan_out, len(sigs), len(outs)
+    n_out = sum(len(v) for v in out_by.values())
+    orphan_out = n_out - matched_out   # outcomes with no earlier signal of that sigId
+    return pairs, orphan_out, len(occurrences), n_out
 
 # ------------------------------------------------------------------------ stats
 def _pct(xs, q):
@@ -1292,14 +1320,9 @@ def material_alerts(rep, prev_state=None):
     # (señal en barra historica no dispara alert, su outcome si) -> no es fallo.
     sid = rep.get("sigid_integrity", {}) or {}
     sid_sig, sid_out = sid.get("signals", {}), sid.get("outcomes", {})
-    if sid_sig.get("conflicting_result_n", 0) >= 5 or sid_out.get("conflicting_result_n", 0) >= 5:
-        a.append(f"SIGID: {sid_sig.get('collided_sigIds',0)} sigId de senales y {sid_out.get('collided_sigIds',0)} "
-                 f"de outcomes colisionan (mismo sigId, receivedAt distinto); "
-                 f"{sid_out.get('conflicting_result_n',0)} tienen result DISTINTO entre ocurrencias -> no es reenvio, "
-                 f"son pares reales distintos fusionados en un sigId (ver nota en sigid_collision_report). "
-                 f"'last wins' descarta una ocurrencia y desplaza la otra a una semana posterior: probable causa de "
-                 f"las alertas MUESTRA. Arreglar la generacion de sigId en el Pine (deltas en dias casi siempre "
-                 f"multiplo de 7, sugiere bar_index que se reinicia semanalmente).")
+    # Since 2026-10-10 build_pairs() keeps every occurrence of a repeated sigId and pairs by
+    # time, so a collision no longer loses or mis-dates a trade. Not an alert anymore; the
+    # counts stay in report.sigid_integrity for reference.
     orph = t["orphan_outcomes"]
     prev_orph = (prev_state or {}).get("totals", {}).get("orphan_outcomes", orph)
     resolved = max(1, t.get("pairs_resolved", 0) + orph)
