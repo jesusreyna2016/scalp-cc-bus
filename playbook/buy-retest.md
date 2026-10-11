@@ -3,159 +3,178 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-10 (sábado) · n: 15775)
+## Sección viva  (última revisión: 2026-10-11 (domingo, revisión semanal) · n: 17478)
 
 ### Nota de proceso
-`git pull` volvió a encontrar el bus con `HEAD` detached, pero esta vez
-sin incidente de fondo: el `main` local estaba simplemente desactualizado
-(apuntaba al commit de 2026-10-06) mientras `origin/main` ya tenía el
-historial correcto y continuo hasta hoy (sin force-push, ancestro común
-intacto) — se trabajó sobre el detached HEAD (ya igual a `origin/main`)
-sin tocar refs, y el push de esta corrida se hace con `origin HEAD:main`.
-Dato nuevo real +401/+190/+64 en este playbook (1m/2m/5m). `pendientes`
-baja de 68 a 17 (se resuelven por timeout de 24h, esperado), `huérfanos`
-estable en 40 — sin subir, sin alarma de pipeline. La alerta `SIGID`
-sigue activa y **sigue creciendo** (2224 señales / 2074 outcomes
-colisionan, de 2000/1855 ayer; 1207 con `result` distinto, de 1074) —
-Jesús no ha tocado el generador de `sigId` en el Pine todavía; sigue
-siendo la causa más probable de las alertas `MUESTRA` (W36-W40 todas
-volvieron a bajar de n vs la corrida previa).
+`git pull` dejó el bus en `HEAD` detached de nuevo (el auto-mode del
+harness bloqueó `checkout -B`/`branch -f` sobre `main` como destrucción
+local) pero sin incidente real: el detached HEAD ya era idéntico a
+`origin/main`, se trabajó ahí sin tocar refs y el push de esta corrida va
+con `origin HEAD:main`. **Hallazgo de proceso, el más importante de
+hoy: la alerta `SIGID` que llevaba semanas activa queda retirada.**
+Anoche (commit `57c2aee`, agente anterior) se corrigió el emparejamiento
+de `analyze.py`: en vez de "last-wins" cuando un `sigId` se repite (el
+`bar_index` del Pine se reinicia y el mismo id vuelve días/semanas
+después como otra operación), ahora cada ocurrencia se conserva y cada
+`outcome` empareja con la señal anterior más reciente. Efecto: recupera
+~2400 pares en todo el bus (26987→**29387**) sin que llegara dato nuevo
+real — es fin de semana, sin sesión CME, `signals`/`outcomes` crudos
+suben de 27003/25871 a 29387/28091 porque ahora se cuentan las
+ocurrencias repetidas por separado, no porque haya trades nuevos.
+`pendientes` baja a 0 (todo se resolvió por timeout 24h). `huérfanos`
+sube de 40 a **44** — efecto esperable del nuevo pareo (algunas de las
+ocurrencias recuperadas no encuentran señal anterior), no una señal nueva
+de fallo de pipeline. El bug de raíz (`sigId`/`bar_index` en el Pine)
+sigue sin tocarse, pero ya no distorsiona el análisis.
 
-**Hallazgo más importante de hoy — y el más delicado de comunicar: el
-gate automático de `analyze.py` (`report.json.gate`) marcó por primera
-vez `readyForLive=true` para `segment="5m/RETEST/LONG"`** (agregado
-n=1596 WR=51.6% E[R]=0.138 PF=**1.32**, cruza el umbral PF≥1.3 por
-primera vez; ayer PF=1.27). Revisando la condición completa de
-`agent-instructions.md`/`execution-ladder.md` (no sólo el número
-agregado que calcula el script), **el gate real NO está cumplido
-todavía**: `decay_weekly_by_segment` muestra que PF sólo superó 1.3 esta
-semana (W41=1.35) — las dos semanas previas estuvieron por debajo
-(W39=1.21, W40=1.23), y WR cruzó por debajo de 50% en W39 (45.6%). La
-regla de "WR TP1 estable 3 semanas corridas" pide 3, no 1. Tampoco se
-cumple la pata de "causa de SL dominante mitigada por un experimento
-`confirmed`": `sl_basis_retest` (el candidato que ataca `RR-bajo`, causa
-dominante de este segmento) sigue sin `verdict` en `experiments.json` y
-su efecto agregado se está **encogiendo** desde que se aplicó (ver
-alerta EXPERIMENTO: sólo 2 de 6 segmentos siguen certificando) — 5m LONG
-es uno de los 2 que sí certifica limpio hoy (`since_change` delta
-**+0.237** CI90=[0.052,0.461], n=597), pero "certifica en un segmento"
-no es lo mismo que "experimento confirmado" a nivel de gate. **Conclusión:
-no se recomienda mover la escalera de ejecución — sigue en peldaño 1
-(Sombra).** Es un near-miss real y el más prometedor de los tres TF, hay
-que vigilarlo semana a semana: si W42 y W43 también cierran con WR≥50 y
-PF≥1.3, el gate quedaría cumplido en su pata numérica y faltaría sólo
-formalizar el experimento de SL.
+**Segundo hallazgo — revisión semanal del gate de `5m/RETEST/LONG`:**
+W41 cerró con WR=52.2%, PF=**1.36**, E[R]=0.155 (n=335), la tercera
+semana en fila con E[R] positivo y la primera con WR≥50 **y** PF≥1.3 a
+la vez desde que se revisó ayer con datos parciales. Pero
+`weeklyStable3` sigue en `false` porque pide 3 semanas CERRADAS
+CONSECUTIVAS con ambos umbrales, y W39 (WR45.0 PF1.19) y W40 (WR53.4
+PF1.22) no los cumplen juntos — el racha más temprana posible empieza en
+W41, así que haría falta que W42 **y** W43 también cierren con WR≥50 y
+PF≥1.3. `slCauseMitigated` también sigue `false`: `sl_basis_retest`
+tiene verdict agregado `flat` (ver abajo) y aunque 5m/RETEST/LONG es uno
+de los 2 segmentos (de 6) que certifica limpio post-cambio
+(`since_change` delta=+0.243 CI90=[0.052,0.472] n=593), un segmento que
+certifica no es un experimento `confirmed` a nivel de gate. **Conclusión
+sin cambio: sigue en peldaño 1 (Sombra), cero ejecución.** Es el
+near-miss más prometedor del bus — si W42/W43 repiten, la pata numérica
+del gate quedaría resuelta y sólo faltaría formalizar el experimento de
+SL.
 
-**Segundo hallazgo: con la ventana OOS (W40+W41) el panorama de `rr1`
-mejora en general.** `1m/RETEST/LONG` baseline OOS deja de ser
-significativamente negativo: sube de E[R]=-0.033 (ayer) a
-**E[R]=-0.006 CI90=[-0.037,0.026]** (n=3637, p_mean_le_0=0.616 — ya
-cruza cero, compatible con plano). `2m/RETEST/LONG` baseline OOS sigue
-positivo al filo: E[R]=**0.043** CI90=[-0.001,0.087] (p=0.056, apenas
-fuera de significancia). `5m/RETEST/LONG` sigue siendo el más fuerte y
-limpio: E[R]=**0.128** CI90=[0.05,0.211] (p=0.002). Sin dato nuevo que
-reabra `sc_min_rr`/`sc_aplus_rr` — la propuesta sigue correctamente
-marcada `rejected_oos` en `experiments.json`, no se toca.
+**Tercer hallazgo: el modo sombra rompió su racha esta semana.** Después
+de 4 semanas seguidas ganándole al indicador crudo (W37-W40), **W41
+cierra con `shadow_beats_raw=false`** (shadow E[R]=0.052 vs raw 0.056,
+n=4944/4996) — el gate 0→1 ya está cumplido desde el 2026-10-04 y no se
+revierte por una semana, pero es la primera vez que el margen se invierte
+con una semana ya cerrada (no parcial) desde la racha. Vigilar W42: si
+vuelve a perder contra el crudo, hay que revisar si `shadow_rules` v2
+necesita ajuste en la revisión semanal siguiente.
 
 ### Veredicto global
-1m n=9790 (+401) WR 45.3% E[R]=**0.043** PF=1.09 (sube vs ayer 0.034,
-consistente con el baseline OOS que deja de ser negativo); 2m n=4389
-(+190) WR 47.8% E[R]=**0.05** PF=1.1 (sube); 5m n=1596 (+64) WR 51.6%
-E[R]=**0.138** PF=**1.32** (cruza 1.3 por primera vez — ver Nota de
-proceso para por qué esto no es aún luz verde). `segment_significance`:
-1m CI90=[0.022,0.064] n=9496 `survives_fdr10=true` p=0.001; 2m
-CI90=[0.019,0.079] n=4231 `survives_fdr10=true` p=0.002; 5m
-CI90=[0.088,0.192] n=1509 `survives_fdr10=true` p=0.0. Los tres TF
-siguen con edge estadísticamente real en agregado histórico y ahora
-también mejoran en la ventana OOS reciente. **Escalera de ejecución:
-sigue en peldaño 1 (Sombra)** a pesar del gate numérico — falta
-estabilidad de 3 semanas y el experimento de SL confirmado.
+1m n=10898 WR 45.0% E[R]=**0.035** PF=1.07; 2m n=4867 WR 47.4%
+E[R]=**0.04** PF=1.08; 5m n=1713 WR 51.1% E[R]=**0.138** PF=**1.31**.
+`segment_significance`: 1m CI90=[0.015,0.054] n=10542
+`survives_fdr10=true`; 2m CI90=[0.013,0.069] n=4678 `survives_fdr10=true`;
+5m CI90=[0.086,0.189] n=1610 `survives_fdr10=true`. Los tres TF siguen
+con edge estadísticamente real. OOS (`rr1_threshold_cut_oos`, ventana
+W40-W41): 1m baseline E[R]=**-0.009** CI90=[-0.038,0.023] n=3714 (plano,
+no cruza a negativo con significancia); 2m baseline E[R]=**0.042**
+CI90=[-0.002,0.087] n=1736 (al filo, p=0.062); 5m baseline E[R]=**0.13**
+CI90=[0.052,0.209] n=585 (el único que certifica limpio OOS). **Escalera
+de ejecución: sigue en peldaño 1 (Sombra)** — ver Nota de proceso.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR — histórico agregado positivo y la ventana OOS reciente deja de ser negativa (ya no cruza cero por debajo) | 9496 | histórico E[R]=**0.043** CI90=[0.022,0.064]; OOS E[R]=**-0.006** CI90=[-0.037,0.026] | alta en agregado, **mejorando en lo reciente** |
-| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, edge real fuera de ruido y el más fuerte OOS — **PF cruza 1.3 por primera vez (1.32) pero sólo 1 de 3 semanas necesarias** | 1509 | E[R]=**0.138** CI90=[0.088,0.192]; OOS E[R]=0.128 CI90=[0.05,0.211] | alta — el más confiable de los tres, **gate numérico cumplido pero no el gate completo** |
-| 3 | `tf=2m` (`survives_fdr10=true`) | TOMAR con cautela — histórico agregado positivo y OOS ya positivo pero al filo de significancia (p=0.056) | 4231 | histórico E[R]=**0.05** CI90=[0.019,0.079]; OOS E[R]=0.043 CI90=[-0.001,0.087] | moderada-alta — mejorando |
-| 4 | `tier=A+` | **negativo/plano**, WR muy bajo (RR alto exige que el trade recorra mucho) | 1155 | WR 22.3%, E[R]=**0.007** PF=1.01 | moderada — evitar, sin cambio de fondo |
-| 5 | `tier=B` | TOMAR, por encima de C; A+ muy por detrás | 6814 | WR 47.7% E[R]=**0.078** PF=1.17 vs tier C WR 49.3% E[R]=0.04 PF=1.09 | alta |
-| 6 | símbolo (`cross_instrument`), 1m/2m/5m | sin revisión fina hoy (sin cambios de fondo reportados por el script) | — | — | moderada |
-| 7 | `aligned=0` (contra-tendencia HTF) | muestra demasiado chica para usar (n=7 en todo RETEST/LONG) | 7 | sin cambio | baja |
-| 8 | `tf=5m` + gate numérico puro | **Se cumple por primera vez** (PF 1.32≥1.3, WR 51.6%≥50, E[R]>0, n≥100) — pero el agente NO certifica el peldaño 2: falta estabilidad de 3 semanas (sólo W41 cumple PF≥1.3) y un experimento `confirmed` sobre la causa de SL dominante | 1596 | PF 1.32, WR 51.6% | alta — gate de ejecución, no de señal; **no recomendar live todavía** |
-| 9 | subir `rr1` mínimo (candidato `sc_min_rr`) en LONG | **NO proponer** — sigue `rejected_oos`, sin evidencia nueva que lo reabra | 3637 (1m) / 1700 (2m) | baseline OOS ya no negativo pero los cortes no se han vuelto a evaluar hoy | alta — ver `experiments.json` |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR — edge real en agregado, OOS plano (ya no negativo con significancia) | 10542 | histórico E[R]=**0.035** CI90=[0.015,0.054]; OOS E[R]=**-0.009** CI90=[-0.038,0.023] | alta en agregado, OOS neutro |
+| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, el más fuerte y el único limpio OOS — **near-miss del gate: W41 cumplió WR≥50+PF≥1.3, faltan W42 y W43** | 1610 | E[R]=**0.138** CI90=[0.086,0.189]; OOS E[R]=0.13 CI90=[0.052,0.209] | alta — el más confiable; **no recomendar live todavía** |
+| 3 | `tf=2m` (`survives_fdr10=true`) | TOMAR con cautela — agregado positivo, OOS positivo pero al filo (p=0.062) | 4678 | histórico E[R]=**0.04** CI90=[0.013,0.069]; OOS E[R]=0.042 CI90=[-0.002,0.087] | moderada |
+| 4 | `tier=A+` | **evitar** — WR muy bajo, E[R] casi plano (RR alto exige recorrido grande) | 1293 | WR 22.1%, E[R]=**0.005** PF=1.01 | alta — sin cambio |
+| 5 | `tier=B` | TOMAR, por encima de C; A+ muy por detrás | 7549 | WR 47.1% E[R]=**0.065** PF=1.14 vs tier C WR 49.1% E[R]=0.036 PF=1.08 | alta |
+| 6 | `sa_verdict=AVOID` (Session Analyst, RETEST/LONG) | **EVITAR** — único corte donde AVOID da E[R] negativo, la confirmación más fuerte de la hipótesis en este playbook | 1298 | E[R]=**-0.018** WR 44.2% vs GO E[R]=0.056 WR48.2% / WAIT E[R]=0.05 WR47.3% | alta — ver Cruce con Session Analyst |
+| 7 | `aligned=0` (contra-tendencia HTF) | muestra demasiado chica para usar | 11 | sin cambio | baja |
+| 8 | `tf=5m` + gate numérico puro | PF≥1.3 y WR≥50 ya cerraron en W41 (1 de 3 semanas) — **no certifica el peldaño 2**: falta estabilidad de 3 semanas consecutivas y un experimento `confirmed` sobre la causa de SL dominante | 335 (W41) | WR 52.2%, PF 1.36 | alta — gate de ejecución, no de señal |
+| 9 | subir `rr1` mínimo (candidato `sc_min_rr`/`sc_aplus_rr`) en LONG | **NO proponer** en 1m/2m (ningún corte OOS mejora el baseline); en 5m el corte 1.2 sí mejora OOS (E[R] 0.198 vs baseline 0.13, n=210, CI90=[0.01,0.395]) pero queda **experimental**, sólo 5m, ver revisión semanal | 1m: 3714 / 2m: 1736 / 5m: 585 | 5m/1.2 es el único candidato vivo | moderada — sólo 5m, marcar experimental |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara de calidad
   de entrada en este segmento.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=9492 delta=**+0.091**
-  (estable); 2m n=4230 delta=**+0.041** (estable); 5m n=1509
-  delta=**-0.029** (sigue siendo el único TF donde la gestión resta en
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=10539 delta=**+0.094**
+  (estable); 2m n=4675 delta=**+0.045** (estable); 5m n=1610
+  delta=**-0.036** (sigue siendo el único TF donde la gestión resta en
   LONG, sin cambio de fondo). Regla sin cambios: escalera en 1m/2m,
   mercado simple en 5m LONG.
-- **SL de 3 capas vs SL = mecha del retest.** `sl_origin_vs_layer.since_change`
-  en LONG: 1m n cerca de 3.2k, delta todavía plano/mejorando de signo
-  (ver detalle completo en `report.json`, sin cambio de lectura: el
-  deterioro histórico de 1m LONG es de régimen, no del SL); 2m confirma
-  limpio; **5m n=597 delta=**+0.237** CI90=[0.052,0.461] — sigue
-  confirmando fuerte, es uno de los 2 segmentos (de 6) que todavía
-  certifica mientras el efecto agregado del experimento se encoge** (ver
-  alerta EXPERIMENTO). Ningún segmento LONG sale `delta_below_zero=true`.
-  **Decisión sin cambio: mantener aplicado en los 6 segmentos** — no
-  hay evidencia para revertir, pero tampoco para declarar el experimento
-  `confirmed` todavía (el agregado se encoge, no generalizar desde los
-  segmentos que sí certifican). `prediction_scoreboard` sigue en
-  hit_direction_rate=33.3% (n=6, peor que un volado, sin dato nuevo hoy).
-- **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)**: W41 (semana en
-  curso, global ambos lados) n=4925 shadow / n=4977 raw, shadow
-  E[R]=**0.051** vs raw **0.055** (`shadow_beats_raw=false`) — no bate al
-  crudo esta semana (parcial, no cuenta para el gate de 3 semanas, que ya
-  se cumplió antes). De las 6 semanas con dato, W36 y W41 (en curso) no
-  batieron al crudo; W37-W40 sí.
+- **SL de 3 capas vs SL = mecha del retest.** Histórico completo (LONG):
+  1m delta=+0.112 CI90=[0.071,0.157] confirma; 2m delta=+0.12
+  CI90=[0.071,0.172] confirma; 5m delta=+0.259 CI90=[0.146,0.383]
+  confirma. **Pero `since_change` (sólo post-2026-09-26) ya no confirma
+  en 1m ni 2m**: 1m delta=+0.056 CI90=[-0.011,0.13] (cruza cero), 2m
+  delta=+0.07 CI90=[-0.006,0.149] (cruza cero); **sólo 5m sigue
+  confirmando limpio** (delta=+0.243 CI90=[0.052,0.472] n=593) — esto es
+  justo la alerta EXPERIMENTO de hoy (el efecto agregado se encoge, sólo
+  2/6 segmentos certifican post-cambio) vista desde el lado LONG.
+  **Decisión sin cambio: mantener aplicado en los 6 segmentos** — no hay
+  evidencia para revertir (ningún segmento sale `delta_below_zero=true`),
+  pero tampoco para declarar el experimento `confirmed` a nivel de gate.
+  Verdict agregado formal hoy: **`flat`** (afterN=10296, expR antes 0.052
+  → después 0.037). `prediction_scoreboard` sigue sin dato nuevo hoy.
+- **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)**: W41 (cerrada) n=4944
+  shadow / n=4996 raw, shadow E[R]=**0.052** vs raw **0.056**
+  (`shadow_beats_raw=false`) — rompe la racha de 4 semanas (W37-W40). El
+  gate 0→1 ya está cumplido (confirmado el 2026-10-04) y no se revierte
+  por esto, pero es la primera semana CERRADA que pierde desde la racha —
+  vigilar W42.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las pérdidas LONG (n=7311, RETEST/LONG): `RR-bajo`
-  2736/7311 (37.4%) causa dominante (sin cambio de rango), seguido de
-  `killzone-Asia-largo` 2665/7311 (36.4%), `contra-estructura`
-  2518/7311 (34.4%), `stop-en-el-minimo` 2429/7311 (33.2%) — mezcla de
-  causas cercanas entre sí, sin una dominante aislada. `sl_basis_retest`
-  (SL=mecha del retest) es el candidato que mejor ataca `RR-bajo`; hoy
-  confirma limpio en 2m y 5m LONG, 1m LONG sigue plano/mejorando — **esto
-  sigue siendo exactamente lo que le falta al gate del peldaño 2** (causa
-  dominante mitigada por experimento `confirmed`, no sólo por una lectura
-  positiva en 2 de 3 TF).
+- Autopsia de SL sobre las pérdidas LONG (n=8130, RETEST/LONG): `RR-bajo`
+  3026/8130 (37.2%) causa dominante (sin cambio de rango), seguido de
+  `killzone-Asia-largo` 2903/8130 (35.7%), `contra-estructura`
+  2799/8130 (34.4%), `stop-en-el-minimo` 2689/8130 (33.1%) — mezcla de
+  causas cercanas, sin una dominante aislada. `sl_basis_retest` (SL=mecha
+  del retest) es el candidato que mejor ataca `RR-bajo`; sólo certifica
+  limpio post-cambio en 5m LONG de los tres TF — **esto sigue siendo
+  exactamente lo que le falta al gate del peldaño 2** (causa dominante
+  mitigada por experimento `confirmed`, no sólo por una lectura positiva
+  en 1 de 3 TF).
+- `sa_verdict=AVOID` en este segmento específico (no sólo en agregado
+  global): EVITAR, ver regla condicional #6 — es el corte con la señal
+  más limpia de todo el playbook hoy.
 
 ### Cruce con Session Analyst
-A nivel global (todo kind/side, no sólo RETEST/LONG): `AVOID` n=1963
-E[R]=**0.006** CI90=[-0.04,0.052] (no significativo, cruza cero); `GO`
-n=1773 E[R]=**0.095** CI90=[0.045,0.145] y `WAIT` n=9116 E[R]=**0.051**
-CI90=[0.029,0.073] (ambos certifican) — orden GO > WAIT > AVOID
-sostenido, sin cambio de fondo vs días previos. Consistente con la
-hipótesis original de `agent-instructions.md`.
+Específico de `RETEST/LONG` (no el agregado global de días previos):
+`AVOID` n=1298 E[R]=**-0.018** WR 44.2% (negativo); `GO` n=1315
+E[R]=**0.056** WR 48.2%; `WAIT` n=5367 E[R]=**0.05** WR 47.3%. Orden
+GO > WAIT > AVOID con AVOID en territorio negativo — la confirmación más
+fuerte vista hasta ahora de la hipótesis de `agent-instructions.md` en
+este playbook específico (el agregado global de días previos sólo daba
+AVOID≈0, nunca negativo).
 
 ### Decaimiento
-**El punto central de hoy es positivo, no de decaimiento**: ningún
-segmento LONG cruza el umbral automático (>15pts WR vs media 3 semanas
-previas). `1m/RETEST/LONG`, que llevaba dos semanas en rojo, se recupera:
-W39 E[R]=0.07 → W40 E[R]=**-0.027** → **W41 E[R]=0.025** (vuelve a
-terreno positivo, WR sube de 42.9% a 46.1%). `2m/RETEST/LONG` mejora
-con fuerza: W40 E[R]=0.003 → **W41 E[R]=0.088**, WR sube a 52.1% (el
-mejor WR semanal del TF en las 6 semanas de histórico). `5m/RETEST/LONG`
-es el que más llama la atención: W39 E[R]=0.098 (PF 1.21) → W40
-E[R]=0.101 (PF 1.23) → **W41 E[R]=0.151 (PF 1.35)** — tercera semana
-consecutiva positiva y la primera en cruzar PF≥1.3, exactamente lo que
-disparó el gate automático (ver Nota de proceso: 1 de 3 semanas
-necesarias, no declarar el gate cumplido todavía).
-**Resumen: el playbook pasa de "1m/RETEST/LONG en decaimiento" a
-"los tres TF mejoran en la semana en curso, con 5m/RETEST/LONG a las
-puertas del gate de ejecución" — vigilar W42/W43 para confirmar o
-descartar la estabilidad de 5m antes de proponer ningún cambio de
-peldaño.**
+Ningún segmento LONG cruza el umbral automático (>15pts WR vs media 3
+semanas previas), con el pareo ya corregido (ver Nota de proceso). Las
+tres series semanales (`decay_weekly_by_segment`), W39→W40→W41: 1m E[R]
+0.057→-0.031→**0.025** (vuelve a positivo tras una semana en rojo), WR
+44.5→42.6→**45.7**; 2m E[R] 0.125→-0.001→**0.092** (recupera con fuerza),
+WR 45.7→46.3→**51.7** (mejor WR semanal del TF en el histórico
+corregido); 5m E[R] 0.091→0.1→**0.155**, PF 1.19→1.22→**1.36** — tercera
+semana positiva seguida y la primera con WR≥50 y PF≥1.3 a la vez,
+exactamente lo que dispara el near-miss del gate (ver Nota de proceso: 1
+de 3 semanas necesarias, no declarar el gate cumplido todavía). **Resumen:
+ningún TF en decaimiento; los tres mejoran en W41; 5m/RETEST/LONG es el
+más cerca del gate de ejecución en todo el bus — vigilar W42/W43 para la
+estabilidad de 3 semanas antes de proponer ningún cambio de peldaño.**
 
 ## Histórico de cambios
+- 2026-10-11 (domingo, REVISIÓN SEMANAL): **se retira la alerta `SIGID`**
+  que llevaba semanas activa — anoche (commit `57c2aee`, agente anterior)
+  se corrigió el emparejamiento en `analyze.py` (ya no es "last-wins"
+  cuando un `sigId` se repite por el reinicio del `bar_index` del Pine;
+  ahora cada ocurrencia se conserva y empareja con la señal anterior más
+  cercana), recuperando ~2400 pares en todo el bus sin dato nuevo real
+  (fin de semana sin sesión CME). `pares_resueltos` 26987→29387,
+  `huérfanos` 40→44 (efecto esperable del nuevo pareo, no alarma nueva).
+  Revisión semanal del gate de `5m/RETEST/LONG`: W41 cierra con WR=52.2%
+  PF=1.36 (tercera semana positiva seguida, la primera con los dos
+  umbrales a la vez) pero `weeklyStable3` sigue `false` (hace falta
+  también W42 y W43, porque W39/W40 no cumplieron juntos) — sigue en
+  peldaño 1 (Sombra). El modo sombra rompió su racha de 4 semanas
+  (W37-W40): W41 cerrada con `shadow_beats_raw=false` por primera vez
+  desde que se cumplió el gate 0→1 (no se revierte el peldaño por esto,
+  vigilar W42). `sl_basis_retest` sigue `verdict=flat` en agregado; sólo
+  5m LONG certifica limpio post-cambio de los tres TF de este playbook.
+  Cruce con Session Analyst específico de RETEST/LONG: por primera vez
+  `AVOID` da E[R] **negativo** (-0.018, n=1298) mientras GO/WAIT son
+  positivos — la confirmación más fuerte de la hipótesis vista en este
+  playbook. Ver `reviews/2026-week-41.md` para el detalle completo de la
+  revisión semanal y las propuestas de `scalp_command.pine`.
 - 2026-10-10 (sábado): **el gate automático marcó `readyForLive=true`
   para `5m/RETEST/LONG`** (PF cruza 1.3 por primera vez, agregado
   n=1596). Al revisar la condición completa (3 semanas estables + SL

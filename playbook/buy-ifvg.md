@@ -3,75 +3,85 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-10 (sábado) · n: 378)
+## Sección viva  (última revisión: 2026-10-11 (domingo, revisión semanal) · n: 416)
 
 ### Nota de proceso
-`git pull` encontró `HEAD` detached por un `main` local desactualizado,
-sin incidente de fondo (ver `buy-retest.md`). Dato nuevo chico
-(+15/+7/+2 en 1m/2m/5m) — INV sigue siendo mucho más esporádico que
-RETEST. INV queda fuera de `shadowRules`, sin cambio.
+Mismo incidente de repo y mismo fix de fondo que `buy-retest.md`: se
+retira la alerta `SIGID` (emparejamiento de `sigId` repetidos corregido
+anoche en `analyze.py`), recupera pares en todo el bus sin dato nuevo
+real (fin de semana sin sesión CME). `huérfanos` 40→44. INV sigue fuera
+de `shadowRules`, sin cambio.
 
-`sl_origin_vs_layer.since_change` (`candle1`) confirma el mismo patrón
-mixto de siempre con un poco más de muestra: **ayuda en 1m** (n=98,
-delta=**+0.4** CI90=[0.003,0.821], confirma, al filo) pero **perjudica
-en 2m** (n=41, delta=**-0.416** CI90=[-0.71,-0.1], confirma negativo);
-5m sigue sin muestra suficiente (n=12, delta=+0.257 CI90=[-0.619,1.302],
-no certifica). Sigue correcto que `sl-retest-wick` se limitara a
-`kind=RETEST`. Único punto a vigilar sin alarmar: `2m/INV/LONG`
-pierde significancia agregada esta corrida (E[R] pasa de +0.039 a
-**-0.013**, CI90=[-0.175,0.167] ahora cruza cero, `survives_fdr10`
-pasa a `false`) — con n=96 es ruido de muestra chica, no decaimiento,
-pero ya no se puede citar como segmento confirmado.
+`sl_origin_vs_layer.since_change` (`candle1`) sigue el mismo patrón
+mixto y ruidoso de siempre, ahora con `n` distinto por el re-pareo:
+**1m mejora de signo e intensidad** (n=98, delta=**+0.4**
+CI90=[0.003,0.821], confirma al filo) pero **2m perjudica con
+significancia** (n=41, delta=**-0.416** CI90=[-0.71,-0.1], confirma
+negativo); 5m sin muestra suficiente (n=12, delta=+0.257
+CI90=[-0.619,1.302]). Sigue correcto que `sl-retest-wick` se limitara a
+`kind=RETEST`. `2m/INV/LONG` sigue sin certificar FDR (ver Veredicto) —
+tercera corrida seguida sin recuperar significancia, con n todavía
+chico para llamarlo decaimiento real.
 
 ### Veredicto global
-1m n=248 (+15) WR 46.8% E[R]=**0.156** PF=1.36 (baja un poco vs 0.173,
-dentro de ruido); 2m n=100 (+7) WR 50.0% E[R]=**-0.013** PF=0.97 (cruza
-a negativo, ver Nota de proceso); 5m n=30 (+2) WR 73.3% E[R]=**0.374**
-PF=3.53 (sigue siendo el mejor TF, n todavía muy chico para confiar).
-`segment_significance`: 1m CI90=[0.013,0.308] n=237 sigue
-`survives_fdr10=true` p=0.039; **2m CI90=[-0.175,0.167] n=96 YA NO
-certifica** (antes sí); 5m CI90=[0.12,0.622] n=27 sostiene
-`survives_fdr10=true` p=0.004 (n demasiado chico para confiar).
+1m n=275 WR 46.5% E[R]=**0.174** PF=1.4; 2m n=108 WR 50.0%
+E[R]=**-0.024** PF=0.94 (sigue negativo); 5m n=33 WR 72.7%
+E[R]=**0.344** PF=3.07 (n todavía muy chico para confiar).
+`segment_significance`: 1m CI90=[0.041,0.318] n=264
+`survives_fdr10=true` p=0.015; **2m CI90=[-0.183,0.136] n=104 sigue sin
+certificar** (p=0.598, lejos de significancia); 5m CI90=[0.119,0.591]
+n=30 `survives_fdr10=true` p=0.004 (n demasiado chico para confiar).
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
-Sin n suficiente todavía para certificar en más de una rama:
+Sin n suficiente todavía para certificar en más de una rama con
+confianza:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar salvo 1m) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, único segmento de este playbook con n usable | 237 | E[R]=**0.156** CI90=[0.013,0.308] | moderada-alta |
-| 2 | `tf=2m` | **dejó de certificar hoy** (CI90 cruza cero) — tratar como sin edge confirmado, n=96 sigue siendo chico | 96 | E[R]=**-0.013** CI90=[-0.175,0.167] | baja — vigilar, no proponer cambio con este n |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, único segmento de este playbook con n usable y estable | 264 | E[R]=**0.174** CI90=[0.041,0.318] | moderada-alta |
+| 2 | `tf=2m` | sin edge confirmado (CI90 cruza cero, lejos de significancia) | 104 | E[R]=**-0.024** CI90=[-0.183,0.136] | baja — no proponer cambio con este n |
 | 3 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — ayuda en 1m (al filo) pero perjudica con significancia en 2m | 98 (1m) / 41 (2m) | delta +0.4 (1m, al filo) / -0.416 (2m, confirma negativo) | moderada |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`).
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=237 delta=**+0.082**;
-  2m n=96 delta=**+0.08**; 5m n=27 delta=**+0.012** (débil en 5m, sin
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=264 delta=**+0.099**;
+  2m n=104 delta=**+0.079**; 5m n=30 delta=**+0.042** (débil en 5m, sin
   cambio de fondo). Sin cambio de regla.
 - **SL de 3 capas vs SL = vela 1 del FVG**: ver Nota de proceso — mixto,
   no proponer cambio.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (INV/LONG, n=148): `killzone-Asia-largo` 68/148 (45.9%)
-  dominante, `RR-bajo` 54/148 (36.5%) segundo, `contra-estructura` 46/148
-  (31.1%) tercero — sin cambio de fondo.
+- Autopsia de SL (INV/LONG, n=163): `killzone-Asia-largo` 73/163 (44.8%)
+  dominante, `RR-bajo` 64/163 (39.3%) segundo, `contra-estructura` 51/163
+  (31.3%) tercero — sin cambio de fondo.
 
 ### Cruce con Session Analyst
 `session_analyst_cross.by_kind_side` (muestra todavía chica): `AVOID`
-n=33 E[R]=**-0.025**; `GO` n=24 E[R]=**0.18**; `WAIT` n=134
-E[R]=**-0.044** — GO sigue el mejor, consistente con la hipótesis
-general, pero AVOID y WAIT siguen chicos para una lectura propia
-confiable. Cifras globales con CI90 en `buy-retest.md`.
+n=33 E[R]=**-0.025** WR48.5%; `GO` n=26 E[R]=**0.176** WR57.7%; `WAIT`
+n=137 E[R]=**-0.043** WR41.6% — GO sigue el mejor, consistente con la
+hipótesis general, pero AVOID y WAIT siguen chicos para una lectura
+propia confiable (ambos negativos, orden GO>AVOID>WAIT invertido en la
+cola, ruido de muestra). Cifras globales con CI90 en `buy-retest.md`.
 
 ### Decaimiento
 `decay_weekly_by_segment`: ningún TF de este playbook tiene todavía
-muestra semanal suficiente para separar señal de ruido. El cambio de
-signo de `2m/INV/LONG` en agregado (ver Nota de proceso) es el único
-punto a vigilar, sin tratarlo como decaimiento real todavía (n chico).
+muestra semanal suficiente para separar señal de ruido (W39-W41 oscilan
+entre n=25 y n=55 por TF/semana, ver `report.json`). `2m/INV/LONG` sigue
+sin certificar FDR por tercera corrida — el único punto a vigilar, sin
+tratarlo como decaimiento real todavía (n chico).
 
 ## Histórico de cambios
+- 2026-10-11 (domingo, REVISIÓN SEMANAL): se retira la alerta `SIGID`
+  (fix de emparejamiento en `analyze.py`, ver `buy-retest.md`) —
+  recupera pares sin dato nuevo real, `huérfanos` 40→44. Sin hallazgo de
+  fondo propio: `2m/INV/LONG` sigue sin certificar FDR (tercera corrida
+  seguida, E[R]=-0.024 CI90=[-0.183,0.136]); 1m y 5m mantienen su edge.
+  Nada que proponer para `scalp_command.pine` desde este playbook esta
+  semana (n insuficiente en todas las ramas salvo 1m, que no tiene
+  cambio que proponer). Ver `reviews/2026-week-41.md`.
 - 2026-10-10 (sábado): `2m/INV/LONG` pierde significancia agregada
   (E[R] +0.039→-0.013, `survives_fdr10` true→false) — con n=96 se
   trata como ruido de muestra chica, no como decaimiento, pero deja de

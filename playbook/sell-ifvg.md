@@ -3,28 +3,27 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-10 (sábado) · n: 317)
+## Sección viva  (última revisión: 2026-10-11 (domingo, revisión semanal) · n: 334)
 
 ### Nota de proceso
-`git pull` encontró `HEAD` detached por un `main` local desactualizado,
-sin incidente de fondo (ver `buy-retest.md`). Dato nuevo mínimo (+4/+1/+0
-en 1m/2m/5m) — normal, INV sigue siendo mucho más esporádico que RETEST.
-Gate de ejecución sin cambio: INV sigue fuera de `shadowRules`.
+Mismo incidente de repo y mismo fix de fondo que `buy-retest.md`: se
+retira la alerta `SIGID` (emparejamiento de `sigId` repetidos corregido
+anoche en `analyze.py`), recupera pares en todo el bus sin dato nuevo
+real (fin de semana sin sesión CME). `huérfanos` 40→44. Gate de
+ejecución sin cambio: INV sigue fuera de `shadowRules`.
 
-Sin hallazgo nuevo material — `sl_origin_vs_layer.since_change`
-(`candle1`) confirma el mismo patrón de siempre: 1m INV/SHORT sigue
-perjudicado con significancia (n=82, delta=**-0.396**
-CI90=[-0.634,-0.15]); 2m sigue inconcluso (n=27, delta=-0.116
-CI90=[-0.9,0.827], CI90 demasiado ancho); 5m (n=5) sigue sin muestra
-para bootstrap. Sin cambio en la conclusión cruzada: no extender
-`sl-retest-wick`/`candle1` a ningún segmento INV.
+`sl_origin_vs_layer.since_change` (`candle1`) confirma el mismo patrón
+de siempre: 1m INV/SHORT sigue perjudicado con significancia (n=82,
+delta=**-0.396** CI90=[-0.652,-0.135]); 2m sigue inconcluso (n=28,
+delta=-0.112 CI90=[-0.909,0.788], CI90 demasiado ancho); 5m (n=5) sigue
+sin muestra para bootstrap. Sin cambio en la conclusión cruzada: no
+extender `sl-retest-wick`/`candle1` a ningún segmento INV.
 
 ### Veredicto global
-1m n=215 (+4) WR 44.7% E[R]=**0.024** PF=1.05 (baja un poco vs 0.028,
-dentro de ruido); 2m n=84 (+1) WR 42.9% E[R]=**0.093** PF=1.2 (sube un
-poco); 5m n=18 (sin dato nuevo) WR 55.6% E[R]=**0.128** PF=1.34 (sin
-cambio). `segment_significance`: 1m CI90=[-0.107,0.158] n=202 (sigue sin
-certificar); 2m CI90=[-0.142,0.356] n=81 (sin certificar); 5m
+1m n=229 WR 45.0% E[R]=**0.056** PF=1.12; 2m n=87 WR 42.5%
+E[R]=**0.095** PF=1.21; 5m n=18 WR 55.6% E[R]=**0.128** PF=1.34.
+`segment_significance`: 1m CI90=[-0.067,0.189] n=214 (sigue sin
+certificar); 2m CI90=[-0.135,0.357] n=83 (sin certificar); 5m
 CI90=[-0.304,0.572] n=16 (sin certificar) — ningún TF de este playbook
 certifica FDR, sin cambio de fondo.
 
@@ -33,50 +32,64 @@ Sin n suficiente todavía para certificar en ninguna rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m`/`2m`/`5m` | ninguno certifica FDR hoy | 202/81/16 | E[R] 0.024/0.093/0.128, todos CI90 cruzan cero | baja |
-| 2 | `tier=B` | sigue negativo | 105 | E[R]=**-0.016** PF=0.97 | baja |
-| 3 | `tier=C` | positivo, sigue mejor que B | 212 | E[R]=**+0.082** PF=1.19 | baja-moderada |
+| 1 | `tf=1m`/`2m`/`5m` | ninguno certifica FDR hoy | 214/83/16 | E[R] 0.056/0.095/0.128, todos CI90 cruzan cero | baja |
+| 2 | `tier=B` | sigue casi plano | 112 | E[R]=**0.01** PF=1.02 | baja |
+| 3 | `tier=C` | positivo, sigue mejor que B | 222 | E[R]=**+0.102** PF=1.24 | baja-moderada |
 | 4 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar | — | sin veredicto único | baja |
-| 5 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — perjudica con significancia en 1m, inconcluso en 2m/5m | 82 (1m) / 27 (2m) / 5 (5m) | delta -0.396 (1m, confirma negativo) / -0.116 (2m, CI90 ancho) / -0.214 (5m, n mínimo) | moderada |
+| 5 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — perjudica con significancia en 1m, inconcluso en 2m/5m | 82 (1m) / 28 (2m) / 5 (5m) | delta -0.396 (1m, confirma negativo) / -0.112 (2m, CI90 ancho) / -0.214 (5m, n mínimo) | moderada |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=202 delta=**+0.213**
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=214 delta=**+0.204**
   (la gestión sigue ayudando mucho más que en cualquier otro segmento del
-  bus, sobre E[R] base cercano a cero); 2m n=81 delta=**+0.086**; 5m
+  bus, sobre E[R] base cercano a cero); 2m n=83 delta=**+0.092**; 5m
   n=16 delta=**+0.08**. Sin cambio de regla.
 - **SL de 3 capas vs SL = vela 1 del FVG**: ver Nota de proceso arriba —
   perjudica en 1m, no proponer.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (n=134, INV/SHORT): `RR-bajo` 57/134 (42.5%) causa
-  dominante, `contra-estructura` 41/134 (30.6%) segundo, `estirado`
-  31/134 (23.1%) tercero — sin cambio de fondo.
+- Autopsia de SL (n=138, INV/SHORT): `RR-bajo` 61/138 (44.2%) causa
+  dominante, `contra-estructura` 41/138 (29.7%) segundo, `estirado`
+  33/138 (23.9%) tercero — sin cambio de fondo.
 - **Decaimiento a vigilar (sigue sin ser formal)**: `decay_weekly_by_segment`
-  1m/INV/SHORT W40 (cerrada) E[R]=**-0.059** → W41 (n=39)
-  E[R]=**+0.133** — se confirma la recuperación, W41 cierra cerca de
-  WR estable (41.0%). 2m/INV/SHORT W40 E[R]=-0.018 → W41 (n=9)
-  E[R]=**+0.377** — sigue siendo n chico, no leer como tendencia. 5m
-  sigue negativo ambas semanas (W40 -0.36, W41 -0.513) con n=3 cada
-  una — ruido puro, sin muestra para decidir.
+  1m/INV/SHORT W39 E[R]=0.047 → W40 E[R]=**-0.08** → W41 (n=39)
+  E[R]=**+0.165** — se confirma la recuperación, WR 41.0% estable. 2m
+  W39 E[R]=0.511 → W40 E[R]=-0.07 → W41 (n=9) E[R]=**+0.377** — sigue
+  siendo n chico, no leer como tendencia. 5m sigue negativo las últimas
+  dos semanas (W40 -0.36, W41 -0.513) con n=3 cada una — ruido puro,
+  sin muestra para decidir.
 
 ### Cruce con Session Analyst
-`session_analyst_cross.by_kind_side`: `AVOID` n=28 E[R]=**-0.447** PF=0.3
-— la caída más fuerte de los cuatro playbooks, confirma la hipótesis
-"AVOID rinde peor" de forma muy clara para este lado específico; `GO`
-n=10 E[R]=**0.502** (n mínimo); `WAIT` n=137 E[R]=**0.05**. Orden
-GO > WAIT >> AVOID, con AVOID muy por debajo — aunque el n de AVOID (28)
-y GO (10) siguen chicos para certificar con CI90 propio, es la lectura
-por side más alineada con la hipótesis original de todo el bus.
+`session_analyst_cross.by_kind_side`: `AVOID` n=30 E[R]=**-0.261**
+WR33.3% — la caída más fuerte de los cuatro playbooks de este bus,
+confirma la hipótesis "AVOID rinde peor" de forma muy clara para este
+lado específico; `GO` n=10 E[R]=**0.502** WR70.0% (n mínimo); `WAIT`
+n=143 E[R]=**0.086** WR46.9%. Orden GO > WAIT >> AVOID, con AVOID muy
+por debajo — aunque el n de AVOID (30) y GO (10) siguen chicos para
+certificar con CI90 propio, es la lectura por side más alineada con la
+hipótesis original de todo el bus (contraste con `sell-retest.md`, que
+hoy muestra el patrón inverso en SHORT/RETEST).
 
 ### Decaimiento
 Ver "Contextos a evitar" arriba — 1m y 2m se recuperan en W41, sin
 racha negativa clara en este playbook salvo 5m (n demasiado chico).
 
 ## Histórico de cambios
+- 2026-10-11 (domingo, REVISIÓN SEMANAL): se retira la alerta `SIGID`
+  (fix de emparejamiento en `analyze.py`, ver `buy-retest.md`) —
+  recupera pares sin dato nuevo real, `huérfanos` 40→44. Sin hallazgo de
+  fondo propio: ningún TF certifica FDR todavía, patrón de SL
+  (`candle1` perjudica en 1m) y de Session Analyst (AVOID muy negativo,
+  la lectura más alineada con la hipótesis de todo el bus) sin cambio.
+  Nota cruzada: `sell-retest.md` (RETEST/SHORT) muestra hoy el patrón
+  inverso de Session Analyst (AVOID > WAIT) — este playbook (INV/SHORT)
+  sigue siendo el más alineado con "AVOID rinde peor", confirma que es
+  un efecto de `kind`/side combinado, no sólo de side. Nada que proponer
+  para `scalp_command.pine` desde este playbook esta semana (n
+  insuficiente en las tres ramas). Ver `reviews/2026-week-41.md`.
 - 2026-10-10 (sábado): sin hallazgo nuevo material. 1m/INV/SHORT y
   2m/INV/SHORT confirman la recuperación de W41 que se veía parcial
   ayer (W41 ya con n=39/9, E[R]=+0.133/+0.377). Dato nuevo mínimo
