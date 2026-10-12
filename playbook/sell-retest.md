@@ -3,7 +3,19 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-11 (domingo, revisión semanal) · n: 11159)
+## Sección viva  (última revisión: 2026-10-12 (lunes, feriado Columbus Day, dato bajo) · n: 11162)
+
+### Nota 2026-10-12
+Día de feriado bancario EEUU, dato nuevo escaso, sin incidentes de repo,
+huérfanos estables en 44. Sin cambios de fondo. La contradicción a
+vigilar con el Session Analyst **persiste sin resolverse**: en
+`RETEST/SHORT`, `AVOID` (E[R]=0.062, n=767) sigue por encima de `WAIT`
+(E[R]=0.044, n=4051) — mismo patrón que el domingo, ni se agrava ni se
+corrige. `GO` sigue siendo el mejor de los tres (E[R]=0.121, n=569).
+`since_change` de `sl_basis_retest` en SHORT: 1m sigue confirmando limpio
+(n=2145, delta=+0.099 CI90=[0.029,0.175]); 2m (delta=+0.031
+CI90=[-0.057,0.12]) y 5m (delta=+0.038 CI90=[-0.062,0.139]) siguen planos,
+sin cambio vs ayer.
 
 ### Nota de proceso
 Mismo incidente de repo que `buy-retest.md` (detached HEAD ya igual a

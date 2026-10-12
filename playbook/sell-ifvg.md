@@ -3,7 +3,12 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-11 (domingo, revisión semanal) · n: 334)
+## Sección viva  (última revisión: 2026-10-12 (lunes, feriado, dato bajo) · n: 334)
+
+### Nota 2026-10-12
+Sin cambios de fondo (feriado bancario EEUU, dato nuevo mínimo en este
+segmento de prioridad 2). n sin cambio vs ayer. Veredicto y reglas
+condicionales sin cambio — ver histórico abajo.
 
 ### Nota de proceso
 Mismo incidente de repo y mismo fix de fondo que `buy-retest.md`: se

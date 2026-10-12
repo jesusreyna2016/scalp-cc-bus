@@ -3,7 +3,18 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-11 (domingo, revisión semanal) · n: 17478)
+## Sección viva  (última revisión: 2026-10-12 (lunes, feriado Columbus Day, dato bajo) · n: 17583)
+
+### Nota 2026-10-12
+Día hábil pero feriado bancario EEUU (Columbus Day) + semana CPI (CPI
+miércoles 14-oct, no afecta hoy): volumen bajo, dato nuevo escaso (W42
+n=21 hasta ahora). Sin incidentes de repo. `huérfanos` estable en 44 (sin
+subir). Nada cambia de fondo vs la revisión semanal de ayer: `since_change`
+de `sl_basis_retest` sigue 2/6 segmentos confirmando limpio (1m SHORT,
+5m LONG — ver abajo), `2m/RETEST/LONG` sigue al filo sin certificar
+(CI90=[-0.007,0.146]). El gate de `5m/RETEST/LONG` no avanzó (todavía
+sólo W41 cerrada con WR≥50+PF≥1.3; faltan W42 y W43). Sin cambios de
+veredicto ni de reglas condicionales.
 
 ### Nota de proceso
 `git pull` dejó el bus en `HEAD` detached de nuevo (el auto-mode del
