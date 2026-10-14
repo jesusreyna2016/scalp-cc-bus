@@ -3,28 +3,29 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-13 (martes, primer día hábil completo tras el feriado) · n: 450)
+## Sección viva  (última revisión: 2026-10-14 (miércoles, CPI 13:30 UTC hoy) · n: 451)
 
-### Nota 2026-10-13
+### Nota 2026-10-14
 Dato nuevo chico (segmento de prioridad 2, bajo volumen). Sin cambios de
-fondo vs ayer en ninguna métrica material.
+fondo vs ayer en ninguna métrica material — `2m/INV/LONG` sigue sin
+certificar (cuarta/quinta corrida seguida), `5m/INV/LONG` sigue con n
+demasiado chico para confiar pese a certificar FDR puntualmente.
 
 ### Nota de proceso
-Mismo incidente de reescritura de `origin/main` que `buy-retest.md`,
-resuelto igual (detached HEAD, `push origin HEAD:main`). INV sigue fuera
-de `shadowRules`, sin cambio.
+`git pull` sin incidente de divergencia (HEAD detached pero ya en el
+mismo commit que `origin/main`). INV sigue fuera de `shadowRules`, sin
+cambio.
 
 ### Veredicto global
-1m n=287 WR 47.7% E[R]=**0.19** PF=1.45; 2m n=110 WR 50.0%
-E[R]=**-0.031** PF=0.93 (sigue negativo); 5m n=35 WR 68.6%
-E[R]=**0.26** PF=2.19 (n todavía muy chico para confiar).
-`segment_significance`: 1m CI90=[0.055,0.33] n=276 `survives_fdr10=true`
-p=0.013; **2m CI90=[-0.184,0.13] n=106 sigue sin certificar** (p=0.635,
-cuarta corrida seguida); 5m CI90=[0.013,0.493] n=32 `survives_fdr10=true`
-p=0.041 (n demasiado chico para confiar). `sl_origin_vs_layer.since_change`
-(`candle1`) sin lectura nueva material hoy (n crece poco): sigue
-correcto que `sl-retest-wick` se limite a `kind=RETEST`, no extender a
-INV.
+1m n=300 WR 46.3% E[R]=**0.157** PF=1.36; 2m n=115 WR 51.3%
+E[R]=**0.01** PF=1.02 (sigue casi plano); 5m n=36 WR 69.4%
+E[R]=**0.279** PF=2.32 (n todavía muy chico para confiar).
+`segment_significance`: 1m CI90=[0.019,0.295] n=289 `survives_fdr10=true`
+p=0.028; **2m CI90=[-0.15,0.174] n=111 sigue sin certificar** (p=0.464);
+5m CI90=[0.032,0.522] n=33 `survives_fdr10=true` p=0.029 (n demasiado
+chico para confiar). `sl_origin_vs_layer` (`candle1`) sin lectura nueva
+material hoy: sigue correcto que `sl-retest-wick` se limite a
+`kind=RETEST`, no extender a INV.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en más de una rama con
@@ -32,40 +33,43 @@ confianza:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar salvo 1m) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, único segmento de este playbook con n usable y estable | 276 | E[R]=**0.19** CI90=[0.055,0.33] | moderada-alta |
-| 2 | `tf=2m` | sin edge confirmado (CI90 cruza cero, lejos de significancia) | 106 | E[R]=**-0.031** CI90=[-0.184,0.13] | baja — no proponer cambio con este n |
-| 3 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — ayuda en 1m (al filo) pero perjudica con significancia en 2m, sin cambio vs ayer | 98 (1m) / 41 (2m) | delta +0.4 (1m, al filo) / -0.416 (2m, confirma negativo) | moderada |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, único segmento de este playbook con n usable y estable | 289 | E[R]=**0.157** CI90=[0.019,0.295] | moderada-alta |
+| 2 | `tf=2m` | sin edge confirmado (CI90 cruza cero, lejos de significancia) | 111 | E[R]=**0.01** CI90=[-0.15,0.174] | baja — no proponer cambio con este n |
+| 3 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — mixto, CI90 amplio y cruza cero en los tres TF, sin cambio vs ayer | 289 (1m) / 111 (2m) / 33 (5m) | delta -0.044 (1m) / +0.372 (2m, n chico) / -0.415 (5m, n chico) | baja |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`).
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=276 delta=**+0.099**;
-  2m n=106 delta=**+0.079**; 5m n=32 delta=**+0.039** (débil en 5m, sin
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=289 delta=**+0.095**;
+  2m n=111 delta=**+0.068**; 5m n=33 delta=**+0.022** (débil en 5m, sin
   cambio de fondo). Sin cambio de regla.
 - **SL de 3 capas vs SL = vela 1 del FVG**: sin lectura nueva material
   hoy — mixto, no proponer cambio.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (INV/LONG, n=168): `killzone-Asia-largo` 76/168 (45.2%)
-  dominante, `RR-bajo` 67/168 (39.9%) segundo, `contra-estructura` 53/168
-  (31.5%) tercero — sin cambio de fondo.
+- Autopsia de SL (INV/LONG, n=179): `killzone-Asia-largo` 83/179 (46.4%)
+  dominante, `RR-bajo` 69/179 (38.5%) segundo, `contra-estructura` 56/179
+  (31.3%) tercero — sin cambio de fondo.
 
 ### Cruce con Session Analyst
 `session_analyst_cross.by_kind_side` (muestra todavía chica): `AVOID`
-n=35 E[R]=**-0.029** WR48.6%; `GO` n=26 E[R]=**0.176** WR57.7%; `WAIT`
-n=146 E[R]=**-0.036** WR42.5% — GO sigue el mejor, consistente con la
-hipótesis general, pero AVOID y WAIT siguen chicos para una lectura
-propia confiable. Cifras globales con CI90 en `buy-retest.md`.
+n=39 E[R]=**-0.092** WR46.2%; `GO` n=29 E[R]=**0.05** WR51.7%; `WAIT`
+n=155 E[R]=**-0.047** WR42.6% — GO sigue el mejor, consistente con la
+hipótesis general, pero los tres siguen chicos para una lectura propia
+confiable. Cifras globales con CI90 en `buy-retest.md`.
 
 ### Decaimiento
 `decay_weekly_by_segment`: ningún TF de este playbook tiene todavía
 muestra semanal suficiente para separar señal de ruido. `2m/INV/LONG`
-sigue sin certificar FDR por cuarta corrida — el único punto a vigilar,
-sin tratarlo como decaimiento real todavía (n chico).
+sigue sin certificar FDR — el único punto a vigilar, sin tratarlo como
+decaimiento real todavía (n chico).
 
 ## Histórico de cambios
+- 2026-10-14 (miércoles): sin hallazgo material nuevo, dato chico.
+  `git pull` sin incidente de divergencia. `2m/INV/LONG` sigue sin
+  certificar FDR.
 - 2026-10-13 (martes): sin hallazgo material nuevo, dato chico. Mismo
   incidente de reescritura de `origin/main` que `buy-retest.md`,
   resuelto igual. `2m/INV/LONG` sigue sin certificar FDR (cuarta

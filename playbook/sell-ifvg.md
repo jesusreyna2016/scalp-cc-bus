@@ -3,25 +3,24 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-13 (martes, primer día hábil completo tras el feriado) · n: 340)
+## Sección viva  (última revisión: 2026-10-14 (miércoles, CPI 13:30 UTC hoy) · n: 346)
 
-### Nota 2026-10-13
+### Nota 2026-10-14
 Dato nuevo mínimo (segmento de prioridad 2). Sin cambios de fondo vs
-ayer en ninguna métrica material. Mismo incidente de reescritura de
-`origin/main` que `buy-retest.md`, resuelto igual (detached HEAD, push
-con `origin HEAD:main`). Gate de ejecución sin cambio: INV sigue fuera
-de `shadowRules`.
+ayer en ninguna métrica material. `git pull` sin incidente de
+divergencia. Gate de ejecución sin cambio: INV sigue fuera de
+`shadowRules`.
 
 ### Veredicto global
-1m n=234 WR 45.3% E[R]=**0.052** PF=1.12; 2m n=88 WR 43.2%
-E[R]=**0.098** PF=1.22; 5m n=18 WR 55.6% E[R]=**0.128** PF=1.34
-(sin dato nuevo en 5m). `segment_significance`: 1m CI90=[-0.073,0.182]
-n=219 (sigue sin certificar); 2m CI90=[-0.134,0.355] n=84 (sin
+1m n=239 WR 45.6% E[R]=**0.053** PF=1.12; 2m n=89 WR 43.8%
+E[R]=**0.108** PF=1.24; 5m n=18 WR 55.6% E[R]=**0.128** PF=1.34
+(sin dato nuevo en 5m). `segment_significance`: 1m CI90=[-0.064,0.18]
+n=224 (sigue sin certificar); 2m CI90=[-0.129,0.364] n=85 (sin
 certificar); 5m CI90=[-0.304,0.572] n=16 (sin certificar) — ningún TF de
 este playbook certifica FDR, sin cambio de fondo. `sl_origin_vs_layer.
 since_change` (`candle1`) sin cambio material: 1m INV/SHORT sigue
-perjudicado con significancia (n=87, delta=**-0.398**
-CI90=[-0.634,-0.169]); 2m inconcluso (n=29, CI90 ancho); 5m sin muestra.
+perjudicado con significancia (n=92, delta=**-0.331**
+CI90=[-0.57,-0.094]); 2m inconcluso (n=30, CI90 ancho); 5m sin muestra.
 Sigue sin extenderse `sl-retest-wick`/`candle1` a ningún segmento INV.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
@@ -29,39 +28,40 @@ Sin n suficiente todavía para certificar en ninguna rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m`/`2m`/`5m` | ninguno certifica FDR hoy | 219/84/16 | E[R] 0.052/0.098/0.128, todos CI90 cruzan cero | baja |
+| 1 | `tf=1m`/`2m`/`5m` | ninguno certifica FDR hoy | 224/85/16 | E[R] 0.053/0.108/0.128, todos CI90 cruzan cero | baja |
 | 2 | `tier=B` | sigue casi plano | 115 | E[R]=**-0.005** PF=0.99 | baja |
-| 3 | `tier=C` | positivo, sigue mejor que B | 225 | E[R]=**+0.107** PF=1.25 | baja-moderada |
+| 3 | `tier=C` | positivo, sigue mejor que B | 231 | E[R]=**+0.111** PF=1.27 | baja-moderada |
 | 4 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar | — | sin veredicto único | baja |
-| 5 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — perjudica con significancia en 1m, inconcluso en 2m/5m, sin cambio vs ayer | 87 (1m) / 29 (2m) / 5 (5m) | delta -0.398 (1m, confirma negativo) / -0.109 (2m, CI90 ancho) / -0.214 (5m, n mínimo) | moderada |
+| 5 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — perjudica con significancia en 1m, inconcluso en 2m/5m, sin cambio vs ayer | 92 (1m) / 30 (2m) / 5 (5m) | delta -0.331 (1m, confirma negativo) / -0.085 (2m, CI90 ancho) / -0.214 (5m, n mínimo) | moderada |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=219 delta=**+0.199**
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=224 delta=**+0.195**
   (la gestión sigue ayudando mucho más que en cualquier otro segmento del
-  bus, sobre E[R] base cercano a cero); 2m n=84 delta=**+0.11**; 5m
+  bus, sobre E[R] base cercano a cero); 2m n=85 delta=**+0.102**; 5m
   n=16 delta=**+0.08**. Sin cambio de regla.
 - **SL de 3 capas vs SL = vela 1 del FVG**: ver Nota de proceso arriba —
   perjudica en 1m, no proponer.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (n=138, INV/SHORT): `RR-bajo` 61/138 (44.2%) causa
-  dominante, `contra-estructura` 41/138 (29.7%) segundo, `estirado`
-  33/138 (23.9%) tercero — sin cambio de fondo.
+- Autopsia de SL (n=141, INV/SHORT): `RR-bajo` 62/141 (44.0%) causa
+  dominante, `contra-estructura` 41/141 (29.1%) segundo, `estirado`
+  35/141 (24.8%) tercero — sin cambio de fondo.
 - **Decaimiento a vigilar (sigue sin ser formal)**: `decay_weekly_by_segment`
-  1m/INV/SHORT W41 E[R]=**0.165** → W42 (parcial, n=5) E[R]=**-0.122** —
-  n demasiado chico para leer como reversión. 2m W41 (n=9) E[R]=0.377 →
-  W42 (n=1) E[R]=0.4 — sin muestra. 5m sin dato nuevo en W42 todavía.
+  1m/INV/SHORT W41 E[R]=**0.165** → W42 (parcial, n=10) E[R]=**-0.007** —
+  mejora vs la lectura de ayer (n=5, -0.122) pero sigue negativo con n
+  chico, no leer como reversión confirmada. 2m W41 (n=9) E[R]=0.377 →
+  W42 (n=2) E[R]=0.65 — sin muestra. 5m sin dato nuevo en W42 todavía.
 
 ### Cruce con Session Analyst
 `session_analyst_cross.by_kind_side`: `AVOID` n=30 E[R]=**-0.261**
 WR33.3% — sin señales nuevas hoy, la caída más fuerte de los cuatro
 playbooks de este bus, confirma la hipótesis "AVOID rinde peor" de forma
-muy clara para este lado específico; `GO` n=11 E[R]=**0.491** WR72.7%
-(n mínimo); `WAIT` n=147 E[R]=**0.087** WR47.6%. Orden GO > WAIT >> AVOID
+muy clara para este lado específico; `GO` n=14 E[R]=**0.476** WR71.4%
+(n mínimo); `WAIT` n=149 E[R]=**0.081** WR47.7%. Orden GO > WAIT >> AVOID
 sin cambio — es la lectura por side más alineada con la hipótesis
 original de todo el bus (contraste con `sell-retest.md`, que sigue
 mostrando el patrón inverso en SHORT/RETEST).
@@ -71,6 +71,10 @@ Ver "Contextos a evitar" arriba — muestra de W42 todavía demasiado chica
 en los tres TF para leer tendencia.
 
 ## Histórico de cambios
+- 2026-10-14 (miércoles): sin hallazgo material nuevo, dato mínimo.
+  `git pull` sin incidente de divergencia. 1m/INV/SHORT W42 parcial
+  mejora levemente (n=5→10, E[R] -0.122→-0.007) pero sigue sin cruzar a
+  positivo.
 - 2026-10-13 (martes): sin hallazgo material nuevo, dato mínimo. Mismo
   incidente de reescritura de `origin/main` que `buy-retest.md`,
   resuelto igual.
