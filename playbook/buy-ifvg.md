@@ -3,26 +3,22 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-14 (miércoles, CPI 13:30 UTC hoy) · n: 451)
+## Sección viva  (última revisión: 2026-10-15 (jueves) · n: 475)
 
-### Nota 2026-10-14
-Dato nuevo chico (segmento de prioridad 2, bajo volumen). Sin cambios de
-fondo vs ayer en ninguna métrica material — `2m/INV/LONG` sigue sin
-certificar (cuarta/quinta corrida seguida), `5m/INV/LONG` sigue con n
-demasiado chico para confiar pese a certificar FDR puntualmente.
-
-### Nota de proceso
-`git pull` sin incidente de divergencia (HEAD detached pero ya en el
-mismo commit que `origin/main`). INV sigue fuera de `shadowRules`, sin
-cambio.
+### Nota 2026-10-15
+Dato nuevo chico (segmento de prioridad 2, bajo volumen), `git pull`
+limpio sin incidentes. Sin cambios de fondo vs ayer en ninguna métrica
+material — `2m/INV/LONG` sigue sin certificar FDR, `5m/INV/LONG` sigue
+con n demasiado chico para confiar pese a certificar FDR puntualmente.
+INV sigue fuera de `shadowRules`.
 
 ### Veredicto global
-1m n=300 WR 46.3% E[R]=**0.157** PF=1.36; 2m n=115 WR 51.3%
-E[R]=**0.01** PF=1.02 (sigue casi plano); 5m n=36 WR 69.4%
-E[R]=**0.279** PF=2.32 (n todavía muy chico para confiar).
-`segment_significance`: 1m CI90=[0.019,0.295] n=289 `survives_fdr10=true`
-p=0.028; **2m CI90=[-0.15,0.174] n=111 sigue sin certificar** (p=0.464);
-5m CI90=[0.032,0.522] n=33 `survives_fdr10=true` p=0.029 (n demasiado
+1m n=316 WR 45.6% E[R]=**0.14** PF=1.32; 2m n=122 WR 50.8%
+E[R]=**0.047** PF=1.11 (sigue casi plano); 5m n=37 WR 70.3%
+E[R]=**0.276** PF=2.34 (n todavía muy chico para confiar).
+`segment_significance`: 1m CI90=[0.015,0.27] n=303 `survives_fdr10=true`
+p=0.035; **2m CI90=[-0.132,0.222] n=118 sigue sin certificar** (p=0.326);
+5m CI90=[0.041,0.509] n=34 `survives_fdr10=true` p=0.027 (n demasiado
 chico para confiar). `sl_origin_vs_layer` (`candle1`) sin lectura nueva
 material hoy: sigue correcto que `sl-retest-wick` se limite a
 `kind=RETEST`, no extender a INV.
@@ -33,9 +29,9 @@ confianza:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar salvo 1m) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, único segmento de este playbook con n usable y estable | 289 | E[R]=**0.157** CI90=[0.019,0.295] | moderada-alta |
-| 2 | `tf=2m` | sin edge confirmado (CI90 cruza cero, lejos de significancia) | 111 | E[R]=**0.01** CI90=[-0.15,0.174] | baja — no proponer cambio con este n |
-| 3 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — mixto, CI90 amplio y cruza cero en los tres TF, sin cambio vs ayer | 289 (1m) / 111 (2m) / 33 (5m) | delta -0.044 (1m) / +0.372 (2m, n chico) / -0.415 (5m, n chico) | baja |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR, único segmento de este playbook con n usable y estable | 303 | E[R]=**0.14** CI90=[0.015,0.27] | moderada-alta |
+| 2 | `tf=2m` | sin edge confirmado (CI90 cruza cero, lejos de significancia) | 118 | E[R]=**0.047** CI90=[-0.132,0.222] | baja — no proponer cambio con este n |
+| 3 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — mixto, CI90 amplio y cruza cero, sin cambio vs ayer | 303 (1m) / 118 (2m) / 34 (5m) | ver `experiments.json`/`sl_origin_vs_layer` por basis | baja |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`).
@@ -67,6 +63,8 @@ sigue sin certificar FDR — el único punto a vigilar, sin tratarlo como
 decaimiento real todavía (n chico).
 
 ## Histórico de cambios
+- 2026-10-15 (jueves): sin hallazgo material nuevo, dato chico. `git
+  pull` limpio sin incidentes. `2m/INV/LONG` sigue sin certificar FDR.
 - 2026-10-14 (miércoles): sin hallazgo material nuevo, dato chico.
   `git pull` sin incidente de divergencia. `2m/INV/LONG` sigue sin
   certificar FDR.

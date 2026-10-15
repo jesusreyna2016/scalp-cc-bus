@@ -3,36 +3,37 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-14 (miércoles, CPI 13:30 UTC hoy) · n: 346)
+## Sección viva  (última revisión: 2026-10-15 (jueves) · n: 355)
 
-### Nota 2026-10-14
+### Nota 2026-10-15
 Dato nuevo mínimo (segmento de prioridad 2). Sin cambios de fondo vs
-ayer en ninguna métrica material. `git pull` sin incidente de
-divergencia. Gate de ejecución sin cambio: INV sigue fuera de
-`shadowRules`.
+ayer en ninguna métrica material. `git pull` limpio sin incidentes.
+Gate de ejecución sin cambio: INV sigue fuera de `shadowRules`.
 
 ### Veredicto global
-1m n=239 WR 45.6% E[R]=**0.053** PF=1.12; 2m n=89 WR 43.8%
-E[R]=**0.108** PF=1.24; 5m n=18 WR 55.6% E[R]=**0.128** PF=1.34
-(sin dato nuevo en 5m). `segment_significance`: 1m CI90=[-0.064,0.18]
-n=224 (sigue sin certificar); 2m CI90=[-0.129,0.364] n=85 (sin
+1m n=245 WR 46.1% E[R]=**0.075** PF=1.17; 2m n=92 WR 44.6%
+E[R]=**0.144** PF=1.33; 5m n=18 WR 55.6% E[R]=**0.128** PF=1.34
+(sin dato nuevo en 5m). `segment_significance`: 1m CI90=[-0.043,0.202]
+n=230 (sigue sin certificar); 2m CI90=[-0.085,0.395] n=88 (sin
 certificar); 5m CI90=[-0.304,0.572] n=16 (sin certificar) — ningún TF de
 este playbook certifica FDR, sin cambio de fondo. `sl_origin_vs_layer.
-since_change` (`candle1`) sin cambio material: 1m INV/SHORT sigue
-perjudicado con significancia (n=92, delta=**-0.331**
-CI90=[-0.57,-0.094]); 2m inconcluso (n=30, CI90 ancho); 5m sin muestra.
-Sigue sin extenderse `sl-retest-wick`/`candle1` a ningún segmento INV.
+since_change` (ventana post-2026-09-26 del experimento `sl_basis_retest`,
+medición paralela, no aplicado en INV): 1m INV/SHORT sigue empeorando con
+significancia si se usara la mecha en vez de 3 capas (n=98,
+delta=**-0.373** CI90=[-0.613,-0.122], ayer -0.331 n=92) — confirma que
+está bien que el cambio real en TradingView se limite a `kind=RETEST` y
+no se extienda a INV.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en ninguna rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m`/`2m`/`5m` | ninguno certifica FDR hoy | 224/85/16 | E[R] 0.053/0.108/0.128, todos CI90 cruzan cero | baja |
-| 2 | `tier=B` | sigue casi plano | 115 | E[R]=**-0.005** PF=0.99 | baja |
-| 3 | `tier=C` | positivo, sigue mejor que B | 231 | E[R]=**+0.111** PF=1.27 | baja-moderada |
+| 1 | `tf=1m`/`2m`/`5m` | ninguno certifica FDR hoy | 230/88/16 | E[R] 0.075/0.144/0.128, todos CI90 cruzan cero | baja |
+| 2 | `tier=B` | sigue casi plano | 117 | E[R]=**0.025** PF=1.05 | baja |
+| 3 | `tier=C` | positivo, sigue mejor que B | 238 | E[R]=**+0.132** PF=1.32 | baja-moderada |
 | 4 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar | — | sin veredicto único | baja |
-| 5 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — perjudica con significancia en 1m, inconcluso en 2m/5m, sin cambio vs ayer | 92 (1m) / 30 (2m) / 5 (5m) | delta -0.331 (1m, confirma negativo) / -0.085 (2m, CI90 ancho) / -0.214 (5m, n mínimo) | moderada |
+| 5 | mover SL a mecha del retest en INV (`sl_basis_retest`, medición paralela) | **NO proponer, confirma negativo** — perjudica con significancia en 1m, sin cambio vs ayer | 98 (1m) | delta -0.373 CI90=[-0.613,-0.122] | moderada |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
@@ -71,6 +72,11 @@ Ver "Contextos a evitar" arriba — muestra de W42 todavía demasiado chica
 en los tres TF para leer tendencia.
 
 ## Histórico de cambios
+- 2026-10-15 (jueves): sin hallazgo material nuevo, dato mínimo. `git
+  pull` limpio sin incidentes. `sl_origin_vs_layer.since_change` en 1m
+  INV/SHORT sigue empeorando con significancia (n=98, delta=-0.373,
+  ayer -0.331 n=92) — confirma que está bien no extender el SL de mecha
+  del retest a INV.
 - 2026-10-14 (miércoles): sin hallazgo material nuevo, dato mínimo.
   `git pull` sin incidente de divergencia. 1m/INV/SHORT W42 parcial
   mejora levemente (n=5→10, E[R] -0.122→-0.007) pero sigue sin cruzar a

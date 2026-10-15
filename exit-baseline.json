@@ -1,55 +1,55 @@
 {
   "schema": "exit-baseline-1",
-  "generatedAt": "2026-10-14T01:18:33.670247+00:00",
+  "generatedAt": "2026-10-15T01:18:52.327143+00:00",
   "source": "scalp-cc-bus outcomes, all kinds and TFs",
   "bySymbol": {
     "ALL": {
-      "n": 31285,
+      "n": 32413,
       "hit1R": 0.331,
-      "stoppedOut": 0.461,
-      "slWasGreenHalfRFirst": 0.318,
+      "stoppedOut": 0.462,
+      "slWasGreenHalfRFirst": 0.317,
       "slWasGreen1RFirst": 0.126,
       "reachedTP2": 0.044
     },
     "CL": {
-      "n": 5790,
-      "hit1R": 0.339,
-      "stoppedOut": 0.466,
-      "slWasGreenHalfRFirst": 0.323,
-      "slWasGreen1RFirst": 0.139,
-      "reachedTP2": 0.048
+      "n": 5954,
+      "hit1R": 0.337,
+      "stoppedOut": 0.468,
+      "slWasGreenHalfRFirst": 0.321,
+      "slWasGreen1RFirst": 0.137,
+      "reachedTP2": 0.047
     },
     "ES": {
-      "n": 6562,
+      "n": 6851,
       "hit1R": 0.312,
-      "stoppedOut": 0.453,
-      "slWasGreenHalfRFirst": 0.322,
-      "slWasGreen1RFirst": 0.13,
+      "stoppedOut": 0.454,
+      "slWasGreenHalfRFirst": 0.32,
+      "slWasGreen1RFirst": 0.128,
       "reachedTP2": 0.039
     },
     "GC": {
-      "n": 6257,
-      "hit1R": 0.331,
+      "n": 6537,
+      "hit1R": 0.329,
       "stoppedOut": 0.466,
-      "slWasGreenHalfRFirst": 0.332,
-      "slWasGreen1RFirst": 0.126,
+      "slWasGreenHalfRFirst": 0.33,
+      "slWasGreen1RFirst": 0.124,
       "reachedTP2": 0.041
     },
     "NQ": {
-      "n": 5546,
+      "n": 5715,
       "hit1R": 0.327,
-      "stoppedOut": 0.469,
-      "slWasGreenHalfRFirst": 0.313,
-      "slWasGreen1RFirst": 0.11,
+      "stoppedOut": 0.471,
+      "slWasGreenHalfRFirst": 0.315,
+      "slWasGreen1RFirst": 0.112,
       "reachedTP2": 0.044
     },
     "YM": {
-      "n": 7130,
-      "hit1R": 0.346,
+      "n": 7356,
+      "hit1R": 0.347,
       "stoppedOut": 0.454,
-      "slWasGreenHalfRFirst": 0.301,
-      "slWasGreen1RFirst": 0.126,
-      "reachedTP2": 0.05
+      "slWasGreenHalfRFirst": 0.3,
+      "slWasGreen1RFirst": 0.127,
+      "reachedTP2": 0.049
     }
   }
 }
