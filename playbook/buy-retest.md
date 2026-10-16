@@ -3,139 +3,176 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-15 (jueves) · n: 19413)
+## Sección viva  (última revisión: 2026-10-16 (viernes) · n: 19568)
 
-### Nota 2026-10-15
-**El near-miss del gate se debilita con más muestra, patrón ya conocido:**
-`5m/RETEST/LONG` W42 parcial creció de n=121 a n=172 y **el PF cayó bajo
-el umbral** (WR=50.0% justo en el límite, PF=**1.24**, ayer era WR51.2
-PF1.39) — repite el patrón ya documentado varias veces en este playbook
-(lecturas tempranas de semana con n chico sobrestiman el efecto y se
-corrigen hacia la media con más muestra). W42 ya no cumpliría el gate
-numérico puro si cerrara hoy; sigue sin contar porque la semana no ha
-cerrado. `since_change` de `sl_basis_retest` se mantiene estable: siguen
-confirmando limpio los mismos 3 TF LONG (1m delta=+0.08 CI90=[0.024,0.14]
-n=4348; 2m delta=+0.076 CI90=[0.01,0.147] n=2067; 5m delta=+0.183
-CI90=[0.039,0.373] n=777), ningún retroceso ni `delta_below_zero=true`.
-El verdict agregado formal sigue `flat`. Segundo hallazgo: **el modo
-sombra pierde la recuperación que parecía tener ayer** — W42 con mucha
-más muestra (n=2651 shadow vs 2858 raw, antes n=1585/1763) pasa de
-`shadow_beats_raw=true` a **prácticamente empatado** (shadow
-E[R]=0.058 = raw E[R]=0.058, `shadow_beats_raw=false`) — van ya 2 de las
-últimas 2 semanas sin batir claramente al crudo, tras la racha de 4
-(W37-W40). No cambia el peldaño (ya se cumplió el gate 0→1 con esas 4
-semanas, esto no es una condición de bajar) pero sí debilita la confianza
-en el conjunto de reglas sombra actual — vigilar si W42 cierra así.
-Sin incidentes de pipeline: `huérfanos` estable en 44, `pares_resueltos`
-sube de 31285 a 32413 (+1128).
+### Nota 2026-10-16
+**El near-miss del gate se recupera un poco, pero sigue sin cerrar:**
+`5m/RETEST/LONG` W42 parcial pasó de n=172 (WR50.0 PF1.24, ayer) a
+n=181 (WR49.7 PF1.20) — el PF se mueve lateral bajo el umbral 1.3, WR
+también por debajo de 50 por primera vez en esta ventana. Sigue sin
+contar para el gate porque la semana no ha cerrado (`weeklyStable3`
+sigue en `false`: sólo W41 cerrada cumple WR≥50+PF≥1.3 de las 3 últimas).
+`since_change` de `sl_basis_retest` **sin novedad material**: siguen
+confirmando limpio los mismos 3 TF LONG (1m delta=+0.091 CI90=[0.031,0.149]
+n=4426; 2m delta=+0.073 CI90=[0.013,0.136] n=2113; 5m delta=+0.188
+CI90=[0.043,0.36] n=786), ningún retroceso ni `delta_below_zero=true`.
+El verdict agregado formal sigue `flat` (mide con la métrica vieja —
+ver nota en `experiments.json`, el feed no recalcula rMultiple con el
+nuevo SL). Modo sombra: W42 sigue sin cerrar, última lectura semanal
+disponible (`shadow_weekly`) sigue en W42 `shadow_beats_raw=false`
+(shadow E[R]=0.037 vs raw 0.038, prácticamente empatado) — van 2 semanas
+seguidas sin batir claramente al crudo tras la racha de 4 (W37-W40), sin
+cambio vs ayer. **Hallazgo nuevo a vigilar, no urgente**: en el reporte
+de hoy `managed_vs_naive` para `5m/RETEST/LONG` sigue siendo el único
+segmento de todo el bus (los 12 `tf/kind/side`) con delta negativo
+(**-0.032**, n=1813) — la escalera de entrada + parciales resta en vez
+de sumar precisamente en el segmento más cercano al gate de ejecución;
+la regla de "mercado simple en 5m LONG" (ver Gestión) ya refleja esto,
+dato estable desde hace varios días, sólo lo marco explícito aquí porque
+es relevante para cualquier propuesta de subir de peldaño. Sin
+incidentes de pipeline: `huérfanos` estable en 44, `pares_resueltos`
+sube de 32413 a 32719 (+306, día más tranquilo que el salto de ayer).
 
 ### Nota de proceso
-`git pull` limpio hoy, sin incidente de divergencia ni `HEAD` detached
-(primera vez en varios días sin un "forced update" de `origin/main`).
+`git pull` requirió fast-forward desde `HEAD` detached (el checkout
+previo quedó apuntando a un commit suelto en vez de a `main`); se
+resolvió con `git checkout main && git pull`, sin pérdida de datos ni
+conflicto — 16 commits fast-forward, limpio.
 
 ### Veredicto global
-1m n=12154 WR 45.0% E[R]=**0.035** PF=1.07; 2m n=5357 WR 47.7%
-E[R]=**0.05** PF=1.1; 5m n=1902 WR 51.3% E[R]=**0.137** PF=**1.31**.
-`segment_significance`: 1m CI90=[0.016,0.053] n=11799
-`survives_fdr10=true`; 2m CI90=[0.022,0.079] n=5172 `survives_fdr10=true`;
-5m CI90=[0.088,0.186] n=1804 `survives_fdr10=true`. Los tres TF siguen
+1m n=12248 WR 45.0% E[R]=**0.033** PF=1.07; 2m n=5409 WR 47.7%
+E[R]=**0.048** PF=1.1; 5m n=1911 WR 51.2% E[R]=**0.135** PF=**1.3**.
+`segment_significance`: 1m CI90=[0.015,0.051] n=11892
+`survives_fdr10=true`; 2m CI90=[0.02,0.075] n=5223 `survives_fdr10=true`;
+5m CI90=[0.086,0.183] n=1813 `survives_fdr10=true`. Los tres TF siguen
 con edge estadísticamente real, sin cambio de fondo. OOS
 (`rr1_threshold_cut_oos`, ventana sigue **W41-W42**, sin avanzar): 1m
-baseline E[R]=**0.028** CI90=[-0.005,0.062] n=3083 (baja un poco de
-0.031, límite inferior sigue justo bajo cero, p=0.081); 2m baseline
-E[R]=**0.11** CI90=[0.059,0.163] n=1335 (sigue certificando limpio,
-algo más débil que ayer); 5m baseline E[R]=**0.119** CI90=[0.033,0.205]
-n=491 (sigue certificando limpio). **Escalera de ejecución: sigue en
-peldaño 1 (Sombra)** — ver Reglas condicionales #8.
+baseline E[R]=**0.021** CI90=[-0.01,0.055] n=3176 (baja de 0.028, ahora
+cruza cero, p=0.132 — pierde el filo de significancia que tenía ayer);
+2m baseline E[R]=**0.099** CI90=[0.048,0.148] n=1386 (sigue certificando
+limpio); 5m baseline E[R]=**0.112** CI90=[0.03,0.201] n=500 (sigue
+certificando limpio, algo más débil que ayer). **Escalera de ejecución:
+sigue en peldaño 1 (Sombra)** — ver Reglas condicionales #8.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR — edge real en agregado, OOS sigue justo bajo significancia | 11799 | histórico E[R]=**0.035** CI90=[0.016,0.053]; OOS (W41-W42) E[R]=**0.028** CI90=[-0.005,0.062] | alta en agregado, OOS al filo |
-| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, el más fuerte, sigue certificando OOS — **near-miss del gate se debilita: W41 cerrada cumple WR≥50+PF≥1.3; W42 en curso con más muestra (n=172) ya NO cumple PF≥1.3 (WR50.0 PF1.24, ayer con n=121 era WR51.2 PF1.39)** | 1804 | E[R]=**0.137** CI90=[0.088,0.186]; OOS (W41-W42) E[R]=**0.119** CI90=[0.033,0.205] | alta — el más confiable; **no recomendar live todavía, W42 se debilitó con más muestra** |
-| 3 | `tf=2m` (`survives_fdr10=true`) | TOMAR — agregado positivo y certifica limpio OOS | 5172 | histórico E[R]=**0.05** CI90=[0.022,0.079]; OOS (W41-W42) E[R]=**0.11** CI90=[0.059,0.163] | alta |
-| 4 | `tier=A+` | **evitar** — WR muy bajo, E[R] casi plano (RR alto exige recorrido grande) | 1386 | WR 22.2%, E[R]=**0.005** PF=1.01 | alta — sin cambio |
-| 5 | `tier=B` | TOMAR, por encima de C; A+ muy por detrás | 8084 | WR 47.4% E[R]=**0.07** PF=1.15 vs tier C WR 49.4% E[R]=0.042 PF=1.09 | alta |
-| 6 | `sa_verdict=AVOID` (Session Analyst, RETEST/LONG) | **EVITAR** — único corte donde AVOID da E[R] negativo, confirmación sostenida de la hipótesis | 1472 | E[R]=**-0.008** WR 43.8% vs GO E[R]=0.08 WR48.6% / WAIT E[R]=0.05 WR47.4% | alta — ver Cruce con Session Analyst |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR — edge real en agregado, OOS pierde el filo de significancia hoy (CI90 vuelve a cruzar cero) | 11892 | histórico E[R]=**0.033** CI90=[0.015,0.051]; OOS (W41-W42) E[R]=**0.021** CI90=[-0.01,0.055] | alta en agregado, OOS debilitado |
+| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, el más fuerte, sigue certificando OOS — **near-miss del gate sigue sin cerrar: W41 cerrada cumple WR≥50+PF≥1.3; W42 en curso (n=181) sigue sin cumplir, WR cae a 49.7% (bajo 50 por primera vez) y PF a 1.20** | 1813 | E[R]=**0.135** CI90=[0.086,0.183]; OOS (W41-W42) E[R]=**0.112** CI90=[0.03,0.201] | alta — el más confiable; **no recomendar live todavía** |
+| 3 | `tf=2m` (`survives_fdr10=true`) | TOMAR — agregado positivo y certifica limpio OOS | 5223 | histórico E[R]=**0.048** CI90=[0.02,0.075]; OOS (W41-W42) E[R]=**0.099** CI90=[0.048,0.148] | alta |
+| 4 | `tier=A+` | **evitar** — WR muy bajo, E[R] casi plano (RR alto exige recorrido grande) | 1470 | WR 22.0%, E[R]=**0.006** PF=1.01 | alta — sin cambio |
+| 5 | `tier=B` | TOMAR, por encima de C; A+ muy por detrás | 8459 | WR 47.0% E[R]=**0.059** PF=1.12 vs tier C WR 49.5% E[R]=0.043 PF=1.09 | alta |
+| 6 | `sa_verdict=AVOID` (Session Analyst, RETEST/LONG) | **EVITAR** — único corte donde AVOID da E[R] negativo, confirmación sostenida de la hipótesis | 1501 | E[R]=**-0.009** WR 43.9% vs GO E[R]=0.045 WR47.8% / WAIT E[R]=0.045 WR47.0% | alta — ver Cruce con Session Analyst |
 | 7 | `aligned=0` (contra-tendencia HTF) | muestra demasiado chica para usar | 11 | sin cambio | baja |
-| 8 | `tf=5m` + gate numérico puro | PF≥1.3 y WR≥50 cerraron en W41; W42 en curso ya NO cumple los dos umbrales con más muestra — **todavía no certifica el peldaño 2** (falta que cierre y sumar una 3ª semana, y hoy la parcial va en contra) | 172 (W42 parcial) | WR 50.0%, PF 1.24 | alta — gate de ejecución, no de señal |
+| 8 | `tf=5m` + gate numérico puro | PF≥1.3 y WR≥50 cerraron en W41; W42 en curso sigue sin cumplir los dos umbrales (ahora WR también cae bajo 50) — **todavía no certifica el peldaño 2** | 181 (W42 parcial) | WR 49.7%, PF 1.20 | alta — gate de ejecución, no de señal |
 | 9 | subir `rr1` mínimo (candidato `sc_min_rr`/`sc_aplus_rr`) | **cerrado `rejected_oos` desde 2026-10-09** — ningún corte generaliza OOS en ningún segmento RETEST tras 2+ ventanas; no reabrir sin evidencia nueva desde cero | — | ver `experiments.json` | cerrado |
+| 10 | `tf=5m` + gestión con escalera/parciales | **evitar la escalera, usar mercado simple** — único segmento de todo el bus donde `managed_vs_naive` es negativo | 1813 | naive E[R]=0.135 vs managed E[R]=0.103, delta=**-0.032** | alta — estable desde hace varios días, ver Gestión |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara de calidad
   de entrada en este segmento.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=11796 delta=**+0.089**
-  (estable); 2m n=5169 delta=**+0.044** (estable); 5m n=1804
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=11889 delta=**+0.088**
+  (estable); 2m n=5220 delta=**+0.043** (estable); 5m n=1813
   delta=**-0.032** (sigue siendo el único TF donde la gestión resta en
-  LONG, sin cambio de fondo). Regla sin cambios: escalera en 1m/2m,
+  LONG, idéntico a ayer). Regla sin cambios: escalera en 1m/2m,
   mercado simple en 5m LONG.
 - **SL de 3 capas vs SL = mecha del retest.** Histórico completo (LONG):
-  1m delta=+0.113 CI90=[0.074,0.156] confirma; 2m delta=+0.121
-  CI90=[0.074,0.168] confirma; 5m delta=+0.232 CI90=[0.124,0.351]
+  1m delta=+0.121 CI90=[0.083,0.163] confirma; 2m delta=+0.116
+  CI90=[0.07,0.163] confirma; 5m delta=+0.233 CI90=[0.128,0.343]
   confirma. **`since_change` (sólo post-2026-09-26) se mantiene estable
   hoy, sin retroceso** — siguen confirmando limpio los TRES TF LONG: 1m
-  delta=+0.08 CI90=[0.024,0.14] n=4348; 2m delta=+0.076 CI90=[0.01,0.147]
-  n=2067; 5m delta=+0.183 CI90=[0.039,0.373] n=777. **Decisión sin
-  cambio: mantener aplicado en los 6 segmentos** — no hay evidencia para
-  revertir (ningún segmento sale `delta_below_zero=true`), pero el
-  verdict agregado formal (mezcla LONG+SHORT) sigue en **`flat`** —
-  vigilar 2-3 corridas más antes de proponerlo para el gate.
+  delta=+0.091 CI90=[0.031,0.149] n=4426; 2m delta=+0.073
+  CI90=[0.013,0.136] n=2113; 5m delta=+0.188 CI90=[0.043,0.36] n=786.
+  **Decisión sin cambio: mantener aplicado en los 6 segmentos** — no hay
+  evidencia para revertir (ningún segmento sale `delta_below_zero=true`),
+  pero el verdict agregado formal (mezcla LONG+SHORT, calculado con la
+  métrica rMultiple vieja porque el feed no recalcula tras el cambio)
+  sigue en **`flat`** — la evidencia real de este experimento vive en
+  `since_change`/`by_basis`, no en ese verdict agregado; vigilar 2-3
+  corridas más antes de proponerlo para el gate.
 - **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)**: W41 (cerrada)
-  `shadow_beats_raw=false`. **W42 pierde la recuperación que parecía
-  tener ayer** — con mucha más muestra (n=2651 shadow / n=2858 raw, ayer
-  n=1585/1763) el E[R] queda prácticamente empatado (shadow=0.058 vs
-  raw=0.058, `shadow_beats_raw=false`) — van ya 2 semanas seguidas sin
-  batir claramente al crudo tras la racha de 4 (W37-W40). No baja el
-  peldaño (el gate 0→1 ya se cumplió con esas 4 semanas) pero debilita la
-  confianza en el conjunto de reglas sombra vigente — vigilar el cierre
-  de W42.
+  `shadow_beats_raw=false`. W42 sigue sin cerrar; la lectura más reciente
+  sigue prácticamente empatada (shadow E[R]=0.037 vs raw 0.038,
+  `shadow_beats_raw=false`), sin cambio vs ayer — van 2 semanas seguidas
+  sin batir claramente al crudo tras la racha de 4 (W37-W40). No baja el
+  peldaño (el gate 0→1 ya se cumplió con esas 4 semanas) pero sigue
+  debilitando la confianza en el conjunto de reglas sombra vigente —
+  vigilar el cierre de W42.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las pérdidas LONG (n=8757, RETEST/LONG): `RR-bajo`
-  3249/8757 (37.1%) causa dominante (sin cambio de rango), seguido de
-  `killzone-Asia-largo` 3193/8757 (36.5%), `contra-estructura`
-  3043/8757 (34.7%), `stop-en-el-minimo` 2897/8757 (33.1%) — mezcla de
-  causas cercanas, sin una dominante aislada. `sl_basis_retest` (SL=mecha
-  del retest) es el candidato que mejor ataca `RR-bajo`; **hoy certifica
-  limpio post-cambio en los 3 TF LONG** (ver Gestión) — se acerca a lo
-  que le falta al gate del peldaño 2 (causa dominante mitigada por
-  experimento `confirmed`), pero el verdict formal agregado sigue `flat`
-  hasta que se sostenga unas corridas más.
+- Autopsia de SL sobre las pérdidas LONG (n=9159, RETEST/LONG):
+  `killzone-Asia-largo` 3415/9159 (37.3%) y `RR-bajo` 3401/9159 (37.1%)
+  **intercambian el primer lugar por un pelo** (ayer RR-bajo dominaba
+  37.1% vs 36.5%, ahora killzone-Asia-largo lo supera por 0.2pts) —
+  diferencia dentro del ruido, no tratar como cambio real; siguen
+  `contra-estructura` 3193/9159 (34.9%) y `stop-en-el-minimo` 3013/9159
+  (32.9%) de cerca, mezcla de causas cercanas sin una dominante aislada.
+  `sl_basis_retest` (SL=mecha del retest) es el candidato que mejor
+  ataca `RR-bajo`; sigue certificando limpio post-cambio en los 3 TF
+  LONG (ver Gestión) — se acerca a lo que le falta al gate del peldaño 2
+  (causa dominante mitigada por experimento `confirmed`), pero el
+  verdict formal agregado sigue `flat` hasta que se sostenga unas
+  corridas más.
 - `sa_verdict=AVOID` en este segmento específico (no sólo en agregado
   global): EVITAR, ver regla condicional #6 — sigue siendo el corte con
   la señal más limpia de todo el playbook.
 
 ### Cruce con Session Analyst
 Específico de `RETEST/LONG`: `AVOID` n=1501 E[R]=**-0.009** WR 43.9%
-(negativo, prácticamente sin cambio); `GO` n=1477 E[R]=**0.059** WR 47.7%;
-`WAIT` n=6397 E[R]=**0.048** WR 47.1%. Orden GO > WAIT > AVOID con AVOID
-en territorio negativo, estable desde hace varias corridas — sigue
-siendo la confirmación más fuerte de la hipótesis de
-`agent-instructions.md` en todo el bus. Nota: el agregado GLOBAL (los 4
-playbooks mezclados) de `AVOID` subió hoy a E[R]=+0.009 (no significativo,
-CI90=[-0.034,0.054]) por primera vez desde que se mide — pero en este
-segmento específico (RETEST/LONG, el de mayor muestra) `AVOID` se
-mantiene negativo sin cambio, así que la regla condicional #6 sigue
-vigente tal cual.
+(negativo, prácticamente sin cambio); `GO` n=1590 E[R]=**0.045** WR 47.8%;
+`WAIT` n=6439 E[R]=**0.045** WR 47.0%. **GO y WAIT convergen hoy** (ayer
+GO=0.059 claramente por encima de WAIT=0.048; hoy quedan empatados en
+0.045) — el orden GO≥WAIT > AVOID se mantiene con AVOID en territorio
+negativo, sigue siendo la confirmación más fuerte de la hipótesis de
+`agent-instructions.md` en todo el bus, pero vigilar si GO sigue
+perdiendo margen sobre WAIT. Nota: el agregado GLOBAL (los 4 playbooks
+mezclados) de `AVOID` se mantiene en E[R]=+0.009 (no significativo,
+CI90=[-0.034,0.054]), idéntico a ayer — en este segmento específico
+(RETEST/LONG, el de mayor muestra) `AVOID` sigue negativo sin cambio,
+así que la regla condicional #6 sigue vigente tal cual.
 
 ### Decaimiento
 Ningún segmento LONG cruza el umbral automático (>15pts WR vs media 3
 semanas previas). Serie semanal (`decay_weekly_by_segment`), W40→W41→W42
-(parcial, más muestra que ayer): 1m E[R] -0.031→0.02→**0.045** (n=1206,
-baja de 0.082 con más muestra); 2m E[R] -0.001→0.107→**0.117** (n=469,
-estable); 5m E[R] 0.1→0.16→**0.114** (n=172, baja de 0.178 — el mismo
-patrón de hoy en el gate: la lectura optimista de ayer con n chico se
-modera con más muestra, PF ya bajo 1.3 como se ve en Reglas
-condicionales #8). **Resumen: ningún TF cruza el umbral formal de
-decaimiento, pero los tres moderan su lectura parcial de W42 frente a
-ayer — tratar la mejora de ayer como sobrestimada por n chico, patrón ya
-documentado varias veces en este playbook.**
+(parcial, más muestra que ayer): 1m E[R] 0.02→0.045→**0.027** (n=1300,
+baja de 0.045 con más muestra); 2m E[R] 0.107→0.117→**0.087** (n=521,
+baja de 0.117); 5m E[R] 0.16→0.114→**0.096** (n=181, baja de 0.114,
+PF ya en 1.2 — mismo patrón que el gate en Reglas condicionales #8).
+**Resumen: ningún TF cruza el umbral formal de decaimiento, pero los
+tres siguen moderando su lectura parcial de W42 con cada día de más
+muestra — tercera corrida consecutiva en que la parcial de la semana
+baja, patrón de método ya muy establecido en este playbook (no tratar
+como decaimiento real hasta que W42 cierre).**
 
 ## Histórico de cambios
+- 2026-10-16 (viernes): `git pull` encontró el repo en `HEAD` detached
+  (apuntando a un commit suelto, no a `main`); se resolvió con
+  `git checkout main && git pull` sin pérdida de datos, 16 commits
+  fast-forward. Dato nuevo moderado (+306 pares resueltos, día más
+  tranquilo que el salto de 1128 de ayer). El near-miss del gate en
+  `5m/RETEST/LONG` sigue sin cerrar: W42 parcial crece a n=181 y por
+  primera vez el WR también cae bajo 50 (49.7%, PF 1.20) — tercera
+  corrida consecutiva en que la lectura de la semana se modera a la
+  baja con más muestra. `since_change` de `sl_basis_retest` sin cambio
+  de fondo, sigue confirmando limpio en los 3 TF LONG; el verdict
+  agregado formal del experimento sigue `flat` porque mide con la
+  métrica rMultiple vieja (el feed no recalcula tras el cambio real en
+  TradingView) — aclarado explícitamente en Gestión para no confundir
+  "flat" con "no funciona". Hallazgo a vigilar sin ser nuevo: la
+  escalera de gestión (`managed_vs_naive`) sigue siendo negativa sólo en
+  `5m/RETEST/LONG` (delta=-0.032) — es el único segmento de los 12
+  `tf/kind/side` del bus donde la gestión resta, y es justo el segmento
+  más cerca del gate de ejecución; la regla de "mercado simple en 5m
+  LONG" ya lo refleja. OOS de `rr1_threshold_cut_oos` en 1m pierde el
+  filo de significancia que tenía ayer (CI90 vuelve a cruzar cero). Session
+  Analyst: GO y WAIT convergen en E[R]=0.045 (ayer GO=0.059 por encima);
+  AVOID se mantiene negativo sin cambio. Autopsia de SL: `killzone-Asia-largo`
+  supera a `RR-bajo` por un pelo (37.3% vs 37.1%) como causa más frecuente,
+  diferencia dentro del ruido. `huérfanos` estable en 44.
 - 2026-10-15 (jueves): `git pull` limpio, sin incidentes de repo (primera
   vez en varios días sin `HEAD` detached ni "forced update"). Dato nuevo
   sólido (+1128 pares resueltos en todo el bus). **Dos hallazgos
