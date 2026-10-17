@@ -3,82 +3,86 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-16 (viernes) · n: 362)
+## Sección viva  (última revisión: 2026-10-17 (sábado) · n: 363)
 
-### Nota 2026-10-16
-Dato nuevo mínimo (segmento de prioridad 2). Sin cambios de fondo vs
-ayer en ninguna métrica material. `git pull` encontró `HEAD` detached,
-resuelto con `git checkout main && git pull` sin pérdida de datos (16
-commits fast-forward). Gate de ejecución sin cambio: INV sigue fuera de
-`shadowRules`.
+### Nota 2026-10-17
+Dato nuevo mínimo (segmento de prioridad 2), salto grande en el resto
+del bus por el fin de semana largo. Sin cambios de fondo vs ayer en
+ninguna métrica material de este playbook. Gate de ejecución sin
+cambio: INV sigue fuera de `shadowRules`.
 
 ### Veredicto global
-1m n=250 WR 46.4% E[R]=**0.071** PF=1.16; 2m n=93 WR 45.2%
-E[R]=**0.145** PF=1.34; 5m n=19 WR 52.6% E[R]=**0.062** PF=1.15
-(un par nuevo en 5m, baja bastante desde 0.128 con n chico — ruido).
-`segment_significance`: 1m CI90=[-0.044,0.196] n=235 (sigue sin
+1m n=251 WR 46.2% E[R]=**0.067** PF=1.15; 2m n=93 WR 45.2%
+E[R]=**0.145** PF=1.34 (idéntico, sin señales nuevas); 5m n=19 WR 52.6%
+E[R]=**0.062** PF=1.15 (idéntico, sin señales nuevas).
+`segment_significance`: 1m CI90=[-0.049,0.189] n=236 (sigue sin
 certificar); 2m CI90=[-0.08,0.389] n=89 (sin certificar); 5m
 CI90=[-0.357,0.499] n=17 (sin certificar) — ningún TF de este playbook
 certifica FDR, sin cambio de fondo. `sl_origin_vs_layer.since_change`
 (ventana post-2026-09-26 del experimento `sl_basis_retest`, medición
 paralela, no aplicado en INV): 1m INV/SHORT sigue empeorando con
-significancia si se usara la mecha en vez de 3 capas (n=103,
-delta=**-0.37** CI90=[-0.609,-0.141], prácticamente igual a ayer
--0.373) — confirma que está bien que el cambio real en TradingView se
-limite a `kind=RETEST` y no se extienda a INV.
+significancia si se usara la mecha en vez de 3 capas (n=104,
+delta=**-0.367** CI90=[-0.603,-0.133], prácticamente igual a ayer) —
+confirma que está bien que el cambio real en TradingView se limite a
+`kind=RETEST` y no se extienda a INV.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en ninguna rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m`/`2m`/`5m` | ninguno certifica FDR hoy | 235/89/17 | E[R] 0.071/0.145/0.062, todos CI90 cruzan cero | baja |
+| 1 | `tf=1m`/`2m`/`5m` | ninguno certifica FDR hoy | 236/89/17 | E[R] 0.067/0.145/0.062, todos CI90 cruzan cero | baja |
 | 2 | `tier=B` | sigue casi plano | 121 | E[R]=**0.026** PF=1.05 | baja |
-| 3 | `tier=C` | positivo, sigue mejor que B | 241 | E[R]=**+0.124** PF=1.3 | baja-moderada |
+| 3 | `tier=C` | positivo, sigue mejor que B | 242 | E[R]=**+0.119** PF=1.29 | baja-moderada |
 | 4 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar | — | sin veredicto único | baja |
-| 5 | mover SL a mecha del retest en INV (`sl_basis_retest`, medición paralela) | **NO proponer, confirma negativo** — perjudica con significancia en 1m, sin cambio vs ayer | 103 (1m) | delta -0.37 CI90=[-0.609,-0.141] | moderada |
+| 5 | mover SL a mecha del retest en INV (`sl_basis_retest`, medición paralela) | **NO proponer, confirma negativo** — perjudica con significancia en 1m, sin cambio vs ayer | 104 (1m) | delta -0.367 CI90=[-0.603,-0.133] | moderada |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=235 delta=**+0.195**
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=236 delta=**+0.2**
   (la gestión sigue ayudando mucho más que en cualquier otro segmento del
   bus, sobre E[R] base cercano a cero); 2m n=89 delta=**+0.108**; 5m
   n=17 delta=**+0.076**. Sin cambio de regla.
-- **SL de 3 capas vs SL = vela 1 del FVG**: ver Nota de proceso arriba —
+- **SL de 3 capas vs SL = vela 1 del FVG**: ver Veredicto global —
   perjudica en 1m, no proponer.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (n=145, INV/SHORT): `RR-bajo` 64/145 (44.1%) causa
-  dominante, `contra-estructura` 42/145 (29.0%) segundo, `estirado`
-  36/145 (24.8%) tercero — sin cambio de fondo.
+- Autopsia de SL (n=146, INV/SHORT): `RR-bajo` 64/146 (43.8%) causa
+  dominante, `contra-estructura` 42/146 (28.8%) segundo, `estirado`
+  36/146 (24.7%) tercero — sin cambio de fondo.
 - **Decaimiento a vigilar (sigue sin ser formal)**: `decay_weekly_by_segment`
-  1m/INV/SHORT W41 E[R]=**0.165** → W42 (parcial, n=21) E[R]=**+0.23** —
-  **confirma la reversión que empezaba a verse ayer** (de -0.007 con
-  n=10 a +0.23 con n=21, ya el doble de muestra y claramente positivo).
-  2m W41 (n=9) E[R]=0.377 → W42 (n=6) E[R]=0.845 — sigue sin muestra
-  usable, PF se ve inflado (99.0, un solo ganador grande). 5m sin dato
-  nuevo en W42 todavía.
+  1m/INV/SHORT W41 (n=39) E[R]=**0.165** → W42 (n=22, ya cerrada)
+  E[R]=**0.174** — se sostiene positivo con la semana ya cerrada, la
+  reversión se confirma sin ser ruido de muestra chica. 2m W41 (n=9)
+  E[R]=0.377 → W42 (n=6, cerrada) E[R]=0.845 — sigue sin muestra usable,
+  PF se ve inflado (99.0, un solo ganador grande). 5m W42 cerró con un
+  solo par (pérdida completa, E[R]=-1.0) — n demasiado chico para leer
+  nada.
 
 ### Cruce con Session Analyst
 `session_analyst_cross.by_kind_side`: `AVOID` n=30 E[R]=**-0.261**
 WR33.3% — sin señales nuevas hoy (idéntico a ayer), la caída más fuerte
 de los cuatro playbooks de este bus, confirma la hipótesis "AVOID rinde
 peor" de forma muy clara para este lado específico; `GO` n=15
-E[R]=**0.377** WR66.7% (bajó de 0.476 con un par nuevo, n todavía
-mínimo); `WAIT` n=160 E[R]=**0.114** WR49.4% (sube de 0.081 con más
-muestra). Orden GO > WAIT >> AVOID sin cambio — sigue siendo la lectura
-por side más alineada con la hipótesis original de todo el bus
-(contraste con `sell-retest.md`, que sigue mostrando el patrón inverso
-en SHORT/RETEST).
+E[R]=**0.377** WR66.7% (idéntico, sin señales nuevas); `WAIT` n=161
+E[R]=**0.107** WR49.1% (prácticamente igual). Orden GO > WAIT >> AVOID
+sin cambio — sigue siendo la lectura por side más alineada con la
+hipótesis original de todo el bus (contraste con `sell-retest.md`, que
+hoy muestra por primera vez AVOID > GO en SHORT/RETEST).
 
 ### Decaimiento
 Ver "Contextos a evitar" arriba — muestra de W42 todavía demasiado chica
 en los tres TF para leer tendencia.
 
 ## Histórico de cambios
+- 2026-10-17 (sábado): sin hallazgo material nuevo en este playbook,
+  dato mínimo (segmento de prioridad 2). La reversión de `1m/INV/SHORT`
+  en W41→W42 se confirma con la semana ya cerrada (n=22, E[R]=0.174,
+  sin caer). Salto grande de dato en el resto del bus por el fin de
+  semana largo. Sin incidentes de pipeline.
 - 2026-10-16 (viernes): sin hallazgo material nuevo, dato mínimo. `git
   pull` encontró `HEAD` detached, resuelto con `git checkout main &&
   git pull` sin pérdida de datos. La reversión de `1m/INV/SHORT` en
