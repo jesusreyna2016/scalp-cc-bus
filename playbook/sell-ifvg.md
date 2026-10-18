@@ -3,26 +3,27 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-17 (sábado) · n: 363)
+## Sección viva  (última revisión: 2026-10-18 (domingo, REVISIÓN SEMANAL) · n: 364)
 
-### Nota 2026-10-17
-Dato nuevo mínimo (segmento de prioridad 2), salto grande en el resto
-del bus por el fin de semana largo. Sin cambios de fondo vs ayer en
-ninguna métrica material de este playbook. Gate de ejecución sin
-cambio: INV sigue fuera de `shadowRules`.
+### Nota 2026-10-18
+REVISIÓN SEMANAL (ver `reviews/2026-week-42.md`) — dato mínimo (+1 en
+todo el playbook, segmento de prioridad 2). Sin cambios de fondo vs
+ayer en ninguna métrica material. Gate de ejecución sin cambio: INV
+sigue fuera de `shadowRules`. Ningún candidato con n≥20 para proponer
+cambio de input esta semana en este playbook.
 
 ### Veredicto global
-1m n=251 WR 46.2% E[R]=**0.067** PF=1.15; 2m n=93 WR 45.2%
+1m n=252 WR 46.4% E[R]=**0.068** PF=1.16; 2m n=93 WR 45.2%
 E[R]=**0.145** PF=1.34 (idéntico, sin señales nuevas); 5m n=19 WR 52.6%
 E[R]=**0.062** PF=1.15 (idéntico, sin señales nuevas).
-`segment_significance`: 1m CI90=[-0.049,0.189] n=236 (sigue sin
+`segment_significance`: 1m CI90=[-0.049,0.197] n=237 (sigue sin
 certificar); 2m CI90=[-0.08,0.389] n=89 (sin certificar); 5m
 CI90=[-0.357,0.499] n=17 (sin certificar) — ningún TF de este playbook
 certifica FDR, sin cambio de fondo. `sl_origin_vs_layer.since_change`
 (ventana post-2026-09-26 del experimento `sl_basis_retest`, medición
 paralela, no aplicado en INV): 1m INV/SHORT sigue empeorando con
-significancia si se usara la mecha en vez de 3 capas (n=104,
-delta=**-0.367** CI90=[-0.603,-0.133], prácticamente igual a ayer) —
+significancia si se usara la mecha en vez de 3 capas (n=105,
+delta=**-0.377** CI90=[-0.611,-0.15], prácticamente igual a ayer) —
 confirma que está bien que el cambio real en TradingView se limite a
 `kind=RETEST` y no se extienda a INV.
 
@@ -31,17 +32,17 @@ Sin n suficiente todavía para certificar en ninguna rama:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m`/`2m`/`5m` | ninguno certifica FDR hoy | 236/89/17 | E[R] 0.067/0.145/0.062, todos CI90 cruzan cero | baja |
+| 1 | `tf=1m`/`2m`/`5m` | ninguno certifica FDR hoy | 237/89/17 | E[R] 0.068/0.145/0.062, todos CI90 cruzan cero | baja |
 | 2 | `tier=B` | sigue casi plano | 121 | E[R]=**0.026** PF=1.05 | baja |
-| 3 | `tier=C` | positivo, sigue mejor que B | 242 | E[R]=**+0.119** PF=1.29 | baja-moderada |
+| 3 | `tier=C` | positivo, sigue mejor que B | 243 | E[R]=**+0.12** PF=1.29 | baja-moderada |
 | 4 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar | — | sin veredicto único | baja |
-| 5 | mover SL a mecha del retest en INV (`sl_basis_retest`, medición paralela) | **NO proponer, confirma negativo** — perjudica con significancia en 1m, sin cambio vs ayer | 104 (1m) | delta -0.367 CI90=[-0.603,-0.133] | moderada |
+| 5 | mover SL a mecha del retest en INV (`sl_basis_retest`, medición paralela) | **NO proponer, confirma negativo** — perjudica con significancia en 1m, sin cambio vs ayer | 105 (1m) | delta -0.377 CI90=[-0.611,-0.15] | moderada |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=236 delta=**+0.2**
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=237 delta=**+0.2**
   (la gestión sigue ayudando mucho más que en cualquier otro segmento del
   bus, sobre E[R] base cercano a cero); 2m n=89 delta=**+0.108**; 5m
   n=17 delta=**+0.076**. Sin cambio de regla.
@@ -54,8 +55,8 @@ Sin n suficiente todavía para certificar en ninguna rama:
   dominante, `contra-estructura` 42/146 (28.8%) segundo, `estirado`
   36/146 (24.7%) tercero — sin cambio de fondo.
 - **Decaimiento a vigilar (sigue sin ser formal)**: `decay_weekly_by_segment`
-  1m/INV/SHORT W41 (n=39) E[R]=**0.165** → W42 (n=22, ya cerrada)
-  E[R]=**0.174** — se sostiene positivo con la semana ya cerrada, la
+  1m/INV/SHORT W41 (n=39) E[R]=**0.165** → W42 (n=23, ya cerrada)
+  E[R]=**0.183** — se sostiene positivo con la semana ya cerrada, la
   reversión se confirma sin ser ruido de muestra chica. 2m W41 (n=9)
   E[R]=0.377 → W42 (n=6, cerrada) E[R]=0.845 — sigue sin muestra usable,
   PF se ve inflado (99.0, un solo ganador grande). 5m W42 cerró con un
@@ -71,13 +72,18 @@ E[R]=**0.377** WR66.7% (idéntico, sin señales nuevas); `WAIT` n=161
 E[R]=**0.107** WR49.1% (prácticamente igual). Orden GO > WAIT >> AVOID
 sin cambio — sigue siendo la lectura por side más alineada con la
 hipótesis original de todo el bus (contraste con `sell-retest.md`, que
-hoy muestra por primera vez AVOID > GO en SHORT/RETEST).
+mantiene AVOID > GO en SHORT/RETEST por segundo día — ver ese playbook).
 
 ### Decaimiento
 Ver "Contextos a evitar" arriba — muestra de W42 todavía demasiado chica
-en los tres TF para leer tendencia.
+en los tres TF para leer tendencia, aunque 1m ya confirma la reversión
+positiva con la semana cerrada.
 
 ## Histórico de cambios
+- 2026-10-18 (domingo, REVISIÓN SEMANAL): dato mínimo (+1), sin
+  hallazgo material nuevo — ver `reviews/2026-week-42.md`. La reversión
+  de `1m/INV/SHORT` se confirma y se fortalece con W42 cerrada
+  (n=23, E[R]=0.183, sube de 0.174). Sin incidentes de pipeline.
 - 2026-10-17 (sábado): sin hallazgo material nuevo en este playbook,
   dato mínimo (segmento de prioridad 2). La reversión de `1m/INV/SHORT`
   en W41→W42 se confirma con la semana ya cerrada (n=22, E[R]=0.174,
