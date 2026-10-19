@@ -3,24 +3,22 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-18 (domingo, REVISIÓN SEMANAL) · n: 514)
+## Sección viva  (última revisión: 2026-10-19 (lunes) · n: 519)
 
-### Nota 2026-10-18
-REVISIÓN SEMANAL (ver `reviews/2026-week-42.md`) — dato mínimo en este
-playbook de prioridad 2 (+3 en 1m, +1 en 2m, sin nuevas en 5m). Sin
-cambio material: `1m/INV/LONG` sigue sin `survives_fdr10` (CI90 todavía
-cruza cero), igual que ayer. `2m/INV/LONG` sigue sin certificar.
-`5m/INV/LONG` certifica FDR puntualmente pero n=34 sigue demasiado
-chico para confiar. INV sigue fuera de `shadowRules` — no hay n>=20
-nuevo que justifique ninguna propuesta de cambio de input en este
-playbook esta semana.
+### Nota 2026-10-19
+Lunes, dato ligero: +4 en 1m, +1 en 2m, sin nuevas en 5m. Sin cambio
+material: `1m/INV/LONG` sigue sin `survives_fdr10` (CI90 todavía cruza
+cero); `2m/INV/LONG` sigue sin certificar; `5m/INV/LONG` sigue
+certificando FDR puntualmente con n=34 (sin señales nuevas, demasiado
+chico para confiar). INV sigue fuera de `shadowRules` — sin candidato
+n≥20 nuevo.
 
 ### Veredicto global
-1m n=347 WR 43.5% E[R]=**0.091** PF=1.2 (estable vs 0.097 de ayer);
-2m n=130 WR 50.8% E[R]=**0.034** PF=1.08 (casi plano, sin cambio); 5m
-n=37 WR 70.3% E[R]=**0.276** PF=2.34 (sin señales nuevas).
-`segment_significance`: 1m CI90=[-0.025,0.219] n=333 sigue sin
-`survives_fdr10`; 2m CI90=[-0.132,0.204] n=126 sigue sin certificar;
+1m n=351 WR 43.9% E[R]=**0.093** PF=1.2 (estable); 2m n=131 WR 50.4%
+E[R]=**0.025** PF=1.06 (sigue casi plano, movimiento de 1 par nuevo);
+5m n=37 WR 70.3% E[R]=**0.276** PF=2.34 (sin señales nuevas).
+`segment_significance`: 1m CI90=[-0.026,0.219] n=337 sigue sin
+`survives_fdr10`; 2m CI90=[-0.146,0.191] n=127 sigue sin certificar;
 5m CI90=[0.041,0.509] n=34 `survives_fdr10=true` (n demasiado chico
 para confiar). `sl_origin_vs_layer` (`candle1`) sin lectura nueva
 material: sigue correcto que `sl-retest-wick` se limite a
@@ -32,34 +30,33 @@ confianza:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar salvo 1m) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` | sigue sin certificar FDR (CI90 cruza cero, sin cambio vs ayer) — tomar con cautela | 333 | E[R]=**0.091** CI90=[-0.025,0.219] | moderada |
-| 2 | `tf=2m` | sin edge confirmado (CI90 cruza cero, lejos de significancia) | 126 | E[R]=**0.034** CI90=[-0.132,0.204] | baja — no proponer cambio con este n |
-| 3 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — mixto, CI90 amplio y cruza cero, sin cambio vs ayer | 333 (1m) / 126 (2m) / 34 (5m) | ver `experiments.json`/`sl_origin_vs_layer` por basis | baja |
+| 1 | `tf=1m` | sigue sin certificar FDR (CI90 cruza cero, sin cambio vs ayer) — tomar con cautela | 337 | E[R]=**0.093** CI90=[-0.026,0.219] | moderada |
+| 2 | `tf=2m` | sin edge confirmado (CI90 cruza cero, lejos de significancia) | 127 | E[R]=**0.025** CI90=[-0.146,0.191] | baja — no proponer cambio con este n |
+| 3 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — mixto, CI90 amplio y cruza cero, sin cambio vs ayer | 337 (1m) / 127 (2m) / 34 (5m) | ver `experiments.json`/`sl_origin_vs_layer` por basis | baja |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`).
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=333 delta=**+0.117**;
-  2m n=126 delta=**+0.104**; 5m n=34 delta=**+0.035** (débil en 5m, sin
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=337 delta=**+0.125**;
+  2m n=127 delta=**+0.103**; 5m n=34 delta=**+0.035** (débil en 5m, sin
   cambio de fondo). Sin cambio de regla.
 - **SL de 3 capas vs SL = vela 1 del FVG**: sin lectura nueva material
   hoy — mixto, no proponer cambio.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (INV/LONG, n=212): `killzone-Asia-largo` 98/212 (46.2%)
-  dominante, `RR-bajo` 81/212 (38.2%) segundo, `contra-estructura` 67/212
-  (31.6%) tercero — sin cambio de fondo.
+- Autopsia de SL (INV/LONG, n=214): `killzone-Asia-largo` 100/214 (46.7%)
+  dominante, `RR-bajo` 81/214 (37.9%) segundo, `contra-estructura` 67/214
+  (31.3%) tercero — sin cambio de fondo.
 
 ### Cruce con Session Analyst
-`session_analyst_cross.by_kind_side` (muestra todavía chica): `AVOID`
-n=42 E[R]=**-0.102** WR45.2% (sin cambio); `GO` n=40 E[R]=**-0.064**
-WR47.5% (sube un poco de -0.039, sigue negativo); `WAIT` n=187
-E[R]=**-0.09** WR39.6% — los tres siguen en negativo, segundo día
-seguido rompiendo el patrón "GO siempre mejor" (con n=40-42 esto puede
-ser ruido, no tratar como reversión real todavía). Cifras globales con
-CI90 en `buy-retest.md`.
+`session_analyst_cross.by_kind_side` (muestra todavía chica, sin
+trades nuevos hoy): `AVOID` n=42 E[R]=**-0.102** WR45.2%; `GO` n=40
+E[R]=**-0.064** WR47.5%; `WAIT` n=187 E[R]=**-0.09** WR39.6% — los tres
+siguen en negativo, tercer día seguido rompiendo el patrón "GO siempre
+mejor" (con n=40-42 esto puede ser ruido, no tratar como reversión real
+todavía). Cifras globales con CI90 en `buy-retest.md`.
 
 ### Decaimiento
 `decay_weekly_by_segment`: ningún TF de este playbook tiene todavía
@@ -68,6 +65,12 @@ sigue sin certificar FDR, estable sin seguir cayendo — sin tratarlo
 como decaimiento real todavía (n chico).
 
 ## Histórico de cambios
+- 2026-10-19 (lunes): dato mínimo (+5 en todo el playbook), sin
+  hallazgo material nuevo. `1m/INV/LONG` se mantiene sin
+  `survives_fdr10`. Cruce con Session Analyst: los tres veredictos
+  siguen en negativo por tercer día seguido, sin trades nuevos. Mismo
+  incidente de infraestructura git documentado en `buy-retest.md`.
+  Ningún candidato con n≥20 para proponer cambio de input.
 - 2026-10-18 (domingo, REVISIÓN SEMANAL): dato mínimo (+4 en todo el
   playbook), sin hallazgo material nuevo — ver `reviews/2026-week-42.md`.
   `1m/INV/LONG` se mantiene sin `survives_fdr10` (sin seguir
