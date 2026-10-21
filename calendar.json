@@ -1,6 +1,7 @@
 {
   "_doc": "Eventos economicos de alto impacto (US). analyze.py marca cada señal con minsToNews y separa near-news (<=30m) vs away. Mantener al dia: el agente puede añadir/quitar, o leer del feed del Session Analyst (market.json). ts = epoch ms UTC.",
   "events": [
-    {"ts": 1791984600000, "impact": "high", "name": "CPI (2026-10-14, via Session Analyst calendarContext)"}
+    {"ts": 1791984600000, "impact": "high", "name": "CPI (2026-10-14, via Session Analyst calendarContext)"},
+    {"ts": 1792679400000, "impact": "high", "name": "EIA crude oil inventories (2026-10-22 09:30 CT, via Session Analyst plan)"}
   ]
 }
