@@ -1,55 +1,55 @@
 {
   "schema": "exit-baseline-1",
-  "generatedAt": "2026-10-21T01:18:13.444899+00:00",
+  "generatedAt": "2026-10-22T01:20:40.273449+00:00",
   "source": "scalp-cc-bus outcomes, all kinds and TFs",
   "bySymbol": {
     "ALL": {
-      "n": 35889,
+      "n": 36829,
       "hit1R": 0.332,
       "stoppedOut": 0.466,
-      "slWasGreenHalfRFirst": 0.32,
-      "slWasGreen1RFirst": 0.127,
+      "slWasGreenHalfRFirst": 0.322,
+      "slWasGreen1RFirst": 0.128,
       "reachedTP2": 0.043
     },
     "CL": {
-      "n": 6609,
+      "n": 6747,
       "hit1R": 0.338,
-      "stoppedOut": 0.469,
+      "stoppedOut": 0.47,
       "slWasGreenHalfRFirst": 0.321,
-      "slWasGreen1RFirst": 0.136,
+      "slWasGreen1RFirst": 0.137,
       "reachedTP2": 0.045
     },
     "ES": {
-      "n": 7478,
+      "n": 7655,
       "hit1R": 0.313,
-      "stoppedOut": 0.462,
-      "slWasGreenHalfRFirst": 0.326,
-      "slWasGreen1RFirst": 0.134,
+      "stoppedOut": 0.463,
+      "slWasGreenHalfRFirst": 0.327,
+      "slWasGreen1RFirst": 0.133,
       "reachedTP2": 0.038
     },
     "GC": {
-      "n": 7424,
-      "hit1R": 0.33,
+      "n": 7676,
+      "hit1R": 0.329,
       "stoppedOut": 0.469,
-      "slWasGreenHalfRFirst": 0.328,
+      "slWasGreenHalfRFirst": 0.33,
       "slWasGreen1RFirst": 0.122,
-      "reachedTP2": 0.04
+      "reachedTP2": 0.039
     },
     "NQ": {
-      "n": 6187,
-      "hit1R": 0.33,
+      "n": 6347,
+      "hit1R": 0.332,
       "stoppedOut": 0.471,
       "slWasGreenHalfRFirst": 0.323,
       "slWasGreen1RFirst": 0.117,
       "reachedTP2": 0.043
     },
     "YM": {
-      "n": 8191,
-      "hit1R": 0.346,
-      "stoppedOut": 0.459,
-      "slWasGreenHalfRFirst": 0.305,
-      "slWasGreen1RFirst": 0.125,
-      "reachedTP2": 0.049
+      "n": 8404,
+      "hit1R": 0.347,
+      "stoppedOut": 0.461,
+      "slWasGreenHalfRFirst": 0.309,
+      "slWasGreen1RFirst": 0.13,
+      "reachedTP2": 0.048
     }
   }
 }
