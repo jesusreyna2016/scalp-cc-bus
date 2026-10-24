@@ -3,51 +3,53 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-23 (viernes) · n: 14086)
+## Sección viva  (última revisión: 2026-10-24 (sábado) · n: 14406)
 
-### Nota 2026-10-23
-Viernes, quinto día seguido de dato real de W43. 1m n8598→**8831**
-(+233), 2m n3721→**3812** (+91), 5m n1413→**1443** (+30). Agregado
-histórico mixto: 1m E[R] 0.033→**0.028** (baja), 2m 0.056→**0.055**
-(casi sin cambio), 5m 0.058→**0.053** (baja). `segment_significance`
-de 5m SHORT sigue pegado a cero — CI90 [-0.001,0.117]→**[-0.001,0.112]**
-(p_mean_le_0 0.053→**0.053**, sin cambio de fondo), sigue siendo el
-más frágil de los 6 segmentos RETEST. **Giro dentro de la propia
-semana**: `decay_weekly_by_segment` de W43 (ver Decaimiento) muestra
-que **1m SHORT cruza a negativo** (E[R]+0.003→**-0.046**, n575→808)
-justo cuando 1m LONG mejora fuerte (ver `buy-retest.md`) — el patrón
-mixto LONG/SHORT de esta semana ahora tiene signo contrario también
-dentro de 1m entre lados; 2m SHORT sostiene su racha en verde (cuarto
-día, E[R]+0.044→**+0.041**) y 5m SHORT sigue hundido sin moverse
-(E[R]-0.105→**-0.11**). El orden del Session Analyst en SHORT se
-mantiene **AVOID > WAIT > GO** por segundo día seguido (AVOID=0.068,
-sin pares nuevos; WAIT=0.041; GO=0.012, baja fuerte) — dos lecturas
-seguidas en la misma dirección empieza a ser menos ruidoso que un solo
-día, ver Cruce con Session Analyst. Sin incidentes de pipeline:
-huérfanos estable en 44, pendientes sube de 0 a 22 (normal).
+### Nota 2026-10-24
+Sábado, cierre de la sesión del viernes (sexto día de W43). 1m
+n8831→**9183** (+352), 2m n3812→**3963** (+151), 5m n1443→**1504**
+(+61). Agregado histórico: 1m E[R] 0.028→**0.03** (sube un poco), 2m
+0.055→**0.057** (sube un poco), 5m 0.053→**0.066** (sube bien).
+**Hito nuevo: `segment_significance` de 5m SHORT certifica FDR por
+primera vez con el límite inferior del CI90 claramente sobre cero** —
+CI90 [-0.001,0.112]→**[0.012,0.123]** (p_mean_le_0 0.053→**0.025**) —
+deja de ser "pegado a cero" y pasa a ser el sexto y último de los 6
+segmentos RETEST en certificar con margen real. **Giro dentro de la
+propia semana**: `decay_weekly_by_segment` de W43 (ver Decaimiento)
+muestra que **5m SHORT cruza de vuelta a positivo** (E[R]-0.11→**+0.013**,
+n157→218) y **1m SHORT se acerca a breakeven** (E[R]-0.046→**-0.006**,
+n808→1160), mientras 2m SHORT sostiene su racha en verde (quinto día,
+E[R]+0.041→**+0.059**) — los tres TF SHORT mejoran o se sostienen hoy,
+igual que los tres LONG (ver `buy-retest.md`). El orden del Session
+Analyst en SHORT se mantiene **AVOID > WAIT > GO** por TERCER día
+seguido (AVOID=0.068, sigue sin pares nuevos; WAIT=0.041; GO=0.035,
+sube de 0.012) — tres lecturas seguidas en la misma dirección, ver
+Cruce con Session Analyst. Sin incidentes de pipeline: huérfanos
+estable en 45 (+1), pendientes vuelve a 0.
 
 ### Veredicto global
-1m n=8831 WR 44.5% E[R]=**0.028** PF=1.06; 2m n=3812 WR 47.6%
-E[R]=**0.055** PF=1.11; 5m n=1443 WR 47.3% E[R]=**0.053** PF=1.11.
-`segment_significance`: 1m CI90=[0.006,0.049] n=8393
-`survives_fdr10=true`; 2m CI90=[0.02,0.09] n=3666
-`survives_fdr10=true`; 5m CI90=[**-0.001**,0.112] n=1351
-`survives_fdr10=true` (sigue pegado a cero, sin cambio de fondo — el
-más frágil de los 6 segmentos RETEST). `gate.readyForLive` sigue sin
-apuntar a ningún segmento (ver `buy-retest.md`), nunca a un segmento
-SHORT. Escalera de ejecución: sigue en peldaño 1 (Sombra).
+1m n=9183 WR 44.4% E[R]=**0.03** PF=1.06; 2m n=3963 WR 47.7%
+E[R]=**0.057** PF=1.12; 5m n=1504 WR 47.2% E[R]=**0.066** PF=1.14.
+`segment_significance`: 1m CI90=[0.009,0.051] n=8726
+`survives_fdr10=true`; 2m CI90=[0.025,0.09] n=3805
+`survives_fdr10=true`; 5m CI90=[**0.012**,0.123] n=1396
+`survives_fdr10=true` (**primera vez con el límite inferior sobre
+cero** — deja de ser el más frágil de los 6 segmentos RETEST, ver
+Nota). `gate.readyForLive` sigue sin apuntar a ningún segmento (ver
+`buy-retest.md`), nunca a un segmento SHORT. Escalera de ejecución:
+sigue en peldaño 1 (Sombra).
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR — edge real, estadísticamente significativo | 8393 | E[R]=**0.028** CI90=[0.006,0.049] | alta |
-| 2 | `tf=2m` (`survives_fdr10=true`) | TOMAR — edge real, sin cambio de fondo | 3666 | E[R]=**0.055** CI90=[0.02,0.09] | alta |
-| 3 | `tf=5m` (`survives_fdr10=true`) | TOMAR, pero **sigue pegado a cero en el agregado histórico** (CI90 roza 0, ver Nota) — el 5m SHORT que carga W43 en rojo | 1351 | E[R]=**0.053** CI90=[-0.001,0.112] | moderada en el agregado histórico; alta en `since_change` (ver Gestión) |
-| 4 | `tier=A+` | **evitar** — WR muy bajo, E[R] vuelve a cruzar a negativo | 1002 | WR 22.5% E[R]=**-0.002** PF=1.0 | alta — converge con LONG en que el tier no sirve aquí |
-| 5 | `tier=B` vs `tier=C` | C sigue mejor | 6484 (B) / 6600 (C) | B E[R]=0.025 PF=1.05; C E[R]=**0.056** PF=1.12 | moderada |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR — edge real, estadísticamente significativo | 8726 | E[R]=**0.03** CI90=[0.009,0.051] | alta |
+| 2 | `tf=2m` (`survives_fdr10=true`) | TOMAR — edge real, sin cambio de fondo | 3805 | E[R]=**0.057** CI90=[0.025,0.09] | alta |
+| 3 | `tf=5m` (`survives_fdr10=true`) | TOMAR — **ya no está pegado a cero**, el CI90 ahora deja un margen real sobre cero por primera vez | 1396 | E[R]=**0.066** CI90=[0.012,0.123] | alta — sube de "moderada" con este hito |
+| 4 | `tier=A+` | **evitar** — WR muy bajo, E[R] sigue casi en cero | 1045 | WR 23.2% E[R]=**0.023** PF=1.03 | alta — converge con LONG en que el tier no sirve aquí |
+| 5 | `tier=B` vs `tier=C` | C sigue mejor | 6735 (B) / 6870 (C) | B E[R]=0.027 PF=1.06; C E[R]=**0.058** PF=1.12 | moderada |
 | 6 | símbolo (`cross_instrument`) | sin revisión fina hoy, sin cambios de fondo reportados | — | — | moderada |
-| 7 | `sa_verdict=AVOID` (Session Analyst, RETEST/SHORT) | **NO evitar mecánicamente — el orden se mantiene AVOID>WAIT>GO por segundo día seguido**, lo opuesto a la hipótesis de `agent-instructions.md`; dos lecturas en la misma dirección, empieza a dejar de ser ruido de un solo día pero todavía no se cambia la regla | 1059 (GO) / 873 (AVOID, sin pares nuevos) | E[R]=**0.012** (GO) vs **0.041** (WAIT) vs **0.068** (AVOID) | baja-moderada — segunda lectura seguida, vigilar una tercera |
+| 7 | `sa_verdict=AVOID` (Session Analyst, RETEST/SHORT) | **NO evitar mecánicamente — el orden se mantiene AVOID>WAIT>GO por TERCER día seguido**, lo opuesto a la hipótesis de `agent-instructions.md`; tres lecturas en la misma dirección, empieza a dejar de ser ruido pero todavía no se cambia la regla | 1136 (GO) / 873 (AVOID, sin pares nuevos) | E[R]=**0.035** (GO) vs **0.041** (WAIT) vs **0.068** (AVOID) | baja-moderada — tercera lectura seguida, vigilar una cuarta |
 | 8 | subir `rr1` mínimo (candidato `sc_min_rr`) en SHORT | **cerrado `rejected_oos` desde 2026-10-09** — no reabrir sin evidencia nueva desde cero | — | ver `experiments.json` | cerrado |
 
 ### Entrada
@@ -55,62 +57,61 @@ SHORT. Escalera de ejecución: sigue en peldaño 1 (Sombra).
   calidad de entrada en este segmento.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=8387 delta=**+0.129**
-  (estable); 2m n=3666 delta=**+0.082** (estable); 5m n=1350
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=8720 delta=**+0.128**
+  (estable); 2m n=3805 delta=**+0.081** (estable); 5m n=1395
   delta=**+0.026** (estable) — los tres positivos, sin cambio de regla.
 - **SL de 3 capas vs SL = mecha del retest.** `since_change` (sólo
-  post-2026-09-26) sigue mejorando en los tres: 1m n=3806 delta=+0.092
-  CI90=[0.036,0.15] (sube de 3585); 2m n=1710 delta=+0.093
-  CI90=[0.02,0.171] (sube de 1623); 5m n=697 delta=+0.147
-  CI90=[0.035,0.272] (sube de 667, sigue confirmando limpio pese a que
-  el agregado histórico de 5m SHORT sigue pegado a cero — ver Nota).
-  Ningún `delta_below_zero=true`. **Los 6 de 6 segmentos RETEST del bus
-  (3 LONG + 3 SHORT) siguen confirmando limpio post-cambio**, cuarto
-  día consecutivo. Verdict agregado formal del experimento: sigue
-  **`flat`** (mide con la métrica rMultiple vieja — ver nota en
-  `buy-retest.md`, la evidencia real vive en `since_change`/`by_basis`).
-  **A proponer en la revisión semanal del domingo 2026-10-25**: subir
-  la confianza documentada de este experimento a "6/6 certifican de
-  forma sostenida" — no se decide hoy.
-- **Modo sombra** — ver `buy-retest.md` (sin desglose por side). W43 en
-  curso mejora en nivel absoluto pero sigue perdiendo contra el crudo
-  (shadow n=3403 E[R]=-0.046 vs raw n=3559 E[R]=-0.039, la brecha
-  shadow-raw se estrecha de -0.016 a -0.007); sería la tercera semana
-  consecutiva en falso si se sostiene (W41 y W42 ya cerraron en falso
-  tras la racha de 4, W37-W40).
+  post-2026-09-26) sigue mejorando en los tres: 1m n=4122 delta=+0.084
+  CI90=[0.034,0.139] (sube de 3806); 2m n=1842 delta=+0.098
+  CI90=[0.029,0.172] (sube de 1710); 5m n=742 delta=+0.128
+  CI90=[0.022,0.249] (sube de 697, sigue confirmando limpio y ahora
+  acompañado del nuevo hito de significancia en el agregado histórico
+  — ver Nota). Ningún `delta_below_zero=true`. **Los 6 de 6 segmentos
+  RETEST del bus (3 LONG + 3 SHORT) siguen confirmando limpio
+  post-cambio**, quinto día consecutivo. Verdict agregado formal del
+  experimento: sigue **`flat`** (mide con la métrica rMultiple vieja —
+  ver nota en `buy-retest.md`, la evidencia real vive en
+  `since_change`/`by_basis`). **A proponer en la revisión semanal de
+  mañana domingo 2026-10-25**: subir la confianza documentada de este
+  experimento a "6/6 certifican de forma sostenida" — no se decide hoy.
+- **Modo sombra** — ver `buy-retest.md` (sin desglose por side). W43
+  (seis días) sigue perdiendo contra el crudo pero la brecha se sigue
+  cerrando (shadow n=4356 E[R]=-0.011 vs raw n=4512 E[R]=-0.007, brecha
+  -0.004); sería la tercera semana consecutiva en falso si se sostiene
+  mañana (W41 y W42 ya cerraron en falso tras la racha de 4, W37-W40).
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las pérdidas SHORT (RETEST/SHORT, n=6513):
-  `RR-bajo` 2312/6513 (35.5%) dominante, `stop-en-el-minimo` 2102/6513
-  (32.3%) segundo, `contra-estructura` 1981/6513 (30.4%) tercero — mezcla
+- Autopsia de SL sobre las pérdidas SHORT (RETEST/SHORT, n=6751):
+  `RR-bajo` 2403/6751 (35.6%) dominante, `stop-en-el-minimo` 2189/6751
+  (32.4%) segundo, `contra-estructura` 2105/6751 (31.2%) tercero — mezcla
   cerrada, sin cambio de fondo. El SL estructural ataca `RR-bajo` y
   sigue confirmando limpio en los 3 TF SHORT (ver Gestión).
-- `2m/RETEST/SHORT` sostiene su recuperación por cuarto día seguido:
-  W43 en curso ya en n=371 (sube de 280) y se mantiene en verde
-  (E[R]=0.041, WR51.2%), prácticamente sin cambio frente a ayer.
-- **1m/RETEST/SHORT, giro nuevo**: cruza a negativo en W43
-  (n=575→808, E[R]+0.003→**-0.046**) justo cuando 1m LONG mejora con
-  fuerza (ver `buy-retest.md`) — primera vez que 1m SHORT está en rojo
-  esta semana.
-- `5m/RETEST/SHORT` sigue en rojo sin moverse (n=127→157,
-  E[R]-0.105→-0.11, PF0.79→0.79) y sigue siendo lo bastante grande para
-  mantener el agregado histórico pegado a cero (ver Veredicto global).
+- `2m/RETEST/SHORT` sostiene su recuperación por quinto día seguido:
+  W43 en curso ya en n=522 (sube de 371) y mejora en verde (E[R]=0.059,
+  WR51.0%).
+- **1m/RETEST/SHORT se recupera**: pasa de n=808→**1160** con
+  E[R]**-0.046→-0.006**, casi breakeven, dejando de ser el único TF
+  SHORT en rojo.
+- **5m/RETEST/SHORT, giro nuevo**: cruza de vuelta a positivo en W43
+  (n=157→218, E[R]**-0.11→+0.013**) — coincide con el hito de
+  significancia del agregado histórico (ver Nota/Veredicto global).
 
 ### Cruce con Session Analyst
 RETEST/SHORT específicamente: `AVOID` n=873 E[R]=**0.068** WR 45.1%
-(sin pares nuevos hoy — el motor fusionado del Session Analyst lleva
-~8h sin refrescar según su propio plan); `GO` n=1059 E[R]=**0.012** WR
-48.6% (baja fuerte de 0.031, con +118 pares nuevos); `WAIT` n=5438
-E[R]=**0.041** WR 45.8%. **El orden se mantiene AVOID > WAIT > GO por
-segundo día seguido** — AVOID sigue siendo el MÁS ALTO de los tres, lo
-opuesto a la hipótesis de `agent-instructions.md` (que sí se confirma
-en LONG, ver `buy-retest.md`). No hay CI90 por este corte para
-confirmar significancia; con dos lecturas seguidas en la misma
-dirección (ayer y hoy) esto empieza a dejar de ser un solo día de
-ruido, pero sigue sin cambiar la regla — se mantiene en observación
-activa, no se toca `shadow_rules` (excluye AVOID sin diferenciar por
-side), vigilar una tercera lectura antes de generalizar.
+(sin pares nuevos hoy, tercer día seguido — el motor fusionado del
+Session Analyst lleva sin refrescar verdicts `AVOID` en este
+segmento); `GO` n=1136 E[R]=**0.035** WR 47.9% (sube de 0.012, con +77
+pares nuevos); `WAIT` n=5652 E[R]=**0.041** WR 45.6%. **El orden se
+mantiene AVOID > WAIT > GO por TERCER día seguido** — AVOID sigue
+siendo el MÁS ALTO de los tres, lo opuesto a la hipótesis de
+`agent-instructions.md` (que sí se confirma en LONG, ver
+`buy-retest.md`). No hay CI90 por este corte para confirmar
+significancia; con tres lecturas seguidas en la misma dirección esto
+empieza a dejar de ser ruido, pero sigue sin cambiar la regla — se
+mantiene en observación activa, no se toca `shadow_rules` (excluye
+AVOID sin diferenciar por side), vigilar una cuarta lectura antes de
+generalizar.
 
 ### Decaimiento
 Última semana cerrada completa sigue siendo W42: 1m/RETEST/SHORT
@@ -118,16 +119,30 @@ E[R]=**0.045** n=1009 (sano); 2m/RETEST/SHORT E[R]=**-0.053**
 PF**0.89** n=401 (semana cerrada en rojo para este TF tras W38-W41
 positivas — ver Contextos a evitar); 5m/RETEST/SHORT E[R]=**0.124**
 PF**1.27** n=181 (el TF SHORT más fuerte de la semana). Ninguno cruza
-el umbral automático de decaimiento. **W43 (en curso, 5 días de
-dato)**: 1m WR43.3% E[R]**-0.046** n=808 (sube de 575, **cruza a
-negativo** por primera vez en la semana); 2m WR51.2% E[R]**+0.041**
-n=371 (cuarto día seguido en verde, sube de 280, prácticamente sin
-cambio); 5m WR47.1% E[R]**-0.11** PF**0.79** n=157 (sigue en rojo, sube
-de 127 sin mejorar) — el patrón mixto de la semana ahora cruza también
-dentro de SHORT: 2m sostiene, 1m se da vuelta, 5m sigue siendo el TF
-más hundido de los dos lados.
+el umbral automático de decaimiento. **W43 (en curso, 6 días de
+dato)**: 1m WR43.4% E[R]**-0.006** n=1160 (sube de 808, casi breakeven,
+sigue mejorando); 2m WR51.0% E[R]**+0.059** n=522 (quinto día seguido
+en verde, sube de 371, mejora); 5m WR46.3% E[R]**+0.013** PF**1.03**
+n=218 (**cruza de vuelta a positivo**, sube de 157) — los tres TF
+SHORT mejoran o se sostienen hoy, igual que los tres LONG
+(`buy-retest.md`): la semana deja de ser uniformemente mala en ambos
+lados.
 
 ## Histórico de cambios
+- 2026-10-24 (sábado): sexto día de dato real de W43, cierre de la
+  sesión del viernes. **Hito: 5m/RETEST/SHORT certifica FDR por
+  primera vez con margen real** (CI90 [-0.001,0.112]→**[0.012,0.123]**,
+  p_mean_le_0 0.053→0.025) — ya no es el más frágil de los 6 segmentos
+  RETEST, los 6 certifican con margen claro. Los tres TF SHORT mejoran
+  o se sostienen en W43: 1m casi llega a breakeven (E[R]-0.046→-0.006),
+  2m sostiene su racha en verde por quinto día (E[R]+0.059), 5m
+  **cruza de vuelta a positivo** (E[R]-0.11→+0.013). Session Analyst:
+  el orden AVOID>WAIT>GO se sostiene por TERCER día seguido
+  (AVOID=0.068 sin pares nuevos, GO sube de 0.012 a 0.035) — empieza a
+  dejar de ser ruido, sin cambiar la regla. `since_change` de
+  `sl_basis_retest` suma su quinto día consecutivo de 6/6 limpio (n
+  sube a 17781, bus completo). Sin incidentes de pipeline: huérfanos
+  estable en 45 (+1), pendientes vuelve a 0.
 - 2026-10-23 (viernes): quinto día seguido de dato real de W43. Giro
   nuevo: **1m/RETEST/SHORT cruza a negativo** (E[R]+0.003→-0.046,
   n575→808) justo cuando 1m/RETEST/LONG mejora fuerte (ver
