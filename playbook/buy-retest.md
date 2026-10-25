@@ -3,30 +3,35 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-24 (sábado) · n: 23580)
+## Sección viva  (última revisión: 2026-10-25 (domingo) · n: 23580)
 
-### Nota 2026-10-24
-Sábado, dato de cierre de la sesión del viernes (sexto día de W43,
-semana cierra mañana domingo). En este playbook: 1m n14531→**14762**
-(+231), 2m n6385→**6481** (+96), 5m n2275→**2337** (+62). El agregado
-histórico sigue mejorando en los tres TF (1m E[R] 0.027→**0.029**, 2m
-sin cambio en **0.046**, 5m 0.104→**0.106** PF se mantiene en
-**1.23**, sigue sin alcanzar el umbral 1.3). **`tier=A+` cruza a
-positivo por primera vez** en este segmento específico (RETEST/LONG
-n=1838→**1886**, E[R]=**-0.009→+0.011** PF=0.99→**1.02**) — efecto
-todavía chico y WR sigue muy bajo (21.9%), no cambia la regla de
-evitarlo, pero es la primera lectura sin signo negativo. `walk_forward`
-(OOS, el número que cuenta) **sube de nuevo, de E[R]=0.015 a 0.025** —
-segunda mejora consecutiva tras la caída de días previos; el mejor
-esquema in-sample sigue en 0.049, la brecha se sigue cerrando sin
-cerrarse del todo. Dato bueno sostenido: `since_change` de
-`sl_basis_retest` suma su QUINTO día consecutivo con los 6 de 6
-segmentos RETEST confirmando limpio (ver Gestión), y crece de
-n=17191 a **17781** sin ningún `delta_below_zero`. `decay_weekly_by_segment`
-de W43 (ver Decaimiento) sigue revirtiendo su rojo en 1m/5m y sostiene
-2m en positivo — la semana deja de ser uniformemente mala. Sin
-incidentes de pipeline: huérfanos estable en 45 (+1, dentro de ruido),
-pendientes vuelve a 0.
+### Nota 2026-10-25
+Domingo, revisión semanal (`reviews/2026-week-43.md`). **Sin pares
+nuevos desde la corrida del sábado** — n idéntico en los tres TF
+(1m=14762, 2m=6481, 5m=2337). No es el silencio normal de fin de
+semana: falta por completo el viernes 2026-10-23 (ningún
+`signals/2026-10-23.jsonl` ni `outcomes/2026-10-23.jsonl` se commiteó),
+pese a ser un día de trading sin feriado — el último commit del cron
+quedó fechado `2026-10-22 23:02 CST` (≈`2026-10-23 04:02 UTC`). El repo
+hermano `session-analyst-bus` confirma en su propio `live/health.json`
+que su pipeline de datos siguió vivo hasta el cierre normal del viernes
+(21:01 UTC) — el mercado funcionó con normalidad, el corte es
+específico de la cadena alerta→Netlify→git de Scalp CC. Detalle y
+recomendación en la revisión semanal (hallazgo 1). Dos decisiones de la
+revisión semanal: (1) `since_change` de `sl_basis_retest` llega a su
+SEXTO día consecutivo de 6/6 segmentos RETEST limpios y **5m SHORT deja
+de estar al filo** (CI90=[0.022,0.249], ya no toca cero) — se sube la
+confianza documentada del experimento a "aplicado, 6/6 certifican de
+forma sostenida" y se marca el cambio de métrica `shadow_rules`
+(`rMultiple`→`rOrig`) como "listo para implementar", no ya "pendiente
+de madurar" (ver Gestión y `experiments.json`). (2) El modo sombra
+completa 3 semanas cerradas seguidas sin batir al indicador crudo
+(W41, W42, W43 con el dato disponible) — espejo inverso de la racha que
+lo promovió a peldaño 1; se añadió una alerta permanente nueva a
+`analyze.py` para esta racha (ver Gestión). Sin incidentes de pipeline
+adicionales en el emparejamiento: huérfanos estable en 45, pendientes
+en 0 — el problema es de ingestión de datos nuevos, no de emparejar lo
+que ya llegó.
 
 ### Veredicto global
 1m n=14762 WR 44.7% E[R]=**0.029** PF=1.06; 2m n=6481 WR 47.4%
@@ -77,24 +82,33 @@ condicionales #8.
   (sube de 3000); 5m delta=+0.204 CI90=[0.099,0.319] n=1186 (baja un
   poco de 0.206, sigue el más fuerte de los seis, sube de 1136).
   **Los 6 de 6 segmentos RETEST siguen certificando limpio
-  post-cambio**, quinto día consecutivo. **Decisión sin cambio:
-  mantener aplicado en los 6 segmentos**; el verdict agregado formal
-  (mezcla LONG+SHORT, calculado con la métrica rMultiple vieja porque
-  el feed no recalcula tras el cambio) sigue en **`flat`** — la
-  evidencia real vive en `since_change`/`by_basis`. **A proponer en la
-  revisión semanal de mañana domingo (2026-10-25, 2026-week-43)**: con
-  ya 5 días seguidos de 6/6 limpio, subir la confianza documentada del
-  experimento a "aplicado, 6/6 certifican de forma sostenida" — no se
-  decide hoy.
-- **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)**: W43 (ya con
-  seis días de dato) sigue perdiendo contra el crudo pero la brecha
-  sigue cerrándose — shadow n=4356 E[R]=**-0.011** vs raw n=4512
-  E[R]=**-0.007** (`shadow_beats_raw=false`, brecha -0.004, se estrechó
-  de -0.007). Con W41 y W42 ya cerradas en falso, **si W43 cierra así
-  mañana serían 3 semanas consecutivas sin batir al indicador crudo**,
-  tras la racha de 4 (W37-W40) — tema central de la revisión semanal de
-  mañana, sin bajar de peldaño todavía (sigue en Sombra, peldaño 1, no
-  se ha pasado nada a ejecución real).
+  post-cambio**, sexto día consecutivo, y **5m SHORT deja de estar al
+  filo** (CI90=[0.022,0.249], ya no toca cero) — es la primera vez que
+  los 6 certifican con margen claro a la vez. **Decisión de la revisión
+  semanal (`reviews/2026-week-43.md`): sube la confianza documentada a
+  "aplicado, 6/6 certifican de forma sostenida (~1 mes sin
+  reversión)"**; el verdict agregado formal (mezcla LONG+SHORT,
+  calculado con la métrica rMultiple vieja porque el feed no recalcula
+  tras el cambio) sigue en **`flat`** — la evidencia real vive en
+  `since_change`/`by_basis`. El criterio de madurez que `shadow_rules`
+  venía esperando para decidir si medir con `rOrig` en vez de
+  `rMultiple` **ya se cumple** — se marca "lista para implementar en la
+  próxima corrida", no se ejecuta hoy mismo (no tocar dos cosas la
+  misma corrida que el punto siguiente).
+- **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)**: con W43 cerrando
+  sin pares nuevos (nota de arriba), el último dato disponible sigue
+  siendo shadow n=4356 E[R]=**-0.011** vs raw n=4512 E[R]=**-0.007**
+  (`shadow_beats_raw=false`). Con W41 y W42 ya cerradas en falso, esto
+  completaría **3 semanas consecutivas sin batir al indicador crudo**,
+  el espejo inverso exacto de la racha de 4 (W37-W40) que promovió el
+  peldaño 1. `execution-ladder.md` no exige mantener la racha para
+  seguir en el peldaño ya alcanzado, así que **no se baja de peldaño**.
+  Se añadió hoy una alerta permanente a `analyze.py`
+  (`MODO SOMBRA: N semanas CERRADAS seguidas sin batir al indicador
+  crudo`) que disparará en la corrida de mañana cuando W43 cierre
+  formalmente — hasta ahora esta racha sólo se narraba día a día sin
+  una alerta explícita. Ver revisión semanal para la recomendación de
+  revisar `shadow_rules` si se confirma.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
@@ -133,17 +147,36 @@ semanas previas) usando semanas cerradas. Última semana cerrada
 completa sigue siendo W42: 1m WR**46.5** E[R]**0.047** n=2224; 2m
 WR**49.6** E[R]**0.084** n=857; 5m WR**53.3** E[R]**0.086** PF**1.19**
 n=321 (el mismo near-miss del gate de Reglas condicionales #8). **W43
-(en curso, ya 6 días de dato real) sigue revirtiendo su rojo en 1m/5m,
-sostiene 2m en positivo**: 1m WR40.6% E[R]**-0.031** n=1590 (sube de
-1359, sigue mejorando desde -0.06); 2m WR43.9% E[R]**+0.015** n=736
-(sube de 640, sin cambio de nivel, se sostiene en positivo); 5m
-WR46.5% E[R]**-0.07** n=286 (sube de 224, mejora desde -0.124, deja de
-ser el único TF que no mejora). Los tres TF LONG mejoran o se sostienen
-hoy — sigue siendo el punto más accionable a vigilar hasta que cierre
-mañana domingo, junto con la segunda recuperación consecutiva del
-`walk_forward` OOS.
+(sin pares nuevos desde ayer, falta el viernes completo — ver Nota de
+arriba) cierra con n menor al esperado y en rojo en 1m/5m**: 1m
+WR40.6% E[R]**-0.031** n=1590 (-29% de muestra vs W42, no mejora más
+porque no llegó más dato); 2m WR43.9% E[R]**+0.015** n=736 (modera
+desde W42 pero sigue positivo); 5m WR46.5% E[R]**-0.07** n=286 (-11% de
+muestra vs W42, el segmento del gate de ejecución cierra en rojo).
+`walk_forward` OOS se detiene en **0.025** (sin dato nuevo para seguir
+mejorando). Por el hueco del viernes (hallazgo 1 de la revisión
+semanal), no se puede separar todavía "el régimen empeoró" de "falta
+una quinta parte de la muestra de la semana" — vigilar si W44 cierra
+limpio para una lectura más confiable.
 
 ## Histórico de cambios
+- 2026-10-25 (domingo, REVISIÓN SEMANAL): sin pares nuevos desde ayer —
+  falta por completo el viernes 2026-10-23 (sin señales ni outcomes
+  commiteados), corte específico del pipeline de ingestión de Scalp CC
+  (el repo hermano `session-analyst-bus` confirma su propio pipeline
+  vivo hasta el cierre normal del viernes). Detalle y recomendación en
+  `reviews/2026-week-43.md` hallazgo 1. W43 cierra (sin más dato
+  esperado hasta el lunes) con n menor al esperado y en rojo en 1m/5m
+  LONG; `5m/RETEST/LONG` (segmento del gate) cierra la semana negativo
+  por primera vez en varias semanas, con reserva por el hueco de
+  muestra. Dos decisiones de la revisión semanal: `sl_basis_retest`
+  llega a su sexto día de 6/6 segmentos limpios (5m SHORT deja de estar
+  al filo) y sube de confianza documentada a "aplicado, 6/6 certifican
+  de forma sostenida"; el modo sombra completa 3 semanas cerradas
+  seguidas sin batir al crudo (espejo de la racha que lo promovió) —
+  se añadió una alerta permanente nueva a `analyze.py` para vigilarlo.
+  Sin incidentes de pipeline en el emparejamiento: huérfanos estable en
+  45, pendientes en 0.
 - 2026-10-24 (sábado): sexto día de dato real de W43, cierre de la
   sesión del viernes. Los tres TF LONG mejoran o se sostienen (1m
   E[R]-0.06→**-0.031**, 2m se sostiene en **+0.015**, 5m

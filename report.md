@@ -1,4 +1,4 @@
-# Scalp CC · report 2026-10-24T01:13Z
+# Scalp CC · report 2026-10-25T01:27Z
 - signals=39215 outcomes=37760 pares_resueltos=39215 pendientes=0 huerfanos=45
 
 ## ⚠ ALERTAS (llevar al frente del resumen)

@@ -3,16 +3,18 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-24 (sábado) · n: 401)
+## Sección viva  (última revisión: 2026-10-25 (domingo) · n: 401)
 
-### Nota 2026-10-24
-Sábado, dato de cierre del viernes (+6 en 1m, +2 en 2m, +3 en 5m,
-segmento de prioridad 2 — el más activo en días para 5m). Sin cambios
-de fondo vs ayer en ninguna métrica material; `1m/INV/SHORT` en
-`since_change` sigue confirmando negativo con significancia aunque se
-afloja un poco (sin cambio de dirección). Gate de ejecución sin
-cambio: INV sigue fuera de `shadowRules`. Ningún candidato con n≥20
-para proponer cambio de input.
+### Nota 2026-10-25
+Domingo, revisión semanal (`reviews/2026-week-43.md`). **Sin pares
+nuevos desde ayer** en ningún TF (1m=277, 2m=101, 5m=23, sin cambio).
+Falta por completo el viernes 2026-10-23 en todo el bus — ver
+`buy-retest.md` y la revisión semanal hallazgo 1 para el detalle del
+pipeline; no es específico de este playbook. Gate de ejecución sin
+cambio: INV sigue fuera de `shadowRules`. Las decisiones de la revisión
+semanal (confianza de `sl_basis_retest`, alerta de racha del modo
+sombra) son específicas de `kind=RETEST` y no aplican a este playbook.
+Ningún candidato con n≥20 para proponer cambio de input.
 
 ### Veredicto global
 1m n=277 WR 46.9% E[R]=**0.076** PF=1.18 (sube un poco); 2m n=101 WR
@@ -80,11 +82,16 @@ la hipótesis original de todo el bus (contraste directo con
 `sell-retest.md`, donde el orden sigue invertido por tercer día).
 
 ### Decaimiento
-Ver "Contextos a evitar" arriba — W43 crece en los tres TF esta vez:
-1m (n=24, sano, mejora), 2m y 5m siguen demasiado chicos para leer con
-confianza pero ya no están estancados en un solo par.
+Ver "Contextos a evitar" arriba — W43 cierra (sin pares nuevos desde
+ayer, falta el viernes completo) con 1m en n=24 (sano), 2m y 5m
+siguen demasiado chicos para leer con confianza.
 
 ## Histórico de cambios
+- 2026-10-25 (domingo, REVISIÓN SEMANAL): sin pares nuevos desde
+  ayer en ningún TF — falta por completo el viernes 2026-10-23 en todo
+  el bus (ver `buy-retest.md` y `reviews/2026-week-43.md`). Sin
+  cambios de regla en este playbook (las decisiones de la revisión
+  semanal son específicas de RETEST).
 - 2026-10-24 (sábado): dato de cierre del viernes (+11 en todo el
   playbook, el más activo en días para 5m con +3). Sin hallazgo
   material nuevo de fondo; ningún TF certifica FDR todavía. `since_change`

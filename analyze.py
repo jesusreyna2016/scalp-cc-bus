@@ -1412,6 +1412,20 @@ def material_alerts(rep, prev_state=None):
         a.append(f"METODO: tus predicciones de direccion aciertan {psb['hit_direction_rate']}% "
                  f"(peor que un volado, n={psb['scored']}, MAE={psb.get('mae_deltaER')}). Se mas conservador "
                  f"con 'cambio del mes' y marcar experimental mas tiempo antes de subir confianza.")
+    # modo sombra: espejo inverso del gate de promocion peldano 0->1 (3 semanas CERRADAS
+    # seguidas shadow_beats_raw=true para subir). Nadie vigilaba la racha contraria.
+    sw = rep.get("shadow_weekly", {}) or {}
+    if sw:
+        now_iso = datetime.now(timezone.utc).isocalendar()
+        cur_wk = f"{now_iso[0]}-W{now_iso[1]:02d}"
+        closed_wks = sorted(w for w in sw if w != cur_wk)
+        if len(closed_wks) >= 3:
+            tail = closed_wks[-3:]
+            if all(sw[w].get("shadow_beats_raw") is False for w in tail):
+                a.append(f"MODO SOMBRA: {len(tail)} semanas CERRADAS seguidas sin batir al indicador crudo "
+                         f"({', '.join(tail)}) -- espejo inverso del gate de promocion del peldano 0->1. "
+                         f"No implica bajar de peldano (ya promovido), pero revisar shadow_rules en la "
+                         f"revision semanal.")
     return a
 
 def exec_gate(rep, decay_by_seg):

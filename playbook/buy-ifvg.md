@@ -3,21 +3,20 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-24 (sábado) · n: 584)
+## Sección viva  (última revisión: 2026-10-25 (domingo) · n: 584)
 
-### Nota 2026-10-24
-Sábado, dato de cierre del viernes para este playbook de prioridad 2:
-+4 en 1m, +4 en 2m, +0 en 5m. `1m/INV/LONG` sigue certificando, CI90
-prácticamente estable: [0.01,0.235]→**[0.014,0.236]** (n381→385) —
-quinta lectura consecutiva certificando. `2m/INV/LONG` sigue sin
-certificar (CI90 sigue cruzando cero). `5m/INV/LONG` sin pares nuevos
-hoy, sin cambio. **Dato notable:** `1m/INV/LONG` en `decay_weekly_by_segment`
-de W43 muestra n=48 WR**60.4%** E[R]**0.321** PF**1.91** — el único
-bolsillo claramente fuerte de toda la semana en todo el bus (ver
-Decaimiento), aunque la muestra semanal sigue chica. Session Analyst:
-`GO` en este segmento sube de n=53 a 57 y el E[R] sube de 0.039 a
-**0.071** (cuarto día positivo, mejora de magnitud). INV sigue fuera
-de `shadowRules` — sin candidato n≥20 nuevo que cambie eso.
+### Nota 2026-10-25
+Domingo, revisión semanal (`reviews/2026-week-43.md`). **Sin pares
+nuevos desde ayer** en ningún TF de este playbook — n idéntico
+(1m=399, 2m=146, 5m=39). Falta por completo el viernes 2026-10-23 en
+todo el bus, no sólo aquí (ver `buy-retest.md` y la revisión semanal
+hallazgo 1 para el detalle del pipeline). `1m/INV/LONG` cierra su
+semana W43 (n=48, sin más dato esperado) como el bolsillo más fuerte
+de toda la semana (WR60.4% E[R]0.321 PF1.91) — con la reserva de que
+le falta el mismo viernes que al resto del bus. INV sigue fuera de
+`shadowRules` (prioridad 2, sólo monitoreo); las dos decisiones de la
+revisión semanal (confianza de `sl_basis_retest`, alerta de racha del
+modo sombra) son específicas de `kind=RETEST` y no aplican aquí.
 
 ### Veredicto global
 1m n=399 WR 45.9% E[R]=**0.121** PF=1.27 (estable); 2m n=146 WR 50.7%
@@ -68,15 +67,21 @@ seguida. Cifras globales con CI90 en `buy-retest.md`.
 
 ### Decaimiento
 `decay_weekly_by_segment`: la mayoría de TF de este playbook siguen
-sin muestra semanal suficiente para separar señal de ruido, pero
-`1m/INV/LONG` ya tiene n=48 en W43 con WR**60.4%** E[R]**0.321**
-PF**1.91** — el bolsillo más fuerte de toda la semana en el bus, a
-vigilar si se sostiene (ver Nota). `1m/INV/LONG` suma su quinta
-lectura seguida certificando `survives_fdr10` (ver Veredicto global)
-— todavía no se trata como decaimiento/mejora formal por semana, falta
-ver cómo cierra W43 mañana.
+sin muestra semanal suficiente para separar señal de ruido. `1m/INV/LONG`
+cierra W43 (sin más dato esperado, n=48) con WR**60.4%** E[R]**0.321**
+PF**1.91** — el bolsillo más fuerte de toda la semana en el bus, con
+la reserva de que falta el viernes 2026-10-23 completo en todo el bus
+(ver Nota). `1m/INV/LONG` suma su quinta lectura seguida certificando
+`survives_fdr10` (ver Veredicto global).
 
 ## Histórico de cambios
+- 2026-10-25 (domingo, REVISIÓN SEMANAL): sin pares nuevos desde
+  ayer en ningún TF — falta por completo el viernes 2026-10-23 en todo
+  el bus (ver `buy-retest.md` y `reviews/2026-week-43.md`). `1m/INV/LONG`
+  cierra la semana como el bolsillo más fuerte del bus (WR60.4%
+  E[R]0.321 PF1.91, n=48), con esa misma reserva de muestra. Sin
+  cambios de regla en este playbook (las decisiones de la revisión
+  semanal son específicas de RETEST).
 - 2026-10-24 (sábado): dato de cierre del viernes (+8 en todo el
   playbook). `1m/INV/LONG` suma su quinta confirmación seguida de
   `survives_fdr10=true`. Dato notable: `1m/INV/LONG` en W43 (n=48)
