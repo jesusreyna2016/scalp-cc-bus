@@ -3,7 +3,23 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-25 (domingo) · n: 401)
+## Sección viva  (última revisión: 2026-10-26 (lunes) · n: 403)
+
+### Nota 2026-10-26
+Lunes, corrida diaria normal. +2 pares nuevos, chico y normal
+(1m=278 +1, 2m=102 +1, 5m=23 sin cambio). Dos hallazgos compartidos con
+el resto del bus, sin acción específica aquí: (1) el modo sombra
+dispara hoy su alerta de 3 semanas cerradas sin batir al crudo (no
+aplica a INV, fuera de `shadowRules`); (2) el viernes 2026-10-23 se
+recuperó sólo parcialmente (9 señales de ~50-90 esperadas). Dato de
+método: `since_change` de `sl_basis_retest` en `1m/INV/SHORT` sigue
+confirmando NEGATIVO con el par nuevo (delta -0.284→**-0.305**
+CI90=[-0.51,-0.06]→**[-0.538,-0.08]**, n128→129) — refuerza, con una
+lectura más, que el cambio de SL estructural NO debe extenderse a INV
+(el scope de `sl-retest-wick-2026-09-03` sigue siendo sólo
+`kind=RETEST`, documentado hoy en `experiments.json`). Contraste con
+`buy-ifvg.md`, donde el mismo corte en INV/LONG da signo positivo —
+confirma que el efecto es específico de lado, no generalizable.
 
 ### Nota 2026-10-25
 Domingo, revisión semanal (`reviews/2026-week-43.md`). **Sin pares
@@ -17,19 +33,18 @@ sombra) son específicas de `kind=RETEST` y no aplican a este playbook.
 Ningún candidato con n≥20 para proponer cambio de input.
 
 ### Veredicto global
-1m n=277 WR 46.9% E[R]=**0.076** PF=1.18 (sube un poco); 2m n=101 WR
-45.5% E[R]=**0.115** PF=1.27 (baja un poco); 5m n=23 WR 56.5%
-E[R]=**0.11** PF=1.29 (+3 pares nuevos, primera lectura con algo de
-muestra en varios días). `segment_significance`: 1m
-CI90=[-0.036,0.193] n=260 (sigue sin certificar); 2m
-CI90=[-0.093,0.345] n=97 (sin certificar); 5m CI90=[-0.262,0.496] n=21
+1m n=278 WR 47.1% E[R]=**0.083** PF=1.2 (sube un poco con el par
+nuevo); 2m n=102 WR 46.1% E[R]=**0.118** PF=1.27 (estable); 5m n=23 WR
+56.5% E[R]=**0.11** PF=1.29 (sin pares nuevos). `segment_significance`:
+1m CI90=[-0.028,0.199] n=261 (sigue sin certificar); 2m
+CI90=[-0.091,0.343] n=98 (sin certificar); 5m CI90=[-0.262,0.496] n=21
 (sin certificar) — ningún TF de este playbook certifica FDR, sin
 cambio de fondo. `sl_origin_vs_layer.since_change` (ventana
 post-2026-09-26 del experimento `sl_basis_retest`, medición paralela,
 no aplicado en INV): 1m INV/SHORT sigue empeorando con significancia
-si se usara la mecha en vez de 3 capas, aunque la magnitud se afloja
-un poco (delta -0.352→**-0.284** CI90=[-0.577,-0.148]→**[-0.51,-0.06]**,
-n123→128) — confirma que está bien que el cambio real en TradingView
+si se usara la mecha en vez de 3 capas, la magnitud se afirma un poco
+con el par nuevo (delta -0.284→**-0.305** CI90=[-0.51,-0.06]→**[-0.538,-0.08]**,
+n128→129) — confirma que está bien que el cambio real en TradingView
 se limite a `kind=RETEST` y no se extienda a INV.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
@@ -41,7 +56,7 @@ Sin n suficiente todavía para certificar en ninguna rama:
 | 2 | `tier=B` | sigue casi plano | 137 | E[R]=**0.057** PF=1.13 | baja |
 | 3 | `tier=C` | positivo, sigue mejor que B | 264 | E[R]=**+0.105** PF=1.25 | baja-moderada |
 | 4 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar | — | sin veredicto único | baja |
-| 5 | mover SL a mecha del retest en INV (`sl_basis_retest`, medición paralela) | **NO proponer, confirma negativo** — perjudica con significancia en 1m, se afloja un poco vs ayer | 128 (1m) | delta -0.284 CI90=[-0.51,-0.06] | moderada |
+| 5 | mover SL a mecha del retest en INV (`sl_basis_retest`, medición paralela) | **NO proponer, confirma negativo** — perjudica con significancia en 1m, se afirma un poco con el par nuevo | 129 (1m) | delta -0.305 CI90=[-0.538,-0.08] | moderada |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
@@ -57,7 +72,7 @@ Sin n suficiente todavía para certificar en ninguna rama:
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (n=159, INV/SHORT, +3 pérdidas nuevas hoy): `RR-bajo`
+- Autopsia de SL (n=159, INV/SHORT, sin pérdidas nuevas hoy): `RR-bajo`
   67/159 (42.1%) causa dominante, `contra-estructura` 48/159 (30.2%)
   segundo, `estirado` 37/159 (23.3%) tercero — sin cambio de fondo.
 - **Decaimiento a vigilar (sigue sin ser formal)**: W42 cerrada sin
@@ -87,6 +102,13 @@ ayer, falta el viernes completo) con 1m en n=24 (sano), 2m y 5m
 siguen demasiado chicos para leer con confianza.
 
 ## Histórico de cambios
+- 2026-10-26 (lunes): +2 pares nuevos (1m+1, 2m+1), chico y normal.
+  `since_change` de `sl_basis_retest` en `1m/INV/SHORT` se afirma un
+  poco en negativo con el par nuevo (delta-0.305, n=129) — refuerza no
+  extender el cambio de SL a INV, documentado hoy en
+  `experiments.json`. Contraste con `buy-ifvg.md` (INV/LONG da signo
+  positivo) — el efecto es específico de lado. Modo sombra dispara hoy
+  su alerta de 3 semanas sin batir al crudo (no aplica a INV).
 - 2026-10-25 (domingo, REVISIÓN SEMANAL): sin pares nuevos desde
   ayer en ningún TF — falta por completo el viernes 2026-10-23 en todo
   el bus (ver `buy-retest.md` y `reviews/2026-week-43.md`). Sin

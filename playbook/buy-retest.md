@@ -3,7 +3,32 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-25 (domingo) · n: 23580)
+## Sección viva  (última revisión: 2026-10-26 (lunes) · n: 23593)
+
+### Nota 2026-10-26
+Lunes, corrida diaria normal. Dato nuevo chico (+5/+5/+3 en 1m/2m/5m,
+n=14767/6486/2340) — volumen típico de lunes, contraste claro con el
+agujero del viernes 2026-10-23 que motivó la nota de ayer. Ese viernes
+**se recuperó sólo parcialmente**: llegó `signals/2026-10-23.jsonl`
+con 9 señales (vs ~50-90/día normal) — la cadena alerta→Netlify→git
+sigue degradada, no es un corte total pero tampoco un día completo;
+vale la pena que Jesús siga revisando la alerta de TradingView y el
+buffer de Netlify de ese día. **El modo sombra se confirma hoy
+formalmente**: la alerta nueva de ayer (`analyze.py`) dispara por
+primera vez — 3 semanas CERRADAS seguidas sin batir al indicador crudo
+(W41, W42, W43), espejo inverso exacto de la racha de 4 (W37-W40) que
+promovió el peldaño 1. `execution-ladder.md` no exige mantener la
+racha para seguir en el peldaño ya alcanzado, así que **no se baja de
+peldaño 1 (Sombra)** — pero queda anotado para revisar `shadow_rules`
+en la revisión semanal del domingo que viene. Hito de método: el
+cambio de SL `sl_basis_retest` cumple hoy ~1 MES desde su aplicación
+(2026-09-26→2026-10-26) con los 6 de 6 segmentos RETEST todavía
+certificando limpio en `since_change`, sin una sola reversión en todo
+el mes (detalle en Gestión). Pipeline: huérfanos sube a 46 (venía de
+44→44→44→44→45→45), es la segunda corrida seguida con +1 — todavía
+dentro de lo que se puede considerar ruido normal, pero si sigue
+subiendo un día más dejaría de ser ignorable; pendientes sube a 13
+(normal, señales de hoy sin outcome resuelto todavía).
 
 ### Nota 2026-10-25
 Domingo, revisión semanal (`reviews/2026-week-43.md`). **Sin pares
@@ -34,34 +59,33 @@ en 0 — el problema es de ingestión de datos nuevos, no de emparejar lo
 que ya llegó.
 
 ### Veredicto global
-1m n=14762 WR 44.7% E[R]=**0.029** PF=1.06; 2m n=6481 WR 47.4%
-E[R]=**0.046** PF=1.09 (sin cambio); 5m n=2337 WR 51.0%
-E[R]=**0.106** PF=**1.23** (sube un poco, sigue sin alcanzar 1.3).
-`segment_significance`: 1m CI90=[0.011,0.045] n=14343
-`survives_fdr10=true`; 2m CI90=[0.021,0.071] n=6278
-`survives_fdr10=true`; 5m CI90=[0.064,0.147] n=2227
+1m n=14767 WR 44.7% E[R]=**0.029** PF=1.06 (sin cambio); 2m n=6486
+WR 47.4% E[R]=**0.045** PF=1.09 (sin cambio); 5m n=2340 WR 51.0%
+E[R]=**0.105** PF=**1.23** (estable, sigue sin alcanzar 1.3).
+`segment_significance`: 1m CI90=[0.013,0.047] n=14348
+`survives_fdr10=true`; 2m CI90=[0.02,0.072] n=6283
+`survives_fdr10=true`; 5m CI90=[0.063,0.146] n=2230
 `survives_fdr10=true`. Los tres TF siguen con edge estadísticamente
-real en el agregado histórico completo; W43 (en curso, sexto día)
-sigue revirtiendo su rojo en 1m y 5m, sostiene 2m en positivo (ver
-Decaimiento). `walk_forward` (el número que cuenta, fuera de muestra,
-testWeeks=[W42,W43]): el mejor esquema de gestión in-sample
-(`nextLevel`) da E[R]=0.049 OOS E[R]=**0.025** (sube de 0.015) —
-segunda recuperación consecutiva, sigue por debajo del in-sample.
-**Escalera de ejecución: sigue en peldaño 1 (Sombra)** — ver Reglas
-condicionales #8.
+real en el agregado histórico completo, sin cambio de fondo con el
+dato chico de hoy. `walk_forward` (el número que cuenta, fuera de
+muestra, testWeeks=[W43,W44]): el mejor esquema de gestión in-sample
+(`fixed_2R`, cambia de `nextLevel`) da trainE[R]=0.049 OOS
+E[R]=**0.027** — ventana rueda a la semana nueva, número similar al de
+ayer. **Escalera de ejecución: sigue en peldaño 1 (Sombra)** — ver
+Reglas condicionales #8.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR — edge real, estadísticamente significativo | 14343 | E[R]=**0.029** CI90=[0.011,0.045] | alta |
-| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, el más fuerte — **el segmento del gate de ejecución; PF agregado sigue en 1.23 (bajo el umbral 1.3), `weeklyStable3` sigue en `false`** | 2227 | E[R]=**0.106** CI90=[0.064,0.147] | alta — el más confiable; **no recomendar live todavía** |
-| 3 | `tf=2m` (`survives_fdr10=true`) | TOMAR — edge real, estadísticamente significativo | 6278 | E[R]=**0.046** CI90=[0.021,0.071] | alta |
-| 4 | `tier=A+` | **evitar** — WR muy bajo, E[R] **cruza a positivo por primera vez** pero el efecto es chico | 1886 | WR 21.9%, E[R]=**0.011** PF=1.02 | alta — sin cambio de regla, vigilar si se sostiene |
-| 5 | `tier=B` | TOMAR, por encima de C; A+ muy por detrás | 10248 | WR 47.0% E[R]=**0.046** PF=1.1 vs tier C WR 49.2% E[R]=0.041 PF=1.09 | alta |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR — edge real, estadísticamente significativo | 14348 | E[R]=**0.029** CI90=[0.013,0.047] | alta |
+| 2 | `tf=5m` (`survives_fdr10=true`) | TOMAR, el más fuerte — **el segmento del gate de ejecución; PF agregado sigue en 1.23 (bajo el umbral 1.3), `weeklyStable3` sigue en `false`** | 2230 | E[R]=**0.105** CI90=[0.063,0.146] | alta — el más confiable; **no recomendar live todavía** |
+| 3 | `tf=2m` (`survives_fdr10=true`) | TOMAR — edge real, estadísticamente significativo | 6283 | E[R]=**0.045** CI90=[0.02,0.072] | alta |
+| 4 | `tier=A+` | **evitar** — WR muy bajo, efecto chico, sin cambio | 1886 | WR 21.9%, E[R]=**0.011** PF=1.02 | alta — sin cambio de regla, vigilar si se sostiene |
+| 5 | `tier=B` | TOMAR, por encima de C; A+ muy por detrás | 10252 | WR 47.0% E[R]=**0.046** PF=1.1 vs tier C n=11455 WR 49.2% E[R]=0.041 PF=1.09 | alta |
 | 6 | `sa_verdict=AVOID` (Session Analyst, RETEST/LONG) | **EVITAR** — único corte donde AVOID da E[R] negativo, confirmación sostenida de la hipótesis | 1555 | E[R]=**-0.004** WR 44.2% vs GO E[R]=0.009 WR46.8% / WAIT E[R]=0.034 WR46.2% | alta — ver Cruce con Session Analyst |
 | 7 | `aligned=0` (contra-tendencia HTF) | muestra demasiado chica para usar | 11 | sin cambio | baja |
-| 8 | `tf=5m` + gate numérico puro | sin cambio de fondo: W42 cerrada en WR**52.7%** (sí pasa) PF**1.18** (no pasa, umbral 1.3) — **todavía no certifica el peldaño 2, 2 de las últimas 3 semanas fallan el PF**; W43 (en curso, ya 6 días de dato) sigue roja pero mejora: n=286, WR46.5%, E[R]-0.07 (sube de -0.124), PF sigue bajo 1 | 317 (W42 cerrada) | WR 52.7%, PF 1.18 | alta — gate de ejecución, no de señal |
+| 8 | `tf=5m` + gate numérico puro | **W43 CIERRA** (ya no es parcial): WR**46.4%** (no pasa) PF**0.85** (no pasa, muy bajo el umbral 1.3) — el close final confirma el deterioro que venía mejorando en las lecturas parciales; de las últimas 3 semanas cerradas (W41/W42/W43) sólo W41 pasa ambos umbrales (WR53.4 PF1.37), **2 de 3 siguen fallando el gate**, `weeklyStable3` sigue `false`. W44 recién abre, sin dato suficiente todavía | 289 (W43 cerrada) | WR 46.4%, PF 0.85 | alta — gate de ejecución, no de señal |
 | 9 | subir `rr1` mínimo (candidato `sc_min_rr`/`sc_aplus_rr`) | **cerrado `rejected_oos` desde 2026-10-09** — ningún corte generaliza OOS en ningún segmento RETEST tras 2+ ventanas; no reabrir sin evidencia nueva desde cero | — | ver `experiments.json` | cerrado |
 | 10 | `tf=5m` + gestión con escalera/parciales | **evitar la escalera, usar mercado simple** — único segmento de todo el bus donde `managed_vs_naive` es negativo, sin cambio de fondo | 2227 | naive E[R]=0.106 vs managed E[R]=0.092, delta=**-0.013** | alta — ver Gestión |
 
@@ -70,55 +94,48 @@ condicionales #8.
   calidad de entrada en este segmento.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=14340 delta=**+0.093**
-  (estable); 2m n=6275 delta=**+0.053** (estable); 5m n=2227
-  delta=**-0.013** (estable, sigue siendo el único TF donde la gestión
-  resta en LONG). Regla sin cambios: escalera en 1m/2m, mercado simple
-  en 5m LONG.
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=14345 delta=**+0.093**
+  (idéntico a ayer); 2m n=6280 delta=**+0.053** (idéntico); 5m n=2230
+  delta=**-0.013** (idéntico, sigue siendo el único TF donde la gestión
+  resta en LONG). Sin dato nuevo relevante hoy, regla sin cambios:
+  escalera en 1m/2m, mercado simple en 5m LONG.
 - **SL de 3 capas vs SL = mecha del retest.** `since_change` (sólo
-  post-2026-09-26) sigue mejorando en 1m/2m y se afloja un poco en 5m
-  sin perder significancia: 1m delta=+0.115 CI90=[0.066,0.162]
-  n=6555 (sube de 6363); 2m delta=+0.124 CI90=[0.065,0.185] n=3080
-  (sube de 3000); 5m delta=+0.204 CI90=[0.099,0.319] n=1186 (baja un
-  poco de 0.206, sigue el más fuerte de los seis, sube de 1136).
-  **Los 6 de 6 segmentos RETEST siguen certificando limpio
-  post-cambio**, sexto día consecutivo, y **5m SHORT deja de estar al
-  filo** (CI90=[0.022,0.249], ya no toca cero) — es la primera vez que
-  los 6 certifican con margen claro a la vez. **Decisión de la revisión
-  semanal (`reviews/2026-week-43.md`): sube la confianza documentada a
-  "aplicado, 6/6 certifican de forma sostenida (~1 mes sin
-  reversión)"**; el verdict agregado formal (mezcla LONG+SHORT,
-  calculado con la métrica rMultiple vieja porque el feed no recalcula
-  tras el cambio) sigue en **`flat`** — la evidencia real vive en
-  `since_change`/`by_basis`. El criterio de madurez que `shadow_rules`
-  venía esperando para decidir si medir con `rOrig` en vez de
-  `rMultiple` **ya se cumple** — se marca "lista para implementar en la
-  próxima corrida", no se ejecuta hoy mismo (no tocar dos cosas la
-  misma corrida que el punto siguiente).
-- **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)**: con W43 cerrando
-  sin pares nuevos (nota de arriba), el último dato disponible sigue
-  siendo shadow n=4356 E[R]=**-0.011** vs raw n=4512 E[R]=**-0.007**
-  (`shadow_beats_raw=false`). Con W41 y W42 ya cerradas en falso, esto
-  completaría **3 semanas consecutivas sin batir al indicador crudo**,
-  el espejo inverso exacto de la racha de 4 (W37-W40) que promovió el
-  peldaño 1. `execution-ladder.md` no exige mantener la racha para
-  seguir en el peldaño ya alcanzado, así que **no se baja de peldaño**.
-  Se añadió hoy una alerta permanente a `analyze.py`
-  (`MODO SOMBRA: N semanas CERRADAS seguidas sin batir al indicador
-  crudo`) que disparará en la corrida de mañana cuando W43 cierre
-  formalmente — hasta ahora esta racha sólo se narraba día a día sin
-  una alerta explícita. Ver revisión semanal para la recomendación de
-  revisar `shadow_rules` si se confirma.
+  post-2026-09-26) **cumple hoy ~1 mes desde el cambio
+  (2026-09-26→2026-10-26) sin una sola reversión**: 1m delta=+0.114
+  CI90=[0.066,0.163] n=6560 (sube de 6555); 2m delta=+0.124
+  CI90=[0.067,0.185] n=3085 (sube de 3080); 5m delta=+0.204
+  CI90=[0.099,0.324] n=1189 (estable, sigue el más fuerte de los
+  seis, sube de 1186). **Los 6 de 6 segmentos RETEST siguen
+  certificando limpio post-cambio**, un mes completo sin excepción.
+  El verdict agregado formal (mezcla LONG+SHORT, calculado con la
+  métrica rMultiple vieja porque el feed no recalcula tras el cambio)
+  sigue en **`flat`** — la evidencia real vive en
+  `since_change`/`by_basis`, documentado también hoy en
+  `experiments.json`. El cambio de métrica de `shadow_rules`
+  (`rMultiple`→`rOrig`), marcado "lista para implementar" en la
+  revisión semanal, sigue pendiente de ejecutarse — no se toca hoy.
+- **Modo sombra (`shadow_rules` v2 + `shadow_weekly`)**: la alerta
+  permanente añadida ayer a `analyze.py` **dispara hoy por primera
+  vez**: `MODO SOMBRA: 3 semanas CERRADAS seguidas sin batir al
+  indicador crudo` (W41 shadow 0.053 vs raw 0.057; W42 shadow 0.05 vs
+  raw 0.05; W43 shadow -0.009 vs raw -0.005 — las tres en
+  `shadow_beats_raw=false`), espejo inverso exacto de la racha de 4
+  (W37-W40) que promovió el peldaño 1. W44 recién abre (n=70, shadow y
+  raw idénticos en 0.224 — muestra demasiado chica para leer).
+  `execution-ladder.md` no exige mantener la racha para seguir en el
+  peldaño ya alcanzado, así que **no se baja de peldaño 1**, pero
+  queda anotado para revisar `shadow_rules` (posible sobreajuste a la
+  ventana W37-W40, o cambio de régimen) en la revisión semanal del
+  domingo que viene.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las pérdidas LONG (n=11130, RETEST/LONG):
-  `RR-bajo` 4136/11130 (37.2%) y `killzone-Asia-largo` 4135/11130
-  (37.2%) quedan prácticamente empatados — quinto vaivén en pocos
-  días, sigue dentro del ruido, no tratar como cambio real; siguen
-  `contra-estructura` 3890/11130 (35.0%) y `stop-en-el-minimo`
-  3614/11130 (32.5%) de cerca, mezcla de causas cercanas sin una
-  dominante aislada. `sl_basis_retest`
+- Autopsia de SL sobre las pérdidas LONG (n=11137, RETEST/LONG):
+  `killzone-Asia-largo` 4141/11137 (37.2%) y `RR-bajo` 4140/11137
+  (37.2%) siguen prácticamente empatados — sigue dentro del ruido, no
+  tratar como cambio real; siguen `contra-estructura` 3890/11137
+  (34.9%) y `stop-en-el-minimo` 3614/11137 (32.5%) de cerca, mezcla de
+  causas cercanas sin una dominante aislada. `sl_basis_retest`
   (SL=mecha del retest) es el candidato que mejor ataca `RR-bajo`;
   sigue en los 6 de 6 segmentos RETEST certificando limpio (ver
   Gestión) — se acerca a lo que le falta al gate del peldaño 2 (causa
@@ -130,36 +147,47 @@ condicionales #8.
   la señal más limpia de todo el playbook.
 
 ### Cruce con Session Analyst
-Específico de `RETEST/LONG`: `AVOID` n=1555 E[R]=**-0.004** WR 44.2%
-(negativo, estable, mismo n que ayer — el motor fusionado del Session
-Analyst sigue sin sumar verdicts `AVOID` nuevos en este segmento); `GO`
-n=2295 E[R]=**0.009** WR 46.8% (+24, prácticamente sin cambio); `WAIT`
-n=8296 E[R]=**0.034** WR 46.2% (+142, sube de 0.029). El orden
+Específico de `RETEST/LONG`: `AVOID` n=1555 E[R]=**-0.004** WR 44.2%;
+`GO` n=2295 E[R]=**0.009** WR 46.8%; `WAIT` n=8296 E[R]=**0.034**
+WR 46.2% — los tres números son IDÉNTICOS a ayer, el motor fusionado
+del Session Analyst no sumó ningún par nuevo con verdict en este
+segmento hoy (coherente con el día de dato chico). El orden
 WAIT > GO > AVOID se mantiene con AVOID todavía en territorio
 negativo — sigue siendo la confirmación más fuerte de la hipótesis de
-`agent-instructions.md` en todo el bus. Nota: en este segmento
-específico (RETEST/LONG, el de mayor muestra) `AVOID` sigue negativo
-sin cambio, así que la regla condicional #6 sigue vigente tal cual.
+`agent-instructions.md` en todo el bus. La regla condicional #6 sigue
+vigente tal cual.
 
 ### Decaimiento
 Ningún segmento LONG cruza el umbral automático (>15pts WR vs media 3
-semanas previas) usando semanas cerradas. Última semana cerrada
-completa sigue siendo W42: 1m WR**46.5** E[R]**0.047** n=2224; 2m
-WR**49.6** E[R]**0.084** n=857; 5m WR**53.3** E[R]**0.086** PF**1.19**
-n=321 (el mismo near-miss del gate de Reglas condicionales #8). **W43
-(sin pares nuevos desde ayer, falta el viernes completo — ver Nota de
-arriba) cierra con n menor al esperado y en rojo en 1m/5m**: 1m
-WR40.6% E[R]**-0.031** n=1590 (-29% de muestra vs W42, no mejora más
-porque no llegó más dato); 2m WR43.9% E[R]**+0.015** n=736 (modera
-desde W42 pero sigue positivo); 5m WR46.5% E[R]**-0.07** n=286 (-11% de
-muestra vs W42, el segmento del gate de ejecución cierra en rojo).
-`walk_forward` OOS se detiene en **0.025** (sin dato nuevo para seguir
-mejorando). Por el hueco del viernes (hallazgo 1 de la revisión
-semanal), no se puede separar todavía "el régimen empeoró" de "falta
-una quinta parte de la muestra de la semana" — vigilar si W44 cierra
-limpio para una lectura más confiable.
+semanas previas) usando semanas cerradas. **W43 ya CIERRA del todo**
+(era parcial ayer): 5m (segmento del gate) WR**46.4%** E[R]**-0.075**
+PF**0.85** n=289 — confirma el rojo que venía mejorando día a día en
+las lecturas parciales, el peor cierre semanal del gate en varias
+semanas. Media de las 3 semanas previas cerradas (W40-W42) en 5m:
+WR~53.4%, bastante por encima del 46.4% de W43, pero la caída (~7pts)
+no cruza el umbral de alerta automática de >15pts. `walk_forward`
+(testWeeks=[W43,W44]) OOS sube a **0.027** (de 0.025) con el cierre de
+W43 y la apertura de W44. **W44 recién abre** (lunes, primer día) con
+muestra todavía demasiado chica en todo el bus (n=70-71 agregado) para
+leer nada por segmento — vigilar su cierre el domingo que viene.
 
 ## Histórico de cambios
+- 2026-10-26 (lunes): dato nuevo chico (+5/+5/+3 en 1m/2m/5m), volumen
+  típico de lunes. El viernes 2026-10-23 se recupera sólo
+  parcialmente (9 señales de ~50-90 esperadas) — pipeline sigue
+  degradado, no roto. **MODO SOMBRA dispara su alerta permanente por
+  primera vez**: 3 semanas CERRADAS seguidas sin batir al indicador
+  crudo (W41/W42/W43), no se baja de peldaño 1 pero se anota revisar
+  `shadow_rules` el domingo. `sl_basis_retest` cumple ~1 mes desde el
+  cambio (2026-09-26→2026-10-26) con los 6/6 segmentos RETEST
+  certificando limpio sin una sola reversión; se documentó en
+  `experiments.json` que el efecto NO generaliza a INV (signo opuesto
+  en SHORT, n chico en LONG) — el scope del experimento se mantiene
+  sólo `RETEST`. `W43` cierra formalmente en el gate (`5m/RETEST/LONG`):
+  WR46.4% PF0.85, el peor cierre semanal de los últimos meses; de las
+  últimas 3 semanas cerradas sólo W41 pasa el gate completo,
+  `weeklyStable3` sigue `false`. Huérfanos sube a 46 (segunda corrida
+  seguida con +1, todavía dentro de ruido normal pero a vigilar).
 - 2026-10-25 (domingo, REVISIÓN SEMANAL): sin pares nuevos desde ayer —
   falta por completo el viernes 2026-10-23 (sin señales ni outcomes
   commiteados), corte específico del pipeline de ingestión de Scalp CC

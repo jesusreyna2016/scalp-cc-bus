@@ -3,7 +3,27 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-25 (domingo) · n: 584)
+## Sección viva  (última revisión: 2026-10-26 (lunes) · n: 584)
+
+### Nota 2026-10-26
+Lunes, corrida diaria normal. **Cero pares nuevos en este playbook**
+(n idéntico en los tres TF: 1m=399, 2m=146, 5m=39) — a diferencia de
+RETEST (que sí tuvo dato chico hoy), BUY-IFVG no sumó ninguna señal
+resuelta. Nada que actualizar en Veredicto/Reglas/Decaimiento. Dos
+hallazgos compartidos con el resto del bus, sin acción aquí: (1) el
+modo sombra dispara hoy su alerta de 3 semanas cerradas sin batir al
+crudo (no aplica a INV, que está fuera de `shadowRules`); (2) el
+viernes 2026-10-23 se recuperó sólo parcialmente (9 señales de
+~50-90 esperadas en todo el bus). Dato de método nuevo: al revisar hoy
+`sl_origin_vs_layer.since_change` con más detalle, `1m/INV/LONG`
+muestra delta=+0.349 CI90=[0.073,0.655] n=219 (`delta_beats_zero=true`)
+— el SL estructural parecería ayudar aquí, pero **no se propone ningún
+cambio**: es señal de prioridad 2, n de cientos (no miles), una sola
+lectura a este nivel de detalle, y `agent-instructions.md` exige no
+generalizar sin varias semanas de estabilidad — queda anotado para
+vigilar, nada más. En el lado SHORT (`sell-ifvg.md`) el mismo corte da
+signo CONTRARIO, lo que refuerza no tocar el scope del experimento
+(sigue sólo `RETEST`).
 
 ### Nota 2026-10-25
 Domingo, revisión semanal (`reviews/2026-week-43.md`). **Sin pares
@@ -75,6 +95,15 @@ la reserva de que falta el viernes 2026-10-23 completo en todo el bus
 `survives_fdr10` (ver Veredicto global).
 
 ## Histórico de cambios
+- 2026-10-26 (lunes): cero pares nuevos en este playbook (n=584 sin
+  cambio en los tres TF). Sin cambios de regla. Nota de método: el
+  since_change de `sl_basis_retest` en `1m/INV/LONG` da positivo
+  (delta+0.349, n=219) pero no se propone nada (prioridad 2, n chico,
+  una sola lectura) — el lado SHORT da signo contrario, refuerza no
+  tocar el scope del experimento (sigue sólo RETEST). Modo sombra
+  dispara hoy su alerta de 3 semanas sin batir al crudo (no aplica a
+  INV). Viernes 2026-10-23 recuperado sólo parcialmente (ver
+  `buy-retest.md`).
 - 2026-10-25 (domingo, REVISIÓN SEMANAL): sin pares nuevos desde
   ayer en ningún TF — falta por completo el viernes 2026-10-23 en todo
   el bus (ver `buy-retest.md` y `reviews/2026-week-43.md`). `1m/INV/LONG`
