@@ -3,7 +3,21 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-27 (martes) · n: 15101)
+## Sección viva  (última revisión: 2026-10-28 (miércoles) · n: 15107)
+
+### Nota 2026-10-28
+Miércoles, **sin dato nuevo real** (ver `buy-retest.md` para el detalle
+completo del corte de pipeline) — último commit de `signals`/`outcomes`
+del bus es 2026-10-26T13:31Z, ~36h sin archivo nuevo, cubre todo el
+martes 2026-10-27. El movimiento de hoy en este segmento (+1/+5/+0 en
+1m/2m/5m, n=9430/4110/1567) es sólo pendientes del 10-26 resolviéndose
+(TIMEOUT a 24h o emparejamiento tardío), no señales nuevas. Verificado
+en `session-analyst-bus/live/health.json` que el mercado sigue activo
+con normalidad — aísla el fallo a la cadena alerta→Netlify→git
+específica de Scalp CC. Session Analyst en SHORT: el orden
+`AVOID > WAIT > GO` sigue idéntico a ayer (séptimo día sin pares SA
+nuevos para SHORT). Modo sombra sin cambio (W44 sigue igual, sin dato
+nuevo para cerrarla). Huérfanos estable en 46.
 
 ### Nota 2026-10-27
 Martes, corrida diaria normal. Dato nuevo moderado (+167/+100/+33 en
@@ -150,6 +164,11 @@ WR vs media 3 semanas previas). **W44 crece a n=201/119/47**
 el domingo que viene.
 
 ## Histórico de cambios
+- 2026-10-28 (miércoles): **sin dato nuevo real**, ~36h sin commit de
+  `signals`/`outcomes` (último 2026-10-26T13:31Z) — ver `buy-retest.md`
+  para el detalle del corte, confirmado sano el pipeline hermano.
+  +1/+5/+0 son pendientes del 10-26, no señales nuevas. Huérfanos
+  estable en 46.
 - 2026-10-27 (martes): dato nuevo moderado (+167/+100/+33 en
   1m/2m/5m), algo más que LONG igual que ayer, números prácticamente
   idénticos a ayer en los tres TF, sin decaimiento. `since_change` de

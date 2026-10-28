@@ -3,7 +3,14 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-27 (martes) · n: 408)
+## Sección viva  (última revisión: 2026-10-28 (miércoles) · n: 408)
+
+### Nota 2026-10-28
+Miércoles, **cero pares nuevos en este playbook, y cero en todo el bus**
+(ver `buy-retest.md` para el detalle completo) — ~36h sin commit de
+`signals`/`outcomes` (último 2026-10-26T13:31Z), confirmado sano el
+pipeline hermano. 1m/2m/5m sin cambio de n (281/104/23). Todas las
+cifras idénticas a ayer porque no hay muestra que las mueva.
 
 ### Nota 2026-10-27
 Martes, corrida diaria normal. +5 pares nuevos, chico y normal
@@ -107,6 +114,10 @@ Ver "Contextos a evitar" arriba — W44 recién abre, muestra mínima en
 los tres TF, nada que leer todavía.
 
 ## Histórico de cambios
+- 2026-10-28 (miércoles): **cero pares nuevos**, ~36h sin commit de
+  `signals`/`outcomes` en el bus (último 2026-10-26T13:31Z) — ver
+  `buy-retest.md`. Pipeline hermano confirmado sano. Todas las cifras
+  idénticas a ayer.
 - 2026-10-27 (martes): +5 pares nuevos (1m+3, 2m+2), chico y normal,
   +3 pérdidas nuevas (n=162). `since_change` de `sl_basis_retest` en
   `1m/INV/SHORT` suma su TERCERA lectura seguida confirmando negativo

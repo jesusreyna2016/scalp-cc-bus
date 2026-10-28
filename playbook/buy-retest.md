@@ -3,7 +3,31 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-27 (martes) · n: 23847)
+## Sección viva  (última revisión: 2026-10-28 (miércoles) · n: 23877)
+
+### Nota 2026-10-28
+Miércoles, **sin dato nuevo real** — confirmado por `git log` que el
+último commit de `signals/`/`outcomes/` en este bus es
+2026-10-26T13:31Z (661 outcomes), es decir **~36h sin un solo archivo
+nuevo**, cubriendo toda la sesión del martes 2026-10-27 y la apertura
+de Asia de hoy. Es un corte más largo y más completo que el del
+viernes 2026-10-23 (aquel llegó parcial, 9 señales; este no llegó
+nada). El único movimiento de hoy en este segmento (+18/+5/+7 en
+1m/2m/5m, n=14942/6558/2377) es `analyze.py` terminando de resolver
+pendientes que ya estaban en el bus desde el 10-26 (TIMEOUT forzado
+a 24h o emparejamiento tardío), no señales genuinas nuevas — por eso
+`pending` del bus cae de 37 a 0 sin que lleguen archivos. Verificado
+en `session-analyst-bus/live/health.json` (checked 2026-10-27T22:37Z,
+webhook 7min, todas las fuentes `fresh`) que el mercado y el pipeline
+del Session Analyst **siguen vivos con normalidad** — el corte es
+específico de la cadena alerta TradingView→Netlify→git de *este* bus
+(Scalp CC), no un cierre de mercado ni un problema compartido.
+Huérfanos se mantiene estable en 46 (no sube), así que no hay indicio
+de pérdida de datos silenciosa, sólo ausencia total de entrada nueva.
+Números agregados (E[R], PF, `since_change`, modo sombra) prácticamente
+idénticos a ayer en los tres TF porque no hay muestra nueva que los
+mueva. **Hallazgo del día: escalar la cadena de ingesta de Scalp CC a
+Jesús** — es el corte más largo registrado hasta ahora en este bus.
 
 ### Nota 2026-10-27
 Martes, corrida diaria normal. Dato nuevo moderado (+157/+67/+30 en
@@ -191,6 +215,13 @@ PF1.17, demasiado chico todavía para leer, vigilar su cierre el
 domingo que viene.
 
 ## Histórico de cambios
+- 2026-10-28 (miércoles): **sin dato nuevo real** — ~36h sin un solo
+  commit de `signals`/`outcomes` (último: 2026-10-26T13:31Z), corte más
+  largo que el del 10-23. Confirmado vía `session-analyst-bus/live/health.json`
+  que el mercado y el pipeline hermano están sanos — el fallo es
+  específico de la cadena de ingesta de Scalp CC. +18/+5/+7 en 1m/2m/5m
+  son pendientes del 10-26 resolviéndose, no señales nuevas. Huérfanos
+  estable en 46. Escalado a Jesús como hallazgo principal del día.
 - 2026-10-27 (martes): dato nuevo moderado (+157/+67/+30 en 1m/2m/5m),
   números agregados prácticamente idénticos a ayer en los tres TF, sin
   decaimiento ni cambio de regla. `since_change` de `sl_basis_retest`

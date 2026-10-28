@@ -66,6 +66,43 @@ def file_integrity_check(prev_state):
     merged = {rel: max(n, prev_counts.get(rel, 0)) for rel, n in cur_counts.items()}
     return alerts, merged
 
+def data_freshness_check():
+    """Momento real del ultimo commit que toco signals/ u outcomes/ (el checkout del
+    contenedor pisa el mtime de los archivos con la hora del clone, asi que `git log`
+    es la unica fuente fiable de 'cuando llego el ultimo dato'). Cae a la fecha del
+    nombre de archivo (a medianoche UTC, mas impreciso) si git no esta disponible.
+    No decide si el hueco es normal (fin de semana/feriado) o un fallo del pipeline
+    Pine->Netlify->git -- eso lo narra el agente LLM con calendar.json y el bus hermano;
+    esto solo mide el hueco."""
+    import subprocess
+    try:
+        out = subprocess.run(
+            ["git", "log", "-1", "--format=%aI", "--", "signals", "outcomes"],
+            cwd=ROOT, capture_output=True, text=True, timeout=10,
+        )
+        iso = out.stdout.strip()
+        if out.returncode == 0 and iso:
+            last_dt = datetime.fromisoformat(iso).astimezone(timezone.utc)
+            hours = round((datetime.now(timezone.utc) - last_dt).total_seconds() / 3600, 1)
+            return {"latest_raw_commit_at": last_dt.isoformat(), "hours_since_latest_raw_file": hours,
+                     "source": "git_log"}
+    except Exception:
+        pass
+    latest = None
+    for kind in ("signals", "outcomes"):
+        for p in glob.glob(os.path.join(ROOT, kind, "*.jsonl")):
+            m = re.match(r"(\d{4}-\d{2}-\d{2})\.jsonl$", os.path.basename(p))
+            if m:
+                d = m.group(1)
+                if latest is None or d > latest:
+                    latest = d
+    if latest is None:
+        return {"latest_raw_commit_at": None, "hours_since_latest_raw_file": None, "source": "none"}
+    latest_dt = datetime.strptime(latest, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+    hours = round((datetime.now(timezone.utc) - latest_dt).total_seconds() / 3600, 1)
+    return {"latest_raw_commit_at": latest_dt.isoformat(), "hours_since_latest_raw_file": hours,
+             "source": "filename_fallback"}
+
 def segment_n_regression_check(rep, prev_state):
     """Como file_integrity_check pero a nivel de AGREGADO, no de archivo crudo:
     vigila si el n de un segmento (by_tf_kind_side, by_kindside_aligned, o una
@@ -1323,6 +1360,13 @@ def material_alerts(rep, prev_state=None):
     # Since 2026-10-10 build_pairs() keeps every occurrence of a repeated sigId and pairs by
     # time, so a collision no longer loses or mis-dates a trade. Not an alert anymore; the
     # counts stay in report.sigid_integrity for reference.
+    fresh = rep.get("data_freshness", {}) or {}
+    hrs = fresh.get("hours_since_latest_raw_file")
+    if hrs is not None and hrs > 20:
+        a.append(f"INGESTA: ningun commit nuevo en signals/outcomes desde {fresh.get('latest_raw_commit_at')} "
+                 f"({hrs}h, fuente={fresh.get('source')}). Puede ser fin de semana/feriado (ver calendar.json) o "
+                 f"un corte real de la cadena TradingView->Netlify->git -- confirmar contra el bus hermano "
+                 f"(session-analyst-bus) antes de escalar a Jesus.")
     orph = t["orphan_outcomes"]
     prev_orph = (prev_state or {}).get("totals", {}).get("orphan_outcomes", orph)
     resolved = max(1, t.get("pairs_resolved", 0) + orph)
@@ -1549,6 +1593,7 @@ def main():
         "rr1_threshold_cut": rr1_threshold_cut(pairs),
         "rr1_threshold_cut_oos": rr1_threshold_cut_oos(pairs),
         "sigid_integrity": sigid_collision_report(),
+        "data_freshness": data_freshness_check(),
     }
     sa = sa_context()
     report["session_analyst"] = sa

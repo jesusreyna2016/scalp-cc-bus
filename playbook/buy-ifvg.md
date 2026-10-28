@@ -3,7 +3,16 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-27 (martes) · n: 588)
+## Sección viva  (última revisión: 2026-10-28 (miércoles) · n: 589)
+
+### Nota 2026-10-28
+Miércoles, **sin dato nuevo real** (ver `buy-retest.md` para el detalle
+completo) — ~36h sin commit de `signals`/`outcomes` en el bus (último
+2026-10-26T13:31Z), confirmado sano el pipeline hermano vía
+`session-analyst-bus/live/health.json`. El único movimiento es
+`1m/INV/LONG` 403→404 (+1), un pendiente del 10-26 resolviéndose, no
+una señal nueva. 2m y 5m sin cambio. Cruce con Session Analyst sin
+pares nuevos. Sin hallazgos de método nuevos.
 
 ### Nota 2026-10-27
 Martes, corrida diaria normal. **+4 pares nuevos, todos en 1m**
@@ -104,6 +113,10 @@ demasiado chico para leer. `1m/INV/LONG` suma su sexta lectura seguida
 certificando `survives_fdr10` (ver Veredicto global).
 
 ## Histórico de cambios
+- 2026-10-28 (miércoles): **sin dato nuevo real**, ~36h sin commit de
+  `signals`/`outcomes` (último 2026-10-26T13:31Z) — ver `buy-retest.md`.
+  `1m/INV/LONG` 403→404 (+1, pendiente del 10-26, no señal nueva).
+  Pipeline hermano confirmado sano.
 - 2026-10-27 (martes): +4 pares nuevos, todos en 1m (n=588 total),
   sin pérdidas nuevas. `1m/INV/LONG` suma su sexta lectura seguida
   certificando `survives_fdr10=true`. Cruce con Session Analyst sin

@@ -1,10 +1,10 @@
 {
   "schema": "exit-baseline-1",
-  "generatedAt": "2026-10-27T01:21:20.479411+00:00",
+  "generatedAt": "2026-10-28T01:39:33.933544+00:00",
   "source": "scalp-cc-bus outcomes, all kinds and TFs",
   "bySymbol": {
     "ALL": {
-      "n": 39950,
+      "n": 39987,
       "hit1R": 0.333,
       "stoppedOut": 0.466,
       "slWasGreenHalfRFirst": 0.322,
@@ -12,23 +12,23 @@
       "reachedTP2": 0.043
     },
     "BTCUSDT": {
-      "n": 22,
-      "hit1R": 0.364,
-      "stoppedOut": 0.318,
+      "n": 24,
+      "hit1R": 0.333,
+      "stoppedOut": 0.292,
       "slWasGreenHalfRFirst": 0.143,
       "slWasGreen1RFirst": 0.0,
-      "reachedTP2": 0.227
+      "reachedTP2": 0.208
     },
     "CL": {
-      "n": 7370,
+      "n": 7378,
       "hit1R": 0.338,
-      "stoppedOut": 0.473,
+      "stoppedOut": 0.472,
       "slWasGreenHalfRFirst": 0.322,
       "slWasGreen1RFirst": 0.136,
       "reachedTP2": 0.045
     },
     "ES": {
-      "n": 8234,
+      "n": 8235,
       "hit1R": 0.316,
       "stoppedOut": 0.459,
       "slWasGreenHalfRFirst": 0.327,
@@ -36,15 +36,15 @@
       "reachedTP2": 0.038
     },
     "ETHUSDT": {
-      "n": 13,
-      "hit1R": 0.231,
-      "stoppedOut": 0.077,
+      "n": 16,
+      "hit1R": 0.188,
+      "stoppedOut": 0.062,
       "slWasGreenHalfRFirst": 0.0,
       "slWasGreen1RFirst": 0.0,
-      "reachedTP2": 0.231
+      "reachedTP2": 0.188
     },
     "GC": {
-      "n": 8278,
+      "n": 8279,
       "hit1R": 0.331,
       "stoppedOut": 0.469,
       "slWasGreenHalfRFirst": 0.33,
@@ -52,17 +52,17 @@
       "reachedTP2": 0.041
     },
     "NQ": {
-      "n": 6867,
-      "hit1R": 0.33,
-      "stoppedOut": 0.475,
+      "n": 6874,
+      "hit1R": 0.329,
+      "stoppedOut": 0.474,
       "slWasGreenHalfRFirst": 0.326,
       "slWasGreen1RFirst": 0.12,
       "reachedTP2": 0.042
     },
     "YM": {
-      "n": 9166,
-      "hit1R": 0.349,
-      "stoppedOut": 0.461,
+      "n": 9181,
+      "hit1R": 0.348,
+      "stoppedOut": 0.46,
       "slWasGreenHalfRFirst": 0.308,
       "slWasGreen1RFirst": 0.13,
       "reachedTP2": 0.047
