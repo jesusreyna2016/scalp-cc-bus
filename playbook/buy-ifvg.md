@@ -3,7 +3,31 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-28 (miércoles) · n: 589)
+## Sección viva  (última revisión: 2026-10-29 (jueves) · n: 650)
+
+### Nota 2026-10-29
+Jueves, lote grande de dato atrasado llega de golpe (ver `buy-retest.md`
+para el detalle del backlog del bus). **+61 pares nuevos en este
+playbook**: 1m 404→436 (+32), 2m 146→162 (+16), 5m 39→45 (+6), y por
+primera vez aparecen **dos TF nuevos con muestra real**: `3m/INV/LONG`
+n=5 y `15m/INV/LONG` n=2 — ambos muy por debajo del piso n≥20, sólo se
+deja constancia, sin veredicto. `1m/INV/LONG` sostiene
+`survives_fdr10=true` (CI90=[0.049,0.257] n=421, E[R] sube un poco a
+0.145) — sigue siendo el único segmento de este playbook con
+certificación FDR usable. **`5m/INV/LONG` PIERDE `survives_fdr10`**
+hoy (antes true con n=36, hoy n=42 CI90=[-0.04,0.379] cruza cero) — con
+la reserva ya anotada ayer de que n era demasiado chico para confiar,
+esto confirma que no era una certificación real. Dato de método: el
+candle1 de `sl_origin_vs_layer` en 2m/INV/LONG se acerca al borde de
+significancia por primera vez (delta=+0.513 CI90=[-0.002,1.121], límite
+inferior casi en cero) — todavía NO confirma (`delta_beats_zero=false`),
+vigilar la próxima lectura, no proponer nada. `managed_vs_naive` en
+5m/INV/LONG cruza a delta NEGATIVO por primera vez (-0.021, n=42,
+antes +0.027) — con n chico, tratar como ruido, no como reversión real
+de la gestión. Cruce con Session Analyst: `GO` sigue siendo la rama más
+fuerte (n=64 E[R]=0.096, sube de 0.071) y `AVOID` sigue siendo la más
+débil (n=42 E[R]=-0.102, sin pares nuevos) — orden GO > WAIT > AVOID
+sin cambio.
 
 ### Nota 2026-10-28
 Miércoles, **sin dato nuevo real** (ver `buy-retest.md` para el detalle
@@ -59,15 +83,19 @@ revisión semanal (confianza de `sl_basis_retest`, alerta de racha del
 modo sombra) son específicas de `kind=RETEST` y no aplican aquí.
 
 ### Veredicto global
-1m n=403 WR 46.4% E[R]=**0.132** PF=1.3 (estable); 2m n=146 WR 50.7%
-E[R]=**0.026** PF=1.06 (sin cambio); 5m n=39 WR 69.2% E[R]=**0.239**
-PF=2.07 (sin pares nuevos). `segment_significance`: 1m CI90=[0.021,0.25]
-n=389 **`survives_fdr10=true`** (sexta lectura seguida certificando);
-2m CI90=[-0.126,0.183] n=141 sigue sin certificar; 5m CI90=[0.012,0.467]
-n=36 `survives_fdr10=true` (n demasiado chico para confiar, sin
-cambio). `sl_origin_vs_layer` (`candle1`) sin lectura nueva material:
-sigue correcto que `sl-retest-wick` se limite a `kind=RETEST`, no
-extender a INV.
+1m n=436 WR 47.2% E[R]=**0.145** PF=1.34 (sube); 2m n=162 WR 53.1%
+E[R]=**0.043** PF=1.11 (estable); 5m n=45 WR 66.7% E[R]=**0.172**
+PF=1.66 (baja un poco, n=45). NUEVO: 3m n=5, 15m n=2 — muestra
+testimonial, sin veredicto. `segment_significance`: 1m
+CI90=[0.049,0.257] n=421 **`survives_fdr10=true`** (sigue
+certificando); 2m CI90=[-0.1,0.194] n=157 sigue sin certificar; **5m
+CI90=[-0.04,0.379] n=42 PIERDE `survives_fdr10` hoy** (antes true con
+n=36, se confirma que era ruido de muestra chica como ya se sospechaba).
+`sl_origin_vs_layer` (`candle1`): 1m sin cambio material (delta=0.013,
+cruza cero); 2m se acerca al borde (delta=+0.513 CI90=[-0.002,1.121],
+todavía sin confirmar); 5m cambia de signo (-0.075, n=42, ruido) — sigue
+correcto que `sl-retest-wick` se limite a `kind=RETEST`, no extender a
+INV.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en más de una rama con
@@ -75,44 +103,53 @@ confianza:
 
 | # | SI | ENTONCES (hipótesis, sin confirmar salvo 1m) | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` | **sexta lectura seguida certificando FDR**, estable — tomar con cautela | 389 | E[R]=**0.132** CI90=[0.021,0.25] | moderada — seis lecturas seguidas |
-| 2 | `tf=2m` | sin edge confirmado (CI90 cruza cero, lejos de significancia) | 141 | E[R]=**0.026** CI90=[-0.126,0.183] | baja — no proponer cambio con este n |
-| 3 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — mixto, CI90 amplio y cruza cero, sin cambio vs ayer | 389 (1m) / 141 (2m) / 36 (5m) | ver `experiments.json`/`sl_origin_vs_layer` por basis | baja |
+| 1 | `tf=1m` | certifica FDR de forma sostenida — tomar con cautela | 421 | E[R]=**0.145** CI90=[0.049,0.257] | moderada — varias lecturas seguidas |
+| 2 | `tf=2m` | sin edge confirmado (CI90 cruza cero) | 157 | E[R]=**0.043** CI90=[-0.1,0.194] | baja — no proponer cambio con este n |
+| 3 | `tf=5m` | perdió la certificación que tenía — tratar como sin edge confirmado | 42 | E[R]=**0.172** CI90=[-0.04,0.379] | baja — n chico, no proponer |
+| 4 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — mixto, ningún TF confirma (2m se acerca al borde) | 421 (1m) / 157 (2m) / 42 (5m) | ver `experiments.json`/`sl_origin_vs_layer` por basis | baja |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`).
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=389 delta=**+0.129**
-  (estable); 2m n=141 delta=**+0.106** (estable); 5m n=36
-  delta=**+0.027** (estable). Sin cambio de regla.
-- **SL de 3 capas vs SL = vela 1 del FVG**: sin lectura nueva material
-  hoy — mixto, no proponer cambio.
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=421 delta=**+0.133**
+  (estable); 2m n=157 delta=**+0.109** (estable); 5m n=42
+  delta=**-0.021** (cruza a negativo por primera vez, n chico, tratar
+  como ruido). Sin cambio de regla.
+- **SL de 3 capas vs SL = vela 1 del FVG**: sin confirmación en ningún
+  TF — mixto, no proponer cambio (ver Veredicto global).
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (INV/LONG, n=238, +2 pérdidas nuevas hoy):
-  `killzone-Asia-largo` 115/238 (48.3%) dominante, `RR-bajo` 88/238
-  (37.0%) segundo, `contra-estructura` 74/238 (31.1%) tercero — sin
-  cambio de fondo.
+- Autopsia de SL (INV/LONG, n=258, +20 pérdidas nuevas hoy):
+  `killzone-Asia-largo` 125/258 (48.4%) dominante, `RR-bajo` 96/258
+  (37.2%) segundo, `contra-estructura` 80/258 (31.0%) tercero — sin
+  cambio de orden.
 
 ### Cruce con Session Analyst
 `session_analyst_cross.by_kind_side`: `AVOID` n=42 E[R]=**-0.102**
-WR45.2% (sin trades nuevos — el motor fusionado del Session Analyst
-sigue sin refrescar este segmento); `GO` n=57 E[R]=**0.071** WR52.6%
-(+4, **cuarto día seguido en positivo**, sube de 0.039); `WAIT` n=231
-E[R]=**-0.022** WR43.3% (+3, sin cambio de fondo) — AVOID y WAIT
-siguen en negativo, GO sostiene su reversión por cuarta lectura
-seguida. Cifras globales con CI90 en `buy-retest.md`.
+WR45.2% (sin trades nuevos); `GO` n=64 E[R]=**0.096** WR54.7% (+7,
+sube de 0.071, sigue siendo la rama más fuerte); `WAIT` n=246
+E[R]=**-0.012** WR44.7% (+15, mejora un poco de -0.022) — AVOID y WAIT
+siguen en negativo/plano, GO sostiene su ventaja. Cifras globales con
+CI90 en `buy-retest.md`.
 
 ### Decaimiento
-`decay_weekly_by_segment`: la mayoría de TF de este playbook siguen
-sin muestra semanal suficiente para separar señal de ruido. W43 (gate,
-cerrada) sin cambio desde ayer. **W44 recién abre** con n=4 en 1m —
-demasiado chico para leer. `1m/INV/LONG` suma su sexta lectura seguida
-certificando `survives_fdr10` (ver Veredicto global).
+`decay_weekly_by_segment`: W44 (semana en curso) 1m n=37 WR62.2%
+E[R]=0.4 (mejora clara vs el promedio de W41-W43, sin señal de
+decaimiento); 2m n=16 WR75.0% E[R]=0.192; 5m n=6 WR50.0% E[R]=-0.23
+(muestra todavía chica en 2m/5m, no leer como tendencia). Ningún TF cae
+>15pts de WR vs el promedio de las 3 semanas previas.
 
 ## Histórico de cambios
+- 2026-10-29 (jueves): lote grande de dato atrasado (+61 en este
+  playbook: 1m+32, 2m+16, 5m+6), más dos TF nuevos con muestra mínima
+  (3m n=5, 15m n=2). `1m/INV/LONG` sostiene `survives_fdr10=true`
+  (n=421). `5m/INV/LONG` PIERDE `survives_fdr10` (n=42, confirma que
+  era ruido de muestra chica como ya se sospechaba). `candle1` en
+  2m/INV/LONG se acerca al borde de significancia sin confirmar
+  (CI90=[-0.002,1.121]). `managed_vs_naive` en 5m cruza a negativo por
+  primera vez (ruido, n chico). Sin cambios de regla.
 - 2026-10-28 (miércoles): **sin dato nuevo real**, ~36h sin commit de
   `signals`/`outcomes` (último 2026-10-26T13:31Z) — ver `buy-retest.md`.
   `1m/INV/LONG` 403→404 (+1, pendiente del 10-26, no señal nueva).
