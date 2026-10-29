@@ -3,7 +3,40 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-28 (miércoles) · n: 15107)
+## Sección viva  (última revisión: 2026-10-29 (jueves) · n: 17459)
+
+### Nota 2026-10-29
+Jueves, corrida diaria normal, dato nuevo real en los cuatro TF SHORT
+(1m n=9429→10558, 2m n=4105→4589, 5m n=1567→1900; **3m aparece con
+muestra relevante por primera vez en este playbook, n=412**). Ver
+`buy-retest.md` para el detalle completo de dos hallazgos compartidos
+a nivel de bus: (1) **el gate de ejecución cambia de segmento**, de
+`5m/RETEST/LONG` a `3m/RETEST/LONG` (5m LONG cae a PF=1.22, bajo el
+umbral) — sigue sin apuntar nunca a un segmento SHORT, no cambia nada
+aquí directamente; (2) **bug de pipeline en `sl_origin_vs_layer`**:
+BTCUSDT/ETHUSDT (símbolos nuevos, no documentados en
+`agent-instructions.md`) entran con `slOrigTk=1` mal calculado — en
+este playbook el efecto es menor que en 5m LONG (los números SHORT de
+abajo parecen sanos, sin blow-up visible), pero conviene vigilar si
+aparece. Específico de SHORT: **3m/RETEST/SHORT (n=412, WR56.1%,
+E[R]=0.169, PF=1.4, `survives_fdr10=true`) entra al Veredicto global**
+con buen numero, pero el SL-mecha-de-retest (`sl_origin_vs_layer`) NO
+certifica todavía en 3m SHORT (delta=0.066 CI90=[-0.095,0.233], cruza
+cero, n=378) — a diferencia de 3m LONG que sí certifica; no generalizar
+el cambio de SL a 3m SHORT todavía. `managed_vs_naive`: 3m SHORT se
+suma a la lista de segmentos donde la escalera resta (delta=-0.06,
+n=408) — ya son tres (3m LONG, 5m LONG, 3m SHORT), 5m SHORT sigue
+positivo (delta=+0.015). Cruce con Session Analyst: **sin pares SA
+nuevos en este segmento por SÉPTIMO día seguido** (AVOID n=873
+E[R]=0.068, GO n=1586 E[R]=0.037, WAIT n=6494 E[R]=0.054 — GO y WAIT
+crecieron de muestra en el agregado del bus, pero el corte específico
+RETEST/SHORT con verdict SA sigue sin par nuevo); el orden
+`AVOID > WAIT > GO` se mantiene, sigue siendo el hallazgo que NO
+generaliza la hipótesis de `agent-instructions.md` (que sí se confirma
+en LONG). `walk_forward` global (compartido con LONG, no hay split por
+side) sube de 0.028 a 0.055. Autopsia de SL sin cambio de causa
+dominante (`RR-bajo` sigue claro primer lugar, 38.1%). Huérfanos sube a
+54 (+8), ver `buy-retest.md`.
 
 ### Nota 2026-10-28
 Miércoles, **sin dato nuevo real** (ver `buy-retest.md` para el detalle
@@ -76,94 +109,130 @@ dirección, ver Cruce con Session Analyst. Sin incidentes de pipeline en
 el emparejamiento: huérfanos estable en 45, pendientes en 0.
 
 ### Veredicto global
-1m n=9429 WR 44.6% E[R]=**0.031** PF=1.06 (sin cambio); 2m n=4105
-WR 47.6% E[R]=**0.054** PF=1.11 (sin cambio); 5m n=1567 WR 47.7%
-E[R]=**0.069** PF=1.15 (estable). `segment_significance`: 1m
-CI90=[0.01,0.051] n=8967 `survives_fdr10=true`; 2m CI90=[0.022,0.087]
-n=3947 `survives_fdr10=true`; 5m CI90=[0.013,0.125] n=1459
-`survives_fdr10=true` — sin cambio de fondo. `gate.readyForLive`
-sigue sin apuntar a ningún segmento (ver `buy-retest.md`), nunca a un
-segmento SHORT. Escalera de ejecución: sigue en peldaño 1 (Sombra).
+1m n=10558 WR 45.1% E[R]=**0.029** PF=1.06 (sin cambio de fondo); 2m
+n=4589 WR 47.8% E[R]=**0.049** PF=1.1 (sin cambio); **3m n=412 WR
+56.1% E[R]=0.169 PF=1.4 — aparece por primera vez en este veredicto**;
+5m n=1900 WR 48.9% E[R]=**0.071** PF=1.15 (estable).
+`segment_significance`: 1m CI90=[0.01,0.048] n=10085
+`survives_fdr10=true`; 2m CI90=[0.019,0.08] n=4424
+`survives_fdr10=true`; 3m CI90=[0.077,0.267] n=408
+`survives_fdr10=true`; 5m CI90=[0.023,0.119] n=1792
+`survives_fdr10=true` — los cuatro TF con edge real. `gate.readyForLive`
+apunta hoy a `3m/RETEST/LONG` (antes `5m/RETEST/LONG`) — sigue sin
+apuntar nunca a un segmento SHORT. Escalera de ejecución: sigue en
+peldaño 1 (Sombra).
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR — edge real, estadísticamente significativo | 8967 | E[R]=**0.031** CI90=[0.01,0.051] | alta |
-| 2 | `tf=2m` (`survives_fdr10=true`) | TOMAR — edge real, sin cambio de fondo | 3947 | E[R]=**0.054** CI90=[0.022,0.087] | alta |
-| 3 | `tf=5m` (`survives_fdr10=true`) | TOMAR — sin cambio de fondo, sigue con margen real sobre cero | 1459 | E[R]=**0.069** CI90=[0.013,0.125] | alta |
-| 4 | `tier=A+` | **evitar** — WR muy bajo, E[R] sigue casi en cero | 1075 | WR 22.9% E[R]=**0.008** PF=1.01 | alta — converge con LONG en que el tier no sirve aquí |
-| 5 | `tier=B` vs `tier=C` | C sigue mejor | 6856 (B) / 7176 (C) | B E[R]=0.024 PF=1.05; C E[R]=**0.063** PF=1.14 | moderada |
+| 1 | `tf=1m` (`survives_fdr10=true`) | TOMAR — edge real, estadísticamente significativo | 10085 | E[R]=**0.029** CI90=[0.01,0.048] | alta |
+| 2 | `tf=2m` (`survives_fdr10=true`) | TOMAR — edge real, sin cambio de fondo | 4424 | E[R]=**0.049** CI90=[0.019,0.08] | alta |
+| 2b | `tf=3m` (`survives_fdr10=true`) | TOMAR, el más fuerte de los cuatro — **nuevo en el radar**, muestra todavía chica (n=408) | 408 | E[R]=**0.169** CI90=[0.077,0.267] | alta la señal, baja la muestra |
+| 3 | `tf=5m` (`survives_fdr10=true`) | TOMAR — sin cambio de fondo, sigue con margen real sobre cero | 1792 | E[R]=**0.071** CI90=[0.023,0.119] | alta |
+| 4 | `tier=A+` | **evitar** — WR muy bajo, E[R] sigue casi en cero | 1127 | WR 23.3% E[R]=**0.018** PF=1.03 | alta — converge con LONG en que el tier no sirve aquí |
+| 5 | `tier=B` vs `tier=C` | C sigue mejor | 7864 (B) / 8744 (C) | B E[R]=0.022 PF=1.05; C E[R]=**0.066** PF=1.14 | moderada |
 | 6 | símbolo (`cross_instrument`) | sin revisión fina hoy, sin cambios de fondo reportados | — | — | moderada |
-| 7 | `sa_verdict=AVOID` (Session Analyst, RETEST/SHORT) | **NO evitar mecánicamente — el orden se mantiene AVOID>WAIT>GO por SEXTO día seguido**, lo opuesto a la hipótesis de `agent-instructions.md`; seis lecturas en la misma dirección (sin pares SA nuevos en 6 días), empieza a pesar más que ruido pero todavía no se cambia la regla (no hay CI90 de este corte para confirmar significancia) | 1136 (GO) / 873 (AVOID, sin pares nuevos) | E[R]=**0.035** (GO) vs **0.041** (WAIT) vs **0.068** (AVOID) | baja-moderada — sexta lectura seguida, vigilar una séptima |
+| 7 | `sa_verdict=AVOID` (Session Analyst, RETEST/SHORT) | **NO evitar mecánicamente — el orden se mantiene AVOID>WAIT>GO por SÉPTIMO día seguido**, lo opuesto a la hipótesis de `agent-instructions.md`; siete lecturas en la misma dirección (todavía sin pares SA nuevos en este corte específico), empieza a pesar más que ruido pero todavía no se cambia la regla (no hay CI90 de este corte para confirmar significancia) | 1586 (GO) / 873 (AVOID, sin pares nuevos en 7 días) | E[R]=**0.037** (GO) vs **0.054** (WAIT) vs **0.068** (AVOID) | baja-moderada — séptima lectura seguida, vigilar si al fin llega dato nuevo |
 | 8 | subir `rr1` mínimo (candidato `sc_min_rr`) en SHORT | **cerrado `rejected_oos` desde 2026-10-09** — no reabrir sin evidencia nueva desde cero | — | ver `experiments.json` | cerrado |
+| 9 | `tf=3m` + gestión con escalera/parciales | **evitar la escalera, usar mercado simple** — nuevo segmento donde `managed_vs_naive` es negativo (se suma a 3m/5m LONG) | 408 | naive E[R]=0.169 vs managed E[R]=0.109, delta=**-0.06** | moderada — muestra chica, vigilar |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` sigue sin dar señal clara de
   calidad de entrada en este segmento.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=8961 delta=**+0.127**
-  (idéntico); 2m n=3947 delta=**+0.081** (idéntico); 5m n=1458
-  delta=**+0.023** (idéntico) — los tres positivos, sin cambio de regla.
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=10079
+  delta=**+0.122** (estable); 2m n=4424 delta=**+0.079** (estable); 3m
+  n=408 delta=**-0.06** (**nuevo, resta — se suma a 3m/5m LONG en la
+  lista de segmentos donde conviene mercado simple**); 5m n=1791
+  delta=**+0.015** (estable, positivo, a diferencia de 5m LONG). Regla
+  actualizada: escalera en 1m/2m/5m SHORT, **mercado simple en 3m
+  SHORT**.
 - **SL de 3 capas vs SL = mecha del retest.** `since_change` (sólo
-  post-2026-09-26) **pasa su primer mes completo desde el cambio
-  (2026-09-26→2026-10-27) sin una sola reversión**: 1m n=4350
-  delta=+0.075 CI90=[0.024,0.125] (sube de 4193); 2m n=1977 delta=+0.107
-  CI90=[0.035,0.176] (sube de 1879); 5m n=804 delta=+0.14
-  CI90=[0.043,0.251] (sube de 772). Ningún `delta_below_zero=true`.
-  **Los 6 de 6 segmentos RETEST del bus (3 LONG + 3 SHORT) siguen
-  confirmando limpio post-cambio**, 31 días sin excepción. Verdict
-  agregado formal sigue **`flat`** (métrica rMultiple vieja, ver
+  post-2026-09-26, n=24220 compartido con LONG): 1m n=5321
+  delta=+0.112 CI90=[0.056,0.171]; 2m n=2409 delta=+0.079
+  CI90=[0.017,0.143]; **3m n=378 delta=+0.066 CI90=[-0.095,0.233] —
+  cruza cero, NO certifica todavía** (a diferencia de 3m LONG que sí
+  certifica, ver `buy-retest.md`); 5m n=1118 delta=+0.116
+  CI90=[0.024,0.219]. Los 3 TF SHORT históricos (1m/2m/5m) siguen sin
+  una sola reversión desde el cambio; 3m SHORT es nuevo en el corte y
+  todavía no tiene muestra suficiente para certificar. Verdict agregado
+  formal sigue **`flat`** (métrica rMultiple vieja, ver
   `buy-retest.md`) — la evidencia real vive en `since_change`/`by_basis`.
-  El cambio de métrica de `shadow_rules` (`rMultiple`→`rOrig`) sigue
-  "listo para implementar", pendiente.
+  Sin el problema del bug de cripto que afecta a 5m LONG (los números
+  SHORT de hoy parecen sanos). El cambio de métrica de `shadow_rules`
+  (`rMultiple`→`rOrig`) sigue "listo para implementar", pendiente.
 - **Modo sombra** — ver `buy-retest.md` (sin desglose por side). Sigue
   en 3 semanas CERRADAS seguidas sin batir al indicador crudo
   (W41/W42/W43), espejo inverso de la racha de 4 (W37-W40) que promovió
-  el peldaño 1. **W44 crece a n=621, `shadow_beats_raw=false`** —
-  todavía parcial; si cierra así sería la cuarta semana consecutiva
-  perdiendo contra el crudo. No implica bajar de peldaño (sigue en
-  Sombra); se revisa `shadow_rules` en la próxima semanal con W44 ya
-  cerrada.
+  el peldaño 1. **W44 (semana EN CURSO, no cerrada) sube a n=5452,
+  `shadow_beats_raw=false`** — si cierra así el domingo sería la cuarta
+  semana consecutiva perdiendo contra el crudo, pero todavía es lectura
+  parcial. No implica bajar de peldaño (sigue en Sombra); se revisa
+  `shadow_rules` en la próxima semanal con W44 ya cerrada.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL sobre las pérdidas SHORT (RETEST/SHORT, n=6971):
-  `RR-bajo` 2504/6971 (35.9%) dominante y claro, `stop-en-el-minimo`
-  2249/6971 (32.3%) segundo, `contra-estructura` 2197/6971 (31.5%)
+- Autopsia de SL sobre las pérdidas SHORT (RETEST/SHORT, n=8188):
+  `RR-bajo` 3116/8188 (38.1%) dominante y claro, `contra-estructura`
+  2818/8188 (34.4%) segundo, `stop-en-el-minimo` 2810/8188 (34.3%)
   tercero — sin cambio de fondo. El SL estructural ataca `RR-bajo` y
-  sigue confirmando limpio en los 3 TF SHORT (ver Gestión).
-- `2m/RETEST/SHORT` sigue en verde en W43 (cerrada, sin cambio desde
-  ayer: WR51.0% E[R]0.07 PF1.15 n=545).
-- `1m/RETEST/SHORT` sigue cerca de breakeven en W43 (cerrada, sin
-  cambio: WR43.5% E[R]-0.001 PF1.0 n=1205).
-- `5m/RETEST/SHORT` sigue cerca de breakeven en W43 (cerrada, sin
-  cambio: WR45.7% E[R]-0.001 PF1.0 n=234).
+  sigue confirmando limpio en 1m/2m/5m SHORT (ver Gestión); 3m SHORT
+  todavía no certifica (muestra chica).
+- `2m/RETEST/SHORT` W44 en curso sube a WR48.4% E[R]-0.009 PF0.98
+  n=603 — se debilita un poco frente a W43 (WR51.0% E[R]0.07), vigilar
+  su cierre el domingo, todavía no cruza el umbral de decaimiento.
+- `1m/RETEST/SHORT` W44 mejora a WR49.5% E[R]0.017 PF1.03 n=1330
+  (W43 había cerrado en breakeven).
+- `5m/RETEST/SHORT` W44 mejora a WR56.3% E[R]0.101 PF1.23 n=380 (W43
+  había cerrado en breakeven).
+- `3m/RETEST/SHORT` nuevo: W44 n=412 WR56.1% E[R]0.169 PF1.4 — fuerte,
+  todavía sin historial de semanas previas para comparar.
 
 ### Cruce con Session Analyst
 RETEST/SHORT específicamente: `AVOID` n=873 E[R]=**0.068** WR 45.1%;
-`GO` n=1136 E[R]=**0.035** WR 47.9%; `WAIT` n=5652 E[R]=**0.041**
-WR 45.6% — los tres números IDÉNTICOS a ayer, sexto día seguido sin
-pares SA nuevos en este segmento. **El orden se mantiene
-AVOID > WAIT > GO por SEXTO día seguido** — AVOID sigue siendo el MÁS
-ALTO de los tres, lo opuesto a la hipótesis de `agent-instructions.md`
-(que sí se confirma en LONG, ver `buy-retest.md` — no se generaliza a
-todo el bus, es un hallazgo de segmento). No hay CI90 por este corte
-para confirmar significancia; con seis lecturas seguidas en la misma
-dirección (aunque sin dato nuevo) esto sigue sin cambiar la regla — se
-mantiene en observación activa, no se toca `shadow_rules` (excluye
-AVOID sin diferenciar por side).
+`GO` n=1586 E[R]=**0.037** WR 48.9%; `WAIT` n=6494 E[R]=**0.054**
+WR 46.9% — AVOID sigue IDÉNTICO a hace una semana (séptimo día seguido
+sin pares SA nuevos en este corte específico), GO y WAIT sí crecieron
+de muestra en el agregado del bus pero sin mover el orden. **El orden
+se mantiene AVOID > WAIT > GO por SÉPTIMO día seguido** — AVOID sigue
+siendo el MÁS ALTO de los tres, lo opuesto a la hipótesis de
+`agent-instructions.md` (que sí se confirma en LONG, ver
+`buy-retest.md` — no se generaliza a todo el bus, es un hallazgo de
+segmento). No hay CI90 por este corte para confirmar significancia;
+con siete lecturas seguidas en la misma dirección (aunque la de AVOID
+sigue sin dato nuevo) esto sigue sin cambiar la regla — se mantiene en
+observación activa, no se toca `shadow_rules` (excluye AVOID sin
+diferenciar por side).
 
 ### Decaimiento
-W43 (cerrada, sin cambio desde ayer): 1m WR43.5% E[R]-0.001 PF1.0
-n=1205; 2m WR51.0% E[R]+0.07 PF1.15 n=545; 5m WR45.7% E[R]-0.001
-PF1.0 n=234. Ninguno cruza el umbral automático de decaimiento (>15pts
-WR vs media 3 semanas previas). **W44 crece a n=201/119/47**
-(1m/2m/5m) — todavía chica para leer por segmento, vigilar su cierre
-el domingo que viene.
+Ningún TF SHORT cruza el umbral automático de decaimiento (>15pts WR
+vs media 3 semanas previas); de hecho los tres TF históricos
+(1m/2m/5m) mejoran o se mantienen en W44 vs el promedio de W41-W43.
+W43 (cerrada): 1m WR43.5% E[R]-0.001 PF1.0 n=1205; 2m WR51.0%
+E[R]+0.07 PF1.15 n=545; 5m WR45.7% E[R]-0.001 PF1.0 n=234. `walk_forward`
+(compartido con LONG, sin split por side) sube con fuerza a **0.055**
+(de 0.028 ayer). **W44 (en curso, parcial) sube a n=1330/603/412/380**
+(1m/2m/3m/5m) con WR49.5%/48.4%/56.1%/56.3% — mejora clara en 1m/5m,
+leve debilidad en 2m, 3m entra fuerte de entrada. Vigilar su cierre el
+domingo que viene.
 
 ## Histórico de cambios
+- 2026-10-29 (jueves): corrida normal, dato nuevo real en los cuatro TF
+  (1m+1129, 2m+484, 5m+333; 3m entra al radar con n=412). Gate de
+  ejecución cambia de segmento a nivel de bus (5m LONG→3m LONG, ver
+  `buy-retest.md`) — sigue sin apuntar nunca a SHORT. 3m/RETEST/SHORT
+  entra fuerte (WR56.1% E[R]0.169 PF1.4, `survives_fdr10=true`) pero el
+  SL-mecha-de-retest NO certifica todavía en 3m SHORT (CI90 cruza cero,
+  a diferencia de 3m LONG); `managed_vs_naive` también resta en 3m
+  SHORT (delta=-0.06), tercer segmento del bus (junto a 3m/5m LONG)
+  donde conviene mercado simple. Cruce con Session Analyst: séptimo día
+  seguido sin pares SA nuevos en este corte específico, orden
+  AVOID>WAIT>GO sin cambio (sigue siendo el hallazgo que NO generaliza
+  la hipótesis de AVOID peor, confirmada sólo en LONG). `walk_forward`
+  (compartido) sube de 0.028 a 0.055. Sin decaimiento, sin cambio de
+  causa dominante de SL. Huérfanos sube a 54 (+8, ver `buy-retest.md`).
 - 2026-10-28 (miércoles): **sin dato nuevo real**, ~36h sin commit de
   `signals`/`outcomes` (último 2026-10-26T13:31Z) — ver `buy-retest.md`
   para el detalle del corte, confirmado sano el pipeline hermano.

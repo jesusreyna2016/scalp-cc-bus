@@ -994,11 +994,17 @@ def sl_origin_vs_layer(pairs):
       retestBar2 (RETEST 1m SHORT)-> mecha mas extrema de la vela del retest Y la anterior
     crudo, mecha exacta, sin pad.
 
-    Filas con slOrigTk <= 0 se cuentan en `invalid_geometry` y se excluyen.
+    Filas con slOrigTk <= MIN_SLORIG_TK se cuentan en `invalid_geometry` y se excluyen:
+    con el SL estructural a 1 tick de la entrada, rOrig = R/riesgo explota (visto en
+    2026-10-29: BTCUSDT/ETHUSDT y tambien NQ/GC/YM con slOrigTk=1 dando rOrig de
+    cientos o miles -- no son trades reales ganando esa R, es division por un
+    denominador casi cero). El SL de 3 capas no sufre esto (tiene piso/buffer); el
+    estructural si, en cualquier simbolo. Antes el piso era <=0; se sube a <=1.
     Mira `by_basis`: candle1 / retestBar / retestBar2 son reglas distintas, no las mezcles."""
+    MIN_SLORIG_TK = 1
     cand = [r for r in pairs if r["resolved"] and r["result"] and r.get("rOrig") is not None]
-    invalid = [r for r in cand if not r.get("slOrigTk") or r["slOrigTk"] <= 0]
-    valid = [r for r in cand if r.get("slOrigTk") and r["slOrigTk"] > 0]
+    invalid = [r for r in cand if not r.get("slOrigTk") or r["slOrigTk"] <= MIN_SLORIG_TK]
+    valid = [r for r in cand if r.get("slOrigTk") and r["slOrigTk"] > MIN_SLORIG_TK]
     # 'legacy' = señales de antes del build retestBar (vela-1 / borde-iFVG). Se ven
     # en by_basis para referencia pero NO cuentan en overall / by_tf_kind_side.
     res = [r for r in valid if r.get("slBasis") != "legacy"]
