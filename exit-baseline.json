@@ -1,71 +1,71 @@
 {
   "schema": "exit-baseline-1",
-  "generatedAt": "2026-10-28T01:39:33.933544+00:00",
+  "generatedAt": "2026-10-29T01:23:24.444348+00:00",
   "source": "scalp-cc-bus outcomes, all kinds and TFs",
   "bySymbol": {
     "ALL": {
-      "n": 39987,
+      "n": 46148,
       "hit1R": 0.333,
-      "stoppedOut": 0.466,
-      "slWasGreenHalfRFirst": 0.322,
-      "slWasGreen1RFirst": 0.128,
-      "reachedTP2": 0.043
+      "stoppedOut": 0.465,
+      "slWasGreenHalfRFirst": 0.314,
+      "slWasGreen1RFirst": 0.126,
+      "reachedTP2": 0.05
     },
     "BTCUSDT": {
-      "n": 24,
-      "hit1R": 0.333,
-      "stoppedOut": 0.292,
-      "slWasGreenHalfRFirst": 0.143,
-      "slWasGreen1RFirst": 0.0,
-      "reachedTP2": 0.208
+      "n": 251,
+      "hit1R": 0.351,
+      "stoppedOut": 0.454,
+      "slWasGreenHalfRFirst": 0.202,
+      "slWasGreen1RFirst": 0.105,
+      "reachedTP2": 0.211
     },
     "CL": {
-      "n": 7378,
-      "hit1R": 0.338,
-      "stoppedOut": 0.472,
-      "slWasGreenHalfRFirst": 0.322,
-      "slWasGreen1RFirst": 0.136,
-      "reachedTP2": 0.045
-    },
-    "ES": {
-      "n": 8235,
-      "hit1R": 0.316,
-      "stoppedOut": 0.459,
-      "slWasGreenHalfRFirst": 0.327,
-      "slWasGreen1RFirst": 0.133,
-      "reachedTP2": 0.038
-    },
-    "ETHUSDT": {
-      "n": 16,
-      "hit1R": 0.188,
-      "stoppedOut": 0.062,
-      "slWasGreenHalfRFirst": 0.0,
-      "slWasGreen1RFirst": 0.0,
-      "reachedTP2": 0.188
-    },
-    "GC": {
-      "n": 8279,
-      "hit1R": 0.331,
-      "stoppedOut": 0.469,
-      "slWasGreenHalfRFirst": 0.33,
-      "slWasGreen1RFirst": 0.123,
-      "reachedTP2": 0.041
-    },
-    "NQ": {
-      "n": 6874,
-      "hit1R": 0.329,
-      "stoppedOut": 0.474,
-      "slWasGreenHalfRFirst": 0.326,
-      "slWasGreen1RFirst": 0.12,
-      "reachedTP2": 0.042
-    },
-    "YM": {
-      "n": 9181,
-      "hit1R": 0.348,
-      "stoppedOut": 0.46,
+      "n": 8475,
+      "hit1R": 0.336,
+      "stoppedOut": 0.466,
       "slWasGreenHalfRFirst": 0.308,
       "slWasGreen1RFirst": 0.13,
+      "reachedTP2": 0.052
+    },
+    "ES": {
+      "n": 9403,
+      "hit1R": 0.314,
+      "stoppedOut": 0.464,
+      "slWasGreenHalfRFirst": 0.318,
+      "slWasGreen1RFirst": 0.128,
+      "reachedTP2": 0.042
+    },
+    "ETHUSDT": {
+      "n": 205,
+      "hit1R": 0.307,
+      "stoppedOut": 0.346,
+      "slWasGreenHalfRFirst": 0.113,
+      "slWasGreen1RFirst": 0.042,
+      "reachedTP2": 0.249
+    },
+    "GC": {
+      "n": 9291,
+      "hit1R": 0.337,
+      "stoppedOut": 0.466,
+      "slWasGreenHalfRFirst": 0.324,
+      "slWasGreen1RFirst": 0.127,
       "reachedTP2": 0.047
+    },
+    "NQ": {
+      "n": 7972,
+      "hit1R": 0.328,
+      "stoppedOut": 0.477,
+      "slWasGreenHalfRFirst": 0.322,
+      "slWasGreen1RFirst": 0.12,
+      "reachedTP2": 0.047
+    },
+    "YM": {
+      "n": 10551,
+      "hit1R": 0.349,
+      "stoppedOut": 0.458,
+      "slWasGreenHalfRFirst": 0.305,
+      "slWasGreen1RFirst": 0.126,
+      "reachedTP2": 0.052
     }
   }
 }
