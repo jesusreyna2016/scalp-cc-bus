@@ -3,7 +3,38 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-29 (jueves) · n: 17459)
+## Sección viva  (última revisión: 2026-10-30 (viernes) · n: 18690)
+
+### Nota 2026-10-30
+Viernes, dato nuevo en los seis TF SHORT (1m n=10558→10915, 2m
+n=4589→4760, 3m n=412→627, 5m n=1900→2005, 15m n=0→234 nuevo en este
+corte, **29m aparece con n=149**). Ver `buy-retest.md` para el hallazgo
+compartido del día (el salto de `aligned=0`/"contra-sesgo" desde el
+26-oct en todos los símbolos, confirmado como real y además favorable
+en E[R], no una causa a mitigar). **Hallazgo propio de hoy: el gate de
+ejecución apunta por primera vez a un segmento SHORT** —
+`29m/RETEST/SHORT` (n=149, WR58.4%, E[R]=0.182, PF1.44) desplaza a
+`3m/RETEST/LONG` como `best` del chequeo agregado, pero
+`fullyReady=false` (sin historial semanal, TF de 3 días de vida) — es
+un near-miss, no un ascenso. `3m/RETEST/SHORT` sigue sano y estable
+(n=627, WR54.1%, E[R]=0.117, PF1.26) pero con menor E[R] que el nuevo
+29m, por eso deja de ser el que más se acerca. **Hallazgo 2 (modo
+sombra): racha de 4 semanas CERRADAS seguidas sin batir al indicador
+crudo** (`shadow_beats_raw=false` en W41, W42, W43 y ahora también
+W44), que el agente detecta automáticamente desde la corrida de ayer.
+Explicación con el dato de hoy: `shadowRules` (v2, 2026-09-27) ya cubre
+los 6 segmentos RETEST de 1m/2m/5m LONG+SHORT casi completos — sólo
+excluye señales con veredicto Session Analyst=AVOID y los TF nuevos
+(3m/15m/29m aún no están en la regla). Como la regla ya no filtra casi
+nada del universo RETEST clásico, el margen contra "crudo" se redujo a
+ruido de semana a semana; no es que la sombra haya empeorado, es que
+dejó de ser selectiva. No se propone ampliar ni recortar `shadowRules`
+hoy (eso es para la revisión semanal del domingo, con `segment_significance`
+de los TF nuevos todavía sin 3+ semanas de historia). Autopsia de SL sin
+cambio de causa dominante propia de SHORT (`RR-bajo` sigue primero).
+Huérfanos estable en 54. Mismo incidente de "forced update" en `git
+pull` que en `buy-retest.md`, resuelto igual (reset a `origin/main`, sin
+pérdida de datos).
 
 ### Nota 2026-10-29
 Jueves, corrida diaria normal, dato nuevo real en los cuatro TF SHORT

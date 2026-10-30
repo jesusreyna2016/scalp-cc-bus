@@ -3,7 +3,48 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-29 (jueves) · n: 27163)
+## Sección viva  (última revisión: 2026-10-30 (viernes) · n: 28196)
+
+### Nota 2026-10-30
+Viernes, corrida diaria normal, dato nuevo en los seis TF LONG ahora
+trackeados (1m n=16660→16945, 2m n=7281→7427, 3m n=431→639, 5m
+n=2791→2902, 15m n=0→201 nuevo en este corte, **29m aparece con muestra
+chica n=82**). **Hallazgo 1 (confirma sospecha de ayer, con causa real):
+`aligned=0` ("contra-sesgo") salta de ~0% histórico a 20-32% de las
+señales en NQ/ES/GC/YM/CL y 42-46% en BTCUSDT/ETHUSDT desde el
+2026-10-26 en TODOS los símbolos, no sólo los nuevos de cripto —
+confirma que no es ruido de muestra chica ni artefacto de BTCUSDT/ETHUSDT,
+es un cambio real y generalizado. `ver` sigue en `v4` sin cambio
+visible, así que si Jesús tocó un input del sesgo/alineación no quedó
+registrado ahí. **Contraintuitivo: el grupo `aligned=0` rinde MEJOR, no
+peor** (E[R] 0.084, PF 1.19, WR 54.3%, n=2471 vs `aligned=1` E[R] 0.039,
+PF 1.08, WR 46.2%, n=45549) — el salto de `contra-sesgo` a 27% de las
+pérdidas de la semana (`sl_post_mortem_weekly_trend`, mejora permanente
+añadida hoy a `analyze.py`) es la etiqueta creciendo de muestra, NO una
+causa nueva que haya que mitigar. Se añadió `aligned-shift-detected-2026-10-26`
+a `experiments.json` (status `detected_unconfirmed`) pendiente de
+confirmar con Jesús si cambió algo el 26-oct; coincide en fecha con la
+aparición de BTCUSDT/ETHUSDT y del TF nuevo de 29m. **Hallazgo 2: el
+gate vuelve a cambiar de segmento** — ya no es `3m/RETEST/LONG` (ayer)
+ni `5m/RETEST/LONG` (antes de ayer), hoy es `29m/RETEST/SHORT`
+(ver `sell-retest.md`) con `readyForLive=true` pero `fullyReady=false`
+(`weeklyStable3=false`, sin historial semanal — el TF tiene 3 días de
+vida). El `best` del gate salta de segmento día a día porque elige el
+E[R] más alto entre los que pasan el filtro agregado, y un TF de 3 días
+puede ganar por pura muestra chica — exactamente el motivo por el que
+`weeklyStable3` existe como segunda pata, no sólo el chequeo agregado.
+3m LONG sigue sano (n=639, WR55.6%, E[R]=0.135, PF1.31) pero ya no es el
+mejor del día, no se cayó de nada. Autopsia de SL sin cambio de causa
+dominante propio de este segmento más allá de lo ya descrito (RR-bajo
+sigue primero). Huérfanos estable en 54 (no sube desde ayer). Proceso:
+`git pull` volvió a dar "forced update" (historia del remoto reescrita
+de nuevo, root commit distinto) — resuelto con `git checkout -B main
+origin/main` tras verificar que el remoto es un superset de contenido
+del local (mismo README/agent-instructions, playbooks y reviews más
+nuevos, nada perdido). Tercera vez documentada que esto pasa (ver nota
+2026-09-09 en `sell-retest.md`); sigue sin costar datos porque el
+contenido del bus (jsonl, reports, playbooks) vive siempre en el árbol
+de trabajo, sólo cambia el historial de commits.
 
 ### Nota 2026-10-29
 Jueves, corrida diaria normal, dato nuevo real en los cuatro TF LONG

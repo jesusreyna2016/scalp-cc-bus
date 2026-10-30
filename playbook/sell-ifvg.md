@@ -3,7 +3,16 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-29 (jueves) · n: 449)
+## Sección viva  (última revisión: 2026-10-30 (viernes) · n: 471)
+
+### Nota 2026-10-30
+Viernes, dato nuevo chico en 1m/2m/5m (n=318/119/30, +22 vs ayer en
+total), 3m sigue en n=4 (sin peso). Sin cambio de fondo ni de causa
+dominante. Ver `buy-retest.md`/`sell-retest.md` para el hallazgo grande
+del día (salto de `aligned=0`, TF 29m nuevo, gate saltando a
+`29m/RETEST/SHORT`) — todo específico de `kind=RETEST`, este playbook
+de INV/SHORT (prioridad 2) no tiene muestra en 29m. Huérfanos estable
+en 54.
 
 ### Nota 2026-10-29
 Jueves, lote grande de dato atrasado llega de golpe (ver `buy-retest.md`

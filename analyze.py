@@ -445,6 +445,28 @@ def sl_causes(rows):
                            for k, v in sorted(by_kind_side.items())}
     return dict(tally.most_common()), detail, causes_by_kind_side
 
+def sl_causes_weekly_trend(rows, n_weeks=8):
+    """Participacion (%) de cada causa de SL por semana ISO, ultimas n_weeks.
+    Hallazgo 2026-10-30: contra-sesgo paso de ~0% (W36-W43) a 27% (W44) de
+    golpe -- sin esto, un salto asi solo se ve si alguien lo busca a mano.
+    Sirve tambien para separar 'la causa crecio en share' de 'el segmento que
+    la dispara (ej. aligned=0) ademas rinde mejor o peor' -- ver by_aligned."""
+    losses = [r for r in rows if r["resolved"] and r["result"] == "SL"]
+    wk = defaultdict(list)
+    for r in losses:
+        try:
+            iso = r["recvDt"].isocalendar()
+            wk[f"{iso[0]}-W{iso[1]:02d}"].append(r)
+        except Exception:
+            pass
+    out = {}
+    for wkey in sorted(wk)[-n_weeks:]:
+        tally, _, _ = sl_causes(wk[wkey])
+        n = len(wk[wkey])
+        out[wkey] = {"n_losses": n,
+                     "causes_pct": {c: round(100 * cnt / n, 1) for c, cnt in tally.items()}}
+    return out
+
 # --------------------------------------------------- counterfactual exits
 def counterfactual(rows):
     """Compara la gestion actual (TP siguiente nivel) contra RR fijos y SL alterno.
@@ -1387,6 +1409,23 @@ def material_alerts(rep, prev_state=None):
         base = st.mean([dw[w].get("wrTP1") for w in wk[-4:-1] if dw[w].get("wrTP1") is not None] or [0])
         if recent is not None and base and recent < base - 15:
             a.append(f"DECAIMIENTO: WR TP1 semana {wk[-1]} = {recent}% vs media previa {round(base,1)}% (-{round(base-recent,1)} pts).")
+    sct = rep.get("sl_post_mortem_weekly_trend", {}) or {}
+    sct_wk = sorted(sct)
+    if len(sct_wk) >= 4:
+        cur_w = sct_wk[-1]
+        cur_pct = sct[cur_w].get("causes_pct", {}) or {}
+        prev_wks = sct_wk[-4:-1]
+        all_causes = set(cur_pct) | {c for w in prev_wks for c in (sct[w].get("causes_pct") or {})}
+        for c in all_causes:
+            cur_v = cur_pct.get(c, 0.0)
+            prev_vs = [sct[w].get("causes_pct", {}).get(c, 0.0) for w in prev_wks]
+            base = st.mean(prev_vs) if prev_vs else 0.0
+            if cur_v >= base + 15 and sct[cur_w].get("n_losses", 0) >= 20:
+                a.append(f"SL CAUSA: '{c}' salta a {cur_v}% de las perdidas en {cur_w} "
+                         f"vs media {round(base,1)}% de las 3 semanas previas ({', '.join(prev_wks)}). "
+                         f"Ver sl_post_mortem_weekly_trend -- puede ser una causa nueva dominante, o (si el "
+                         f"segmento que la dispara en realidad rinde bien, ej. aligned=0 en by_aligned) una "
+                         f"etiqueta que crece de muestra sin ser el problema real.")
     for e in rep.get("experiments", []):
         if e.get("verdict") == "confirmed":
             a.append(f"EXPERIMENTO CONFIRMADO: {e.get('param')} {e.get('from')}->{e.get('to')} ({e.get('id')}).")
@@ -1612,6 +1651,7 @@ def main():
     causes, detail, causes_by_kind_side = sl_causes(pairs)
     report["sl_post_mortem"] = {"causes": causes, "n_losses": sum(1 for r in resolved if r["result"] == "SL"),
                                 "detail": detail[:60], "causes_by_kind_side": causes_by_kind_side}
+    report["sl_post_mortem_weekly_trend"] = sl_causes_weekly_trend(pairs)
     # SL post-mortem de la semana ISO mas reciente (para la revision semanal del domingo)
     if report["decay_weekly"]:
         _last_week = sorted(report["decay_weekly"])[-1]
@@ -1671,6 +1711,7 @@ def main():
     state["metrics_by_kindside_tier"] = report["by_kindside_tier"]
     state["metrics_by_kindside_aligned"] = report["by_kindside_aligned"]
     state["sl_causes"] = causes
+    state["sl_post_mortem_weekly_trend"] = report["sl_post_mortem_weekly_trend"]
     state["sigid_integrity"] = report["sigid_integrity"]
     state["decay_weekly"] = report["decay_weekly"]
     state["decay_weekly_by_segment"] = report["decay_weekly_by_segment"]
@@ -1733,6 +1774,8 @@ def main():
         L.append(f"n_losses={wpm['n_losses']}  causas: "
                  + ", ".join(f"{k}×{v}" for k, v in wpm["causes"].items()) + "\n")
         L.append("ejemplos por causa: " + json.dumps(wpm["example_sigIds"], ensure_ascii=False) + "\n")
+    L.append("\n## Autopsia de SL · tendencia semanal de causas (% de las perdidas de esa semana)\n```json\n"
+             + json.dumps(report["sl_post_mortem_weekly_trend"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Contrafactual de gestion\n```json\n"
              + json.dumps(report["counterfactual"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Modelo GESTIONADO (escalera + parciales) vs INGENUO\n```json\n"
