@@ -1,10 +1,10 @@
 {
   "schema": "exit-baseline-1",
-  "generatedAt": "2026-10-30T01:43:39.197209+00:00",
+  "generatedAt": "2026-10-30T01:50:14.804779+00:00",
   "source": "scalp-cc-bus outcomes, all kinds and TFs",
   "bySymbol": {
     "ALL": {
-      "n": 48020,
+      "n": 48049,
       "hit1R": 0.332,
       "stoppedOut": 0.467,
       "slWasGreenHalfRFirst": 0.311,
@@ -12,15 +12,15 @@
       "reachedTP2": 0.052
     },
     "BTCUSDT": {
-      "n": 354,
-      "hit1R": 0.333,
-      "stoppedOut": 0.497,
-      "slWasGreenHalfRFirst": 0.182,
+      "n": 355,
+      "hit1R": 0.332,
+      "stoppedOut": 0.499,
+      "slWasGreenHalfRFirst": 0.181,
       "slWasGreen1RFirst": 0.102,
       "reachedTP2": 0.186
     },
     "CL": {
-      "n": 8789,
+      "n": 8800,
       "hit1R": 0.337,
       "stoppedOut": 0.467,
       "slWasGreenHalfRFirst": 0.307,
@@ -28,7 +28,7 @@
       "reachedTP2": 0.053
     },
     "ES": {
-      "n": 9721,
+      "n": 9722,
       "hit1R": 0.312,
       "stoppedOut": 0.466,
       "slWasGreenHalfRFirst": 0.316,
@@ -36,16 +36,16 @@
       "reachedTP2": 0.043
     },
     "ETHUSDT": {
-      "n": 308,
-      "hit1R": 0.305,
-      "stoppedOut": 0.416,
-      "slWasGreenHalfRFirst": 0.148,
-      "slWasGreen1RFirst": 0.055,
-      "reachedTP2": 0.218
+      "n": 309,
+      "hit1R": 0.304,
+      "stoppedOut": 0.417,
+      "slWasGreenHalfRFirst": 0.147,
+      "slWasGreen1RFirst": 0.054,
+      "reachedTP2": 0.217
     },
     "GC": {
-      "n": 9682,
-      "hit1R": 0.335,
+      "n": 9686,
+      "hit1R": 0.334,
       "stoppedOut": 0.466,
       "slWasGreenHalfRFirst": 0.32,
       "slWasGreen1RFirst": 0.124,
@@ -60,11 +60,11 @@
       "reachedTP2": 0.049
     },
     "YM": {
-      "n": 10881,
+      "n": 10892,
       "hit1R": 0.348,
       "stoppedOut": 0.458,
       "slWasGreenHalfRFirst": 0.303,
-      "slWasGreen1RFirst": 0.125,
+      "slWasGreen1RFirst": 0.124,
       "reachedTP2": 0.054
     }
   }
