@@ -765,9 +765,9 @@ _SA_VERDICT_RE = re.compile(r"\b(GO|WAIT|AVOID)\b")
 
 def _sa_plan_verdicts(base):
     """Lee session-analyst-bus/plans/<fecha>-pre-<sesion>.json y extrae, por
-    simbolo, el veredicto GO/WAIT/AVOID citado en la linea 'SYM: ...' del
-    resumen. No hay campo estructurado por simbolo (solo 'focus' trae uno,
-    el mas limpio del dia) asi que se parsea el texto libre del resumen."""
+    simbolo, el veredicto GO/WAIT/AVOID: primero del campo estructurado
+    instruments[SYM].verdict.signal (los planes lo traen siempre desde sep);
+    si falta, de la linea 'SYM: ...' del resumen (planes viejos)."""
     out = {}
     plans_dir = os.path.join(base, "plans")
     if not os.path.isdir(plans_dir):
@@ -785,7 +785,14 @@ def _sa_plan_verdicts(base):
         summary = plan.get("summary") or {}
         lines = summary.get("es") if isinstance(summary, dict) else summary
         lines = lines or []
+        if isinstance(lines, str):
+            lines = [lines]
+        insts = plan.get("instruments") or {}
         for sym in _SA_SYMBOLS:
+            sig = str(((insts.get(sym) or {}).get("verdict") or {}).get("signal") or "").upper()
+            if sig in ("GO", "WAIT", "AVOID"):
+                out[(date, session, sym)] = sig
+                continue
             for line in lines:
                 if line.startswith(sym + ":"):
                     mm = _SA_VERDICT_RE.search(line)
