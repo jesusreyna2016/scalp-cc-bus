@@ -853,14 +853,21 @@ def session_analyst_cross(pairs, sa_base):
 # agente cambie el criterio en una revision semanal, actualiza esta
 # constante (no la recalcules a mano fuera de aqui).
 SHADOW_RULES_V1 = {
-    "version": 2,
-    "definedAt": "2026-09-27",
+    "version": 3,
+    "definedAt": "2026-10-31",
     "criteria": {
         "kind": ["RETEST"],
         "tf_side": ["1/LONG", "1/SHORT", "2/LONG", "2/SHORT", "5/LONG", "5/SHORT"],
-        "excludeSaVerdict": ["AVOID"],
+        "excludeSaVerdict": [],
     },
     "rationale": (
+        "REVISION 2026-10-31 (v2->v3): se quita el filtro por veredicto Session Analyst. "
+        "Con n=24k cruzados, AVOID rinde E[R] +0.022 (mejor que GO +0.005) y WAIT es el mejor "
+        "(+0.043, CI90 limpio, estable desde 2026-09-11); excluir AVOID dejaba la sombra en "
+        "+0.036 contra +0.038 del indicador crudo, o sea el filtro restaba. El veredicto SA "
+        "es un plan de sesion para el trader, no un filtro de senales scalp: no volver a "
+        "excluir por SA salvo que session_analyst_cross muestre AVOID con CI90 negativo "
+        "durante 3 semanas. Historia v1/v2 abajo. "
         "kind=RETEST (prioridad 1; INV no tiene ningun segmento con survives_fdr10=true "
         "todavia). REVISION SEMANAL 2026-09-27 (v1->v2): v1 (2026-09-20) limitaba tf_side a "
         "4 segmentos (1/LONG, 1/SHORT, 2/SHORT, 5/LONG) porque 2m LONG y 5m SHORT todavia "

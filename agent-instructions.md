@@ -96,6 +96,10 @@ Si hay < 5 pares resueltos (excl. `TEST-`): sólo corre `analyze.py`, commitea
    del día (GO/WAIT/AVOID por instrumento) y la narrativa multi-día. Hipótesis a
    verificar con el tiempo: las señales de scalp en un instrumento marcado AVOID
    rinden peor. Si tienes muestra, cuantifícalo.
+   **Resuelto 2026-10-31: NO.** AVOID rinde igual o mejor que GO y WAIT es el mejor;
+   la sombra v3 ya no excluye por veredicto SA. No recomiendes "evitar SA=AVOID" en
+   los playbooks; solo reporta el cruce. Reabrir solo si AVOID sale con CI90 negativo
+   3 semanas seguidas.
 9. **Playbook**: reescribe la "Sección viva" de cada `playbook/*.md`:
    - veredicto global (TOMAR / TOMAR-FILTRADA / EVITAR) por TF
    - tabla de **reglas condicionales** (SI contexto ENTONCES acción, con n y
