@@ -765,9 +765,9 @@ _SA_VERDICT_RE = re.compile(r"\b(GO|WAIT|AVOID)\b")
 
 def _sa_plan_verdicts(base):
     """Lee session-analyst-bus/plans/<fecha>-pre-<sesion>.json y extrae, por
-    simbolo, el veredicto GO/WAIT/AVOID citado en la linea 'SYM: ...' del
-    resumen. No hay campo estructurado por simbolo (solo 'focus' trae uno,
-    el mas limpio del dia) asi que se parsea el texto libre del resumen."""
+    simbolo, el veredicto GO/WAIT/AVOID: primero del campo estructurado
+    instruments[SYM].verdict.signal (los planes lo traen siempre desde sep);
+    si falta, de la linea 'SYM: ...' del resumen (planes viejos)."""
     out = {}
     plans_dir = os.path.join(base, "plans")
     if not os.path.isdir(plans_dir):
@@ -785,7 +785,14 @@ def _sa_plan_verdicts(base):
         summary = plan.get("summary") or {}
         lines = summary.get("es") if isinstance(summary, dict) else summary
         lines = lines or []
+        if isinstance(lines, str):
+            lines = [lines]
+        insts = plan.get("instruments") or {}
         for sym in _SA_SYMBOLS:
+            sig = str(((insts.get(sym) or {}).get("verdict") or {}).get("signal") or "").upper()
+            if sig in ("GO", "WAIT", "AVOID"):
+                out[(date, session, sym)] = sig
+                continue
             for line in lines:
                 if line.startswith(sym + ":"):
                     mm = _SA_VERDICT_RE.search(line)
@@ -853,14 +860,20 @@ def session_analyst_cross(pairs, sa_base):
 # agente cambie el criterio en una revision semanal, actualiza esta
 # constante (no la recalcules a mano fuera de aqui).
 SHADOW_RULES_V1 = {
-    "version": 2,
-    "definedAt": "2026-09-27",
+    "version": 3,
+    "definedAt": "2026-10-31",
     "criteria": {
         "kind": ["RETEST"],
         "tf_side": ["1/LONG", "1/SHORT", "2/LONG", "2/SHORT", "5/LONG", "5/SHORT"],
-        "excludeSaVerdict": ["AVOID"],
+        "excludeSaVerdict": [],
     },
     "rationale": (
+        "v2->v3 (2026-10-31, decision de Jesus): se QUITA el filtro por veredicto del Session "
+        "Analyst. session_analyst_cross al 2026-10-30 (n=24364): WAIT E[R]=0.043 CI90 "
+        "[0.028,0.059] (el unico significativo), AVOID E[R]=0.029 CI90 [-0.010,0.071], GO "
+        "E[R]=0.005 CI90 [-0.023,0.031]. Excluir AVOID no tenia base (rinde mas que GO) y el "
+        "veredicto del SA no ordena las senales de scalp; el cruce se sigue midiendo, pero no "
+        "filtra. Historia v1/v2: "
         "kind=RETEST (prioridad 1; INV no tiene ningun segmento con survives_fdr10=true "
         "todavia). REVISION SEMANAL 2026-09-27 (v1->v2): v1 (2026-09-20) limitaba tf_side a "
         "4 segmentos (1/LONG, 1/SHORT, 2/SHORT, 5/LONG) porque 2m LONG y 5m SHORT todavia "
