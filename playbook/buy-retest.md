@@ -3,7 +3,52 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-31 (sábado) · n: 28677)
+## Sección viva  (última revisión: 2026-11-01 (domingo) · n: 28677)
+
+### Nota 2026-11-01
+Domingo, corrida muy temprana (01:15 UTC, cierra W44). **Dato nuevo
+casi nulo**: 1m y 2m quedan exactamente en el mismo n que ayer (17097 y
+7476, cero señales LONG nuevas en 24h); sólo 3m (768→772 +4), 5m
+(2977→3036 +59) y 15m/29m (253→265 +12, 106→111 +5) crecen un poco.
+Normal para domingo de madrugada, no indicio de problema de pipeline
+(huérfanos estable en 54, pendientes en 9). Sin lectura independiente
+nueva para 1m/2m LONG: `sl_basis_retest` since_change queda clavado en
+los mismos números de ayer (1m delta=0.033 CI90=[0.001,0.066] n=7475,
+el límite inferior sigue casi en cero — mismo TF al filo que ayer; 2m
+delta=0.06 CI90=[0.019,0.102] n=3684, sin cambio). 3m/5m/15m/29m sí
+tienen lectura nueva y se mantienen o fortalecen (3m 0.331→mismo
+n=657 sin cambio real; 5m 0.175→**0.183** CI90=[0.107,0.275] n=1770,
+más fuerte; 15m 0.537→**0.577** CI90=[0.245,0.996] n=255, más fuerte;
+29m 0.937→0.925 CI90=[0.08,2.114] n=106, estable). Cruce con Session
+Analyst específico de este segmento, con mucho más dato que ayer por
+sincronización con `session-analyst-bus` (WAIT pasó de n=9434 a
+n=14335): `AVOID` n=1871 E[R]=**0.053**, `GO` n=2795 E[R]=**-0.013**,
+`WAIT` n=14335 E[R]=**0.041** — mismo orden que ayer (AVOID y WAIT por
+encima de cero, GO por debajo), ahora con un salto grande de muestra
+que lo hace más creíble, no menos. **El hallazgo que define la
+revisión semanal de hoy es a nivel de todo el bus, no de este
+segmento, y hoy mismo se corrigió**: la racha de 4 semanas
+`shadow_beats_raw=false` (W41-W44) resultó ser un artefacto de alcance,
+no una reversión real — `shadow_rules` v3 (fijado ayer) limitaba
+`tf_side` a los 6 segmentos clásicos (1/2/5m), que eran el 100% del
+universo RETEST hasta que 3m/15m/29m empezaron a tener muestra real
+(~10-29); desde entonces `raw_indicator` los cuenta y `shadow` no, así
+que raw subía por construcción. Con 3m certificando FDR hoy en ambos
+lados (ver abajo), se sube `shadow_rules` a **v4** (se agrega
+3m LONG/SHORT a `tf_side`, mismo estándar que promovió 2m/5m en
+2026-09-27) directamente en esta corrida. Tras el cambio, W44 cierra
+shadow_n=9255 (subió de 7737) shadow E[R]=**0.023** vs raw E[R]=0.027
+n=10088 — la brecha se achica mucho (de -0.017 a -0.004) pero sigue
+sin batir a raw; el resto de la brecha es 15m (no certifica FDR
+todavía) y 29m (certifica sólo en SHORT y es `instrument-specific`,
+spread 0.916 — ver `sell-retest.md`), ninguno de los dos cumple aún el
+estándar para sumarse a la sombra. Detalle completo de la decisión en
+`reviews/2026-week-44.md`. `29m/RETEST/LONG` sigue
+sin certificar FDR (CI90=[-0.046,0.36] n=107, p=0.106) mientras
+`29m/RETEST/SHORT` sí certifica — la asimetría de lado que apareció
+ayer se mantiene igual, ver `sell-retest.md`. Nota de método: el
+scoreboard de predicciones sigue en 16.7% de acierto de dirección
+(n=6, sin cambio, no llegó ningún resultado nuevo que puntuar hoy).
 
 ### Nota 2026-10-31
 Sábado, corrida diaria normal, dato nuevo parejo en los seis TF LONG

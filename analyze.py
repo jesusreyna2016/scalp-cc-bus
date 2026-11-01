@@ -860,14 +860,33 @@ def session_analyst_cross(pairs, sa_base):
 # agente cambie el criterio en una revision semanal, actualiza esta
 # constante (no la recalcules a mano fuera de aqui).
 SHADOW_RULES_V1 = {
-    "version": 3,
-    "definedAt": "2026-10-31",
+    "version": 4,
+    "definedAt": "2026-11-01",
     "criteria": {
         "kind": ["RETEST"],
-        "tf_side": ["1/LONG", "1/SHORT", "2/LONG", "2/SHORT", "5/LONG", "5/SHORT"],
+        "tf_side": ["1/LONG", "1/SHORT", "2/LONG", "2/SHORT", "3/LONG", "3/SHORT", "5/LONG", "5/SHORT"],
         "excludeSaVerdict": [],
     },
     "rationale": (
+        "REVISION SEMANAL 2026-11-01 (v3->v4): se agrega 3/LONG y 3/SHORT a tf_side. "
+        "shadow_weekly venia marcando shadow_beats_raw=false de forma sostenida (W41-W44) "
+        "porque desde que aparecieron TF nuevos en el bus (3m/15m/29m, ~2026-10-29) "
+        "raw_indicator los incluye pero shadow (criterio v3) no, asi que shadow dejo de ser "
+        "un subconjunto distinto de raw -- en las semanas donde el criterio v3 cubre todo "
+        "el universo clasico (W36-W43, antes de que 3m/15m/29m tuvieran muestra) shadow_n "
+        "era literalmente igual a raw_n (comparacion trivial, nunca puede batir a algo "
+        "idéntico a si mismo); en W44 (con los TF nuevos ya con muestra) raw_expR=0.027 > "
+        "shadow_expR=0.01 porque las senales nuevas que shadow excluye rinden bien y raw si "
+        "las cuenta. De los tres TF nuevos, 3m/RETEST/LONG (n=764, survives_fdr10=true, "
+        "CI90=[0.008,0.141]) y 3m/RETEST/SHORT (n=738, survives_fdr10=true, "
+        "CI90=[0.04,0.177]) cumplen HOY el mismo estandar que uso la revision v1->v2 para "
+        "sumar 2m LONG/5m SHORT (FDR 10% + cross_instrument verdict=universal, spread 0.323 "
+        "y 0.327 respectivamente) -- se agregan. 15m (survives_fdr10=false en ambos lados) y "
+        "29m (survives_fdr10=true en SHORT pero cross_instrument=instrument-specific, spread "
+        "0.916, y sin una sola semana ISO cerrada de historial, todo su n vive en W44) NO "
+        "cumplen el estandar todavia -- quedan fuera de v4, igual que 2m LONG/5m SHORT se "
+        "quedaron fuera de v1 hasta madurar. Ver reviews/2026-week-44.md para el detalle. "
+        "Historia v1/v2/v3 abajo. "
         "REVISION 2026-10-31 (v2->v3): se quita el filtro por veredicto Session Analyst. "
         "Con n=24k cruzados, AVOID rinde E[R] +0.022 (mejor que GO +0.005) y WAIT es el mejor "
         "(+0.043, CI90 limpio, estable desde 2026-09-11); excluir AVOID dejaba la sombra en "

@@ -3,7 +3,19 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-31 (sábado) · n: 677)
+## Sección viva  (última revisión: 2026-11-01 (domingo) · n: 677)
+
+### Nota 2026-11-01
+Domingo, corrida muy temprana (01:15 UTC) tras el cierre de semana:
+**cero señales INV/LONG nuevas en ninguno de los cinco TF** (1m 452,
+2m 162, 5m 51, 15m 4, 3m 8 — n idéntico a ayer en los cinco). Nada que
+leer en este playbook hoy mismo: sin dato nuevo no hay lectura
+independiente, se mantiene todo lo de la nota de ayer sin cambio
+(`1m/INV/LONG` sigue el único `survives_fdr10=true`, CI90=[0.02,0.221]
+n=437; `candle1` para INV sigue sin certificar, CI90 cruza cero,
+n=936). La revisión semanal de hoy (`reviews/2026-week-44.md`) cubre
+los hallazgos de todo el bus (modo sombra, `aligned`, SL-mecha) que
+afectan sobre todo a RETEST — ver ahí el detalle. Huérfanos estable.
 
 ### Nota 2026-10-31
 Sábado, corrida diaria normal, dato nuevo chico y disperso (1m

@@ -3,7 +3,19 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-31 (sábado) · n: 487)
+## Sección viva  (última revisión: 2026-11-01 (domingo) · n: 487)
+
+### Nota 2026-11-01
+Domingo, corrida muy temprana (01:15 UTC). Casi sin dato nuevo:
+1m 329 (sin cambio), 2m 120 (sin cambio), 3m 5 (sin cambio), 15m 1 (sin
+cambio), 5m 33 (+1). **Aparece `29m/INV/SHORT` por primera vez, n=1**
+(testimonial, PF=99 artefacto de un único trade ganador — mismo caso
+que `15m/INV/SHORT` ayer, sin peso hasta que haya varias docenas de
+muestras). Sin lectura nueva de fondo: ningún TF certifica FDR, el
+orden Session Analyst GO > WAIT >> AVOID se mantiene (sin dato nuevo
+para recalcularlo). Ver `reviews/2026-week-44.md` para los hallazgos
+de todo el bus (modo sombra, cambio de `aligned`, SL-mecha), que son
+de `kind=RETEST` y no mueven nada aquí. Huérfanos estable.
 
 ### Nota 2026-10-31
 Sábado, dato nuevo chico (1m 318→329 +11, 2m 119→120 +1, 5m 30→32 +2,

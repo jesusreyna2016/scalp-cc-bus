@@ -3,7 +3,52 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-10-31 (sábado) · n: 19553)
+## Sección viva  (última revisión: 2026-11-01 (domingo) · n: 19553)
+
+### Nota 2026-11-01
+Domingo, corrida muy temprana (01:15 UTC, cierra W44). Dato nuevo
+chico en los seis TF SHORT (1m 11350→11364 +14, 2m 4931→4935 +4, 3m
+742→746 +4, 5m 2106→2156 +50, 15m 263→288 +25, 29m 161→169 +8).
+**Decisión principal de hoy (domingo): la racha de 4 semanas perdiendo
+contra el crudo (W41-W44) era un artefacto de alcance, no una
+reversión real, y se corrigió en esta misma corrida.** `shadow_rules`
+v3 (de ayer) fijaba `tf_side` a los 6 segmentos clásicos (1/2/5m); eso
+era el 100% del universo RETEST hasta que 3m/15m/29m sumaron muestra
+real (~10-29), momento desde el cual `raw_indicator` los cuenta y
+`shadow` no — la brecha era por construcción, no por degradación de
+la regla. Hoy 3m/RETEST certifica FDR en ambos lados (LONG
+CI90=[0.008,0.141] n=764; SHORT CI90=[0.04,0.177] n=738, ambos
+`verdict=universal` en cross_instrument) con el mismo estándar que
+promovió 2m/5m en 2026-09-27 — se sube `shadow_rules` a **v4**
+(agrega 3m LONG/SHORT). Resultado: W44 cierra shadow_n=9255 (subió de
+7737) shadow E[R]=**0.023** vs raw E[R]=0.027 n=10088 — brecha de
+-0.004, mucho más chica que la de -0.017 antes del cambio, pero sigue
+sin batir a raw. **`29m/RETEST/SHORT` queda deliberadamente FUERA de
+v4** aunque certifica FDR (CI90=[0.023,0.314] n=168): en
+`cross_instrument` sale `instrument-specific` (spread 0.916, ver
+Consistencia entre instrumentos), sin una sola semana ISO cerrada de
+historial — no cumple el mismo estándar que sí cumplió 3m. 15m tampoco
+(no certifica FDR en ningún lado). Detalle completo en
+`reviews/2026-week-44.md`. **`29m/RETEST/SHORT` sigue siendo el near-miss del gate** (n=169,
+WR56.8%, E[R]=0.169, PF=1.39, cumple el chequeo numérico agregado
+completo) pero sin `weeklyStable3` (el TF no existía en W41-W43) ni
+`slCauseMitigated` — sin cambio respecto a ayer, sigue sin ser señal
+real de subir de peldaño. `sl_basis_retest` since_change: 1m
+(delta=0.043 CI90=[0.008,0.077] n=5607) y 2m (delta=0.052
+CI90=[0.005,0.1] n=2582) quedan clavados en el mismo n que ayer, sin
+lectura independiente nueva; **5m SÍ tiene lectura nueva y se
+fortalece** (delta 0.107→**0.172** CI90=[0.062,0.3], n=1262→1304);
+3m sigue "al filo" sin cambio (delta=0.102 CI90=[-0.002,0.213] n=653,
+límite inferior sigue casi en cero); 29m delta=0.237
+CI90=[0.045,0.494] n=163, certifica con margen. Cruce con Session
+Analyst (con mucho más dato por sincronización de `session-analyst-bus`,
+igual que en `buy-retest.md`): `AVOID` n=920 E[R]=**0.093**, `GO`
+n=1265 E[R]=**-0.032**, `WAIT` n=10750 E[R]=**0.058** — mismo orden
+que ayer (`AVOID`>`WAIT`>>`GO`, `GO` negativo), consistente con el
+hallazgo de bus de hoy de que `GO` es el único veredicto que no se
+distingue de cero o negativo (ver revisión semanal). Autopsia de SL
+sin cambio de causa dominante propia de SHORT. Huérfanos estable en
+54, pendientes en 9.
 
 ### Nota 2026-10-31
 Sábado, corrida diaria normal, dato nuevo en los seis TF SHORT (1m
