@@ -3,7 +3,33 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-01 (domingo) · n: 28677)
+## Sección viva  (última revisión: 2026-11-02 (lunes) · n: 28932)
+
+### Nota 2026-11-02
+Lunes, dato nuevo chico y parejo en los seis TF LONG (1m 17097→17106
++9, 2m 7476→7479 +3, 3m 772→799 +27, 5m 3036→3140 +104, 15m 265→286
++21, 29m 111→122 +11). Nada roto en el pipeline (huérfanos 54→56,
+pendientes subió de 9 a 40 — normal, son señales recientes sin 24h
+cumplidas todavía, no orfandad). **`sl_basis_retest` (`since_change`)
+sigue sin romper el filo en 1m LONG** — mismo patrón que el 31-oct, no
+se revisó hoy con lectura independiente nueva porque no llegó
+suficiente dato 1m fresco. A nivel de bus el candidato se mantiene
+fuerte y un poco más confirmado: `retestBar` sube a n=29983 (de
+29603), E[R] 0.138 vs 0.037 de 3-capas, delta **0.101** CI90=[0.083,
+0.12] (delta algo mayor que el 0.095 de ayer) — ver nota añadida en
+`experiments.json`. **Las dos alertas de causa de SL de hoy
+(killzone-Asia-largo 46.2%, stop-en-el-minimo 50.0% de las pérdidas)
+son ruido de muestra, no una causa nueva**: la semana que arranca
+(W45) sólo tiene 26 pérdidas en todo el bus todavía — con ese n
+cualquier porcentaje salta mucho sin significar nada; no se actúa, se
+vigila con más muestra. Session Analyst cruzado con todo el bus (no
+sólo este segmento): `GO` sigue siendo el peor veredicto (E[R]=-0.015,
+CI90=[-0.043,0.015], cruza cero) frente a `AVOID` (0.062,
+CI90=[0.02,0.104]) y `WAIT` (0.05, CI90=[0.037,0.063]) — mismo orden
+que el 31-oct, conclusión sin cambios (no excluir por veredicto SA).
+Nota de método: el scoreboard de predicciones del agente bajó a 0% de
+acierto de dirección (n=6, antes 16.7%) — tratar cualquier "patrón
+nuevo" propio con más cautela todavía.
 
 ### Nota 2026-11-01
 Domingo, corrida muy temprana (01:15 UTC, cierra W44). **Dato nuevo

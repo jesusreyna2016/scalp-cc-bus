@@ -3,7 +3,13 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-01 (domingo) · n: 487)
+## Sección viva  (última revisión: 2026-11-02 (lunes) · n: 489)
+
+### Nota 2026-11-02
+Lunes, dato casi nulo (1m 329, 2m 120, 3m 5, 15m 1, 29m 1 — todos sin
+cambio; 5m 33→33 tampoco se movió hoy). INV sigue sin ningún segmento
+con `survives_fdr10=true`; sin novedad que cambie el veredicto
+EVITAR/monitoreo de esta señal.
 
 ### Nota 2026-11-01
 Domingo, corrida muy temprana (01:15 UTC). Casi sin dato nuevo:

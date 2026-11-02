@@ -3,7 +3,33 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-01 (domingo) · n: 19553)
+## Sección viva  (última revisión: 2026-11-02 (lunes) · n: 19760)
+
+### Nota 2026-11-02
+Lunes, dato nuevo chico en los seis TF SHORT (1m 11364→11371 +7, 2m
+4935→4940 +5, 3m 746→771 +25, 5m 2156→2195 +39, 15m 288→305 +17, 29m
+169→178 +9). **Hallazgo del día: `29m/RETEST/SHORT` PERDIÓ hoy la
+certificación FDR que tenía ayer** — `segment_significance` pasa de
+CI90=[0.03,0.316] (certificaba) a CI90=[-0.021,0.254] (vuelve a cruzar
+cero, `survives_fdr10=false`) con sólo +9 pares nuevos; el E[R] del
+segmento también bajó (0.169→0.116, PF 1.39→1.26). Es justo la
+advertencia que se dejó ayer ("muestra demasiado chica para leerlo
+como régimen") cumpliéndose: con un TF que lleva pocos días de vida,
+9 operaciones bastan para voltear el signo de la significancia. `29m
+/RETEST/LONG` tampoco certifica (CI90=[-0.019,0.344]), así que **hoy
+ningún lado de 29m certifica FDR** — la asimetría de lado que se vio
+el 31-oct ya no es una asimetría, es ruido de ambos lados. Pese a
+eso, en el chequeo numérico agregado (n/PF/WR, no FDR) `29m/RETEST/
+LONG` (n=122, WR 55.7%, PF 1.35) ahora supera a `29m/RETEST/SHORT`
+(n=178, WR 54.5%, PF 1.26) — por eso el gate del bus (`report.json.gate`)
+apunta hoy a LONG en vez de SHORT como near-miss; ninguno de los dos
+cumple el gate completo (faltan 3 semanas cerradas estables y mitigar
+la causa de SL dominante). `sl_origin_vs_layer` en 29m SHORT sigue
+fuerte y sin cruzar cero (delta 0.234 CI90=[0.052,0.486], n=172) —
+la fragilidad es de significancia direccional (E[R] agregado), no del
+experimento de SL. Resto del bus sin cambios de fondo respecto a
+ayer; ver `buy-retest.md` para el estado del candidato `sl_basis_retest`
+y las alertas de causa de SL (ruido de muestra en W45, n=26 pérdidas).
 
 ### Nota 2026-11-01
 Domingo, corrida muy temprana (01:15 UTC, cierra W44). Dato nuevo
