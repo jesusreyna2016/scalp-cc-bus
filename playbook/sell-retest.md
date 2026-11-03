@@ -3,7 +3,33 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-02 (lunes) · n: 19760)
+## Sección viva  (última revisión: 2026-11-03 (martes) · n: 20646)
+
+### Nota 2026-11-03
+Martes, dato nuevo chico en los seis TF SHORT (1m 11371→11755 +384,
+2m 4940→5107 +167, 3m 771→934 +163, 5m 2195→2284 +89, 15m 305→367 +62,
+29m 178→199 +21). **`29m/RETEST/SHORT` recupera hoy la certificación
+FDR** que había perdido ayer — `segment_significance` pasa de
+CI90=[-0.021,0.254] (no certificaba) a CI90=[0.023,0.302]
+`survives_fdr10=true` (n=198, E[R]=0.163, PF=1.37); `29m/RETEST/LONG`
+también recupera FDR hoy (CI90=[0.077,0.443] n=155, ver
+`buy-retest.md`) — ambos lados vuelven a certificar el mismo día que
+ambos la habían perdido, lo que confirma el diagnóstico de ayer: con
+~1 semana de vida, 20-30 pares bastan para voltear el signo en
+cualquier dirección, todavía no es régimen estable. En el chequeo
+numérico agregado del gate, `29m/RETEST/LONG` sigue siendo el "mejor"
+(E[R] 0.254 > 0.163 de SHORT) así que el gate del bus sigue apuntando
+a LONG, no a este segmento — ninguno de los dos cumple el gate
+completo (`weeklyStable3`=false, W44 se quedó a 0.01 de PF 1.3;
+`slCauseMitigated`=false). `sl_origin_vs_layer.since_change` en 29m
+SHORT se enfría un poco hoy: delta=0.149 CI90=[-0.027,0.375] n=193,
+cruza a "al filo" (no certifica), viniendo de certificar ayer — la
+fragilidad sigue siendo de significancia direccional/muestra chica, no
+del experimento de SL en sí (3m/RETEST/SHORT también queda al filo,
+delta=0.064 CI90=[-0.033,0.167] n=814). Resto del bus sin cambios de
+fondo frente a ayer — ver `buy-retest.md` para el estado completo de
+`sl_basis_retest` (hoy 1m/RETEST/LONG es el que pierde certificación) y
+las alertas de Session Analyst/método.
 
 ### Nota 2026-11-02
 Lunes, dato nuevo chico en los seis TF SHORT (1m 11364→11371 +7, 2m

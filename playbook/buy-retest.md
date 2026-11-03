@@ -3,7 +3,42 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-02 (lunes) · n: 28932)
+## Sección viva  (última revisión: 2026-11-03 (martes) · n: 29584)
+
+### Nota 2026-11-03
+Martes, dato nuevo chico y parejo en los seis TF LONG (1m 17106→17270
++164, 2m 7479→7555 +76, 3m 799→1023 +224, 5m 3140→3220 +80, 15m
+286→361 +75, 29m 122→155 +33). Huérfanos 56→57, pendientes 40→48 —
+normal (señales recientes sin 24h cumplidas, no orfandad). **Reversión
+del hallazgo de ayer: `29m/RETEST/LONG` recupera hoy la certificación
+FDR** que había perdido el lunes — `segment_significance` pasa de
+CI90=[-0.019,0.344] (no certificaba) a CI90=[0.077,0.443]
+`survives_fdr10=true` (n=155, E[R]=0.254, PF=1.6); `29m/RETEST/SHORT`
+también recupera FDR (CI90=[0.023,0.302] n=198, ver `sell-retest.md`)
+— confirma lo que ya se venía diciendo: con un TF de ~1 semana de vida
+9-30 pares bastan para voltear el signo de la significancia en
+cualquier dirección, no se puede leer como régimen todavía. El gate
+del bus sigue apuntando a `29m/RETEST/LONG` como el único segmento con
+el chequeo numérico agregado completo (n/PF/WR), pero **`weeklyStable3`
+y `slCauseMitigated` siguen `false`** — el detalle semanal muestra que
+W44 (cerrada) quedó MUY cerca: WR=54.5% (pasa) pero PF=1.29, a sólo
+0.01 del umbral de 1.3. Dato nuevo en `sl_basis_retest` (`since_change`,
+post-2026-09-26, n total sube a 26784): **1m/RETEST/LONG cruza hoy a NO
+certificar** — delta=0.03 CI90=[-0.001,0.061] n=7619 (el límite
+inferior toca negativo por primera vez desde que se vigila "al filo",
+venía en CI90=[0.001,0.066] el 11-01); es el único de los 6 TF LONG
+clásicos que pierde la certificación limpia hoy (2m/3m/5m/15m la
+mantienen, ver `experiments.json` para el detalle completo por
+segmento). No amerita revertir nada (delta sigue positivo, CI90 apenas
+roza cero). Cruce con Session Analyst sin cambio de fondo: `GO` sigue
+siendo el peor veredicto a nivel de bus (E[R]=-0.015, CI90=[-0.043,
+0.015], cruza cero) frente a `AVOID` (0.066, CI90=[0.025,0.108]) y
+`WAIT` (0.052, CI90=[0.04,0.064]) — mismo orden que ayer, sin acción
+(la exclusión por veredicto SA sigue retirada desde `shadow_rules` v3).
+Nota de método: el scoreboard de predicciones del agente sigue en 0%
+de acierto de dirección (n=6, sin resultados nuevos que puntuar hoy) —
+seguir tratando cualquier lectura propia de "cambio de régimen" con
+mucha cautela hasta que crezca la muestra.
 
 ### Nota 2026-11-02
 Lunes, dato nuevo chico y parejo en los seis TF LONG (1m 17097→17106
