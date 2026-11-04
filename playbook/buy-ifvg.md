@@ -3,7 +3,22 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-03 (martes) · n: 699)
+## Sección viva  (última revisión: 2026-11-04 (miércoles) · n: 707)
+
+### Nota 2026-11-04
+Miércoles, dato casi nulo (1m 460→462 +2, 2m 168→168 sin cambio, 3m
+10→11 +1, 5m 57→57 sin cambio, 15m 4→4 sin cambio). `1m/INV/LONG`
+sigue certificando sin interrupción desde el 2026-10-31
+(`segment_significance` CI90=[0.025,0.225] n=447, E[R]=0.12, PF=1.27).
+Sin novedad adicional; 2m/3m/5m/15m siguen sin certificar. Nota de
+anomalía (no afecta a este playbook de forma directa, se documenta
+para referencia porque usa la misma base de SL estructural): hoy
+`sl_origin_vs_layer.by_basis.candle1` (SL = vela 1 del FVG, aplica a
+INV) mostró una varianza extrema (orig_expR=2.13, CI90=[-0.073,
+6.075], n=995) — es ruido de cola gorda por stop muy ajustado
+(slOrigTk mediana=6 ticks), no evidencia de que mover el SL a la vela
+1 funcione; sigue sin certificar (CI90 cruza cero), no se propone
+nada. Veredicto sin cambio: EVITAR/monitoreo salvo `1m/INV/LONG`.
 
 ### Nota 2026-11-03
 Martes, dato casi nulo (1m 452→460 +8, 2m 162→168 +6, 3m 8→10 +2, 5m

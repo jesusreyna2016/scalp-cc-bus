@@ -3,7 +3,50 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-03 (martes) · n: 29584)
+## Sección viva  (última revisión: 2026-11-04 (miércoles) · n: 30052)
+
+### Nota 2026-11-04
+Miércoles, dato nuevo chico y parejo en los seis TF LONG (1m 17270→17320
++50, 2m 7555→7595 +40, 3m 1023→1249 +226, 5m 3220→3313 +93, 15m
+361→403 +42, 29m 155→172 +17). Huérfanos 57→61 (+4, vigilar si sigue
+subiendo, hoy todavía dentro de ruido normal — no hay evidencia de un
+problema de pipeline Pine/ingest). `29m/RETEST/LONG` **mantiene** la
+certificación FDR de ayer (`segment_significance` CI90=[0.054,0.395]
+`survives_fdr10=true`, n=172, E[R]=0.227, PF=1.51) — sigue siendo el
+único segmento del bus con el chequeo numérico agregado del gate
+completo (n≥100, E[R]>0, PF≥1.3, WR≥50), pero **`weeklyStable3` y
+`slCauseMitigated` siguen `false`**: el TF 29m sólo lleva una semana
+ISO cerrada de vida (W44), así que todavía no puede evaluarse "3
+semanas seguidas" — no es un fallo del segmento, es que es demasiado
+joven para ese criterio. No se sube de peldaño. `sl_basis_retest`
+(`since_change`, post-2026-09-26): 1m/RETEST/LONG **sigue al filo**,
+prácticamente sin cambio (delta=0.03 CI90=[-0.002,0.061] n=7660, ayer
+n=7619 CI90=[-0.001,0.061]) — no se revierte ni certifica limpio, se
+sigue vigilando. A nivel de bus (no sólo LONG) el hallazgo más fuerte
+de la corrida es `sl_origin_vs_layer.by_basis.retestBar`: E[R] 0.151 vs
+0.043 del SL de 3 capas, delta **0.109** CI90=[0.091,0.127] n=32083
+(ayer n=29983, delta 0.101) — delta un poco más fuerte con más muestra,
+sigue siendo el candidato más robusto de todo el bus para la próxima
+revisión semanal (ver `experiments.json`, experimento
+`sl-retest-wick-2026-09-03`). Nota de anomalía: `by_basis.candle1`
+(INVERSIÓN, no afecta a este playbook) mostró hoy una varianza extrema
+(orig_expR=2.13, CI90=[-0.073,6.075], n=995) — es ruido de cola gorda
+por SL estructural muy ajustado (slOrigTk mediana=6 ticks) combinado
+con n chico, no un bug de pipeline; sigue sin certificar, no se toca
+nada. Cruce con Session Analyst sin cambio de fondo: `GO` sigue siendo
+el peor veredicto a nivel de bus (E[R]=-0.016, CI90 cruza cero) frente
+a `AVOID` (0.078, CI90=[0.035,0.118]) y `WAIT` (0.051, CI90=[0.039,
+0.063]) — mismo orden que los días previos, sin acción (la exclusión
+por veredicto SA sigue retirada desde `shadow_rules` v3). Nota de
+método: el scoreboard de predicciones del agente sigue en 0% de
+acierto de dirección (n=6, MAE=0.265, sin resultados nuevos que
+puntuar hoy) — se mantiene la cautela con cualquier "cambio de
+régimen" propio. Nota operativa (no afecta a los datos): el checkout
+local de este repo tenía la rama `main` desalineada de `origin/main`
+tras una reescritura de historial remota; se resincronizó con `git
+reset --hard origin/main` antes de esta corrida, sin pérdida de
+contenido (todo lo de las notas del 10-31 al 11-03 ya estaba en
+`origin/main`).
 
 ### Nota 2026-11-03
 Martes, dato nuevo chico y parejo en los seis TF LONG (1m 17106→17270

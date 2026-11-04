@@ -3,7 +3,35 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-03 (martes) · n: 20646)
+## Sección viva  (última revisión: 2026-11-04 (miércoles) · n: 21874)
+
+### Nota 2026-11-04
+Miércoles, dato nuevo chico en los seis TF SHORT (1m 11755→12292 +537,
+2m 5107→5341 +234, 3m 934→1140 +206, 5m 2284→2429 +145, 15m 367→431
++64, 29m 199→241 +42). `29m/RETEST/SHORT` **mantiene** la certificación
+FDR de ayer (`segment_significance` CI90=[0.034,0.313]
+`survives_fdr10=true`, n=240, E[R]=0.17, PF=1.38); igual que en
+`buy-retest.md`, LONG sigue siendo el "mejor" del par (E[R] 0.227 >
+0.17) así que el gate del bus sigue apuntando a LONG, no a este
+segmento. `sl_origin_vs_layer.since_change`
+en 29m SHORT se mantiene al filo (delta=0.11 CI90=[-0.042,0.296]
+n=235, ayer n=193 CI90=[-0.027,0.375]) — mismo estado, muestra todavía
+chica para un TF de ~1 semana de vida; 3m/RETEST/SHORT también sigue
+al filo (delta=0.046 CI90=[-0.042,0.13] n=1006, ayer n=814
+CI90=[-0.033,0.167]) — ninguno de los dos revierte ni certifica, se
+sigue vigilando sin tocar nada. A nivel de bus el hallazgo más fuerte
+de la corrida sigue siendo `sl_origin_vs_layer.by_basis.retestBar2`
+(mecha vela retest + anterior, 1m SHORT): E[R] 0.059 vs 0.02 del SL de
+3 capas, delta **0.04** CI90=[0.012,0.067] n=9561 (ayer n=8758, delta
+0.041 — prácticamente igual) — sigue certificando limpio, candidato de
+la revisión semanal junto con `retestBar` (ver `buy-retest.md` y
+`experiments.json`, experimento `sl-retest-wick-2026-09-03`). Huérfanos
+subieron a 61 (+4 desde ayer) — dentro de ruido normal, se vigila si
+sigue la tendencia al alza. Resto del bus sin cambios de fondo frente
+a ayer (Session Analyst: `GO` peor E[R]=-0.016 cruza cero, `AVOID`
+0.078 CI90=[0.035,0.118], `WAIT` 0.051 CI90=[0.039,0.063] — mismo
+orden, sin acción; scoreboard de predicciones sigue 0% de acierto de
+dirección n=6) — ver `buy-retest.md` para el detalle completo.
 
 ### Nota 2026-11-03
 Martes, dato nuevo chico en los seis TF SHORT (1m 11371→11755 +384,
