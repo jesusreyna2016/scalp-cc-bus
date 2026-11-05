@@ -3,7 +3,16 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-04 (miércoles) · n: 707)
+## Sección viva  (última revisión: 2026-11-05 (jueves) · n: 719)
+
+### Nota 2026-11-05
+Jueves, dato chico (1m 462→467 +5, 2m 168→173 +5, 3m 11→15 +4, 5m
+57→57 sin cambio, 15m 4→4 sin cambio, 29m 0→3 +3). `1m/INV/LONG` sigue
+certificando sin interrupción (`segment_significance`
+CI90=[0.035,0.234], n=452, E[R]=0.13, PF=1.3) — prácticamente igual a
+ayer. 2m/3m/5m/15m/29m siguen sin certificar (n insuficiente o CI90
+cruza cero). Sin anomalías nuevas. Veredicto sin cambio: EVITAR/monitoreo
+salvo `1m/INV/LONG`.
 
 ### Nota 2026-11-04
 Miércoles, dato casi nulo (1m 460→462 +2, 2m 168→168 sin cambio, 3m

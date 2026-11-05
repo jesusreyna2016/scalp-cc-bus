@@ -3,7 +3,37 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-04 (miércoles) · n: 30052)
+## Sección viva  (última revisión: 2026-11-05 (jueves) · n: 31034)
+
+### Nota 2026-11-05
+Jueves, dato nuevo chico y parejo en los seis TF LONG (1m 17320→17706
++386, 2m 7595→7765 +170, 3m 1249→1456 +207, 5m 3313→3430 +117, 15m
+403→468 +65, 29m 172→209 +37). Huérfanos 61→62 (+1, ruido normal).
+**Hallazgo más accionable de hoy**: en `sl_origin_vs_layer.since_change`
+(medición desde que `sl_basis_retest` se aplicó el 2026-09-26),
+`1m/RETEST/LONG` — el único de los 6 segmentos RETEST que seguía "al
+filo" cruzando cero — **vuelve a cruzar a positivo**: delta
+0.034 CI90=[0.003,0.065] (ayer delta=0.03 CI90=[-0.002,0.061], n
+7660→8003). Con esto los 6 de 6 segmentos RETEST (1m/2m/5m × LONG/SHORT)
+tienen `delta_beats_zero=true` en `since_change` simultáneamente, algo
+que ya pasó una vez (2026-10-20) y luego se revirtió en este mismo
+segmento — con ese historial de vaivén justo en el límite, se trata
+como "cruzó de nuevo, vigilar 2-3 lecturas más antes de llamarlo
+estable", no como confirmación definitiva. `29m/RETEST/LONG` sigue
+siendo el único segmento con el chequeo numérico agregado completo del
+gate (n=209, E[R]=0.28 CI90=[0.125,0.44] PF=1.65, `survives_fdr10=true`
+— ambos subieron de ayer: n 172→209, E[R] 0.227→0.28), pero
+`weeklyStable3` y `slCauseMitigated` siguen `false` (TF demasiado joven,
+sólo W44 cerrada) — no se sube de peldaño. A nivel de bus,
+`sl_origin_vs_layer.by_basis.retestBar` (medición paralela, no depende
+de fecha de cambio) sigue siendo el hallazgo más robusto: E[R] 0.158 vs
+0.048 del SL de 3 capas, delta 0.11 CI90=[0.091,0.129] n=33281 (ayer
+n=32083, delta 0.109) — consistente, un poco más fuerte con más muestra.
+Cruce con Session Analyst sin cambio de fondo: `AVOID` sigue rindiendo
+mejor que `GO` y `WAIT` a nivel de bus (ver `report.json.alerts`), no se
+toca el filtro. Scoreboard de predicciones sin cambios (0/6 aciertos de
+dirección, sin resultados nuevos que puntuar hoy) — mantener cautela con
+el hallazgo de arriba hasta que se sostenga.
 
 ### Nota 2026-11-04
 Miércoles, dato nuevo chico y parejo en los seis TF LONG (1m 17270→17320

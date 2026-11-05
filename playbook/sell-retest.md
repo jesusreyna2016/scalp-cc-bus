@@ -3,7 +3,32 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-04 (miércoles) · n: 21874)
+## Sección viva  (última revisión: 2026-11-05 (jueves) · n: 22380)
+
+### Nota 2026-11-05
+Jueves, dato nuevo chico en los seis TF SHORT (1m 12292→12472 +180,
+2m 5341→5405 +64, 3m 1140→1286 +146, 5m 2429→2486 +57, 15m 431→464
++33, 29m 241→267 +26). `29m/RETEST/SHORT` sigue certificando FDR
+(`segment_significance` CI90=[0.035,0.303] `survives_fdr10=true`,
+n=265, E[R]=0.165, PF=1.37) pero sigue por debajo de LONG (0.28 vs
+0.165), así que el gate del bus sigue apuntando a `29m/RETEST/LONG`
+(ver `buy-retest.md`). `sl_origin_vs_layer.since_change` en 29m SHORT
+se mueve ligeramente a la baja (delta 0.11→0.098, CI90=[-0.047,0.275]
+n=257, ayer n=235) y 3m SHORT igual (delta 0.046→0.017,
+CI90=[-0.066,0.1] n=1141, ayer n=1006) — ambos siguen al filo cruzando
+cero, dentro del ruido esperado para su tamaño de muestra, sin revertir
+ni certificar. A nivel de bus el hallazgo más fuerte sigue siendo
+`sl_origin_vs_layer.by_basis.retestBar2` (mecha vela retest + anterior,
+1m SHORT): E[R] 0.062 vs 0.021 del SL de 3 capas, delta **0.041**
+CI90=[0.014,0.068] n=9714 (ayer n=9561, delta 0.04) — estable, candidato
+de la revisión semanal junto con `retestBar` (ver `experiments.json`,
+experimento `sl-retest-wick-2026-09-03`). **Nota importante hoy**: en
+`since_change`, `1m/RETEST/LONG` (el hermano de este TF, no este
+segmento) volvió a cruzar a positivo tras estar al filo — ver el detalle
+completo en `buy-retest.md`, es el hallazgo más accionable del día para
+todo el bus RETEST. Huérfanos 61→62 (+1, ruido normal). Resto sin
+cambios de fondo (Session Analyst, scoreboard de predicciones) — ver
+`buy-retest.md` para el detalle compartido.
 
 ### Nota 2026-11-04
 Miércoles, dato nuevo chico en los seis TF SHORT (1m 11755→12292 +537,
