@@ -3,7 +3,35 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-05 (jueves) · n: 22380)
+## Sección viva  (última revisión: 2026-11-06 (viernes) · n: 23005)
+
+### Nota 2026-11-06
+Viernes, dato nuevo chico en los seis TF SHORT (1m 12472→12758 +286,
+2m 5405→5510 +105, 3m 1286→1418 +132, 5m 2486→2540 +54, 15m 464→491
++27, 29m 267→288 +21). Huérfanos 62→62 (sin cambio, sano).
+`29m/RETEST/SHORT` sigue certificando FDR (`segment_significance`
+CI90=[0.076,0.361] `survives_fdr10=true`, n=283, E[R]=0.214, PF=1.48)
+y sigue por debajo de LONG (0.342 vs 0.214), así que el gate del bus
+sigue apuntando a `29m/RETEST/LONG` (ver `buy-retest.md`).
+`sl_origin_vs_layer.since_change`: `29m/RETEST/SHORT` se mueve más al
+filo (delta 0.098→0.044, CI90=[-0.108,0.218] n=274, ayer n=257) — sigue
+sin revertir por debajo de cero, dentro del ruido esperado para su
+tamaño de muestra; `3m/RETEST/SHORT` en cambio se acerca a certificar
+(delta 0.017→0.082, CI90=[-0.017,0.189] n=1251, ayer n=1141) — el
+límite inferior ya casi no cruza cero, vigilar. A nivel de bus el
+hallazgo más fuerte sigue siendo `sl_origin_vs_layer.by_basis.retestBar2`
+(mecha vela retest + anterior, 1m SHORT): E[R] 0.065 vs 0.023 del SL de
+3 capas, delta **0.042** CI90=[0.015,0.07] n=9972 (ayer n=9714, delta
+0.041 → prácticamente igual, una confirmación más) — candidato de la revisión semanal
+junto con `retestBar` (ver `experiments.json`, experimento
+`sl-retest-wick-2026-09-03`). **Nota importante hoy**: en `since_change`,
+`1m/RETEST/LONG` (el hermano de este TF, no este segmento) **mantiene**
+por segundo día la certificación tras el cruce del jueves — ver el
+detalle completo en `buy-retest.md`, sigue siendo el hallazgo más
+accionable del día para todo el bus RETEST. Resto sin cambios de fondo
+(Session Analyst, scoreboard de predicciones, modo sombra: 3 semanas
+cerradas sin batir al crudo) — ver `buy-retest.md` para el detalle
+compartido.
 
 ### Nota 2026-11-05
 Jueves, dato nuevo chico en los seis TF SHORT (1m 12292→12472 +180,

@@ -3,7 +3,42 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-05 (jueves) · n: 31034)
+## Sección viva  (última revisión: 2026-11-06 (viernes) · n: 31718)
+
+### Nota 2026-11-06
+Viernes, dato nuevo chico y parejo en los seis TF LONG (1m 17706→17948
++242, 2m 7765→7905 +140, 3m 1456→1605 +149, 5m 3430→3494 +64, 15m
+468→525 +57, 29m 209→241 +32). Huérfanos 62→62 (sin cambio, sano).
+**Hallazgo más accionable de hoy**: `sl_origin_vs_layer.since_change`
+en `1m/RETEST/LONG` **mantiene** la certificación por segundo día
+consecutivo tras el cruce del jueves — delta=0.034 CI90=[0.004,0.064]
+(ayer delta=0.034 CI90=[0.003,0.065], n 8003→8193) — prácticamente
+plano, el límite inferior sigue muy cerca de cero pero no vuelve a
+cruzar. Con esto los 6 de 6 segmentos RETEST (1m/2m/5m × LONG/SHORT)
+siguen con `delta_beats_zero=true` simultáneamente por segunda lectura
+seguida; se mantiene el criterio de "vigilar 1-2 lecturas más antes de
+llamarlo estable" (ya se revirtió una vez el 2026-10-20 justo después
+de certificar). `29m/RETEST/LONG` sigue siendo el único segmento con
+el chequeo numérico agregado completo del gate y **se fortalece**: n
+209→241, E[R] 0.28→0.342, PF 1.65→1.78, `survives_fdr10=true`
+CI90=[0.154,0.561] (ayer [0.125,0.44]) — pero `weeklyStable3` y
+`slCauseMitigated` siguen `false` (sólo W44 cerrada, TF todavía
+demasiado joven para "3 semanas seguidas"), no se sube de peldaño. A
+nivel de bus, `sl_origin_vs_layer.by_basis.retestBar` sigue siendo el
+hallazgo más robusto y se fortalece ligeramente: E[R] 0.166 vs 0.052
+del SL de 3 capas, delta 0.115 CI90=[0.096,0.134] n=34155 (ayer
+n=33281, delta 0.11). Cruce con Session Analyst sin cambio de fondo:
+`GO` sigue siendo el peor veredicto a nivel de bus (E[R]=-0.003,
+CI90=[-0.032,0.026] cruza cero) frente a `AVOID` (0.093,
+CI90=[0.056,0.13]) y `WAIT` (0.058, CI90=[0.046,0.071]) — mismo orden
+que días previos, sin acción. Scoreboard de predicciones sin cambios
+(33.3% acierto de dirección, n=6 puntuados, MAE=0.257) — mantener
+cautela con cualquier "cambio de régimen" propio. Nota de método: el
+modo sombra (`shadow_rules`) lleva 3 semanas CERRADAS seguidas
+(2026-W42, W43, W44) sin batir al indicador crudo en E[R] — no implica
+bajar de peldaño (el peldaño 0→1 ya se promovió con otro criterio en
+2026-10-04), pero es señal para revisar `shadowRules` en la próxima
+revisión semanal (domingo).
 
 ### Nota 2026-11-05
 Jueves, dato nuevo chico y parejo en los seis TF LONG (1m 17320→17706

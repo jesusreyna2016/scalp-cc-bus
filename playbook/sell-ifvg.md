@@ -3,7 +3,17 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-05 (jueves) · n: 543)
+## Sección viva  (última revisión: 2026-11-06 (viernes) · n: 555)
+
+### Nota 2026-11-06
+Viernes, dato chico (1m 360→364 +4, 2m 131→134 +3, 3m 10→13 +3, 5m
+39→41 +2, 15m sin cambio en 1, 29m sin cambio en 2). `1m/INV/SHORT`
+**se afirma por tercer día**: el límite inferior del CI90 sube de
+0.019 a 0.026 (`segment_significance` CI90=[0.026,0.23], n=345,
+E[R]=0.127, PF=1.3; ayer CI90=[0.019,0.225] n=341, E[R]=0.122) —
+margen cada vez más claro. 2m/3m/5m/15m/29m siguen sin certificar.
+Huérfanos 62→62 (sin cambio, sano). Veredicto sin cambio de fondo:
+EVITAR/monitoreo, con `1m/INV/SHORT` para vigilar de cerca.
 
 ### Nota 2026-11-05
 Jueves, dato chico (1m 353→360 +7, 2m 130→131 +1, 3m 8→10 +2, 5m
