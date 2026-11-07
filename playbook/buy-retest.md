@@ -3,7 +3,47 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-06 (viernes) · n: 31718)
+## Sección viva  (última revisión: 2026-11-07 (sábado) · n: 32288)
+
+### Nota 2026-11-07
+Sábado, dato nuevo chico y parejo en los seis TF LONG (1m 17948→18124
++176, 2m 7905→7976 +71, 3m 1605→1785 +180, 5m 3494→3549 +55, 15m
+525→588 +63, 29m 241→266 +25). Huérfanos 62→62 (sin cambio, sano).
+**Hallazgo más accionable de hoy**: `sl_origin_vs_layer.since_change`
+sigue con los 6 de 6 segmentos RETEST (1m/2m/5m × LONG/SHORT) en
+`delta_beats_zero=true` simultáneamente, ya por tercer/cuarto día
+seguido — `1m/RETEST/LONG` (el que más tiempo estuvo al filo) se
+mantiene estable: delta 0.034→0.032 CI90=[0.003,0.061] (n 8193→8288),
+límite inferior sigue muy cerca de cero pero no vuelve a cruzar. Se
+mantiene el criterio de vigilar 1-2 lecturas más antes de llamarlo
+definitivamente estable (ya se revirtió una vez el 2026-10-20 justo
+después de certificar). `29m/RETEST/LONG` sigue siendo el único
+segmento con el chequeo numérico agregado completo del gate, pero se
+afloja un poco con la muestra nueva: n 241→266, E[R] 0.342→0.307, PF
+1.78→1.69, `survives_fdr10=true` CI90=[0.126,0.516] (ayer
+[0.154,0.561]) — sigue muy por encima de cero, no es una reversión,
+es ruido normal de muestra todavía chica. `weeklyStable3` y
+`slCauseMitigated` siguen `false` (sólo W44 cerrada), no se sube de
+peldaño. A nivel de bus, `sl_origin_vs_layer.by_basis.retestBar` sigue
+siendo el hallazgo más robusto y se fortalece ligeramente: E[R] 0.174
+vs 0.052 del SL de 3 capas, delta 0.122 CI90=[0.101,0.145] n=34858
+(ayer n=34155, delta 0.115). Cruce con Session Analyst sin cambio de
+fondo: `GO` sigue siendo el peor veredicto a nivel de bus (E[R]=-0.003,
+CI90=[-0.032,0.026] cruza cero) frente a `AVOID` (0.08,
+CI90=[0.045,0.117]) y `WAIT` (0.059, CI90=[0.047,0.072]) — mismo orden
+que días previos, sin acción. Scoreboard de predicciones sin cambios
+(33.3% acierto de dirección, n=6, MAE=0.256). Modo sombra sigue en 3
+semanas CERRADAS seguidas (2026-W42, W43, W44) sin batir al indicador
+crudo — revisar `shadowRules` en la revisión semanal de mañana
+domingo. **Nota operativa** (no afecta a los datos): el checkout local
+de este repo tenía `main` desalineado de `origin/main` tras otra
+reescritura de historial remota (squash: la raíz del historial pasó de
+2026-11-02 a 2026-11-06, 50 commits sin ancestro común con la rama
+local anterior) — se resincronizó con `git checkout -B main
+origin/main` antes de esta corrida; el árbol de trabajo estaba limpio
+(sin cambios propios pendientes), así que no hubo pérdida de contenido.
+Este mismo patrón ya ocurrió el 2026-11-04 (ver nota de esa fecha), así
+que parece mantenimiento periódico esperado del bus, no un incidente.
 
 ### Nota 2026-11-06
 Viernes, dato nuevo chico y parejo en los seis TF LONG (1m 17706→17948
