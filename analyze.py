@@ -845,11 +845,19 @@ def session_analyst_cross(pairs, sa_base):
             ks: {v: seg_metrics(rows) for v, rows in sorted(vd.items()) if len(rows) >= 5}
             for ks, vd in sorted(by_kind_side.items())
         },
+        "by_kind_side_ci90": {
+            ks: {v: bootstrap_er_ci(rows) for v, rows in sorted(vd.items()) if len(rows) >= 8}
+            for ks, vd in sorted(by_kind_side.items())
+        },
         "note": "join por (fecha, killzone->sesion SA asia/london/ny, simbolo); "
                 "'Sin KZ' no cruza (sin sesion SA equivalente); veredicto parseado del texto "
                 "libre del resumen SA (linea 'SYM: ...'), no de un campo estructurado; "
                 "by_verdict_ci90/avoid_vs_rest_ci90 = bootstrap 90% CI de E[R] (null si n<8); "
-                "by_kind_side = mismo cruce desglosado por kind/side (solo celdas con n>=5).",
+                "by_kind_side = mismo cruce desglosado por kind/side (solo celdas con n>=5); "
+                "by_kind_side_ci90 = bootstrap 90% CI de E[R] por celda kind/side x veredicto "
+                "(solo celdas con n>=8, null si bootstrap_er_ci no puede calcular) -- agregado "
+                "2026-11-08 porque los playbooks venian recalculando esto a mano cada corrida "
+                "sin poder citar un CI90 propio del corte cruzado.",
     }
 
 # ============================================================ MODO SOMBRA

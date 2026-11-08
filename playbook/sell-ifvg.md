@@ -3,7 +3,26 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-07 (sábado) · n: 568)
+## Sección viva  (última revisión: 2026-11-08 (domingo, revisión semanal) · n: 568)
+
+### Nota 2026-11-08 (domingo, REVISIÓN SEMANAL 2026-week-45)
+Dato nuevo mínimo (sin cambio en los seis TF). Huérfanos estable en
+62. `1m/INV/SHORT` sigue certificando sin interrupción
+(`segment_significance` CI90=[0.027,0.228] n=353 E[R]=0.131 PF=1.31),
+quinto día consecutivo con margen estable. Se actualizan hoy las
+tablas de "Veredicto global"/"Reglas condicionales" de esta sección,
+que habían quedado desactualizadas frente a las notas diarias
+(reflejan ahora los mismos números que las notas recientes ya
+documentaban). Mejora de método compartida con los otros tres
+playbooks: se agregó `by_kind_side_ci90` a `session_analyst_cross()`
+en `analyze.py` — con intervalo real, `INV/SHORT` confirma: `WAIT`
+certifica positivo (E[R]=**0.142** CI90=[0.033,0.258] n=307,
+p_mean_le_0=0.013); `GO` (E[R]=0.123 CI90=[-0.122,0.362] n=30) y
+`AVOID` (E[R]=-0.059 CI90=[-0.303,0.189] n=44) no certifican, ambos
+con n todavía chico. El orden puntual (`GO > WAIT >> AVOID`) que este
+playbook documentaba sin CI90 se mantiene en el punto estimado, pero
+sólo `WAIT` tiene ventaja estadísticamente real hoy. Sin cambio de
+veredicto: EVITAR/monitoreo, con `1m/INV/SHORT` para vigilar de cerca.
 
 ### Nota 2026-11-07
 Sábado, dato chico (1m 364→372 +8, 2m 134→136 +2, 3m 13→16 +3, 5m
@@ -185,66 +204,69 @@ sombra) son específicas de `kind=RETEST` y no aplican a este playbook.
 Ningún candidato con n≥20 para proponer cambio de input.
 
 ### Veredicto global
-1m n=329 WR 46.5% E[R]=**0.084** PF=1.2 (sube); 2m n=120 WR 49.2%
-E[R]=**0.124** PF=1.3 (estable); 5m n=32 WR 46.9% E[R]=**0.201** PF=1.46
-(sube con +2 pares, n sigue chico). 3m n=5 — PF=99 artefacto de cero
-pérdidas en 5 trades, no leer como real. NUEVO: 15m n=1 — testimonial.
-`segment_significance`: 1m CI90=[-0.024,0.185] n=310 (sigue sin
-certificar); 2m CI90=[-0.065,0.329] n=116 (sin certificar); 5m
-CI90=[-0.204,0.59] n=30 (sin certificar) — ningún TF de este playbook
-certifica FDR, sin cambio de fondo; sigue siendo el único playbook de
-los cuatro sin un solo segmento con edge confirmado. `sl_origin_vs_layer.
-since_change` (ventana post-2026-09-26 del experimento `sl_basis_retest`,
-medición paralela, NO aplicado en INV): `1m/INV/SHORT` sigue sin
-certificar en ninguna dirección (delta=**-0.164** CI90=[-0.396,0.066]
-n=148, cruza cero) — mismo estado que ayer (perdió la certificación
-negativa que sostenía desde el 10-26), n cambia un poco por exclusión
-de geometría inválida, no por reversión real. Sigue sin evidencia de
-que el SL-mecha ayude en INV tampoco, así que la recomendación de no
-extender `sl-retest-wick` a `kind=INV` no cambia.
+**1m n=353 WR 46.7% E[R]=**0.131** PF=1.31 — certifica FDR (ver
+abajo), el único TF de este playbook con edge estadístico real**; 2m
+n=136 WR 48.5% E[R]=**0.097** PF=1.23; 5m n=41 WR 48.8% E[R]=**0.127**
+PF=1.29; 3m n=16 WR 81.2% E[R]=**0.187** PF=2.0 (WR alto con n chico,
+no leer como real); 15m n=1, 29m n=2 — testimoniales. `segment_
+significance`: **1m CI90=[0.027,0.228] n=353 `survives_fdr10=true`**
+(certifica con margen estable, quinto día consecutivo — ver Nota de
+hoy); 2m CI90=[-0.08,0.274] n=132 (sin certificar); 5m
+CI90=[-0.175,0.448] n=39 (sin certificar); 3m CI90=[-0.074,0.417]
+n=16 (muy chico). `sl_origin_vs_layer.since_change` (ventana
+post-2026-09-26 del experimento `sl_basis_retest`, medición paralela,
+NO aplicado en INV): `1m/INV/SHORT` sigue sin certificar en ninguna
+dirección (delta=**-0.067** CI90=[-0.352,0.245] n=182, cruza cero) —
+sin evidencia de que el SL-mecha ayude en INV, la recomendación de no
+extender `sl-retest-wick` a `kind=INV` no cambia (ver revisión
+semanal `reviews/2026-week-45.md`, donde sí se formaliza para RETEST).
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
-Sin n suficiente todavía para certificar en ninguna rama:
 
-| # | SI | ENTONCES (hipótesis, sin confirmar) | n | efecto | confianza |
+| # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m`/`2m`/`5m` | ninguno certifica FDR hoy | 310/116/30 | E[R] 0.084/0.124/0.201, todos CI90 cruzan cero | baja |
-| 2 | símbolo (`cross_instrument`) | los tres TF `instrument-specific` — NO generalizar | — | sin veredicto único | baja |
-| 3 | mover SL a mecha del retest en INV (`sl_basis_retest`, medición paralela) | **NO proponer** — sigue sin certificar en ninguna dirección | 148 (1m) | delta -0.164 CI90=[-0.396,0.066] (cruza cero) | baja |
+| 1 | `tf=1m` (`survives_fdr10=true`) | **TOMAR con cautela — único segmento de este playbook con edge estadístico real** | 353 | E[R]=**0.131** CI90=[0.027,0.228] | moderada — quinto día consecutivo certificando |
+| 2 | `tf=2m`/`5m`/`3m` | ninguno certifica FDR hoy | 132/39/16 | E[R] 0.097/0.127/0.187, todos CI90 cruzan cero | baja |
+| 3 | símbolo (`cross_instrument`) | sin revisión fina hoy | — | sin veredicto único | baja |
+| 4 | mover SL a mecha del retest en INV (`sl_basis_retest`, medición paralela) | **NO proponer** — sigue sin certificar en ninguna dirección | 182 (1m) | delta -0.067 CI90=[-0.352,0.245] (cruza cero) | baja |
+| 5 | `sa_verdict=WAIT` (Session Analyst, INV/SHORT) | **certifica positivo con CI90 propio hoy** — `GO`/`AVOID` siguen sin certificar por n chico (ver Nota 2026-11-08) | 307 | E[R]=**0.142** CI90=[0.033,0.258] | moderada |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
 
 ### Gestión
-- **Escalera + parciales (`managed_vs_naive`)**: 1m n=310
-  delta=**+0.189** (la gestión sigue ayudando mucho más que en
+- **Escalera + parciales (`managed_vs_naive`)**: 1m n=353
+  delta=**+0.17** (la gestión sigue ayudando mucho más que en
   cualquier otro segmento del bus, sobre E[R] base cercano a cero); 2m
-  n=116 delta=**+0.153**; 5m n=30 delta=**+0.093**; 3m n=5
-  delta=-0.185 (demasiado chico, no pesa). Sin cambio de regla.
+  n=132 delta=**+0.146**; 5m n=39 delta=**+0.064**; 3m n=16
+  delta=+0.031 (muestra chica, no pesa mucho). Sin cambio de regla.
 - **SL de 3 capas vs SL = vela 1 del FVG**: ver Veredicto global — sigue
   sin certificar en ninguna dirección en 1m, no proponer.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
-- Autopsia de SL (n=190, INV/SHORT, bus completo): `RR-bajo` 82/190
-  (43.2%) causa dominante, `contra-estructura` 57/190 (30.0%) segundo,
-  `estirado` 41/190 (21.6%) y `stop-en-el-minimo` 41/190 (21.6%)
-  empatados en tercero — sin cambio de orden relevante.
+- Autopsia de SL (n=218, INV/SHORT, bus completo): `RR-bajo` 94/218
+  (43.1%) causa dominante, `contra-estructura` 64/218 (29.4%)
+  segundo, `stop-en-el-minimo` 45/218 (20.6%) y `estirado` 43/218
+  (19.7%) de cerca — sin cambio de orden relevante.
 - **Decaimiento**: muestra todavía insuficiente por semana para una
   lectura propia de este TF/kind/side; no hay alerta de decaimiento
   automática para este segmento hoy.
 
 ### Cruce con Session Analyst
-`session_analyst_cross.by_kind_side`: `AVOID` n=37 (+5) E[R]=**-0.271**
-WR35.1% (sigue siendo la caída más fuerte de los cuatro playbooks de
-este bus, confirma la hipótesis "AVOID rinde peor" de forma muy clara
-para este lado específico); `GO` n=30 (sin pares nuevos hoy) E[R]=**0.208**
-WR60.0% (sigue el más alto); `WAIT` n=213 (+16) E[R]=**0.127** WR49.8%
-(baja un poco de 0.137). Orden GO > WAIT >> AVOID sin cambio — sigue
-siendo la lectura por side más alineada con la hipótesis original de
-todo el bus (contraste con `sell-retest.md`/`buy-retest.md`, donde el
-bus completo RETEST ahora muestra a WAIT como el único verdict
-significativo — ver esos playbooks para esa lectura agregada).
+**Con `by_kind_side_ci90` (nuevo en `analyze.py`, ver Nota 2026-11-08):**
+`AVOID` n=44 E[R]=**-0.059** CI90=[-0.303,0.189] (no certifica, n
+chico, ya no es la caída tan marcada de lecturas previas); `GO` n=30
+E[R]=**0.123** CI90=[-0.122,0.362] (no certifica, n chico); `WAIT`
+n=307 E[R]=**0.142** CI90=[0.033,0.258] (certifica, p_mean_le_0=0.013
+— la única rama con ventaja estadísticamente real hoy). El orden
+puntual (`GO > WAIT >> AVOID`) se mantiene pero, con el intervalo de
+confianza ya calculado, sólo `WAIT` tiene evidencia real — las lecturas
+anteriores de `AVOID` muy negativo se apoyaban en puntos estimados sin
+CI90 propio. Contraste con `sell-retest.md`/`buy-retest.md`: en
+RETEST, hoy `AVOID` y `WAIT` certifican y `GO` no (ver revisión
+semanal) — el veredicto SA se comporta distinto en INV que en RETEST,
+no se generaliza entre `kind`.
 
 ### Decaimiento
 Sin alerta formal — muestra insuficiente por semana para este TF/kind/
