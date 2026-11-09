@@ -3,7 +3,41 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-08 (domingo, revisión semanal) · n: 32387)
+## Sección viva  (última revisión: 2026-11-09 · n: 32573)
+
+### Nota 2026-11-09
+Dato nuevo moderado tras el cierre del domingo/lunes (1m 18127→18158,
+2m 7977→7991, 3m 1788→1815, 5m 3614→3693, 15m 605→626, 29m 276→290;
++186 en total). Huérfanos estable en 63 (sano, sin tendencia al alza).
+**`sl_origin_vs_layer.since_change` no se revierte**: los 8/12
+segmentos RETEST que certificaban ayer siguen certificando hoy con
+números prácticamente idénticos (1m LONG delta=0.038
+CI90=[0.007,0.067] n=8316, antes 0.032/n=8288; 2m LONG delta=0.07
+CI90=[0.032,0.11] n=4132; 3m LONG delta=0.249 CI90=[0.169,0.332]
+n=1565; 5m LONG delta=0.498 CI90=[0.167,1.065] n=2333; 15m LONG
+delta=0.74 CI90=[0.366,1.162] n=586) — `29m/RETEST/LONG` sigue sin
+certificar en esta métrica (delta=0.368 CI90=[**-0.005**,0.828] n=271,
+al filo de cero, no es de los 8 confirmados). **Gate**: `2026-W45`
+cerró formalmente con `ok=true` (WR=51.8%, PF=2.04) — es la PRIMERA
+semana cerrada que cumple el estándar en `29m/RETEST/LONG`; faltan 2
+semanas seguidas más para `weeklyStable3` (W43 sin dato suficiente,
+W44 `ok=false` por PF=1.29<1.3). No se sube de peldaño. **Modo
+sombra**: el alerta de `report.alerts` de "3 semanas cerradas sin
+batir al indicador crudo" (W43-W45) tiene explicación mecánica, no es
+una señal de que el sistema empeoró: `shadow_rules` v4 (desde
+2026-11-01) excluye 15m y 29m del conjunto sombra porque todavía no
+cumplen el estándar de inclusión (FDR + `cross_instrument` universal +
+semanas ISO cerradas), y esos dos TF son justamente los que hoy rinden
+mejor (`29m/RETEST/LONG` E[R]=0.308, el más alto del bus) — el
+indicador crudo se beneficia de incluirlos y la sombra no. Revisar en
+`reviews/2026-week-46.md` (domingo 2026-11-15) si alguno de los dos ya
+cumple el estándar para pasar a v5. **SL post-mortem**: `chop` saltó a
+36% de las pérdidas en lo que va de `2026-W46` (vs 14.7% de media en
+W43-W45) pero la semana apenas tiene `n_losses=50` — probable ruido de
+muestra chica, no se declara causa dominante nueva todavía, se vigila
+mañana con más datos. Resto de hallazgos (escalera gestionada +0.063
+sobre ingenua, contra-sesgo rinde mejor que alineado, Session Analyst
+AVOID/WAIT por encima de GO) sin cambio frente a ayer.
 
 ### Nota 2026-11-08 (domingo, REVISIÓN SEMANAL 2026-week-45)
 Dato nuevo chico en los seis TF LONG tras el cierre de ayer (1m

@@ -3,7 +3,33 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-08 (domingo, revisión semanal) · n: 23868)
+## Sección viva  (última revisión: 2026-11-09 · n: 24077)
+
+### Nota 2026-11-09
+Dato nuevo moderado (1m 13100→13142, 2m 5620→5642, 3m 1580→1601, 5m
+2697→2774, 15m 554→589, 29m 320→329; +209 en total). Huérfanos
+estable en 63. **`sl_origin_vs_layer.since_change`** sin reversión:
+los 3 TF SHORT clásicos confirmados ayer siguen confirmando (1m
+delta=0.045 CI90=[0.013,0.079] n=7144; 2m delta=0.077
+CI90=[0.028,0.124] n=3219; 5m delta=0.394 CI90=[0.18,0.668] n=1845);
+3m/15m/29m SHORT siguen sin certificar (CI90 cruza cero en los tres),
+misma asimetría LONG/SHORT que viene documentándose, no es nueva.
+**Gate**: comparte con `buy-retest.md` — `29m/RETEST/LONG` sigue
+siendo el segmento objetivo del gate (E[R] histórico más alto); `W45`
+cerró con `ok=true`, primera semana cerrada que cumple el estándar,
+faltan 2 más para `weeklyStable3`. `29m/RETEST/SHORT` sigue cumpliendo
+el chequeo agregado por su cuenta (n=329, E[R]=0.203) pero no es el
+`best` del gate hoy. **Modo sombra**: mismo alerta que `buy-retest.md`
+— 3 semanas cerradas (W43-W45) sin batir al crudo, explicado por la
+exclusión de 15m/29m en `shadow_rules` v4, no por degradación real; se
+revisa el domingo 2026-11-15 si alguno de los dos TF ya califica para
+v5. **SL post-mortem**: `chop` subió a 36% en la semana parcial W46
+(n_losses=50, muestra muy chica, se vigila sin declarar causa
+dominante nueva). `15m/RETEST/SHORT` sigue siendo `instrument-specific`
+en `cross_instrument` (spread 0.52, todos los símbolos con E[R]
+positivo salvo ETHUSDT ligeramente negativo [-0.042, n=120]) — no se
+generaliza como regla universal. Resto sin cambio frente a ayer (Session Analyst AVOID/WAIT
+por encima de GO en SHORT también).
 
 ### Nota 2026-11-08 (domingo, REVISIÓN SEMANAL 2026-week-45)
 Dato nuevo chico en los seis TF SHORT (1m 12989→13100 +111, 2m

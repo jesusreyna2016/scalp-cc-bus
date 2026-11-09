@@ -3,7 +3,14 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-08 (domingo, revisión semanal) · n: 568)
+## Sección viva  (última revisión: 2026-11-09 · n: 574)
+
+### Nota 2026-11-09
+Dato nuevo mínimo (n total 568→574). Huérfanos estable en 63.
+`1m/INV/SHORT` sigue certificando sin interrupción
+(`segment_significance` CI90=[0.031,0.224] n=356 E[R]=0.13), sin
+cambio de fondo frente a ayer. Nada nuevo que reportar en esta señal
+(prioridad 2, monitoreo).
 
 ### Nota 2026-11-08 (domingo, REVISIÓN SEMANAL 2026-week-45)
 Dato nuevo mínimo (sin cambio en los seis TF). Huérfanos estable en
