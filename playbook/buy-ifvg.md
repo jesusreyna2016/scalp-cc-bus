@@ -3,7 +3,17 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-09 · n: 743)
+## Sección viva  (última revisión: 2026-11-10 · n: 762)
+
+### Nota 2026-11-10
+Dato nuevo mínimo (n total 743→762, +19). Huérfanos estable en 63.
+`1m/INV/LONG` sigue certificando sin interrupción
+(`segment_significance` CI90=[0.018,0.215] n=477 E[R]=0.114), sin
+cambio de fondo. `candle1` (SL=vela 1 del FVG en INV, el candidato
+análogo a `retestBar` en RETEST) sigue sin certificar y con lectura
+ruidosa (n=1094, CI90=[-0.073,5.489], cola gorda por SL estructural
+muy ajustado) — no cambia su tratamiento de no-propuesta. Nada nuevo
+que reportar en esta señal (prioridad 2, monitoreo).
 
 ### Nota 2026-11-09
 Dato nuevo mínimo (n total 742→743). Huérfanos estable en 63.
