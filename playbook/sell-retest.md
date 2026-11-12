@@ -3,7 +3,29 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-11 · n: 25324)
+## Sección viva  (última revisión: 2026-11-12 · n: 25858)
+
+### Nota 2026-11-12
+Dato nuevo chico en SHORT (1m 13562→13696 +134, 2m 5833→5884 +51, 3m
+1921→2062 +141, 5m 2925→3007 +82, 15m 709→769 +60, 29m 388→440 +52; +520).
+Seis TF SHORT siguen `survives_fdr10=true`. **Hallazgo del día:
+`29m/RETEST/SHORT` certifica por PRIMERA VEZ en
+`sl_origin_vs_layer.since_change`**: delta=+0.134 CI90=[**0.019**,0.265] n=407
+(ayer [-0.003,0.274] n=361). Con esto 11/12 segmentos RETEST certifican; sólo
+falta `15m/RETEST/SHORT` (0.114 [-0.023,0.277] n=697, empeoró su límite
+inferior frente a ayer -0.013). Primera lectura: tratar como a confirmar 2-3
+lecturas más. 3m SHORT confirma su segunda lectura (0.11 [0.034,0.19]
+n=1786). `retestBar2` (1m SHORT, bus) 0.064 vs 0.029, delta 0.035
+CI90=[0.007,0.062] n=10755 — sigue positivo pero el límite inferior se va
+estrechando lectura a lectura (0.012→0.008→0.007), vigilar. **Asimetría W46
+(en curso)**: mientras LONG está fuerte en todos los TF, SHORT se debilita en
+los TF altos — 3m PF1.01, 5m PF1.00, 15m PF1.15, 29m PF1.26 (WR 47-49%); sólo
+1m (PF1.34) y 2m (PF1.08) aguantan. No es caída >15 pts de WR (no dispara
+decay), pero si W46 cierra así, revisar el domingo si es régimen alcista de la
+semana (coherente con SA) o deterioro real del lado corto. **SL post-mortem
+W46 RETEST/SHORT** (n_losses=857): `stop-en-el-minimo` 47%, `contra-estructura`
+41%, `RR-bajo` 41%, `contra-sesgo` 30% — `contra-sesgo` más alto que en LONG
+(13%), consistente con la semana alcista. Sin cambio de reglas.
 
 ### Nota 2026-11-11
 Dato nuevo moderado (1m 13358→13560 +202, 2m 5733→5832 +99, 3m
@@ -647,6 +669,7 @@ la semana, próxima revisión semanal domingo 2026-11-15
 (`reviews/2026-week-46.md`).
 
 ## Histórico de cambios
+- 2026-11-12: nota diaria añadida (n=25858); sin cambio de reglas.
 - 2026-10-31 (sábado): dato nuevo en los seis TF SHORT (1m+435, 2m+171,
   3m+115, 5m+101, 15m+29, 29m+12). **El gate de ejecución apunta por
   primera vez a un segmento SHORT**: `29m/RETEST/SHORT` (n=161,

@@ -3,7 +3,33 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-11 · n: 34140)
+## Sección viva  (última revisión: 2026-11-12 · n: 35379)
+
+### Nota 2026-11-12
+Dato nuevo moderado (1m 18741→19267 +526, 2m 8269→8484 +215, 3m 2184→2355
++171, 5m 3910→4123 +213, 15m 710→780 +70, 29m 343→370 +27; +1222 LONG en
+total, más que ayer). Huérfanos estable en 63. Los seis TF LONG siguen
+`survives_fdr10=true`; `15m/RETEST/LONG` se recupera de su lectura frágil de
+ayer (CI90 [0.002,0.192] → [**0.038**,0.218], n=750). **Hallazgo del día:
+`29m/RETEST/LONG` (segmento del gate) tiene su TERCERA lectura consecutiva
+certificando en `sl_origin_vs_layer.since_change`**: delta=**+0.402**
+CI90=[**0.106**,0.771] n=344 (ayer [0.041,0.764] n=318, antier [0.009,0.783]).
+Límite inferior sube por tercer día seguido — cumple la política de "2-3
+lecturas seguidas"; se trata ya como estable en la medición paralela. Sigue
+SIN cambiar `slCauseMitigated` del gate (depende del verdict mecánico de
+`eval_experiments()`, `flat` por el mismatch de métrica permanente). Bus:
+11/12 segmentos RETEST certifican (ver `sell-retest.md`: 29m SHORT certifica
+hoy). Resto LONG since_change: 1m 0.045 [0.016,0.073] n=9217; 2m 0.068
+[0.03,0.104] n=4557; 3m 0.236 [0.166,0.309] n=2046; 5m 0.459 [0.169,0.949]
+n=2710; 15m 0.726 [0.411,1.076] n=730. **W46 en curso** (sin cerrar) fuerte en
+los seis TF LONG: 29m WR59.3% PF2.10, 5m PF1.58, 15m PF1.59, 3m PF1.43, 2m
+PF1.39, 1m PF1.27 — si W46 cierra con WR>=50 y PF>=1.3 en 29m LONG, el
+`weeklyStable3` del gate sigue fallando sólo porque W44 cerró con PF=1.29 (al
+filo); necesita W47 también. **SL post-mortem W46 RETEST/LONG** (n_losses=1240):
+`stop-en-el-minimo` 43%, `RR-bajo` 40%, `contra-estructura` 39%,
+`killzone-Asia-largo` 38% — sin causa nueva, mismo orden que W44-W45.
+Modelo P(TP1): `rr1` sigue siendo el único peso grande (-1.24, a más RR1
+pedido menos prob. de TP1, coherente), Brier 0.222. Sin cambio de reglas.
 
 ### Nota 2026-11-11
 Dato nuevo moderado tras el cierre de ayer (1m 18573→18737 +164, 2m
@@ -820,6 +846,7 @@ de los doce segmentos RETEST en `reviews/2026-week-45.md` (próxima
 revisión semanal: domingo 2026-11-15, `reviews/2026-week-46.md`).
 
 ## Histórico de cambios
+- 2026-11-12: nota diaria añadida (n=35379); sin cambio de reglas.
 - 2026-10-31 (sábado): corrida normal, dato nuevo parejo en los seis TF
   LONG (+152/+49/+129/+75/+52/+24 en 1m/2m/3m/5m/15m/29m). **Corrección
   de matiz al hallazgo de ayer**: el patrón global "aligned=0 rinde

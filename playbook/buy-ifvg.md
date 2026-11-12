@@ -3,7 +3,10 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-11 · n: 779)
+## Sección viva  (última revisión: 2026-11-12 · n: 817)
+
+### Nota 2026-11-12
+Dato nuevo chico; sin cambio de fondo. Segmento INV sigue con muestra baja por TF (salvo 1m), no hay propuestas. `candle1` sigue sin certificar en `sl_origin_vs_layer`.
 
 ### Nota 2026-11-11
 Dato nuevo mínimo (n total 762→779, +17). Huérfanos estable en 63.
@@ -305,6 +308,7 @@ confianza; ningún TF cae >15pts de WR vs el promedio de las 3 semanas
 previas con muestra suficiente.
 
 ## Histórico de cambios
+- 2026-11-12: nota diaria añadida (n=817); sin cambio de reglas.
 - 2026-10-31 (sábado): dato nuevo chico (+14 en total: 1m+11, 5m+2,
   3m+3, 15m+1, 2m sin cambio). `1m/INV/LONG` sigue siendo el único
   segmento certificando `survives_fdr10=true` (n=437). `candle1`

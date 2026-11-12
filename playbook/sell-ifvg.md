@@ -3,7 +3,10 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-11 · n: 592)
+## Sección viva  (última revisión: 2026-11-12 · n: 604)
+
+### Nota 2026-11-12
+Dato nuevo chico; sin cambio de fondo. Segmento INV sigue con muestra baja por TF (salvo 1m), no hay propuestas. `candle1` sigue sin certificar en `sl_origin_vs_layer`.
 
 ### Nota 2026-11-11
 Dato nuevo mínimo (n total 581→592, +11). Huérfanos estable en 63.
@@ -559,6 +562,7 @@ side (ver "Contextos a evitar" arriba).
   (`file_integrity_check` limpio); vigilar si se repite.
 
 ## Histórico de cambios
+- 2026-11-12: nota diaria añadida (n=604); sin cambio de reglas.
 - 2026-09-23 (miércoles): dato nuevo chico (+9), sin hallazgos nuevos
   de fondo. Todas las ramas de Session Analyst empeoran un poco (AVOID
   y WAIT ambas más negativas) pero sin significancia — sigue siendo el
