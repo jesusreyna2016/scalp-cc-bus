@@ -3,7 +3,25 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-12 · n: 35379)
+## Sección viva  (última revisión: 2026-11-13 · n: 36406)
+
+### Nota 2026-11-13
+Dato nuevo moderado (1m 19267→19661 +394, 2m 8484→8686 +202, 3m 2355→2555
++200, 5m 4123→4263 +140, 15m 780→837 +57, 29m 370→404 +34; +1027 LONG).
+Huérfanos estable en 63. `since_change` (SL mecha del retest vs 3 capas):
+los seis TF LONG siguen certificando — 1m 0.038 [0.012,0.068] n=9541; 2m
+0.064 [0.028,0.101] n=4745; 3m 0.242 [0.172,0.31] n=2227; 5m 0.456
+[0.174,0.923] n=2838; 15m **1.461** [0.634,2.535] n=784 (salto desde 0.726
+ayer con sólo +54 pares = cola gorda de uno o pocos ganadores grandes, no
+mejora real; no se cita como efecto); **29m (gate) 0.483 [0.182,0.834]
+n=375, cuarta lectura seguida certificando, límite inferior sube otra vez
+(0.106→0.182)**. W46 (en curso) sigue sólido: 29m WR60% PF2.28 n=115, 5m
+PF1.49, 15m PF1.46, 3m PF1.39, 2m PF1.33, 1m PF1.28. Gate sin cambio:
+`readyForLive=true`, `fullyReady=false` (W44 PF 1.29 al filo; necesita
+que W46 y W47 cierren ok). SL post-mortem W46: `stop-en-el-minimo` sigue
+como causa dominante del bus (1241/2876 pérdidas), sin causa nueva.
+Modelo: `rr1` -1.24 sigue siendo el único peso grande; calibración
+subestima arriba (decil 9 pred 0.65 vs real 0.755). Sin cambio de reglas.
 
 ### Nota 2026-11-12
 Dato nuevo moderado (1m 18741→19267 +526, 2m 8269→8484 +215, 3m 2184→2355
@@ -846,6 +864,7 @@ de los doce segmentos RETEST en `reviews/2026-week-45.md` (próxima
 revisión semanal: domingo 2026-11-15, `reviews/2026-week-46.md`).
 
 ## Histórico de cambios
+- 2026-11-13: nota diaria añadida; sin cambio de reglas.
 - 2026-11-12: nota diaria añadida (n=35379); sin cambio de reglas.
 - 2026-10-31 (sábado): corrida normal, dato nuevo parejo en los seis TF
   LONG (+152/+49/+129/+75/+52/+24 en 1m/2m/3m/5m/15m/29m). **Corrección

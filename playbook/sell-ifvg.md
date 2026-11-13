@@ -3,7 +3,14 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-12 · n: 604)
+## Sección viva  (última revisión: 2026-11-13 · n: 620)
+
+### Nota 2026-11-13
+Muestra chica (1m 403, 2m 145, 5m 45). La alerta de `candle1`
+"certificando" la produce 5m/INV/SHORT (n=29, delta 68.7 por un
+outlier, CI90 [-0.607,206.6]) — ruido de cola gorda, no señal. 2m/INV/SHORT
+since_change sigue con delta negativo (-0.233 [-0.456,0.012], n=80),
+cerca de cruzar a "peor"; vigilar. Sin cambio de reglas.
 
 ### Nota 2026-11-12
 Dato nuevo chico; sin cambio de fondo. Segmento INV sigue con muestra baja por TF (salvo 1m), no hay propuestas. `candle1` sigue sin certificar en `sl_origin_vs_layer`.
@@ -562,6 +569,7 @@ side (ver "Contextos a evitar" arriba).
   (`file_integrity_check` limpio); vigilar si se repite.
 
 ## Histórico de cambios
+- 2026-11-13: nota diaria añadida; sin cambio de reglas.
 - 2026-11-12: nota diaria añadida (n=604); sin cambio de reglas.
 - 2026-09-23 (miércoles): dato nuevo chico (+9), sin hallazgos nuevos
   de fondo. Todas las ramas de Session Analyst empeoran un poco (AVOID

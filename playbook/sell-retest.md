@@ -3,7 +3,21 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-12 · n: 25858)
+## Sección viva  (última revisión: 2026-11-13 · n: 26453)
+
+### Nota 2026-11-13
+Dato nuevo moderado (1m 13696→13931 +235, 2m 5884→5985 +101, 3m
+2062→2218 +156, 5m 3007→3072 +65, 15m 769→792 +23, 29m 440→455 +15;
++595 SHORT). `since_change`: 11/12 RETEST siguen certificando; 29m SHORT
+segunda lectura (0.149 [0.034,0.276] n=420, ayer [0.019,0.265]); 3m
+SHORT 0.131 [0.057,0.211] n=1917 se afianza; 1m SHORT 0.037
+[**0.006**,0.068] n=7789 — límite inferior sigue estrechándose, vigilar;
+15m SHORT sigue sin certificar (0.12 [-0.015,0.28] n=718). **Atención
+W46 (en curso)**: el lado SHORT rinde claramente peor que el LONG en
+TF intermedios — 2m PF1.05, 3m PF1.04, 5m PF1.08 (vs LONG 1.33/1.39/1.49).
+No es decaimiento formal (semana sin cerrar, sin alerta del script) pero
+si W46 cierra así, 3m/5m SHORT serían candidatos a alerta de decaimiento.
+Sin cambio de reglas.
 
 ### Nota 2026-11-12
 Dato nuevo chico en SHORT (1m 13562→13696 +134, 2m 5833→5884 +51, 3m
@@ -669,6 +683,7 @@ la semana, próxima revisión semanal domingo 2026-11-15
 (`reviews/2026-week-46.md`).
 
 ## Histórico de cambios
+- 2026-11-13: nota diaria añadida; sin cambio de reglas.
 - 2026-11-12: nota diaria añadida (n=25858); sin cambio de reglas.
 - 2026-10-31 (sábado): dato nuevo en los seis TF SHORT (1m+435, 2m+171,
   3m+115, 5m+101, 15m+29, 29m+12). **El gate de ejecución apunta por

@@ -1,71 +1,71 @@
 {
   "schema": "exit-baseline-1",
-  "generatedAt": "2026-11-12T02:26:51.655938+00:00",
+  "generatedAt": "2026-11-13T02:21:33.812164+00:00",
   "source": "scalp-cc-bus outcomes, all kinds and TFs",
   "bySymbol": {
     "ALL": {
-      "n": 62658,
+      "n": 64311,
       "hit1R": 0.337,
       "stoppedOut": 0.463,
-      "slWasGreenHalfRFirst": 0.303,
+      "slWasGreenHalfRFirst": 0.302,
       "slWasGreen1RFirst": 0.121,
-      "reachedTP2": 0.059
+      "reachedTP2": 0.06
     },
     "BTCUSDT": {
-      "n": 1507,
-      "hit1R": 0.358,
-      "stoppedOut": 0.456,
-      "slWasGreenHalfRFirst": 0.172,
-      "slWasGreen1RFirst": 0.077,
-      "reachedTP2": 0.19
+      "n": 1563,
+      "hit1R": 0.355,
+      "stoppedOut": 0.455,
+      "slWasGreenHalfRFirst": 0.169,
+      "slWasGreen1RFirst": 0.076,
+      "reachedTP2": 0.191
     },
     "CL": {
-      "n": 11295,
-      "hit1R": 0.334,
-      "stoppedOut": 0.463,
-      "slWasGreenHalfRFirst": 0.303,
-      "slWasGreen1RFirst": 0.123,
-      "reachedTP2": 0.056
+      "n": 11624,
+      "hit1R": 0.335,
+      "stoppedOut": 0.461,
+      "slWasGreenHalfRFirst": 0.301,
+      "slWasGreen1RFirst": 0.122,
+      "reachedTP2": 0.057
     },
     "ES": {
-      "n": 12128,
+      "n": 12372,
       "hit1R": 0.318,
       "stoppedOut": 0.464,
-      "slWasGreenHalfRFirst": 0.315,
+      "slWasGreenHalfRFirst": 0.316,
       "slWasGreen1RFirst": 0.125,
       "reachedTP2": 0.048
     },
     "ETHUSDT": {
-      "n": 1340,
-      "hit1R": 0.35,
-      "stoppedOut": 0.44,
-      "slWasGreenHalfRFirst": 0.178,
-      "slWasGreen1RFirst": 0.071,
-      "reachedTP2": 0.19
+      "n": 1421,
+      "hit1R": 0.351,
+      "stoppedOut": 0.439,
+      "slWasGreenHalfRFirst": 0.176,
+      "slWasGreen1RFirst": 0.072,
+      "reachedTP2": 0.186
     },
     "GC": {
-      "n": 12152,
-      "hit1R": 0.339,
+      "n": 12470,
+      "hit1R": 0.338,
       "stoppedOut": 0.467,
-      "slWasGreenHalfRFirst": 0.309,
+      "slWasGreenHalfRFirst": 0.308,
       "slWasGreen1RFirst": 0.119,
       "reachedTP2": 0.053
     },
     "NQ": {
-      "n": 10312,
-      "hit1R": 0.333,
-      "stoppedOut": 0.475,
-      "slWasGreenHalfRFirst": 0.319,
+      "n": 10618,
+      "hit1R": 0.335,
+      "stoppedOut": 0.474,
+      "slWasGreenHalfRFirst": 0.318,
       "slWasGreen1RFirst": 0.124,
-      "reachedTP2": 0.052
+      "reachedTP2": 0.053
     },
     "YM": {
-      "n": 13924,
-      "hit1R": 0.352,
+      "n": 14243,
+      "hit1R": 0.351,
       "stoppedOut": 0.455,
-      "slWasGreenHalfRFirst": 0.302,
-      "slWasGreen1RFirst": 0.126,
-      "reachedTP2": 0.057
+      "slWasGreenHalfRFirst": 0.301,
+      "slWasGreen1RFirst": 0.125,
+      "reachedTP2": 0.058
     }
   }
 }

@@ -3,7 +3,15 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-12 · n: 817)
+## Sección viva  (última revisión: 2026-11-13 · n: 832)
+
+### Nota 2026-11-13
+Muestra chica (1m 534, 2m 194, 5m 64, 3m 32). **Alerta del script a
+NO tomar al pie de la letra**: `by_basis.candle1` (SL en vela 1 del FVG)
+"certifica" hoy (delta 1.789 CI90 [0.013,5.168] n=1186), pero lo mueve
+un solo segmento de cola gorda (5m/INV/SHORT delta 68.7 con n=29). Los
+segmentos LONG de INV siguen sin certificar (1m 0.183 [-0.061,0.481]).
+No es candidato para experiments.json. Sin cambio de reglas.
 
 ### Nota 2026-11-12
 Dato nuevo chico; sin cambio de fondo. Segmento INV sigue con muestra baja por TF (salvo 1m), no hay propuestas. `candle1` sigue sin certificar en `sl_origin_vs_layer`.
@@ -308,6 +316,7 @@ confianza; ningún TF cae >15pts de WR vs el promedio de las 3 semanas
 previas con muestra suficiente.
 
 ## Histórico de cambios
+- 2026-11-13: nota diaria añadida; sin cambio de reglas.
 - 2026-11-12: nota diaria añadida (n=817); sin cambio de reglas.
 - 2026-10-31 (sábado): dato nuevo chico (+14 en total: 1m+11, 5m+2,
   3m+3, 15m+1, 2m sin cambio). `1m/INV/LONG` sigue siendo el único
