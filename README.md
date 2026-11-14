@@ -15,7 +15,7 @@ reviews/<YYYY>-week-<NN>.md   revision semanal + propuestas de cambio de inputs
 ```
 
 Lo escribe: `scalp-bus-cron.mjs` (espeja el log de Netlify Blobs aquí) y el propio
-agente en cada rutina. Método en `scalp-agent/agent-instructions.md` del repo principal.
+agente en cada rutina. Método en `agent-instructions.md` de este repo (la copia de `scalp-agent/` del repo principal es una v1 vieja).
 
 ## Campos del evento `signal`
 
