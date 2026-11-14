@@ -361,6 +361,12 @@ def build_pairs():
             "rOrig": _f(oraw, "rOrig"),
             "slOrigHit": _i(oraw, "slOrigHit"),
             "barsResolveOrig": _f(oraw, "barsResolveOrig"),
+            # 3er SL paralelo en RETEST: vela 1 del FVG detras del iFVG (build 2026-11-14+)
+            "slC1Tk": _f(raw, "slC1Tk") if raw.get("slC1Tk") not in (None, "") else _f(oraw, "slC1Tk"),
+            "resC1": oraw.get("resC1") or None,
+            "rC1": _f(oraw, "rC1"),
+            "slC1Hit": _i(oraw, "slC1Hit"),
+            "barsResolveC1": _f(oraw, "barsResolveC1"),
         }
         pairs.append(rec)
 
@@ -1224,6 +1230,58 @@ def bootstrap_er_ci(rows, iters=2000, seed=12345):
             "p_net_le_0": round(sum(1 for m in mn if m <= 0) / iters, 3),
             "n": n, "days": nb, "ci_method": "day-clustered bootstrap"}
 
+def _day_ci(vals_by_row, iters=2000, seed=4242):
+    """mean + day-clustered bootstrap CI90 of (day, value) pairs."""
+    import random
+    days = defaultdict(lambda: [0.0, 0])
+    for d, v in vals_by_row:
+        days[d][0] += v; days[d][1] += 1
+    blocks = list(days.values()); nb = len(blocks)
+    n = sum(b[1] for b in blocks)
+    if n < 8:
+        return None
+    rnd = random.Random(seed); ms = []
+    for _ in range(iters):
+        sm = 0.0; k = 0
+        for _ in range(nb):
+            b = blocks[rnd.randrange(nb)]; sm += b[0]; k += b[1]
+        ms.append(sm / k)
+    ms.sort()
+    return {"mean": round(sum(b[0] for b in blocks) / n, 3),
+            "ci90": [round(ms[int(.05 * iters)], 3), round(ms[int(.95 * iters)], 3)], "n": n, "days": nb}
+
+def retest_stop_compare(pairs):
+    """RETEST: SL de 3 capas (rMultiple) vs mecha del retest (rOrig) vs vela 1 del FVG (rC1).
+    Misma entrada y mismos TP. Todo NETO de COST_TICKS (coste / ticks de SU stop) con IC por dias.
+    Comparacion pareada sobre las filas donde los tres stops tienen R; la geometria invalida de
+    vela 1 (slC1Tk <= 0 o resC1 = INVALID) se cuenta aparte. Solo outcomes del build con slC1."""
+    def cost(r, tk):
+        sym = (r.get("sigId") or "").split("-")[0]
+        return COST_TICKS.get(sym, COST_TICKS["default"]) / tk if tk and tk > 0 else None
+    rows = [r for r in pairs if r["resolved"] and r["kind"] == "RETEST" and r.get("resC1")]
+    groups = defaultdict(list)
+    for r in rows:
+        groups[f"{r['tf']}m/{r['side']}"].append(r); groups["ALL"].append(r)
+    out = {}
+    for k, rs in sorted(groups.items()):
+        inv = [r for r in rs if r.get("resC1") == "INVALID" or (r.get("slC1Tk") is not None and r["slC1Tk"] <= 0)]
+        inv_ids = {id(r) for r in inv}
+        tiny = [r for r in rs if r.get("slC1Tk") is not None and 0 < r["slC1Tk"] <= 3]
+        ok = [r for r in rs if id(r) not in inv_ids and r.get("rC1") is not None and r.get("rOrig") is not None
+              and r.get("rMultiple") is not None and (r.get("slOrigTk") or 0) > 0 and (r.get("slTk") or 0) > 0
+              and (r.get("slC1Tk") or 0) > 0]
+        def net(fr, ftk):
+            return _day_ci([(_day(r), r[fr] - cost(r, r[ftk])) for r in ok])
+        out[k] = {"n_new_build": len(rs), "invalid_geometry": len(inv),
+                  "invalid_pct": round(100 * len(inv) / len(rs), 1) if rs else None,
+                  "slC1_1to3tk": len(tiny), "n_paired": len(ok),
+                  "layer3_net": net("rMultiple", "slTk"), "retestWick_net": net("rOrig", "slOrigTk"),
+                  "candle1_net": net("rC1", "slC1Tk"),
+                  "slTk_p50": {"layer3": _pct([r["slTk"] for r in ok], .5),
+                               "retestWick": _pct([r["slOrigTk"] for r in ok], .5),
+                               "candle1": _pct([r["slC1Tk"] for r in ok], .5)}}
+    return out
+
 def fdr_bh(pvals, q=0.10):
     """Benjamini-Hochberg. keep[i]=True si se rechaza H0 con FDR<=q."""
     m = len(pvals)
@@ -1720,6 +1778,7 @@ def main():
         "cost_ticks": COST_TICKS,
         "managed_vs_naive": managed_vs_naive(pairs),
         "sl_origin_vs_layer": sl_origin_vs_layer(pairs),
+        "retest_stop_compare": retest_stop_compare(pairs),
         "rr1_threshold_cut": rr1_threshold_cut(pairs),
         "rr1_threshold_cut_oos": rr1_threshold_cut_oos(pairs),
         "sigid_integrity": sigid_collision_report(),
@@ -1831,6 +1890,14 @@ def main():
             L.append(f"- {a}\n")
     L.append(f"\n- E[R] global: {json.dumps(report['expR_ci_overall'], ensure_ascii=False)}\n")
     L.append(f"- gate ejecucion: {json.dumps(report['gate'], ensure_ascii=False)}\n")
+    _rc = (report.get("retest_stop_compare") or {}).get("ALL")
+    if _rc:
+        _m = lambda x: f"{x['mean']} {x['ci90']}" if x else "na"
+        L.append(f"- RETEST stops (E[R] neto, IC90 por dias, n {_rc['n_paired']}): 3 capas {_m(_rc['layer3_net'])} · "
+                 f"mecha retest {_m(_rc['retestWick_net'])} · vela 1 {_m(_rc['candle1_net'])} · "
+                 f"vela 1 invalida {_rc['invalid_geometry']}/{_rc['n_new_build']} ({_rc['invalid_pct']}%)\n")
+    else:
+        L.append("- RETEST stops: sin outcomes del build con SL vela 1 todavia\n")
     L.append("\n## Integridad de sigId (colisiones, posible causa de alertas MUESTRA)\n```json\n"
              + json.dumps(report["sigid_integrity"], indent=2, ensure_ascii=False) + "\n```\n")
     def tbl(title, d):

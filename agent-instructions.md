@@ -98,6 +98,11 @@ Si hay < 5 pares resueltos (excl. `TEST-`): sólo corre `analyze.py`, commitea
    `candle1` y `retestBar` son dos reglas distintas, no las mezcles.
    Este SL NO se aplica todavía: si gana de forma estable (FDR + walk-forward),
    pasa a `experiments.json` / propuesta de la revisión semanal, no antes.
+5d. **Tres stops en RETEST** (`retest_stop_compare`, outcomes del build 2026-11-14+): misma
+    entrada y TP; 3 capas (`rMultiple`) vs mecha del retest (`rOrig`) vs vela 1 del FVG detrás
+    del iFVG (`rC1`). E[R] neto con IC90 por días, pareado, por TF/lado. La vela 1 con
+    `slC1Tk <= 0` (`resC1=INVALID`) va en `invalid_geometry` y `slC1_1to3tk` cuenta los stops
+    de 1-3 ticks (el coste los castiga). Mismo criterio que 5c para darlo por real.
 6. **Modelo P(TP1)** (`model`): cuando `fitted=true`, interpreta signos y
    magnitudes de los coeficientes en palabras y mira la calibración (deciles:
    `pred` vs `actual`). El modelo es interno; **no es verdad fuera de muestra**
