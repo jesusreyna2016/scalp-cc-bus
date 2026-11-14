@@ -3,7 +3,23 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-13 · n: 36406)
+## Sección viva  (última revisión: 2026-11-14 · n: 37300)
+
+### Nota 2026-11-14
+Sábado (cierre del viernes). Dato nuevo moderado (1m +285, 2m +147, 3m +264,
+5m +116, 15m +49, 29m +33; +894 LONG). Huérfanos estable en 63 (pipeline
+sano). `since_change` (SL mecha del retest vs 3 capas): los seis TF LONG
+siguen certificando — 1m 0.037 [0.009,0.066] n=9742; 2m 0.064
+[0.029,0.099] n=4857; 3m 0.247 [0.179,0.315] n=2445; 5m 0.451
+[0.184,0.918] n=2942; 15m 1.408 [0.622,2.412] n=823 (cola gorda, no se
+cita como efecto); **29m (gate) 0.54 [0.209,0.921] n=400, quinta lectura
+seguida, límite inferior sube otra vez (0.182→0.209)**. W46 casi cerrada,
+LONG sólido en todos los TF: 29m WR55.4% PF2.18 n=148, 5m PF1.35, 15m
+PF1.49, 3m PF1.29, 2m PF1.23, 1m PF1.21. Gate: `readyForLive=true`,
+`fullyReady=false` (W44 PF 1.29 al filo; si W46 cierra ok aún falta W47).
+SL post-mortem W46 (bus): `stop-en-el-minimo` sigue dominante (1531/3662),
+RETEST/LONG: contra-estructura 850 ≈ stop-en-el-minimo 847 ≈ RR-bajo 832.
+Sin causa nueva. Sin cambio de reglas.
 
 ### Nota 2026-11-13
 Dato nuevo moderado (1m 19267→19661 +394, 2m 8484→8686 +202, 3m 2355→2555

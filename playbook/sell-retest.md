@@ -3,7 +3,21 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-13 · n: 26453)
+## Sección viva  (última revisión: 2026-11-14 · n: 27225)
+
+### Nota 2026-11-14
+Sábado. Dato nuevo (1m +286, 2m +145, 3m +163, 5m +100, 15m +51, 29m +27;
++772 SHORT). `since_change`: 11/12 RETEST siguen certificando; 29m SHORT
+tercera lectura (0.146 [0.038,0.274] n=438) → ya cumple "2-3 lecturas";
+1m SHORT 0.031 [**0.002**,0.064] n=8003 — el límite inferior sigue
+cayendo hacia 0 (0.006→0.002), **al filo, vigilar**; 15m SHORT sigue sin
+certificar (0.12 [-0.011,0.268] n=767). **W46: se confirma la debilidad
+del lado SHORT** en TF intermedios mientras LONG sigue sano — 2m SHORT
+WR45.1% PF**0.89** E[R]-0.056 n=501 (único segmento RETEST negativo de
+la semana), 5m PF1.02, 3m PF1.09, 1m PF1.06 (vs LONG 1.23/1.35/1.29/1.21).
+No dispara decaimiento formal (WR no cae >15 pts), pero 2m SHORT lleva
+2 de 3 semanas con PF<1 (W44 0.96, W46 0.89). Candidato a revisar en la
+revisión semanal de mañana; sin cambio de reglas hoy.
 
 ### Nota 2026-11-13
 Dato nuevo moderado (1m 13696→13931 +235, 2m 5884→5985 +101, 3m

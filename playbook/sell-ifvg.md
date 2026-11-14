@@ -3,7 +3,12 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-13 · n: 620)
+## Sección viva  (última revisión: 2026-11-14 · n: 633)
+
+### Nota 2026-11-14
+Dato nuevo mínimo (+13). 1m/INV/SHORT since_change sin certificar
+(0.261 [-0.116,0.705] n=218). La alerta agregada de `candle1` sigue
+siendo artefacto de cola gorda. Sin cambio de reglas.
 
 ### Nota 2026-11-13
 Muestra chica (1m 403, 2m 145, 5m 45). La alerta de `candle1`
