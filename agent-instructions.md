@@ -6,6 +6,18 @@ maneja Jesús o su propio puente.
 
 ## Principio: el trabajo pesado lo hace `analyze.py`, tú interpretas
 
+**Razona siempre en NETO.** `expRnet` / `pfNet` / `ci90net` restan el coste por trade
+(`COST_TICKS` en `analyze.py`, 2 ticks ida y vuelta por defecto, por símbolo) dividido por
+`slTk`. El bruto (`expR`, `pf`, `ci90`) es solo referencia: con un SL mediano de ~20 ticks el
+coste es ~0.13 R y un E[R] bruto pequeño es negativo en neto. Todos los IC son bootstrap
+por días (`ci_method`), no por señal. Para crypto el coste en ticks es casi 0; su comisión
+real es en %, ajústala en `COST_TICKS` si se opera.
+
+**Resolución en la misma vela (parche Pine, 2026-11-14, activo desde que Jesús lo pegue):**
+SL y TP en la misma vela = SL; TP1 y TP2 en la misma vela = TP1. Desde ese build ya no sale
+`result=TP2`. Los outcomes anteriores son optimistas (decidían por la apertura y cobraban TP2):
+no mezcles antes y después sin decirlo; añade la fecha del cambio a `experiments.json`.
+
 En cada corrida:
 
 1. `git pull` para traer los `.jsonl` nuevos que el cron de Netlify commiteó.
@@ -26,7 +38,8 @@ En cada corrida:
      modelo P(TP1) y el contrafactual in-sample sirven para generar hipótesis,
      no para decidir. No bendigas nada que no sobreviva OOS.
    - `segment_significance`: sólo trata como real un segmento con
-     `survives_fdr10=true` y CI90 de E[R] que no cruce 0.
+     `survives_fdr10=true` (FDR sobre el E[R] NETO) y `ci90net` que no cruce 0.
+     `survives_fdr10_gross` es solo referencia.
    - `regime_clusters`, `cross_instrument`, `news_context`: úsalos para reglas
      condicionales. Una regla que sólo funciona en un símbolo (`cross_instrument`
      verdict `instrument-specific`) se marca como tal, no se generaliza.
@@ -51,7 +64,7 @@ Si hay < 5 pares resueltos (excl. `TEST-`): sólo corre `analyze.py`, commitea
    Si `orphan_outcomes` sube de forma sostenida, algo en el pipeline Pine/ingest
    falla: anótalo y avisa.
 3. **Lectura de métricas** (`by_tf_kind_side`, `by_tier`, `by_kz`, `by_nearEdge`,
-   `by_aligned`, `by_emaStack`): WR TP1, E[R], PF, distribución MFE (p25/p50/p75)
+   `by_aligned`, `by_emaStack`, `expR_ci_by_symbol`): WR TP1, E[R] neto, PF neto, distribución MFE (p25/p50/p75)
    para el parcial, MAE p75-p90 de ganadores para el SL mínimo, `mfeBeforeSL` de
    perdedores, barras ganador vs perdedor, `entryZoneTk` (calidad de entrada),
    `revAfterSL_rate` (stop en el mínimo).
@@ -136,7 +149,7 @@ Escribe `reviews/<YYYY>-week-<NN>.md`:
 - las 3 causas de SL más frecuentes de la semana + evidencia (sigIds)
 - estado de cada experimento abierto
 - **propuestas concretas** de cambio de inputs de `scalp_command.pine`, cada una con:
-  el input, from→to, el segmento, el efecto esperado sobre WR/E[R] **del walk-forward
+  el input, from→to, el segmento, el efecto esperado sobre WR/E[R] neto **del walk-forward
   (no in-sample)**, y el n de la evidencia.
   Candidatos: `sc_min_rr`, `sc_aplus_rr`, `sc_slbuf`, `sc_floor_atr5`,
   `sc_cap_atr5`, `sc_cap_adr`, `alert_cooldown`, `sc_cooldown`, `min_score_buy`,
@@ -177,6 +190,6 @@ a estrategia del bot.
 ## Escalera de ejecución (gate)
 
 NO recomiendes conectar a cuenta live hasta que, en el segmento objetivo:
-n >= 100 · WR TP1 estable 3 semanas · E[R] > 0 con PF >= 1.3 · causa de SL
+n >= 100 · WR TP1 estable 3 semanas · E[R] NETO > 0 con PF neto >= 1.3 · causa de SL
 dominante mitigada por un cambio de regla verificado (experimento `confirmed`).
 Antes: sólo asesor / demo. Ver `execution-ladder.md`.

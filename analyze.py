@@ -16,6 +16,23 @@ import json, os, sys, math, glob, re, statistics as st
 from collections import defaultdict, Counter
 from datetime import datetime, timezone, timedelta
 
+# ---- trading costs (net E[R]) ----
+# Round-trip cost per trade in ticks (commission + slippage), per symbol. Net R = gross R - cost/slTk.
+# Edit here to change it; "default" applies to any symbol not listed.
+COST_TICKS = {"default": 2.0}
+
+def cost_r(r):
+    sym = (r.get("sigId") or "").split("-")[0]
+    c = COST_TICKS.get(sym, COST_TICKS["default"])
+    sl = r.get("slTk")
+    return c / sl if sl and sl > 0 else 0.0
+
+def r_net(r):
+    return None if r.get("rMultiple") is None else r["rMultiple"] - cost_r(r)
+
+def _day(r):
+    return r.get("recvDate") or "?"
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 QUIET = "--quiet" in sys.argv
 
@@ -373,6 +390,8 @@ def seg_metrics(rows):
     rs = [r["rMultiple"] for r in res if r["rMultiple"] is not None]
     gains = sum(x for x in rs if x > 0)
     pain = sum(-x for x in rs if x < 0)
+    rn = [r_net(r) for r in res if r["rMultiple"] is not None]
+    gn = sum(x for x in rn if x > 0); pn = sum(-x for x in rn if x < 0)
     winner_mae = [r["maeTk"] for r in wins_tp1 if r["maeTk"] is not None]
     loser_mfe = [r["mfeBeforeSLTk"] for r in losses if r["mfeBeforeSLTk"] is not None]
     return {
@@ -381,6 +400,8 @@ def seg_metrics(rows):
         "nSL": len(losses), "nTO": len(to),
         "expR": round(st.mean(rs), 3) if rs else None,
         "pf": round(gains / pain, 2) if pain > 0 else (None if gains == 0 else 99.0),
+        "expRnet": round(st.mean(rn), 3) if rn else None,
+        "pfNet": round(gn / pn, 2) if pn > 0 else (None if gn == 0 else 99.0),
         "mfe_p25": _pct([r["mfeTk"] for r in res], .25),
         "mfe_p50": _pct([r["mfeTk"] for r in res], .50),
         "mfe_p75": _pct([r["mfeTk"] for r in res], .75),
@@ -621,7 +642,8 @@ def decay_weekly_by_segment(rows):
         for seg, rs in sorted(wk[wkey].items()):
             m = seg_metrics(rs)
             if m["n"] >= 1:
-                segs[seg] = {"n": m["n"], "wrTP1": m.get("wrTP1"), "expR": m.get("expR"), "pf": m.get("pf")}
+                segs[seg] = {"n": m["n"], "wrTP1": m.get("wrTP1"), "expR": m.get("expR"), "pf": m.get("pf"),
+                             "expRnet": m.get("expRnet"), "pfNet": m.get("pfNet")}
         out[wkey] = segs
     return out
 
@@ -1176,17 +1198,31 @@ def sl_origin_vs_layer(pairs):
     return out
 
 def bootstrap_er_ci(rows, iters=2000, seed=12345):
+    """E[R] CI90, gross and net (after COST_TICKS), with a DAY-CLUSTERED bootstrap: whole
+    trading days are resampled, because signals of the same day (6 TF x 7 symbols, often the
+    same move) are not independent and a per-signal bootstrap gives CIs that are too narrow."""
     import random
-    rs = [r["rMultiple"] for r in rows if r["resolved"] and r["rMultiple"] is not None]
-    if len(rs) < 8:
+    res = [r for r in rows if r["resolved"] and r["rMultiple"] is not None]
+    if len(res) < 8:
         return None
-    rnd = random.Random(seed); n = len(rs); means = []
+    days = defaultdict(lambda: [0.0, 0.0, 0])
+    for r in res:
+        d = days[_day(r)]; d[0] += r["rMultiple"]; d[1] += r_net(r); d[2] += 1
+    blocks = list(days.values()); nb = len(blocks)
+    rnd = random.Random(seed); mg, mn = [], []
     for _ in range(iters):
-        means.append(sum(rs[rnd.randrange(n)] for _ in range(n)) / n)
-    means.sort()
-    return {"expR": round(st.mean(rs), 3),
-            "ci90": [round(means[int(.05 * iters)], 3), round(means[int(.95 * iters)], 3)],
-            "p_mean_le_0": round(sum(1 for m in means if m <= 0) / iters, 3), "n": n}
+        sg = sn = 0.0; k = 0
+        for _ in range(nb):
+            b = blocks[rnd.randrange(nb)]; sg += b[0]; sn += b[1]; k += b[2]
+        mg.append(sg / k); mn.append(sn / k)
+    mg.sort(); mn.sort()
+    q = lambda m: [round(m[int(.05 * iters)], 3), round(m[int(.95 * iters)], 3)]
+    n = len(res)
+    return {"expR": round(sum(b[0] for b in blocks) / n, 3), "ci90": q(mg),
+            "p_mean_le_0": round(sum(1 for m in mg if m <= 0) / iters, 3),
+            "expRnet": round(sum(b[1] for b in blocks) / n, 3), "ci90net": q(mn),
+            "p_net_le_0": round(sum(1 for m in mn if m <= 0) / iters, 3),
+            "n": n, "days": nb, "ci_method": "day-clustered bootstrap"}
 
 def fdr_bh(pvals, q=0.10):
     """Benjamini-Hochberg. keep[i]=True si se rechaza H0 con FDR<=q."""
@@ -1268,8 +1304,11 @@ def per_segment_significance(pairs):
             rows.append((k, ci))
     if not rows:
         return {}
-    keep = fdr_bh([c["p_mean_le_0"] for _, c in rows], q=0.10)
-    return {k: {**c, "survives_fdr10": bool(kp)} for (k, c), kp in zip(rows, keep)}
+    # FDR on NET E[R] (after costs) with day-clustered p-values; gross kept for reference.
+    keep = fdr_bh([c["p_net_le_0"] for _, c in rows], q=0.10)
+    keep_g = fdr_bh([c["p_mean_le_0"] for _, c in rows], q=0.10)
+    return {k: {**c, "survives_fdr10": bool(kp), "survives_fdr10_gross": bool(kg)}
+            for (k, c), kp, kg in zip(rows, keep, keep_g)}
 
 # ----------------------------------------------------------- regime clusters
 def _kmeans(V, k, iters=60, seed=7):
@@ -1571,8 +1610,9 @@ def exec_gate(rep, decay_by_seg):
     separado cada corrida. Solo fullyReady=true es luz verde real."""
     best = None
     for k, m in rep["by_tf_kind_side"].items():
-        if m["n"] >= 100 and (m.get("expR") or -9) > 0 and (m.get("pf") or 0) >= 1.3 and (m.get("wrTP1") or 0) >= 50:
-            if not best or m["expR"] > rep["by_tf_kind_side"][best]["expR"]:
+        # NET of costs (COST_TICKS), never gross
+        if m["n"] >= 100 and (m.get("expRnet") or -9) > 0 and (m.get("pfNet") or 0) >= 1.3 and (m.get("wrTP1") or 0) >= 50:
+            if not best or m["expRnet"] > rep["by_tf_kind_side"][best]["expRnet"]:
                 best = k
 
     weekly_stable, weekly_detail = None, []
@@ -1587,9 +1627,9 @@ def exec_gate(rep, decay_by_seg):
         ok_count = 0
         for w in last3:
             seg_wk = decay_by_seg.get(w, {}).get(best) or {}
-            ok = (seg_wk.get("wrTP1") or 0) >= 50 and (seg_wk.get("pf") or 0) >= 1.3
+            ok = (seg_wk.get("wrTP1") or 0) >= 50 and (seg_wk.get("pfNet") or 0) >= 1.3
             ok_count += int(ok)
-            weekly_detail.append({"week": w, "wrTP1": seg_wk.get("wrTP1"), "pf": seg_wk.get("pf"), "ok": ok})
+            weekly_detail.append({"week": w, "wrTP1": seg_wk.get("wrTP1"), "pfNet": seg_wk.get("pfNet"), "ok": ok})
         weekly_stable = len(last3) >= 3 and ok_count == 3
 
         for exp in (rep.get("experiments") or []):
@@ -1609,9 +1649,10 @@ def exec_gate(rep, decay_by_seg):
             "weeklyStable3": weekly_stable, "weeklyDetail": weekly_detail,
             "slCauseMitigated": sl_mitigated,
             "fullyReady": bool(best) and bool(weekly_stable) and sl_mitigated,
-            "note": "readyForLive: n>=100 & E[R]>0 & PF>=1.3 & WR>=50 en un segmento tf/kind/side (solo "
+            "costTicks": COST_TICKS,
+            "note": "Todo NETO de costes (COST_TICKS). readyForLive: n>=100 & E[R] neto>0 & PF neto>=1.3 & WR>=50 en un segmento tf/kind/side (solo "
                     "agregado historico). fullyReady exige ademas weeklyStable3 (3 semanas CERRADAS seguidas "
-                    "con WR>=50 & PF>=1.3 en ese mismo segmento) y slCauseMitigated (experimento con "
+                    "con WR>=50 & PF neto>=1.3 en ese mismo segmento) y slCauseMitigated (experimento con "
                     "verdict=confirmed dirigido a ese segmento). Solo fullyReady=true es luz verde real para "
                     "subir de peldano; readyForLive=true con fullyReady=false es un near-miss a vigilar."}
 
@@ -1674,6 +1715,9 @@ def main():
         "cross_instrument": cross_instrument(pairs),
         "prediction_scoreboard": prediction_scoreboard(pairs),
         "expR_ci_overall": bootstrap_er_ci(pairs),
+        "expR_ci_by_symbol": {s_: bootstrap_er_ci([r for r in pairs if r["sigId"].split("-")[0] == s_])
+                              for s_ in sorted({r["sigId"].split("-")[0] for r in pairs})},
+        "cost_ticks": COST_TICKS,
         "managed_vs_naive": managed_vs_naive(pairs),
         "sl_origin_vs_layer": sl_origin_vs_layer(pairs),
         "rr1_threshold_cut": rr1_threshold_cut(pairs),
@@ -1791,9 +1835,9 @@ def main():
              + json.dumps(report["sigid_integrity"], indent=2, ensure_ascii=False) + "\n```\n")
     def tbl(title, d):
         L.append(f"\n## {title}\n")
-        L.append("| seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |\n|---|--|--|--|--|--|--|--|--|\n")
+        L.append("| seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |\n|---|--|--|--|--|--|--|--|--|--|--|\n")
         for k, m in d.items():
-            L.append(f"| {k} | {m['n']} | {m.get('wrTP1','')} | {m.get('expR','')} | {m.get('pf','')} | "
+            L.append(f"| {k} | {m['n']} | {m.get('wrTP1','')} | {m.get('expR','')} | {m.get('expRnet','')} | {m.get('pf','')} | {m.get('pfNet','')} | "
                      f"{m.get('nSL','')} | {m.get('mfe_p50','')} | {m.get('winnerMAE_p75','')} | {m.get('revAfterSL_rate','')} |\n")
     tbl("Por tf / kind / side", report["by_tf_kind_side"])
     tbl("Por tier", report["by_tier"])
