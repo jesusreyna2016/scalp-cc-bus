@@ -3,7 +3,15 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-14 · n: 633)
+## Sección viva  (última revisión: 2026-11-15 · n: 635)
+
+### Nota 2026-11-15 (domingo, REVISIÓN SEMANAL 2026-week-46)
+Dato nuevo mínimo (+2). Sin cambio material respecto a ayer. `candle1`
+sigue sin certificar por TF/side en `since_change`, mismo diagnóstico
+de cola gorda/muestra chica de siempre. INV sigue sin ningún segmento
+con `survives_fdr10` neto ni bruto; el hallazgo de la semana (E[R]
+neto) es de `kind=RETEST`, no aplica aquí. Ver `reviews/2026-week-46.md`.
+Sin cambio de reglas.
 
 ### Nota 2026-11-14
 Dato nuevo mínimo (+13). 1m/INV/SHORT since_change sin certificar

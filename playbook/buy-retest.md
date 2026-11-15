@@ -3,7 +3,35 @@
 Señal: el precio vuelve a tocar un iFVG alcista ya formado (`kind=RETEST`, `side=LONG`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-14 · n: 37300)
+## Sección viva  (última revisión: 2026-11-15 · n: 37345)
+
+### Nota 2026-11-15 (domingo, REVISIÓN SEMANAL 2026-week-46)
+**Hallazgo nuevo de la semana: E[R] NETO de costes (añadido ayer a
+`analyze.py`) muestra que 1m y 2m LONG son perdedores netos con
+significancia, no solo "sin edge".** `segment_significance` neto:
+1m/LONG E[R]neto=-0.131 CI90net=[-0.16,-0.1] n=19346; 2m/LONG
+E[R]neto=-0.106 CI90net=[-0.149,-0.064] n=8561; 3m/LONG E[R]neto=-0.004
+CI90net=[-0.041,0.029] n=2750 (cruza cero); 5m/LONG E[R]neto=0.029
+CI90net=[-0.015,0.074] n=4248 (cruza cero); 15m/LONG E[R]neto=0.087
+CI90net=[-0.004,0.197] n=851 (al filo); **29m/LONG E[R]neto=0.305
+CI90net=[0.157,0.464] n=410 — el único LONG que sobrevive FDR10% neto
+con holgura**, aunque `cross_instrument=instrument-specific` (no pasa
+el segundo filtro para entrar a `shadow_rules`). IFVG LONG: SL mecha
+del retest vs 3-capas, `since_change`, sigue certificando en los 5 TF
+LONG — 1m 0.037 [0.009,0.066] n=9742; 2m 0.064 [0.029,0.099] n=4857;
+3m 0.247 [0.179,0.315] n=2445; 5m 0.447 [0.181,0.895] n=2963; 15m
+1.418 [0.636,2.399] n=826 (cola gorda); **29m (gate) 0.544
+[0.226,0.918] n=403, QUINTA lectura seguida certificando, límite
+inferior sube por quinto día (0.106→0.182→0.226)**. W46 (casi
+cerrada) fuerte en LONG: 29m WR54.9% PFneto2.01 n=153, 15m PFneto1.42,
+5m PFneto1.24, 3m PFneto1.04 (al filo), 2m PFneto0.98 (negativo neto),
+1m PFneto0.96 (negativo neto) — **el patrón semanal confirma el
+hallazgo neto: 1m/2m pierden neto incluso en la semana más fuerte del
+mes, 15m/29m ganan con holgura.** Gate sin cambio: `readyForLive=true`,
+`fullyReady=false`, `weeklyStable3` 1/3 (solo W45 ok de W43-W45; si
+W46 cierra ok sería 2/3, falta W47). Ver `reviews/2026-week-46.md`
+para el detalle completo y el candidato `shadow_rules_net_candidate`
+(no activo todavía). Sin cambio de reglas de entrada hoy.
 
 ### Nota 2026-11-14
 Sábado (cierre del viernes). Dato nuevo moderado (1m +285, 2m +147, 3m +264,

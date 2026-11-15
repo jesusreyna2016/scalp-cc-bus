@@ -1,4 +1,4 @@
-# Scalp CC · report 2026-11-15T02:14Z
+# Scalp CC · report 2026-11-15T02:26Z
 - signals=66136 outcomes=63783 pares_resueltos=66134 pendientes=2 huerfanos=63
 
 ## ⚠ ALERTAS (llevar al frente del resumen)
@@ -10540,6 +10540,221 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     "raw_n": 8120,
     "raw_expR": 0.097,
     "shadow_beats_raw": false
+  }
+}
+```
+
+## Modo sombra · candidato NET (no activo, ver reviews/2026-week-46.md)
+```json
+{
+  "rule": {
+    "version": "net-candidate",
+    "definedAt": "2026-11-15",
+    "criteria": {
+      "kind": [
+        "RETEST"
+      ],
+      "tf_side": [
+        "15/SHORT"
+      ],
+      "excludeSaVerdict": []
+    },
+    "rationale": "Candidato NO activo (no sustituye SHADOW_RULES_V1): mismo estandar FDR10 + cross_instrument=universal que v1-v4, pero sobre significancia NETA de costes en vez de bruta. Se añade para decidir informado en revision semanal si se promueve. Ver reviews/2026-week-46.md."
+  },
+  "shadow": {
+    "n": 844,
+    "wrTP1": 51.3,
+    "nSL": 379,
+    "nTO": 32,
+    "expR": 0.165,
+    "pf": 1.35,
+    "expRnet": 0.118,
+    "pfNet": 1.24,
+    "mfe_p25": 37.0,
+    "mfe_p50": 134.0,
+    "mfe_p75": 1071.0,
+    "winnerMAE_p75": 230.0,
+    "winnerMAE_p90": 4151.600000000001,
+    "loserMFEbeforeSL_p50": 0.0,
+    "bars_win_p50": 1.0,
+    "bars_loss_p50": 1.0,
+    "entryZoneTk_p50": -182.5,
+    "revAfterSL_rate": 64.4
+  },
+  "shadow_ci90": {
+    "expR": 0.165,
+    "ci90": [
+      0.085,
+      0.282
+    ],
+    "p_mean_le_0": 0.0,
+    "expRnet": 0.118,
+    "ci90net": [
+      0.034,
+      0.238
+    ],
+    "p_net_le_0": 0.009,
+    "n": 815,
+    "days": 20,
+    "ci_method": "day-clustered bootstrap"
+  },
+  "raw_indicator": {
+    "n": 64658,
+    "wrTP1": 46.9,
+    "nSL": 30003,
+    "nTO": 4342,
+    "expR": 0.055,
+    "pf": 1.11,
+    "expRnet": -0.074,
+    "pfNet": 0.86,
+    "mfe_p25": 9.0,
+    "mfe_p50": 22.0,
+    "mfe_p75": 52.0,
+    "winnerMAE_p75": 16.0,
+    "winnerMAE_p90": 41.0,
+    "loserMFEbeforeSL_p50": 4.0,
+    "bars_win_p50": 2.0,
+    "bars_loss_p50": 3.0,
+    "entryZoneTk_p50": -17.0,
+    "revAfterSL_rate": 36.5
+  },
+  "raw_indicator_ci90": {
+    "expR": 0.055,
+    "ci90": [
+      0.035,
+      0.077
+    ],
+    "p_mean_le_0": 0.0,
+    "expRnet": -0.074,
+    "ci90net": [
+      -0.097,
+      -0.051
+    ],
+    "p_net_le_0": 1.0,
+    "n": 62305,
+    "days": 68,
+    "ci_method": "day-clustered bootstrap"
+  },
+  "tier_ap_b_only": {
+    "n": 32061,
+    "wrTP1": 44.3,
+    "nSL": 15480,
+    "nTO": 2370,
+    "expR": 0.043,
+    "pf": 1.09,
+    "expRnet": -0.092,
+    "pfNet": 0.84,
+    "mfe_p25": 9.0,
+    "mfe_p50": 21.0,
+    "mfe_p75": 47.0,
+    "winnerMAE_p75": 13.0,
+    "winnerMAE_p90": 30.0,
+    "loserMFEbeforeSL_p50": 4.0,
+    "bars_win_p50": 2.0,
+    "bars_loss_p50": 3.0,
+    "entryZoneTk_p50": -16.0,
+    "revAfterSL_rate": 34.1
+  },
+  "tier_ap_b_only_ci90": {
+    "expR": 0.043,
+    "ci90": [
+      0.018,
+      0.068
+    ],
+    "p_mean_le_0": 0.004,
+    "expRnet": -0.092,
+    "ci90net": [
+      -0.118,
+      -0.066
+    ],
+    "p_net_le_0": 1.0,
+    "n": 30891,
+    "days": 68,
+    "ci_method": "day-clustered bootstrap"
+  },
+  "note": "compara el conjunto de reglas condicionales (shadow) contra (a) el indicador crudo (todo RETEST) y (b) RETEST tier A+/B solo. Gate peldano 0->1 de execution-ladder.md: shadow debe batir a raw_indicator en E[R] durante 3 semanas seguidas, n>=60 en el segmento objetivo. bootstrap_er_ci requiere n>=8, si no devuelve null."
+}
+```
+
+## Modo sombra · candidato NET por semana (no activo)
+```json
+{
+  "2026-W36": {
+    "shadow_n": 0,
+    "shadow_expR": null,
+    "raw_n": 3136,
+    "raw_expR": -0.027,
+    "shadow_beats_raw": false
+  },
+  "2026-W37": {
+    "shadow_n": 0,
+    "shadow_expR": null,
+    "raw_n": 5248,
+    "raw_expR": 0.07,
+    "shadow_beats_raw": false
+  },
+  "2026-W38": {
+    "shadow_n": 0,
+    "shadow_expR": null,
+    "raw_n": 4807,
+    "raw_expR": 0.091,
+    "shadow_beats_raw": false
+  },
+  "2026-W39": {
+    "shadow_n": 0,
+    "shadow_expR": null,
+    "raw_n": 5227,
+    "raw_expR": 0.051,
+    "shadow_beats_raw": false
+  },
+  "2026-W40": {
+    "shadow_n": 0,
+    "shadow_expR": null,
+    "raw_n": 5223,
+    "raw_expR": 0.016,
+    "shadow_beats_raw": false
+  },
+  "2026-W41": {
+    "shadow_n": 0,
+    "shadow_expR": null,
+    "raw_n": 5084,
+    "raw_expR": 0.057,
+    "shadow_beats_raw": false
+  },
+  "2026-W42": {
+    "shadow_n": 0,
+    "shadow_expR": null,
+    "raw_n": 4993,
+    "raw_expR": 0.05,
+    "shadow_beats_raw": false
+  },
+  "2026-W43": {
+    "shadow_n": 0,
+    "shadow_expR": null,
+    "raw_n": 4609,
+    "raw_expR": -0.005,
+    "shadow_beats_raw": false
+  },
+  "2026-W44": {
+    "shadow_n": 303,
+    "shadow_expR": 0.037,
+    "raw_n": 10312,
+    "raw_expR": 0.027,
+    "shadow_beats_raw": true
+  },
+  "2026-W45": {
+    "shadow_n": 285,
+    "shadow_expR": 0.36,
+    "raw_n": 7899,
+    "raw_expR": 0.121,
+    "shadow_beats_raw": true
+  },
+  "2026-W46": {
+    "shadow_n": 256,
+    "shadow_expR": 0.105,
+    "raw_n": 8120,
+    "raw_expR": 0.097,
+    "shadow_beats_raw": true
   }
 }
 ```

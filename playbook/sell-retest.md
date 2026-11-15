@@ -3,7 +3,36 @@
 Señal: un iFVG bajista ya formado (`kind=RETEST`, `side=SHORT`).
 Prioridad 1. Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-14 · n: 27225)
+## Sección viva  (última revisión: 2026-11-15 · n: 27313)
+
+### Nota 2026-11-15 (domingo, REVISIÓN SEMANAL 2026-week-46)
+**Hallazgo nuevo de la semana: E[R] NETO de costes (añadido ayer a
+`analyze.py`) muestra que 1m y 2m SHORT también son perdedores netos
+con significancia.** `segment_significance` neto: 1m/SHORT
+E[R]neto=-0.099 CI90net=[-0.131,-0.068] n=13598; 2m/SHORT
+E[R]neto=-0.072 CI90net=[-0.111,-0.033] n=5921; 3m/SHORT E[R]neto=0.006
+CI90net=[-0.05,0.065] n=2292 (cruza cero); 5m/SHORT E[R]neto=0.034
+CI90net=[-0.02,0.091] n=3059 (cruza cero); **15m/SHORT E[R]neto=0.118
+CI90net=[0.034,0.238] n=815 — único segmento RETEST de TODO el bus
+(LONG o SHORT) que sobrevive FDR10% neto Y pasa `cross_instrument=
+universal`**; 29m/SHORT E[R]neto=0.132 CI90net=[0.043,0.236] n=454
+(sobrevive FDR10% neto pero `cross_instrument=instrument-specific`).
+Con ese único segmento (`15/SHORT`) se construyó hoy un candidato de
+`shadow_rules` NETO (no activo, `shadow_rules_net_candidate` en
+`analyze.py`/`report.json`) que bate al indicador crudo en las 3
+semanas más recientes con muestra (W44, W45, W46-en-curso) — espejo
+inverso de `SHADOW_RULES_V1` vigente, que lleva esas mismas 3 semanas
+SIN batirlo. Ver `reviews/2026-week-46.md`. SL mecha del retest vs
+3-capas (`since_change`) SHORT: 1m 0.031 [0.002,0.064] n=8003 (el más
+frágil, límite inferior muy cerca de cero); 2m 0.064 [0.02,0.109]
+n=3645; 3m 0.126 [0.053,0.202] n=2034; 5m 0.398 [0.208,0.646] n=2233;
+**29m (gate, SHORT) 0.146 [0.038,0.274] n=438, confirma de nuevo**;
+único sin certificar: 15m SHORT 0.119 [-0.009,0.269] n=768 (al filo,
+cruza cero por poco). W46 (casi cerrada) SHORT: 29m PFneto1.12, 15m
+PFneto1.08, 5m PFneto1.13, 3m PFneto0.86 (negativo neto), 2m
+PFneto0.72 (negativo neto), 1m PFneto0.84 (negativo neto) — mismo
+patrón que LONG: 1m/2m/3m pierden neto, 5m/15m/29m ganan. Sin cambio
+de reglas de entrada hoy.
 
 ### Nota 2026-11-14
 Sábado. Dato nuevo (1m +286, 2m +145, 3m +163, 5m +100, 15m +51, 29m +27;

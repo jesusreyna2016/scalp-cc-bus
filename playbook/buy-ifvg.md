@@ -3,7 +3,17 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-14 · n: 840)
+## Sección viva  (última revisión: 2026-11-15 · n: 841)
+
+### Nota 2026-11-15 (domingo, REVISIÓN SEMANAL 2026-week-46)
+Dato nuevo mínimo (+1). Sin cambio material. `candle1` (SL vela 1 del
+FVG vs 3-capas) sigue "certificando" en agregado (delta 1.762
+CI90=[0.019,5.054] n=1206) por la misma cola gorda de siempre (muestra
+chica, uno o dos ganadores extremos) — no se trata como hallazgo real,
+sigue sin certificar en `since_change` por TF/side. El hallazgo de la
+semana (E[R] neto de costes) es de `kind=RETEST`; INV sigue sin ningún
+segmento con `survives_fdr10` (ni bruto ni neto), prioridad 2 sin
+cambios. Ver `reviews/2026-week-46.md`. Sin cambio de reglas.
 
 ### Nota 2026-11-14
 Dato nuevo mínimo (+8). Huérfanos 63. `candle1` sigue "certificando" en
