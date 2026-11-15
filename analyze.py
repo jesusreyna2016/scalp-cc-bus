@@ -951,6 +951,39 @@ SHADOW_RULES_V1 = {
     ),
 }
 
+def shadow_rules_net_candidate(report):
+    """Candidato de SHADOW_RULES NO activo (no sustituye SHADOW_RULES_V1): aplica el
+    mismo estandar que se uso para construir v1..v4 (survives_fdr10 + cross_instrument
+    universal) pero sobre significancia NETA de costes (COST_TICKS), que existe desde
+    2026-11-14 y todavia no se habia usado para redefinir el universo de tf_side de la
+    sombra (v1-v4 se construyeron sobre significancia bruta). Se calcula en cada corrida
+    para poder comparar su shadow_weekly contra el de SHADOW_RULES_V1 sin comprometerse a
+    adoptarlo -- ver reviews/2026-week-46.md: con el standard neto el universo encoge de
+    8 a 1 segmento (1er dia de la metrica neta, se vigila 2-3 lecturas mas antes de
+    promover a SHADOW_RULES_V1)."""
+    sig = report.get("segment_significance") or {}
+    ci = report.get("cross_instrument") or {}
+    tf_side = []
+    for seg, s in sig.items():
+        parts = seg.split("/")
+        if len(parts) != 3 or parts[1] != "RETEST":
+            continue
+        tf = parts[0].rstrip("m")
+        side = parts[2]
+        if s.get("survives_fdr10") and (ci.get(seg) or {}).get("verdict") == "universal":
+            tf_side.append(f"{tf}/{side}")
+    return {
+        "version": "net-candidate",
+        "definedAt": report["generatedAt"][:10],
+        "criteria": {"kind": ["RETEST"], "tf_side": sorted(tf_side), "excludeSaVerdict": []},
+        "rationale": (
+            "Candidato NO activo (no sustituye SHADOW_RULES_V1): mismo estandar FDR10 + "
+            "cross_instrument=universal que v1-v4, pero sobre significancia NETA de costes "
+            "en vez de bruta. Se añade para decidir informado en revision semanal si se "
+            "promueve. Ver reviews/2026-week-46.md."
+        ),
+    }
+
 def _shadow_matcher(rule, sa_base):
     """Devuelve (matches_fn, kinds_ok) para el criterio shadow dado, reusado por
     shadow_rules_apply (acumulado) y shadow_weekly (por semana, gate 3-semanas)."""
@@ -1790,6 +1823,9 @@ def main():
     report["session_analyst_cross"] = session_analyst_cross(pairs, sa_base)
     report["shadow_rules"] = shadow_rules_apply(pairs, sa_base)
     report["shadow_weekly"] = shadow_weekly(pairs, sa_base)
+    _net_rule = shadow_rules_net_candidate(report)
+    report["shadow_rules_net_candidate"] = shadow_rules_apply(pairs, sa_base, rule=_net_rule)
+    report["shadow_weekly_net_candidate"] = shadow_weekly(pairs, sa_base, rule=_net_rule)
     report["news_context"] = news_context(pairs, sa)
     report["gate"] = exec_gate(report, report["decay_weekly_by_segment"])
     causes, detail, causes_by_kind_side = sl_causes(pairs)
@@ -1865,6 +1901,8 @@ def main():
     state["sl_origin_vs_layer"] = report["sl_origin_vs_layer"]
     state["shadowRules"] = report["shadow_rules"]
     state["shadowWeekly"] = report["shadow_weekly"]
+    state["shadowRulesNetCandidate"] = report["shadow_rules_net_candidate"]
+    state["shadowWeeklyNetCandidate"] = report["shadow_weekly_net_candidate"]
     state["alerts"] = report["alerts"]
     state["file_line_counts"] = file_line_counts
     state["segment_n_history"] = segment_n_history
@@ -1975,6 +2013,10 @@ def main():
              + json.dumps(report["shadow_rules"], indent=2, ensure_ascii=False) + "\n```\n")
     L.append("\n## Modo sombra por semana (gate: shadow_beats_raw 3 semanas seguidas, n>=60)\n```json\n"
              + json.dumps(report["shadow_weekly"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Modo sombra · candidato NET (no activo, ver reviews/2026-week-46.md)\n```json\n"
+             + json.dumps(report["shadow_rules_net_candidate"], indent=2, ensure_ascii=False) + "\n```\n")
+    L.append("\n## Modo sombra · candidato NET por semana (no activo)\n```json\n"
+             + json.dumps(report["shadow_weekly_net_candidate"], indent=2, ensure_ascii=False) + "\n```\n")
     with open(os.path.join(ROOT, "report.md"), "w", encoding="utf-8") as f:
         f.write("".join(L))
 

@@ -1,28 +1,29 @@
-# Scalp CC · report 2026-11-14T02:14Z
-- signals=66064 outcomes=63708 pares_resueltos=65998 pendientes=66 huerfanos=63
+# Scalp CC · report 2026-11-15T02:14Z
+- signals=66136 outcomes=63783 pares_resueltos=66134 pendientes=2 huerfanos=63
 
 ## ⚠ ALERTAS (llevar al frente del resumen)
 - GATE: 29m/RETEST/LONG cumple el chequeo numerico agregado (n/PF/WR) pero NO el gate completo todavia -- weeklyStable3=False, slCauseMitigated=False. Es un near-miss a vigilar, no subir de peldano.
-- SL: SL en la vela 1 del FVG (inversion) BATE al de 3 capas fuera de ruido (E[R] 1.876 vs 0.116, delta 1.76 CI90 [0.014, 5.058], n 1204). Candidato para experiments.json + revision semanal.
-- SL: SL en la mecha de la vela del retest BATE al de 3 capas fuera de ruido (E[R] 0.223 vs 0.061, delta 0.162 CI90 [0.128, 0.201], n 41101). Candidato para experiments.json + revision semanal.
+- SL: SL en la vela 1 del FVG (inversion) BATE al de 3 capas fuera de ruido (E[R] 1.879 vs 0.117, delta 1.762 CI90 [0.019, 5.054], n 1206). Candidato para experiments.json + revision semanal.
+- SL: SL en la mecha de la vela del retest BATE al de 3 capas fuera de ruido (E[R] 0.225 vs 0.062, delta 0.163 CI90 [0.129, 0.204], n 41171). Candidato para experiments.json + revision semanal.
 - SL: SL en la mecha del retest + vela previa (1m short) BATE al de 3 capas fuera de ruido (E[R] 0.056 vs 0.024, delta 0.032 CI90 [0.006, 0.059], n 11140). Candidato para experiments.json + revision semanal.
-- SESSION ANALYST: senales scalp con veredicto SA=AVOID rinden MEJOR de forma no-random (E[R] 0.077 CI90 [0.045, 0.11], n 4725). Contrario a la hipotesis original de agent-instructions.md.
-- SESSION ANALYST: senales scalp con veredicto SA=WAIT rinden MEJOR de forma no-random (E[R] 0.067 CI90 [0.055, 0.079], n 31976). Consistente con la hipotesis original de agent-instructions.md.
+- SESSION ANALYST: senales scalp con veredicto SA=AVOID rinden MEJOR de forma no-random (E[R] 0.077 CI90 [0.004, 0.16], n 4725). Contrario a la hipotesis original de agent-instructions.md.
+- SESSION ANALYST: senales scalp con veredicto SA=WAIT rinden MEJOR de forma no-random (E[R] 0.067 CI90 [0.041, 0.093], n 31976). Consistente con la hipotesis original de agent-instructions.md.
 - MODO SOMBRA: 3 semanas CERRADAS seguidas sin batir al indicador crudo (2026-W43, 2026-W44, 2026-W45) -- espejo inverso del gate de promocion del peldano 0->1. No implica bajar de peldano (ya promovido), pero revisar shadow_rules en la revision semanal.
 
-- E[R] global: {"expR": 0.056, "ci90": [0.048, 0.064], "p_mean_le_0": 0.0, "n": 63645}
-- gate ejecucion: {"readyForLive": true, "segment": "29m/RETEST/LONG", "weeklyStable3": false, "weeklyDetail": [{"week": "2026-W43", "wrTP1": null, "pf": null, "ok": false}, {"week": "2026-W44", "wrTP1": 54.5, "pf": 1.29, "ok": false}, {"week": "2026-W45", "wrTP1": 51.8, "pf": 2.04, "ok": true}], "slCauseMitigated": false, "fullyReady": false, "note": "readyForLive: n>=100 & E[R]>0 & PF>=1.3 & WR>=50 en un segmento tf/kind/side (solo agregado historico). fullyReady exige ademas weeklyStable3 (3 semanas CERRADAS seguidas con WR>=50 & PF>=1.3 en ese mismo segmento) y slCauseMitigated (experimento con verdict=confirmed dirigido a ese segmento). Solo fullyReady=true es luz verde real para subir de peldano; readyForLive=true con fullyReady=false es un near-miss a vigilar."}
+- E[R] global: {"expR": 0.057, "ci90": [0.037, 0.079], "p_mean_le_0": 0.0, "expRnet": -0.073, "ci90net": [-0.093, -0.049], "p_net_le_0": 1.0, "n": 63720, "days": 68, "ci_method": "day-clustered bootstrap"}
+- gate ejecucion: {"readyForLive": true, "segment": "29m/RETEST/LONG", "weeklyStable3": false, "weeklyDetail": [{"week": "2026-W43", "wrTP1": null, "pfNet": null, "ok": false}, {"week": "2026-W44", "wrTP1": 54.5, "pfNet": 1.19, "ok": false}, {"week": "2026-W45", "wrTP1": 51.8, "pfNet": 1.91, "ok": true}], "slCauseMitigated": false, "fullyReady": false, "costTicks": {"default": 2.0}, "note": "Todo NETO de costes (COST_TICKS). readyForLive: n>=100 & E[R] neto>0 & PF neto>=1.3 & WR>=50 en un segmento tf/kind/side (solo agregado historico). fullyReady exige ademas weeklyStable3 (3 semanas CERRADAS seguidas con WR>=50 & PF neto>=1.3 en ese mismo segmento) y slCauseMitigated (experimento con verdict=confirmed dirigido a ese segmento). Solo fullyReady=true es luz verde real para subir de peldano; readyForLive=true con fullyReady=false es un near-miss a vigilar."}
+- RETEST stops: sin outcomes del build con SL vela 1 todavia
 
 ## Integridad de sigId (colisiones, posible causa de alertas MUESTRA)
 ```json
 {
   "signals": {
-    "total_sigIds": 58866,
-    "collided_sigIds": 6530,
+    "total_sigIds": 58930,
+    "collided_sigIds": 6538,
     "collided_pct": 11.09,
     "delta_days_histogram": {
-      "14": 1311,
-      "7": 1229,
+      "14": 1315,
+      "7": 1233,
       "42": 560,
       "21": 551,
       "28": 539,
@@ -36,12 +37,12 @@
     "conflicting_result_examples": []
   },
   "outcomes": {
-    "total_sigIds": 57013,
-    "collided_sigIds": 6102,
+    "total_sigIds": 57080,
+    "collided_sigIds": 6110,
     "collided_pct": 10.7,
     "delta_days_histogram": {
-      "14": 1267,
-      "7": 1155,
+      "14": 1271,
+      "7": 1159,
       "21": 511,
       "28": 497,
       "42": 490,
@@ -51,7 +52,7 @@
       "63": 142,
       "48": 105
     },
-    "conflicting_result_n": 3588,
+    "conflicting_result_n": 3592,
     "conflicting_result_examples": [
       "NQ-2-22054-L",
       "GC-1-23394-S",
@@ -68,112 +69,112 @@
 ```
 
 ## Por tf / kind / side
-| seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
-|---|--|--|--|--|--|--|--|--|
-| 15m/INV/LONG | 4 | 50.0 | -0.115 | 0.77 | 2 | 92.0 | 155.75 | 0.0 |
-| 15m/INV/SHORT | 4 | 75.0 | 0.667 | 3.67 | 1 | 91.5 | 1361.5 | 0.0 |
-| 15m/RETEST/LONG | 886 | 49.5 | 0.127 | 1.27 | 404 | 115.0 | 204.0 | 56.9 |
-| 15m/RETEST/SHORT | 843 | 51.2 | 0.164 | 1.35 | 379 | 133.0 | 232.5 | 64.4 |
-| 1m/INV/LONG | 538 | 46.5 | 0.135 | 1.31 | 224 | 15.5 | 11.0 | 16.5 |
-| 1m/INV/SHORT | 414 | 47.1 | 0.155 | 1.38 | 158 | 22.0 | 13.5 | 17.1 |
-| 1m/RETEST/LONG | 19946 | 44.7 | 0.035 | 1.07 | 9534 | 15.0 | 10.0 | 28.7 |
-| 1m/RETEST/SHORT | 14217 | 44.7 | 0.031 | 1.06 | 6679 | 19.0 | 12.0 | 29.2 |
-| 29m/INV/LONG | 4 | 75.0 | 0.365 | 2.46 | 1 | 1251.0 | 1715.5 | 0.0 |
-| 29m/INV/SHORT | 3 | 66.7 | 0.02 | 1.06 | 1 | 766.0 | 235.5 | 0.0 |
-| 29m/RETEST/LONG | 437 | 53.8 | 0.348 | 1.84 | 169 | 140.0 | 170.5 | 58.0 |
-| 29m/RETEST/SHORT | 482 | 50.6 | 0.182 | 1.39 | 209 | 157.0 | 272.0 | 76.1 |
-| 2m/INV/LONG | 197 | 51.3 | 0.002 | 1.0 | 84 | 18.5 | 14.0 | 13.1 |
-| 2m/INV/SHORT | 147 | 49.7 | 0.124 | 1.31 | 57 | 28.5 | 15.0 | 29.8 |
-| 2m/RETEST/LONG | 8833 | 47.4 | 0.038 | 1.08 | 4159 | 19.0 | 13.0 | 38.9 |
-| 2m/RETEST/SHORT | 6130 | 47.1 | 0.041 | 1.08 | 2890 | 25.0 | 15.0 | 38.3 |
-| 3m/INV/LONG | 33 | 51.5 | -0.151 | 0.67 | 15 | 22.0 | 31.0 | 66.7 |
-| 3m/INV/SHORT | 20 | 80.0 | 0.242 | 2.53 | 3 | 37.0 | 26.5 | 0.0 |
-| 3m/RETEST/LONG | 2819 | 53.2 | 0.101 | 1.23 | 1222 | 26.0 | 18.0 | 51.0 |
-| 3m/RETEST/SHORT | 2381 | 52.7 | 0.119 | 1.27 | 1020 | 25.0 | 18.75 | 54.5 |
-| 5m/INV/LONG | 64 | 65.6 | 0.097 | 1.33 | 18 | 31.0 | 32.75 | 55.6 |
-| 5m/INV/SHORT | 45 | 51.1 | 0.125 | 1.3 | 18 | 82.0 | 63.5 | 38.9 |
-| 5m/RETEST/LONG | 4379 | 51.3 | 0.106 | 1.23 | 1920 | 50.0 | 52.0 | 50.3 |
-| 5m/RETEST/SHORT | 3172 | 49.5 | 0.089 | 1.19 | 1399 | 56.0 | 56.0 | 47.7 |
+| seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
+|---|--|--|--|--|--|--|--|--|--|--|
+| 15m/INV/LONG | 4 | 50.0 | -0.115 | -0.152 | 0.77 | 0.71 | 2 | 92.0 | 155.75 | 0.0 |
+| 15m/INV/SHORT | 4 | 75.0 | 0.667 | 0.618 | 3.67 | 3.27 | 1 | 91.5 | 1361.5 | 0.0 |
+| 15m/RETEST/LONG | 893 | 49.5 | 0.133 | 0.087 | 1.28 | 1.17 | 404 | 117.0 | 204.0 | 56.9 |
+| 15m/RETEST/SHORT | 844 | 51.3 | 0.165 | 0.118 | 1.35 | 1.24 | 379 | 134.0 | 230.0 | 64.4 |
+| 1m/INV/LONG | 539 | 46.4 | 0.135 | -0.01 | 1.31 | 0.98 | 224 | 15.5 | 11.0 | 16.5 |
+| 1m/INV/SHORT | 414 | 47.1 | 0.155 | 0.044 | 1.38 | 1.1 | 158 | 22.0 | 13.5 | 17.1 |
+| 1m/RETEST/LONG | 19948 | 44.7 | 0.035 | -0.131 | 1.07 | 0.77 | 9534 | 15.0 | 10.0 | 28.7 |
+| 1m/RETEST/SHORT | 14235 | 44.6 | 0.031 | -0.099 | 1.06 | 0.82 | 6679 | 19.0 | 12.0 | 29.2 |
+| 29m/INV/LONG | 4 | 75.0 | 0.365 | 0.362 | 2.46 | 2.44 | 1 | 1251.0 | 1715.5 | 0.0 |
+| 29m/INV/SHORT | 3 | 66.7 | 0.02 | 0.014 | 1.06 | 1.04 | 1 | 766.0 | 235.5 | 0.0 |
+| 29m/RETEST/LONG | 442 | 53.6 | 0.348 | 0.305 | 1.84 | 1.71 | 170 | 141.5 | 202.0 | 57.6 |
+| 29m/RETEST/SHORT | 483 | 50.5 | 0.182 | 0.132 | 1.39 | 1.27 | 209 | 157.0 | 272.0 | 76.1 |
+| 2m/INV/LONG | 197 | 51.3 | 0.002 | -0.1 | 1.0 | 0.8 | 84 | 18.5 | 14.0 | 13.1 |
+| 2m/INV/SHORT | 147 | 49.7 | 0.124 | 0.036 | 1.31 | 1.08 | 57 | 28.5 | 15.0 | 29.8 |
+| 2m/RETEST/LONG | 8834 | 47.4 | 0.038 | -0.106 | 1.08 | 0.81 | 4159 | 19.0 | 13.0 | 38.9 |
+| 2m/RETEST/SHORT | 6139 | 47.0 | 0.041 | -0.072 | 1.08 | 0.87 | 2890 | 25.0 | 15.0 | 38.3 |
+| 3m/INV/LONG | 33 | 51.5 | -0.151 | -0.212 | 0.67 | 0.56 | 15 | 22.0 | 31.0 | 66.7 |
+| 3m/INV/SHORT | 20 | 80.0 | 0.242 | 0.197 | 2.53 | 2.22 | 3 | 37.0 | 26.5 | 0.0 |
+| 3m/RETEST/LONG | 2825 | 53.1 | 0.101 | -0.004 | 1.23 | 0.99 | 1222 | 26.0 | 18.0 | 51.0 |
+| 3m/RETEST/SHORT | 2389 | 52.5 | 0.119 | 0.006 | 1.27 | 1.01 | 1020 | 25.0 | 18.75 | 54.5 |
+| 5m/INV/LONG | 64 | 65.6 | 0.097 | 0.031 | 1.33 | 1.1 | 18 | 31.0 | 32.75 | 55.6 |
+| 5m/INV/SHORT | 47 | 53.2 | 0.14 | 0.099 | 1.35 | 1.24 | 18 | 88.0 | 79.0 | 38.9 |
+| 5m/RETEST/LONG | 4403 | 51.4 | 0.107 | 0.029 | 1.23 | 1.06 | 1927 | 51.0 | 54.75 | 50.3 |
+| 5m/RETEST/SHORT | 3223 | 49.6 | 0.1 | 0.034 | 1.22 | 1.07 | 1410 | 58.0 | 59.75 | 47.9 |
 
 ## Por tier
-| seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
-|---|--|--|--|--|--|--|--|--|
-| A+ | 4276 | 23.3 | 0.05 | 1.07 | 2752 | 29.5 | 14.0 | 19.2 |
-| B | 28233 | 47.5 | 0.042 | 1.09 | 12946 | 20.0 | 13.0 | 36.9 |
-| C | 33489 | 49.5 | 0.069 | 1.15 | 14868 | 23.0 | 18.0 | 38.8 |
+| seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
+|---|--|--|--|--|--|--|--|--|--|--|
+| A+ | 4283 | 23.3 | 0.051 | -0.094 | 1.08 | 0.88 | 2752 | 30.0 | 14.0 | 19.2 |
+| B | 28287 | 47.5 | 0.042 | -0.091 | 1.09 | 0.83 | 12954 | 20.0 | 13.0 | 36.9 |
+| C | 33564 | 49.5 | 0.07 | -0.055 | 1.15 | 0.9 | 14879 | 23.0 | 18.0 | 38.8 |
 
 ## Por killzone
-| seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
-|---|--|--|--|--|--|--|--|--|
-| Asia | 23532 | 49.0 | 0.073 | 1.16 | 10673 | 16.0 | 12.0 | 37.5 |
-| London | 9769 | 46.5 | 0.036 | 1.07 | 4753 | 21.0 | 15.0 | 38.6 |
-| NY | 12036 | 45.5 | 0.063 | 1.13 | 5685 | 31.0 | 23.0 | 39.4 |
-| Sin KZ | 20661 | 45.7 | 0.042 | 1.09 | 9455 | 24.0 | 16.0 | 31.5 |
+| seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
+|---|--|--|--|--|--|--|--|--|--|--|
+| Asia | 23561 | 49.1 | 0.073 | -0.096 | 1.16 | 0.82 | 10680 | 16.0 | 12.0 | 37.6 |
+| London | 9787 | 46.6 | 0.037 | -0.096 | 1.07 | 0.83 | 4755 | 21.0 | 15.0 | 38.6 |
+| NY | 12043 | 45.5 | 0.063 | -0.027 | 1.13 | 0.95 | 5687 | 32.0 | 23.0 | 39.4 |
+| Sin KZ | 20743 | 45.6 | 0.044 | -0.06 | 1.09 | 0.89 | 9463 | 24.0 | 16.0 | 31.6 |
 
 ## Por nearEdge
-| seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
-|---|--|--|--|--|--|--|--|--|
-| edge=-1 | 18754 | 45.6 | 0.049 | 1.1 | 8782 | 26.0 | 19.0 | 35.9 |
-| edge=0 | 24318 | 48.9 | 0.061 | 1.13 | 11027 | 19.0 | 13.0 | 37.6 |
-| edge=1 | 22926 | 46.0 | 0.057 | 1.12 | 10757 | 21.0 | 16.0 | 35.0 |
+| seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
+|---|--|--|--|--|--|--|--|--|--|--|
+| edge=-1 | 18836 | 45.6 | 0.051 | -0.057 | 1.1 | 0.89 | 8794 | 26.0 | 19.0 | 35.9 |
+| edge=0 | 24343 | 48.9 | 0.061 | -0.084 | 1.13 | 0.85 | 11030 | 19.0 | 13.0 | 37.7 |
+| edge=1 | 22955 | 46.0 | 0.057 | -0.073 | 1.12 | 0.87 | 10761 | 21.0 | 16.0 | 35.0 |
 
 ## Por aligned
-| seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
-|---|--|--|--|--|--|--|--|--|
-| aligned=0 | 6107 | 53.4 | 0.124 | 1.28 | 2681 | 36.0 | 43.0 | 62.0 |
-| aligned=1 | 59891 | 46.3 | 0.049 | 1.1 | 27885 | 21.0 | 14.0 | 33.7 |
+| seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
+|---|--|--|--|--|--|--|--|--|--|--|
+| aligned=0 | 6149 | 53.5 | 0.126 | 0.025 | 1.28 | 1.05 | 2691 | 36.0 | 45.0 | 62.1 |
+| aligned=1 | 59985 | 46.3 | 0.05 | -0.083 | 1.1 | 0.85 | 27894 | 21.0 | 14.0 | 33.7 |
 
 ## Por kind/side x nearEdge
-| seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
-|---|--|--|--|--|--|--|--|--|
-| INV/LONG|edge=-1 | 39 | 48.7 | -0.008 | 0.98 | 19 | 23.0 | 32.0 | 31.6 |
-| INV/LONG|edge=0 | 307 | 59.0 | 0.176 | 1.49 | 105 | 19.0 | 13.0 | 30.5 |
-| INV/LONG|edge=1 | 494 | 43.5 | 0.042 | 1.09 | 220 | 17.0 | 13.0 | 13.6 |
-| INV/SHORT|edge=-1 | 376 | 45.2 | 0.13 | 1.31 | 152 | 27.0 | 12.0 | 18.4 |
-| INV/SHORT|edge=0 | 225 | 52.9 | 0.165 | 1.44 | 77 | 20.5 | 19.5 | 28.6 |
-| INV/SHORT|edge=1 | 32 | 71.9 | 0.296 | 2.05 | 9 | 40.5 | 80.0 | 11.1 |
-| RETEST/LONG|edge=-1 | 4943 | 51.4 | 0.116 | 1.25 | 2230 | 29.0 | 31.0 | 54.0 |
-| RETEST/LONG|edge=0 | 14371 | 48.8 | 0.047 | 1.1 | 6599 | 18.0 | 13.0 | 37.7 |
-| RETEST/LONG|edge=1 | 17986 | 44.3 | 0.044 | 1.09 | 8579 | 20.0 | 14.0 | 29.9 |
-| RETEST/SHORT|edge=-1 | 13396 | 43.5 | 0.021 | 1.04 | 6381 | 25.0 | 16.0 | 30.0 |
-| RETEST/SHORT|edge=0 | 9415 | 48.6 | 0.075 | 1.16 | 4246 | 22.0 | 14.0 | 37.8 |
-| RETEST/SHORT|edge=1 | 4414 | 52.9 | 0.11 | 1.24 | 1949 | 29.0 | 30.0 | 59.7 |
+| seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
+|---|--|--|--|--|--|--|--|--|--|--|
+| INV/LONG|edge=-1 | 39 | 48.7 | -0.008 | -0.109 | 0.98 | 0.8 | 19 | 23.0 | 32.0 | 31.6 |
+| INV/LONG|edge=0 | 307 | 59.0 | 0.176 | 0.047 | 1.49 | 1.12 | 105 | 19.0 | 13.0 | 30.5 |
+| INV/LONG|edge=1 | 495 | 43.4 | 0.042 | -0.081 | 1.09 | 0.85 | 220 | 17.0 | 13.0 | 13.6 |
+| INV/SHORT|edge=-1 | 377 | 45.4 | 0.131 | 0.037 | 1.31 | 1.08 | 152 | 27.0 | 12.5 | 18.4 |
+| INV/SHORT|edge=0 | 226 | 53.1 | 0.167 | 0.06 | 1.44 | 1.14 | 77 | 21.0 | 20.25 | 28.6 |
+| INV/SHORT|edge=1 | 32 | 71.9 | 0.296 | 0.229 | 2.05 | 1.74 | 9 | 40.5 | 80.0 | 11.1 |
+| RETEST/LONG|edge=-1 | 4977 | 51.4 | 0.119 | 0.002 | 1.26 | 1.0 | 2238 | 30.0 | 32.0 | 54.1 |
+| RETEST/LONG|edge=0 | 14375 | 48.8 | 0.047 | -0.112 | 1.1 | 0.8 | 6599 | 18.0 | 13.0 | 37.7 |
+| RETEST/LONG|edge=1 | 17993 | 44.3 | 0.044 | -0.091 | 1.09 | 0.84 | 8579 | 20.0 | 14.0 | 29.9 |
+| RETEST/SHORT|edge=-1 | 13443 | 43.4 | 0.023 | -0.082 | 1.05 | 0.85 | 6385 | 25.0 | 17.0 | 30.0 |
+| RETEST/SHORT|edge=0 | 9435 | 48.5 | 0.075 | -0.048 | 1.16 | 0.91 | 4249 | 22.0 | 14.0 | 37.8 |
+| RETEST/SHORT|edge=1 | 4435 | 52.9 | 0.112 | -0.003 | 1.25 | 0.99 | 1953 | 29.0 | 30.0 | 59.8 |
 
 ## Por kind/side x tier
-| seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
-|---|--|--|--|--|--|--|--|--|
-| INV/LONG|tier=B | 310 | 41.3 | 0.039 | 1.08 | 145 | 17.0 | 13.0 | 11.0 |
-| INV/LONG|tier=C | 530 | 54.2 | 0.118 | 1.3 | 199 | 19.0 | 14.0 | 26.1 |
-| INV/SHORT|tier=B | 198 | 47.5 | 0.095 | 1.22 | 81 | 24.5 | 12.0 | 9.9 |
-| INV/SHORT|tier=C | 435 | 50.1 | 0.177 | 1.45 | 157 | 26.0 | 23.0 | 27.4 |
-| RETEST/LONG|tier=A+ | 2618 | 23.5 | 0.061 | 1.09 | 1707 | 25.0 | 12.0 | 17.3 |
-| RETEST/LONG|tier=B | 15917 | 48.0 | 0.055 | 1.12 | 7270 | 18.0 | 13.0 | 38.2 |
-| RETEST/LONG|tier=C | 18765 | 49.4 | 0.054 | 1.12 | 8431 | 21.0 | 17.0 | 37.9 |
-| RETEST/SHORT|tier=A+ | 1658 | 22.9 | 0.033 | 1.05 | 1045 | 39.0 | 16.0 | 22.3 |
-| RETEST/SHORT|tier=B | 11808 | 47.1 | 0.023 | 1.05 | 5450 | 21.0 | 15.0 | 36.2 |
-| RETEST/SHORT|tier=C | 13759 | 49.4 | 0.084 | 1.18 | 6081 | 26.0 | 20.0 | 40.7 |
+| seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
+|---|--|--|--|--|--|--|--|--|--|--|
+| INV/LONG|tier=B | 311 | 41.2 | 0.039 | -0.09 | 1.08 | 0.84 | 145 | 17.0 | 13.0 | 11.0 |
+| INV/LONG|tier=C | 530 | 54.2 | 0.118 | -0.003 | 1.3 | 0.99 | 199 | 19.0 | 14.0 | 26.1 |
+| INV/SHORT|tier=B | 198 | 47.5 | 0.095 | -0.007 | 1.22 | 0.98 | 81 | 24.5 | 12.0 | 9.9 |
+| INV/SHORT|tier=C | 437 | 50.3 | 0.178 | 0.084 | 1.46 | 1.2 | 157 | 26.0 | 23.0 | 27.4 |
+| RETEST/LONG|tier=A+ | 2618 | 23.5 | 0.061 | -0.101 | 1.09 | 0.87 | 1707 | 25.0 | 12.0 | 17.3 |
+| RETEST/LONG|tier=B | 15925 | 48.0 | 0.055 | -0.089 | 1.12 | 0.84 | 7270 | 18.0 | 13.0 | 38.2 |
+| RETEST/LONG|tier=C | 18802 | 49.4 | 0.054 | -0.082 | 1.12 | 0.85 | 8439 | 21.0 | 17.0 | 37.9 |
+| RETEST/SHORT|tier=A+ | 1665 | 22.9 | 0.035 | -0.083 | 1.05 | 0.89 | 1045 | 39.0 | 16.0 | 22.3 |
+| RETEST/SHORT|tier=B | 11853 | 47.0 | 0.024 | -0.094 | 1.05 | 0.83 | 5458 | 21.0 | 15.0 | 36.2 |
+| RETEST/SHORT|tier=C | 13795 | 49.4 | 0.086 | -0.022 | 1.19 | 0.96 | 6084 | 26.0 | 20.0 | 40.7 |
 
 ## Por kind/side x aligned
-| seg | n | WR TP1 | E[R] | PF | SL | MFE p50 | winMAE p75 | rev% |
-|---|--|--|--|--|--|--|--|--|
-| INV/LONG|aligned=0 | 17 | 52.9 | -0.049 | 0.9 | 8 | 27.0 | 33.0 | 50.0 |
-| INV/LONG|aligned=1 | 823 | 49.3 | 0.092 | 1.21 | 336 | 18.0 | 13.0 | 19.0 |
-| INV/SHORT|aligned=0 | 19 | 73.7 | 0.122 | 1.46 | 5 | 45.0 | 98.25 | 20.0 |
-| INV/SHORT|aligned=1 | 614 | 48.5 | 0.152 | 1.37 | 233 | 25.0 | 14.75 | 21.5 |
-| RETEST/LONG|aligned=0 | 2845 | 52.8 | 0.127 | 1.28 | 1263 | 41.0 | 50.0 | 61.0 |
-| RETEST/LONG|aligned=1 | 34455 | 46.5 | 0.049 | 1.1 | 16145 | 19.0 | 14.0 | 34.0 |
-| RETEST/SHORT|aligned=0 | 3226 | 53.8 | 0.123 | 1.27 | 1405 | 32.0 | 37.0 | 63.2 |
-| RETEST/SHORT|aligned=1 | 23999 | 45.8 | 0.045 | 1.09 | 11171 | 24.0 | 15.0 | 34.0 |
+| seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
+|---|--|--|--|--|--|--|--|--|--|--|
+| INV/LONG|aligned=0 | 17 | 52.9 | -0.049 | -0.107 | 0.9 | 0.79 | 8 | 27.0 | 33.0 | 50.0 |
+| INV/LONG|aligned=1 | 824 | 49.3 | 0.092 | -0.034 | 1.21 | 0.93 | 336 | 18.0 | 13.0 | 19.0 |
+| INV/SHORT|aligned=0 | 19 | 73.7 | 0.122 | 0.084 | 1.46 | 1.3 | 5 | 45.0 | 98.25 | 20.0 |
+| INV/SHORT|aligned=1 | 616 | 48.7 | 0.153 | 0.054 | 1.38 | 1.12 | 233 | 25.0 | 15.5 | 21.5 |
+| RETEST/LONG|aligned=0 | 2877 | 52.9 | 0.131 | 0.038 | 1.29 | 1.08 | 1271 | 42.0 | 52.75 | 61.0 |
+| RETEST/LONG|aligned=1 | 34468 | 46.5 | 0.049 | -0.097 | 1.1 | 0.83 | 16145 | 19.0 | 14.0 | 34.0 |
+| RETEST/SHORT|aligned=0 | 3236 | 53.9 | 0.124 | 0.014 | 1.28 | 1.03 | 1407 | 32.0 | 37.25 | 63.3 |
+| RETEST/SHORT|aligned=1 | 24077 | 45.8 | 0.047 | -0.067 | 1.1 | 0.88 | 11180 | 24.0 | 16.0 | 34.0 |
 
 ## Autopsia de SL
-n_losses=30566  causas: RR-bajo×11904, stop-en-el-minimo×11065, contra-estructura×11040, killzone-Asia-largo×6334, estirado×5296, sin-nivel-detras×4771, chop×4520, SL-muy-pegado×3710, sin-causa-clara×3077, contra-sesgo×2681
+n_losses=30585  causas: RR-bajo×11915, stop-en-el-minimo×11078, contra-estructura×11049, killzone-Asia-largo×6334, estirado×5296, sin-nivel-detras×4771, chop×4524, SL-muy-pegado×3711, sin-causa-clara×3077, contra-sesgo×2691
 - INV/LONG (n=344): killzone-Asia-largo×163, RR-bajo×131, contra-estructura×113, estirado×75, stop-en-el-minimo×68, sin-nivel-detras×42, chop×41, SL-muy-pegado×41, sin-causa-clara×23, contra-sesgo×8
 - INV/SHORT (n=238): RR-bajo×105, contra-estructura×70, stop-en-el-minimo×51, estirado×50, sin-causa-clara×38, SL-muy-pegado×36, chop×32, sin-nivel-detras×19, contra-sesgo×5
-- RETEST/LONG (n=17408): RR-bajo×6790, contra-estructura×6477, stop-en-el-minimo×6265, killzone-Asia-largo×6171, estirado×3029, sin-nivel-detras×2913, chop×2546, SL-muy-pegado×2015, sin-causa-clara×1415, contra-sesgo×1263
-- RETEST/SHORT (n=12576): RR-bajo×4878, stop-en-el-minimo×4681, contra-estructura×4380, estirado×2142, chop×1901, sin-nivel-detras×1797, SL-muy-pegado×1618, sin-causa-clara×1601, contra-sesgo×1405
+- RETEST/LONG (n=17416): RR-bajo×6793, contra-estructura×6479, stop-en-el-minimo×6270, killzone-Asia-largo×6171, estirado×3029, sin-nivel-detras×2913, chop×2549, SL-muy-pegado×2016, sin-causa-clara×1415, contra-sesgo×1271
+- RETEST/SHORT (n=12587): RR-bajo×4886, stop-en-el-minimo×4689, contra-estructura×4387, estirado×2142, chop×1902, sin-nivel-detras×1797, SL-muy-pegado×1618, sin-causa-clara×1601, contra-sesgo×1407
 
 ## Autopsia de SL · semana 2026-W46 (para revision semanal)
-n_losses=3662  causas: stop-en-el-minimo×1531, RR-bajo×1446, contra-estructura×1441, killzone-Asia-largo×787, contra-sesgo×656, estirado×646, sin-nivel-detras×553, chop×551, SL-muy-pegado×420, sin-causa-clara×297
+n_losses=3681  causas: stop-en-el-minimo×1544, RR-bajo×1457, contra-estructura×1450, killzone-Asia-largo×787, contra-sesgo×666, estirado×646, chop×555, sin-nivel-detras×553, SL-muy-pegado×421, sin-causa-clara×297
 ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1-23895-L", "YM-2-22745-L", "YM-2-22795-L"], "RR-bajo": ["YM-1-23721-L", "ES-1-24663-L", "CL-1-24496-L", "YM-1-23895-L", "YM-1-24083-L"], "contra-estructura": ["YM-1-23718-L", "YM-1-23721-L", "NQ-1-24664-L", "ES-2-22682-L", "CL-1-24496-L"]}
 
 ## Autopsia de SL · tendencia semanal de causas (% de las perdidas de esa semana)
@@ -280,17 +281,17 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     }
   },
   "2026-W46": {
-    "n_losses": 3662,
+    "n_losses": 3681,
     "causes_pct": {
-      "stop-en-el-minimo": 41.8,
-      "RR-bajo": 39.5,
+      "stop-en-el-minimo": 41.9,
+      "RR-bajo": 39.6,
       "contra-estructura": 39.4,
-      "killzone-Asia-largo": 21.5,
-      "contra-sesgo": 17.9,
-      "estirado": 17.6,
-      "sin-nivel-detras": 15.1,
-      "chop": 15.0,
-      "SL-muy-pegado": 11.5,
+      "killzone-Asia-largo": 21.4,
+      "contra-sesgo": 18.1,
+      "estirado": 17.5,
+      "chop": 15.1,
+      "sin-nivel-detras": 15.0,
+      "SL-muy-pegado": 11.4,
       "sin-causa-clara": 8.1
     }
   }
@@ -334,15 +335,15 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
 ```json
 {
   "overall": {
-    "n": 63632,
-    "naive_expR": 0.056,
+    "n": 63707,
+    "naive_expR": 0.057,
     "managed_expR": 0.114,
-    "delta": 0.058,
+    "delta": 0.057,
     "avgEntryBetterTk_p50": 2.8,
-    "fill_t3plus_pct": 44.8,
+    "fill_t3plus_pct": 44.7,
     "fill_full_pct": 31.7,
-    "m1_rate": 37.2,
-    "m2_rate": 22.5,
+    "m1_rate": 37.3,
+    "m2_rate": 22.6,
     "m3_rate": 11.7,
     "beAfterM1_rate": 18.5
   },
@@ -374,30 +375,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "beAfterM1_rate": 25.0
     },
     "15m/RETEST/LONG": {
-      "n": 848,
-      "naive_expR": 0.127,
-      "managed_expR": -0.101,
+      "n": 851,
+      "naive_expR": 0.133,
+      "managed_expR": -0.095,
       "delta": -0.228,
-      "avgEntryBetterTk_p50": 1.45,
-      "fill_t3plus_pct": 31.7,
-      "fill_full_pct": 22.5,
-      "m1_rate": 33.8,
-      "m2_rate": 18.6,
-      "m3_rate": 10.1,
-      "beAfterM1_rate": 18.5
+      "avgEntryBetterTk_p50": 1.5,
+      "fill_t3plus_pct": 31.6,
+      "fill_full_pct": 22.4,
+      "m1_rate": 34.1,
+      "m2_rate": 18.9,
+      "m3_rate": 10.3,
+      "beAfterM1_rate": 18.4
     },
     "15m/RETEST/SHORT": {
-      "n": 814,
-      "naive_expR": 0.164,
+      "n": 815,
+      "naive_expR": 0.165,
       "managed_expR": 0.015,
-      "delta": -0.149,
+      "delta": -0.15,
       "avgEntryBetterTk_p50": 0.0,
-      "fill_t3plus_pct": 29.5,
+      "fill_t3plus_pct": 29.4,
       "fill_full_pct": 18.8,
       "m1_rate": 37.5,
       "m2_rate": 21.0,
       "m3_rate": 12.3,
-      "beAfterM1_rate": 20.5
+      "beAfterM1_rate": 20.6
     },
     "1m/INV/LONG": {
       "n": 516,
@@ -478,17 +479,17 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "beAfterM1_rate": 0.0
     },
     "29m/RETEST/LONG": {
-      "n": 407,
+      "n": 410,
       "naive_expR": 0.348,
-      "managed_expR": 0.062,
-      "delta": -0.286,
-      "avgEntryBetterTk_p50": 8.5,
-      "fill_t3plus_pct": 35.6,
-      "fill_full_pct": 25.8,
-      "m1_rate": 39.1,
-      "m2_rate": 26.3,
-      "m3_rate": 15.5,
-      "beAfterM1_rate": 15.2
+      "managed_expR": 0.056,
+      "delta": -0.292,
+      "avgEntryBetterTk_p50": 8.55,
+      "fill_t3plus_pct": 35.9,
+      "fill_full_pct": 25.9,
+      "m1_rate": 38.8,
+      "m2_rate": 26.1,
+      "m3_rate": 15.4,
+      "beAfterM1_rate": 15.1
     },
     "29m/RETEST/SHORT": {
       "n": 454,
@@ -621,43 +622,43 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "beAfterM1_rate": 11.5
     },
     "5m/INV/SHORT": {
-      "n": 43,
-      "naive_expR": 0.125,
-      "managed_expR": 0.218,
-      "delta": 0.093,
+      "n": 45,
+      "naive_expR": 0.14,
+      "managed_expR": 0.224,
+      "delta": 0.085,
       "avgEntryBetterTk_p50": 7.0,
-      "fill_t3plus_pct": 53.5,
-      "fill_full_pct": 37.2,
-      "m1_rate": 30.2,
-      "m2_rate": 20.9,
-      "m3_rate": 14.0,
-      "beAfterM1_rate": 14.0
+      "fill_t3plus_pct": 51.1,
+      "fill_full_pct": 35.6,
+      "m1_rate": 31.1,
+      "m2_rate": 20.0,
+      "m3_rate": 13.3,
+      "beAfterM1_rate": 15.6
     },
     "5m/RETEST/LONG": {
-      "n": 4225,
-      "naive_expR": 0.106,
-      "managed_expR": 0.072,
+      "n": 4248,
+      "naive_expR": 0.107,
+      "managed_expR": 0.074,
       "delta": -0.033,
-      "avgEntryBetterTk_p50": 1.7,
-      "fill_t3plus_pct": 35.5,
-      "fill_full_pct": 24.9,
+      "avgEntryBetterTk_p50": 1.9,
+      "fill_t3plus_pct": 35.6,
+      "fill_full_pct": 25.0,
       "m1_rate": 37.2,
       "m2_rate": 21.8,
       "m3_rate": 10.9,
       "beAfterM1_rate": 20.5
     },
     "5m/RETEST/SHORT": {
-      "n": 3015,
-      "naive_expR": 0.089,
-      "managed_expR": 0.086,
-      "delta": -0.002,
+      "n": 3058,
+      "naive_expR": 0.1,
+      "managed_expR": 0.092,
+      "delta": -0.008,
       "avgEntryBetterTk_p50": 3.6,
-      "fill_t3plus_pct": 36.7,
-      "fill_full_pct": 24.9,
-      "m1_rate": 36.2,
-      "m2_rate": 21.8,
-      "m3_rate": 11.1,
-      "beAfterM1_rate": 19.3
+      "fill_t3plus_pct": 36.5,
+      "fill_full_pct": 24.8,
+      "m1_rate": 36.4,
+      "m2_rate": 22.1,
+      "m3_rate": 11.2,
+      "beAfterM1_rate": 19.2
     }
   }
 }
@@ -667,13 +668,13 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
 ```json
 {
   "overall": {
-    "n": 53445,
-    "layer_expR": 0.054,
-    "orig_expR": 0.226,
-    "delta_orig_minus_layer": 0.171,
+    "n": 53517,
+    "layer_expR": 0.055,
+    "orig_expR": 0.227,
+    "delta_orig_minus_layer": 0.172,
     "delta_ci90": [
-      0.114,
-      0.248
+      0.116,
+      0.245
     ],
     "delta_beats_zero": true,
     "delta_below_zero": false,
@@ -683,22 +684,22 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     "slOrigTk_p50": 11.0,
     "orig_wider_pct": 5.6,
     "orig_saved_from_SL": 177,
-    "orig_caused_SL": 7016
+    "orig_caused_SL": 7024
   },
   "note": "overall/by_tf_kind_side = solo build retestBar (legacy excluido)",
-  "invalid_geometry": 4546,
+  "invalid_geometry": 4548,
   "invalid_by_seg": {
     "2m/RETEST/LONG": 560,
     "1m/RETEST/SHORT": 919,
     "2m/RETEST/SHORT": 295,
     "1m/RETEST/LONG": 1969,
     "1m/INV/SHORT": 60,
-    "5m/RETEST/LONG": 156,
+    "5m/RETEST/LONG": 157,
     "1m/INV/LONG": 95,
     "2m/INV/LONG": 24,
     "5m/INV/LONG": 4,
     "2m/INV/SHORT": 9,
-    "5m/RETEST/SHORT": 106,
+    "5m/RETEST/SHORT": 107,
     "5m/INV/SHORT": 3,
     "3m/RETEST/LONG": 161,
     "3m/RETEST/SHORT": 130,
@@ -710,18 +711,18 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
   },
   "by_basis": {
     "candle1": {
-      "n": 1204,
-      "layer_expR": 0.116,
-      "orig_expR": 1.876,
-      "delta_orig_minus_layer": 1.76,
+      "n": 1206,
+      "layer_expR": 0.117,
+      "orig_expR": 1.879,
+      "delta_orig_minus_layer": 1.762,
       "delta_ci90": [
-        0.014,
-        5.058
+        0.019,
+        5.054
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 52.1,
-      "orig_wrTP1": 28.5,
+      "layer_wrTP1": 52.2,
+      "orig_wrTP1": 28.6,
       "slTk_p50": 24.0,
       "slOrigTk_p50": 7.0,
       "orig_wider_pct": 3.6,
@@ -748,23 +749,23 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "orig_caused_SL": 0
     },
     "retestBar": {
-      "n": 41101,
-      "layer_expR": 0.061,
-      "orig_expR": 0.223,
-      "delta_orig_minus_layer": 0.162,
+      "n": 41171,
+      "layer_expR": 0.062,
+      "orig_expR": 0.225,
+      "delta_orig_minus_layer": 0.163,
       "delta_ci90": [
-        0.128,
-        0.201
+        0.129,
+        0.204
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 49.2,
-      "orig_wrTP1": 36.7,
+      "layer_wrTP1": 49.3,
+      "orig_wrTP1": 36.8,
       "slTk_p50": 25.0,
       "slOrigTk_p50": 12.0,
       "orig_wider_pct": 6.5,
       "orig_saved_from_SL": 166,
-      "orig_caused_SL": 5297
+      "orig_caused_SL": 5305
     },
     "retestBar2": {
       "n": 11140,
@@ -788,40 +789,40 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
   },
   "by_tf_kind_side": {
     "15m/RETEST/LONG": {
-      "n": 823,
-      "layer_expR": 0.131,
-      "orig_expR": 1.539,
-      "delta_orig_minus_layer": 1.408,
+      "n": 826,
+      "layer_expR": 0.138,
+      "orig_expR": 1.555,
+      "delta_orig_minus_layer": 1.418,
       "delta_ci90": [
-        0.622,
-        2.412
+        0.636,
+        2.399
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 52.2,
-      "orig_wrTP1": 49.3,
+      "layer_wrTP1": 52.4,
+      "orig_wrTP1": 49.4,
       "slTk_p50": 77.0,
       "slOrigTk_p50": 77.0,
-      "orig_wider_pct": 30.4,
+      "orig_wider_pct": 30.3,
       "orig_saved_from_SL": 23,
-      "orig_caused_SL": 47
+      "orig_caused_SL": 48
     },
     "15m/RETEST/SHORT": {
-      "n": 767,
-      "layer_expR": 0.174,
-      "orig_expR": 0.294,
-      "delta_orig_minus_layer": 0.12,
+      "n": 768,
+      "layer_expR": 0.175,
+      "orig_expR": 0.295,
+      "delta_orig_minus_layer": 0.119,
       "delta_ci90": [
-        -0.011,
-        0.268
+        -0.009,
+        0.269
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 53.8,
-      "orig_wrTP1": 47.2,
+      "layer_wrTP1": 53.9,
+      "orig_wrTP1": 47.3,
       "slTk_p50": 81.0,
       "slOrigTk_p50": 79.0,
-      "orig_wider_pct": 28.2,
+      "orig_wider_pct": 28.3,
       "orig_saved_from_SL": 18,
       "orig_caused_SL": 69
     },
@@ -902,21 +903,21 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "orig_caused_SL": 1448
     },
     "29m/RETEST/LONG": {
-      "n": 400,
-      "layer_expR": 0.342,
-      "orig_expR": 0.882,
-      "delta_orig_minus_layer": 0.54,
+      "n": 403,
+      "layer_expR": 0.341,
+      "orig_expR": 0.885,
+      "delta_orig_minus_layer": 0.544,
       "delta_ci90": [
-        0.209,
-        0.921
+        0.226,
+        0.918
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
       "layer_wrTP1": 57.8,
-      "orig_wrTP1": 58.2,
-      "slTk_p50": 66.0,
-      "slOrigTk_p50": 97.0,
-      "orig_wider_pct": 49.0,
+      "orig_wrTP1": 58.3,
+      "slTk_p50": 67.0,
+      "slOrigTk_p50": 98.0,
+      "orig_wider_pct": 48.6,
       "orig_saved_from_SL": 17,
       "orig_caused_SL": 15
     },
@@ -1111,102 +1112,102 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "orig_caused_SL": 14
     },
     "5m/INV/SHORT": {
-      "n": 39,
-      "layer_expR": 0.202,
-      "orig_expR": 51.063,
-      "delta_orig_minus_layer": 50.861,
+      "n": 41,
+      "layer_expR": 0.214,
+      "orig_expR": 48.745,
+      "delta_orig_minus_layer": 48.531,
       "delta_ci90": [
-        -0.654,
-        153.446
+        -0.512,
+        146.074
       ],
       "delta_beats_zero": false,
       "delta_below_zero": false,
-      "layer_wrTP1": 56.4,
-      "orig_wrTP1": 28.2,
-      "slTk_p50": 72.0,
-      "slOrigTk_p50": 19.0,
-      "orig_wider_pct": 12.8,
+      "layer_wrTP1": 58.5,
+      "orig_wrTP1": 31.7,
+      "slTk_p50": 117.0,
+      "slOrigTk_p50": 28.0,
+      "orig_wider_pct": 12.2,
       "orig_saved_from_SL": 0,
       "orig_caused_SL": 11
     },
     "5m/RETEST/LONG": {
-      "n": 3865,
-      "layer_expR": 0.092,
-      "orig_expR": 0.473,
-      "delta_orig_minus_layer": 0.381,
+      "n": 3886,
+      "layer_expR": 0.093,
+      "orig_expR": 0.471,
+      "delta_orig_minus_layer": 0.378,
       "delta_ci90": [
-        0.168,
-        0.712
+        0.165,
+        0.722
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 53.1,
+      "layer_wrTP1": 53.2,
       "orig_wrTP1": 45.2,
       "slTk_p50": 45.0,
-      "slOrigTk_p50": 31.0,
+      "slOrigTk_p50": 32.0,
       "orig_wider_pct": 14.4,
       "orig_saved_from_SL": 34,
-      "orig_caused_SL": 339
+      "orig_caused_SL": 344
     },
     "5m/RETEST/SHORT": {
-      "n": 2767,
-      "layer_expR": 0.076,
-      "orig_expR": 0.418,
-      "delta_orig_minus_layer": 0.342,
+      "n": 2809,
+      "layer_expR": 0.088,
+      "orig_expR": 0.432,
+      "delta_orig_minus_layer": 0.345,
       "delta_ci90": [
-        0.182,
-        0.545
+        0.187,
+        0.538
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_wrTP1": 51.8,
-      "orig_wrTP1": 43.3,
-      "slTk_p50": 50.0,
-      "slOrigTk_p50": 37.0,
-      "orig_wider_pct": 15.7,
+      "layer_wrTP1": 52.0,
+      "orig_wrTP1": 43.6,
+      "slTk_p50": 52.0,
+      "slOrigTk_p50": 39.0,
+      "orig_wider_pct": 15.6,
       "orig_saved_from_SL": 21,
-      "orig_caused_SL": 254
+      "orig_caused_SL": 256
     }
   },
   "since_change": {
     "changeDate": "2026-09-26",
-    "n": 39126,
+    "n": 39198,
     "by_tf_kind_side": {
       "15m/RETEST/LONG": {
-        "n": 823,
-        "layer_expR": 0.131,
-        "orig_expR": 1.539,
-        "delta_orig_minus_layer": 1.408,
+        "n": 826,
+        "layer_expR": 0.138,
+        "orig_expR": 1.555,
+        "delta_orig_minus_layer": 1.418,
         "delta_ci90": [
-          0.622,
-          2.412
+          0.636,
+          2.399
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
-        "layer_wrTP1": 52.2,
-        "orig_wrTP1": 49.3,
+        "layer_wrTP1": 52.4,
+        "orig_wrTP1": 49.4,
         "slTk_p50": 77.0,
         "slOrigTk_p50": 77.0,
-        "orig_wider_pct": 30.4,
+        "orig_wider_pct": 30.3,
         "orig_saved_from_SL": 23,
-        "orig_caused_SL": 47
+        "orig_caused_SL": 48
       },
       "15m/RETEST/SHORT": {
-        "n": 767,
-        "layer_expR": 0.174,
-        "orig_expR": 0.294,
-        "delta_orig_minus_layer": 0.12,
+        "n": 768,
+        "layer_expR": 0.175,
+        "orig_expR": 0.295,
+        "delta_orig_minus_layer": 0.119,
         "delta_ci90": [
-          -0.011,
-          0.268
+          -0.009,
+          0.269
         ],
         "delta_beats_zero": false,
         "delta_below_zero": false,
-        "layer_wrTP1": 53.8,
-        "orig_wrTP1": 47.2,
+        "layer_wrTP1": 53.9,
+        "orig_wrTP1": 47.3,
         "slTk_p50": 81.0,
         "slOrigTk_p50": 79.0,
-        "orig_wider_pct": 28.2,
+        "orig_wider_pct": 28.3,
         "orig_saved_from_SL": 18,
         "orig_caused_SL": 69
       },
@@ -1287,21 +1288,21 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "orig_caused_SL": 1041
       },
       "29m/RETEST/LONG": {
-        "n": 400,
-        "layer_expR": 0.342,
-        "orig_expR": 0.882,
-        "delta_orig_minus_layer": 0.54,
+        "n": 403,
+        "layer_expR": 0.341,
+        "orig_expR": 0.885,
+        "delta_orig_minus_layer": 0.544,
         "delta_ci90": [
-          0.209,
-          0.921
+          0.226,
+          0.918
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
         "layer_wrTP1": 57.8,
-        "orig_wrTP1": 58.2,
-        "slTk_p50": 66.0,
-        "slOrigTk_p50": 97.0,
-        "orig_wider_pct": 49.0,
+        "orig_wrTP1": 58.3,
+        "slTk_p50": 67.0,
+        "slOrigTk_p50": 98.0,
+        "orig_wider_pct": 48.6,
         "orig_saved_from_SL": 17,
         "orig_caused_SL": 15
       },
@@ -1496,61 +1497,61 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "orig_caused_SL": 7
       },
       "5m/INV/SHORT": {
-        "n": 29,
-        "layer_expR": 0.14,
-        "orig_expR": 68.82,
-        "delta_orig_minus_layer": 68.68,
+        "n": 31,
+        "layer_expR": 0.16,
+        "orig_expR": 64.61,
+        "delta_orig_minus_layer": 64.449,
         "delta_ci90": [
-          -0.607,
-          206.621
+          -0.402,
+          193.442
         ],
         "delta_beats_zero": false,
         "delta_below_zero": false,
-        "layer_wrTP1": 51.7,
-        "orig_wrTP1": 24.1,
-        "slTk_p50": 182.0,
-        "slOrigTk_p50": 19.0,
-        "orig_wider_pct": 6.9,
+        "layer_wrTP1": 54.8,
+        "orig_wrTP1": 29.0,
+        "slTk_p50": 207.0,
+        "slOrigTk_p50": 28.0,
+        "orig_wider_pct": 6.5,
         "orig_saved_from_SL": 0,
         "orig_caused_SL": 8
       },
       "5m/RETEST/LONG": {
-        "n": 2942,
-        "layer_expR": 0.083,
-        "orig_expR": 0.534,
-        "delta_orig_minus_layer": 0.451,
+        "n": 2963,
+        "layer_expR": 0.084,
+        "orig_expR": 0.532,
+        "delta_orig_minus_layer": 0.447,
         "delta_ci90": [
-          0.184,
-          0.918
+          0.181,
+          0.895
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
-        "layer_wrTP1": 52.8,
+        "layer_wrTP1": 52.9,
         "orig_wrTP1": 45.2,
-        "slTk_p50": 55.0,
-        "slOrigTk_p50": 38.0,
-        "orig_wider_pct": 13.7,
+        "slTk_p50": 56.0,
+        "slOrigTk_p50": 39.0,
+        "orig_wider_pct": 13.6,
         "orig_saved_from_SL": 27,
-        "orig_caused_SL": 250
+        "orig_caused_SL": 255
       },
       "5m/RETEST/SHORT": {
-        "n": 2191,
-        "layer_expR": 0.083,
-        "orig_expR": 0.479,
-        "delta_orig_minus_layer": 0.396,
+        "n": 2233,
+        "layer_expR": 0.098,
+        "orig_expR": 0.496,
+        "delta_orig_minus_layer": 0.398,
         "delta_ci90": [
-          0.201,
-          0.651
+          0.208,
+          0.646
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
-        "layer_wrTP1": 52.1,
-        "orig_wrTP1": 43.3,
-        "slTk_p50": 59.0,
-        "slOrigTk_p50": 46.0,
+        "layer_wrTP1": 52.4,
+        "orig_wrTP1": 43.7,
+        "slTk_p50": 62.0,
+        "slOrigTk_p50": 47.0,
         "orig_wider_pct": 13.9,
         "orig_saved_from_SL": 14,
-        "orig_caused_SL": 207
+        "orig_caused_SL": 209
       }
     },
     "note": "emparejado (rOrig vs rMultiple) solo con recvDate >= changeDate; compara contra by_tf_kind_side (todo el historico) para ver si el efecto se mantiene, se encoge (optimismo in-sample esperable) o se invierte en la ventana nueva. NO confundir con prediction_scoreboard."
@@ -1563,12 +1564,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
 {
   "1/RETEST/LONG": {
     "baseline": {
-      "n": 19260,
+      "n": 19262,
       "wrTP1": 46.3,
       "nSL": 9096,
-      "nTO": 1244,
+      "nTO": 1246,
       "expR": 0.03,
       "pf": 1.06,
+      "expRnet": -0.138,
+      "pfNet": 0.76,
       "mfe_p25": 7.0,
       "mfe_p50": 15.0,
       "mfe_p75": 34.0,
@@ -1582,21 +1585,31 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "ci90": {
         "expR": 0.03,
         "ci90": [
-          0.015,
-          0.044
+          0.002,
+          0.057
         ],
-        "p_mean_le_0": 0.001,
-        "n": 18673
+        "p_mean_le_0": 0.037,
+        "expRnet": -0.138,
+        "ci90net": [
+          -0.168,
+          -0.109
+        ],
+        "p_net_le_0": 1.0,
+        "n": 18673,
+        "days": 62,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.0": {
-        "n": 9338,
+        "n": 9339,
         "wrTP1": 30.4,
         "nSL": 5576,
-        "nTO": 920,
+        "nTO": 921,
         "expR": 0.03,
         "pf": 1.05,
+        "expRnet": -0.142,
+        "pfNet": 0.81,
         "mfe_p25": 9.0,
         "mfe_p50": 20.0,
         "mfe_p75": 43.0,
@@ -1610,20 +1623,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.03,
           "ci90": [
-            0.003,
-            0.054
+            -0.019,
+            0.076
           ],
-          "p_mean_le_0": 0.029,
-          "n": 8998
+          "p_mean_le_0": 0.162,
+          "expRnet": -0.142,
+          "ci90net": [
+            -0.191,
+            -0.094
+          ],
+          "p_net_le_0": 1.0,
+          "n": 8998,
+          "days": 60,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
-        "n": 7704,
+        "n": 7705,
         "wrTP1": 27.6,
         "nSL": 4731,
-        "nTO": 848,
+        "nTO": 849,
         "expR": 0.04,
         "pf": 1.06,
+        "expRnet": -0.133,
+        "pfNet": 0.82,
         "mfe_p25": 9.0,
         "mfe_p50": 21.0,
         "mfe_p75": 45.0,
@@ -1637,20 +1660,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.04,
           "ci90": [
-            0.011,
-            0.07
+            -0.016,
+            0.095
           ],
-          "p_mean_le_0": 0.013,
-          "n": 7410
+          "p_mean_le_0": 0.12,
+          "expRnet": -0.133,
+          "ci90net": [
+            -0.19,
+            -0.078
+          ],
+          "p_net_le_0": 1.0,
+          "n": 7410,
+          "days": 59,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 7028,
+        "n": 7029,
         "wrTP1": 26.1,
         "nSL": 4378,
-        "nTO": 813,
+        "nTO": 814,
         "expR": 0.04,
         "pf": 1.06,
+        "expRnet": -0.134,
+        "pfNet": 0.83,
         "mfe_p25": 9.0,
         "mfe_p50": 21.0,
         "mfe_p75": 45.0,
@@ -1664,11 +1697,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.04,
           "ci90": [
-            0.01,
-            0.071
+            -0.017,
+            0.096
           ],
-          "p_mean_le_0": 0.014,
-          "n": 6752
+          "p_mean_le_0": 0.128,
+          "expRnet": -0.134,
+          "ci90net": [
+            -0.194,
+            -0.075
+          ],
+          "p_net_le_0": 1.0,
+          "n": 6752,
+          "days": 59,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
@@ -1678,6 +1719,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 746,
         "expR": 0.032,
         "pf": 1.05,
+        "expRnet": -0.144,
+        "pfNet": 0.82,
         "mfe_p25": 9.0,
         "mfe_p50": 21.0,
         "mfe_p75": 45.0,
@@ -1691,11 +1734,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.032,
           "ci90": [
-            -0.004,
-            0.068
+            -0.032,
+            0.1
           ],
-          "p_mean_le_0": 0.072,
-          "n": 5702
+          "p_mean_le_0": 0.205,
+          "expRnet": -0.144,
+          "ci90net": [
+            -0.208,
+            -0.076
+          ],
+          "p_net_le_0": 1.0,
+          "n": 5702,
+          "days": 59,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
@@ -1705,6 +1756,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 607,
         "expR": 0.026,
         "pf": 1.04,
+        "expRnet": -0.151,
+        "pfNet": 0.82,
         "mfe_p25": 8.0,
         "mfe_p50": 22.0,
         "mfe_p75": 47.0,
@@ -1718,23 +1771,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.026,
           "ci90": [
-            -0.021,
-            0.073
+            -0.056,
+            0.109
           ],
-          "p_mean_le_0": 0.198,
-          "n": 3756
+          "p_mean_le_0": 0.315,
+          "expRnet": -0.151,
+          "ci90net": [
+            -0.234,
+            -0.065
+          ],
+          "p_net_le_0": 0.997,
+          "n": 3756,
+          "days": 58,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "1/RETEST/SHORT": {
     "baseline": {
-      "n": 13611,
+      "n": 13625,
       "wrTP1": 46.6,
       "nSL": 6269,
-      "nTO": 993,
+      "nTO": 1007,
       "expR": 0.034,
       "pf": 1.07,
+      "expRnet": -0.097,
+      "pfNet": 0.82,
       "mfe_p25": 9.0,
       "mfe_p50": 19.0,
       "mfe_p75": 39.0,
@@ -1748,21 +1811,31 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "ci90": {
         "expR": 0.034,
         "ci90": [
-          0.018,
-          0.051
+          0.005,
+          0.066
         ],
-        "p_mean_le_0": 0.0,
-        "n": 13017
+        "p_mean_le_0": 0.025,
+        "expRnet": -0.097,
+        "ci90net": [
+          -0.128,
+          -0.065
+        ],
+        "p_net_le_0": 1.0,
+        "n": 13017,
+        "days": 62,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.0": {
-        "n": 6549,
-        "wrTP1": 31.1,
+        "n": 6560,
+        "wrTP1": 31.0,
         "nSL": 3784,
-        "nTO": 729,
+        "nTO": 740,
         "expR": 0.039,
         "pf": 1.06,
+        "expRnet": -0.092,
+        "pfNet": 0.87,
         "mfe_p25": 12.0,
         "mfe_p50": 27.0,
         "mfe_p75": 54.0,
@@ -1771,25 +1844,35 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 7.0,
         "bars_win_p50": 6.0,
         "bars_loss_p50": 5.0,
-        "entryZoneTk_p50": -13.0,
+        "entryZoneTk_p50": -14.0,
         "revAfterSL_rate": 21.8,
         "ci90": {
           "expR": 0.039,
           "ci90": [
-            0.008,
-            0.069
+            -0.008,
+            0.092
           ],
-          "p_mean_le_0": 0.018,
-          "n": 6177
+          "p_mean_le_0": 0.091,
+          "expRnet": -0.092,
+          "ci90net": [
+            -0.141,
+            -0.037
+          ],
+          "p_net_le_0": 0.999,
+          "n": 6177,
+          "days": 60,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
-        "n": 5360,
-        "wrTP1": 27.6,
+        "n": 5370,
+        "wrTP1": 27.5,
         "nSL": 3216,
-        "nTO": 667,
+        "nTO": 677,
         "expR": 0.034,
         "pf": 1.05,
+        "expRnet": -0.096,
+        "pfNet": 0.87,
         "mfe_p25": 12.0,
         "mfe_p50": 28.0,
         "mfe_p75": 57.0,
@@ -1803,20 +1886,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.034,
           "ci90": [
-            -0.001,
-            0.07
+            -0.026,
+            0.099
           ],
-          "p_mean_le_0": 0.052,
-          "n": 5033
+          "p_mean_le_0": 0.179,
+          "expRnet": -0.096,
+          "ci90net": [
+            -0.158,
+            -0.034
+          ],
+          "p_net_le_0": 0.99,
+          "n": 5033,
+          "days": 59,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 4921,
-        "wrTP1": 26.1,
+        "n": 4929,
+        "wrTP1": 26.0,
         "nSL": 2990,
-        "nTO": 647,
+        "nTO": 655,
         "expR": 0.033,
         "pf": 1.05,
+        "expRnet": -0.098,
+        "pfNet": 0.87,
         "mfe_p25": 12.0,
         "mfe_p50": 28.0,
         "mfe_p75": 57.0,
@@ -1830,20 +1923,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.033,
           "ci90": [
-            -0.005,
-            0.071
+            -0.032,
+            0.1
           ],
-          "p_mean_le_0": 0.079,
-          "n": 4611
+          "p_mean_le_0": 0.203,
+          "expRnet": -0.098,
+          "ci90net": [
+            -0.165,
+            -0.032
+          ],
+          "p_net_le_0": 0.993,
+          "n": 4611,
+          "days": 59,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 4149,
+        "n": 4155,
         "wrTP1": 23.5,
         "nSL": 2577,
-        "nTO": 596,
+        "nTO": 602,
         "expR": 0.031,
         "pf": 1.05,
+        "expRnet": -0.1,
+        "pfNet": 0.87,
         "mfe_p25": 13.0,
         "mfe_p50": 29.0,
         "mfe_p75": 60.0,
@@ -1857,20 +1960,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.031,
           "ci90": [
-            -0.01,
-            0.076
+            -0.043,
+            0.105
           ],
-          "p_mean_le_0": 0.117,
-          "n": 3879
+          "p_mean_le_0": 0.246,
+          "expRnet": -0.1,
+          "ci90net": [
+            -0.176,
+            -0.025
+          ],
+          "p_net_le_0": 0.986,
+          "n": 3879,
+          "days": 59,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 2800,
-        "wrTP1": 18.1,
+        "n": 2806,
+        "wrTP1": 18.0,
         "nSL": 1821,
-        "nTO": 473,
+        "nTO": 479,
         "expR": 0.017,
         "pf": 1.02,
+        "expRnet": -0.115,
+        "pfNet": 0.86,
         "mfe_p25": 13.0,
         "mfe_p50": 31.0,
         "mfe_p75": 65.0,
@@ -1884,207 +1997,285 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.017,
           "ci90": [
-            -0.039,
-            0.07
+            -0.079,
+            0.12
           ],
-          "p_mean_le_0": 0.298,
-          "n": 2612
+          "p_mean_le_0": 0.402,
+          "expRnet": -0.115,
+          "ci90net": [
+            -0.209,
+            -0.013
+          ],
+          "p_net_le_0": 0.969,
+          "n": 2612,
+          "days": 59,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "15/RETEST/LONG": {
     "baseline": {
-      "n": 841,
+      "n": 847,
       "wrTP1": 52.2,
       "nSL": 367,
-      "nTO": 35,
-      "expR": 0.122,
-      "pf": 1.27,
+      "nTO": 38,
+      "expR": 0.129,
+      "pf": 1.28,
+      "expRnet": 0.082,
+      "pfNet": 1.17,
       "mfe_p25": 38.0,
-      "mfe_p50": 106.5,
-      "mfe_p75": 538.0,
+      "mfe_p50": 107.0,
+      "mfe_p75": 558.0,
       "winnerMAE_p75": 204.0,
-      "winnerMAE_p90": 2685.199999999999,
+      "winnerMAE_p90": 2741.900000000003,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
       "entryZoneTk_p50": -139.0,
       "revAfterSL_rate": 62.7,
       "ci90": {
-        "expR": 0.122,
+        "expR": 0.129,
         "ci90": [
-          0.056,
-          0.192
+          0.049,
+          0.224
         ],
-        "p_mean_le_0": 0.002,
-        "n": 806
+        "p_mean_le_0": 0.004,
+        "expRnet": 0.082,
+        "ci90net": [
+          0.001,
+          0.181
+        ],
+        "p_net_le_0": 0.046,
+        "n": 809,
+        "days": 19,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.0": {
-        "n": 318,
-        "wrTP1": 33.6,
+        "n": 322,
+        "wrTP1": 33.9,
         "nSL": 194,
-        "nTO": 17,
-        "expR": 0.098,
-        "pf": 1.15,
+        "nTO": 19,
+        "expR": 0.114,
+        "pf": 1.18,
+        "expRnet": 0.058,
+        "pfNet": 1.08,
         "mfe_p25": 50.0,
         "mfe_p50": 144.0,
-        "mfe_p75": 848.0,
-        "winnerMAE_p75": 320.5,
-        "winnerMAE_p90": 2756.8,
+        "mfe_p75": 852.5,
+        "winnerMAE_p75": 430.0,
+        "winnerMAE_p90": 2799.4000000000005,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -110.0,
+        "entryZoneTk_p50": -107.0,
         "revAfterSL_rate": 58.8,
         "ci90": {
-          "expR": 0.098,
+          "expR": 0.114,
           "ci90": [
-            -0.045,
-            0.242
+            -0.039,
+            0.298
           ],
-          "p_mean_le_0": 0.139,
-          "n": 301
+          "p_mean_le_0": 0.106,
+          "expRnet": 0.058,
+          "ci90net": [
+            -0.095,
+            0.245
+          ],
+          "p_net_le_0": 0.259,
+          "n": 303,
+          "days": 19,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
-        "n": 258,
-        "wrTP1": 29.8,
+        "n": 261,
+        "wrTP1": 29.9,
         "nSL": 167,
-        "nTO": 14,
-        "expR": 0.053,
-        "pf": 1.08,
+        "nTO": 16,
+        "expR": 0.067,
+        "pf": 1.1,
+        "expRnet": 0.007,
+        "pfNet": 1.01,
         "mfe_p25": 53.0,
         "mfe_p50": 132.0,
-        "mfe_p75": 899.0,
-        "winnerMAE_p75": 519.0,
-        "winnerMAE_p90": 3317.4000000000055,
+        "mfe_p75": 950.0,
+        "winnerMAE_p75": 581.25,
+        "winnerMAE_p90": 3689.2999999999993,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -107.0,
+        "entryZoneTk_p50": -106.0,
         "revAfterSL_rate": 59.3,
         "ci90": {
-          "expR": 0.053,
+          "expR": 0.067,
           "ci90": [
-            -0.119,
-            0.225
+            -0.11,
+            0.29
           ],
-          "p_mean_le_0": 0.3,
-          "n": 244
+          "p_mean_le_0": 0.259,
+          "expRnet": 0.007,
+          "ci90net": [
+            -0.168,
+            0.238
+          ],
+          "p_net_le_0": 0.462,
+          "n": 245,
+          "days": 19,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 231,
-        "wrTP1": 29.4,
+        "n": 233,
+        "wrTP1": 29.6,
         "nSL": 152,
-        "nTO": 11,
-        "expR": 0.052,
-        "pf": 1.08,
+        "nTO": 12,
+        "expR": 0.068,
+        "pf": 1.1,
+        "expRnet": 0.007,
+        "pfNet": 1.01,
         "mfe_p25": 53.0,
-        "mfe_p50": 139.0,
-        "mfe_p75": 860.25,
-        "winnerMAE_p75": 633.75,
-        "winnerMAE_p90": 3220.300000000004,
+        "mfe_p50": 140.0,
+        "mfe_p75": 882.0,
+        "winnerMAE_p75": 729.0,
+        "winnerMAE_p90": 3659.2000000000007,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -107.0,
+        "entryZoneTk_p50": -106.0,
         "revAfterSL_rate": 59.2,
         "ci90": {
-          "expR": 0.052,
+          "expR": 0.068,
           "ci90": [
-            -0.123,
-            0.234
+            -0.125,
+            0.312
           ],
-          "p_mean_le_0": 0.307,
-          "n": 220
+          "p_mean_le_0": 0.28,
+          "expRnet": 0.007,
+          "ci90net": [
+            -0.184,
+            0.255
+          ],
+          "p_net_le_0": 0.466,
+          "n": 221,
+          "days": 19,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 181,
-        "wrTP1": 29.3,
+        "n": 183,
+        "wrTP1": 29.5,
         "nSL": 118,
-        "nTO": 10,
-        "expR": 0.117,
-        "pf": 1.17,
-        "mfe_p25": 59.5,
-        "mfe_p50": 156.0,
-        "mfe_p75": 852.5,
-        "winnerMAE_p75": 602.0,
-        "winnerMAE_p90": 2713.800000000001,
+        "nTO": 11,
+        "expR": 0.136,
+        "pf": 1.2,
+        "expRnet": 0.078,
+        "pfNet": 1.11,
+        "mfe_p25": 59.75,
+        "mfe_p50": 160.5,
+        "mfe_p75": 860.25,
+        "winnerMAE_p75": 697.25,
+        "winnerMAE_p90": 3344.3000000000025,
+        "loserMFEbeforeSL_p50": 0.0,
+        "bars_win_p50": 1.0,
+        "bars_loss_p50": 1.0,
+        "entryZoneTk_p50": -84.0,
+        "revAfterSL_rate": 54.2,
+        "ci90": {
+          "expR": 0.136,
+          "ci90": [
+            -0.119,
+            0.442
+          ],
+          "p_mean_le_0": 0.181,
+          "expRnet": 0.078,
+          "ci90net": [
+            -0.177,
+            0.384
+          ],
+          "p_net_le_0": 0.291,
+          "n": 172,
+          "days": 19,
+          "ci_method": "day-clustered bootstrap"
+        }
+      },
+      "2.0": {
+        "n": 109,
+        "wrTP1": 26.6,
+        "nSL": 73,
+        "nTO": 7,
+        "expR": 0.159,
+        "pf": 1.22,
+        "expRnet": 0.103,
+        "pfNet": 1.13,
+        "mfe_p25": 68.0,
+        "mfe_p50": 251.0,
+        "mfe_p75": 9262.0,
+        "winnerMAE_p75": 1357.0,
+        "winnerMAE_p90": 5013.399999999995,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
         "entryZoneTk_p50": -88.0,
-        "revAfterSL_rate": 54.2,
-        "ci90": {
-          "expR": 0.117,
-          "ci90": [
-            -0.1,
-            0.337
-          ],
-          "p_mean_le_0": 0.19,
-          "n": 171
-        }
-      },
-      "2.0": {
-        "n": 107,
-        "wrTP1": 26.2,
-        "nSL": 73,
-        "nTO": 6,
-        "expR": 0.126,
-        "pf": 1.17,
-        "mfe_p25": 68.0,
-        "mfe_p50": 246.0,
-        "mfe_p75": 9037.0,
-        "winnerMAE_p75": 886.0,
-        "winnerMAE_p90": 4999.600000000006,
-        "loserMFEbeforeSL_p50": 0.0,
-        "bars_win_p50": 1.0,
-        "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -90.0,
         "revAfterSL_rate": 50.7,
         "ci90": {
-          "expR": 0.126,
+          "expR": 0.159,
           "ci90": [
-            -0.176,
-            0.433
+            -0.109,
+            0.471
           ],
-          "p_mean_le_0": 0.247,
-          "n": 101
+          "p_mean_le_0": 0.172,
+          "expRnet": 0.103,
+          "ci90net": [
+            -0.174,
+            0.424
+          ],
+          "p_net_le_0": 0.266,
+          "n": 102,
+          "days": 19,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "15/RETEST/SHORT": {
     "baseline": {
-      "n": 816,
-      "wrTP1": 52.9,
+      "n": 817,
+      "wrTP1": 53.0,
       "nSL": 357,
       "nTO": 27,
-      "expR": 0.175,
+      "expR": 0.176,
       "pf": 1.39,
+      "expRnet": 0.128,
+      "pfNet": 1.27,
       "mfe_p25": 36.0,
-      "mfe_p50": 129.5,
-      "mfe_p75": 1068.75,
-      "winnerMAE_p75": 232.5,
-      "winnerMAE_p90": 4160.300000000003,
+      "mfe_p50": 131.0,
+      "mfe_p75": 1071.0,
+      "winnerMAE_p75": 230.0,
+      "winnerMAE_p90": 4151.600000000001,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -182.5,
+      "entryZoneTk_p50": -183.0,
       "revAfterSL_rate": 68.3,
       "ci90": {
-        "expR": 0.175,
+        "expR": 0.176,
         "ci90": [
-          0.094,
-          0.26
+          0.095,
+          0.297
         ],
         "p_mean_le_0": 0.0,
-        "n": 790
+        "expRnet": 0.128,
+        "ci90net": [
+          0.045,
+          0.25
+        ],
+        "p_net_le_0": 0.004,
+        "n": 791,
+        "days": 20,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
@@ -2095,6 +2286,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 14,
         "expR": 0.345,
         "pf": 1.59,
+        "expRnet": 0.29,
+        "pfNet": 1.46,
         "mfe_p25": 53.0,
         "mfe_p50": 155.0,
         "mfe_p75": 939.0,
@@ -2108,11 +2301,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.345,
           "ci90": [
-            0.147,
-            0.558
+            0.142,
+            0.633
           ],
-          "p_mean_le_0": 0.0,
-          "n": 285
+          "p_mean_le_0": 0.001,
+          "expRnet": 0.29,
+          "ci90net": [
+            0.081,
+            0.579
+          ],
+          "p_net_le_0": 0.009,
+          "n": 285,
+          "days": 19,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
@@ -2122,6 +2323,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 11,
         "expR": 0.4,
         "pf": 1.67,
+        "expRnet": 0.344,
+        "pfNet": 1.54,
         "mfe_p25": 54.5,
         "mfe_p50": 153.0,
         "mfe_p75": 990.0,
@@ -2135,11 +2338,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.4,
           "ci90": [
-            0.177,
-            0.636
+            0.147,
+            0.731
           ],
           "p_mean_le_0": 0.003,
-          "n": 235
+          "expRnet": 0.344,
+          "ci90net": [
+            0.088,
+            0.68
+          ],
+          "p_net_le_0": 0.014,
+          "n": 235,
+          "days": 19,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
@@ -2149,6 +2360,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 10,
         "expR": 0.394,
         "pf": 1.64,
+        "expRnet": 0.338,
+        "pfNet": 1.52,
         "mfe_p25": 56.75,
         "mfe_p50": 153.5,
         "mfe_p75": 1053.5,
@@ -2162,11 +2375,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.394,
           "ci90": [
-            0.159,
-            0.667
+            0.114,
+            0.756
           ],
-          "p_mean_le_0": 0.003,
-          "n": 212
+          "p_mean_le_0": 0.008,
+          "expRnet": 0.338,
+          "ci90net": [
+            0.055,
+            0.706
+          ],
+          "p_net_le_0": 0.025,
+          "n": 212,
+          "days": 19,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
@@ -2176,6 +2397,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 9,
         "expR": 0.368,
         "pf": 1.56,
+        "expRnet": 0.316,
+        "pfNet": 1.45,
         "mfe_p25": 64.0,
         "mfe_p50": 155.0,
         "mfe_p75": 979.0,
@@ -2189,11 +2412,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.368,
           "ci90": [
-            0.083,
-            0.684
+            0.035,
+            0.801
           ],
-          "p_mean_le_0": 0.013,
-          "n": 173
+          "p_mean_le_0": 0.032,
+          "expRnet": 0.316,
+          "ci90net": [
+            -0.02,
+            0.751
+          ],
+          "p_net_le_0": 0.062,
+          "n": 173,
+          "days": 19,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
@@ -2203,6 +2434,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 6,
         "expR": 0.546,
         "pf": 1.81,
+        "expRnet": 0.496,
+        "pfNet": 1.7,
         "mfe_p25": 64.0,
         "mfe_p50": 176.0,
         "mfe_p75": 979.0,
@@ -2216,23 +2449,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.546,
           "ci90": [
-            0.118,
-            1.006
+            0.031,
+            1.187
           ],
-          "p_mean_le_0": 0.017,
-          "n": 105
+          "p_mean_le_0": 0.036,
+          "expRnet": 0.496,
+          "ci90net": [
+            -0.017,
+            1.143
+          ],
+          "p_net_le_0": 0.056,
+          "n": 105,
+          "days": 19,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "2/RETEST/LONG": {
     "baseline": {
-      "n": 8579,
+      "n": 8580,
       "wrTP1": 48.8,
       "nSL": 3983,
-      "nTO": 408,
+      "nTO": 409,
       "expR": 0.036,
       "pf": 1.07,
+      "expRnet": -0.111,
+      "pfNet": 0.8,
       "mfe_p25": 8.0,
       "mfe_p50": 19.0,
       "mfe_p75": 42.0,
@@ -2246,11 +2489,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "ci90": {
         "expR": 0.036,
         "ci90": [
-          0.014,
-          0.056
+          -0.002,
+          0.073
         ],
-        "p_mean_le_0": 0.002,
-        "n": 8314
+        "p_mean_le_0": 0.061,
+        "expRnet": -0.111,
+        "ci90net": [
+          -0.15,
+          -0.073
+        ],
+        "p_net_le_0": 1.0,
+        "n": 8314,
+        "days": 63,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
@@ -2261,6 +2512,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 288,
         "expR": 0.031,
         "pf": 1.05,
+        "expRnet": -0.126,
+        "pfNet": 0.83,
         "mfe_p25": 12.0,
         "mfe_p50": 26.0,
         "mfe_p75": 54.0,
@@ -2274,11 +2527,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.031,
           "ci90": [
-            -0.009,
-            0.074
+            -0.034,
+            0.098
           ],
-          "p_mean_le_0": 0.102,
-          "n": 3778
+          "p_mean_le_0": 0.2,
+          "expRnet": -0.126,
+          "ci90net": [
+            -0.192,
+            -0.061
+          ],
+          "p_net_le_0": 1.0,
+          "n": 3778,
+          "days": 62,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
@@ -2288,6 +2549,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 262,
         "expR": 0.026,
         "pf": 1.04,
+        "expRnet": -0.134,
+        "pfNet": 0.83,
         "mfe_p25": 12.0,
         "mfe_p50": 26.0,
         "mfe_p75": 55.0,
@@ -2301,11 +2564,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.026,
           "ci90": [
-            -0.022,
-            0.074
+            -0.054,
+            0.102
           ],
-          "p_mean_le_0": 0.176,
-          "n": 3057
+          "p_mean_le_0": 0.3,
+          "expRnet": -0.134,
+          "ci90net": [
+            -0.215,
+            -0.058
+          ],
+          "p_net_le_0": 0.999,
+          "n": 3057,
+          "days": 60,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
@@ -2315,6 +2586,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 246,
         "expR": 0.032,
         "pf": 1.05,
+        "expRnet": -0.128,
+        "pfNet": 0.84,
         "mfe_p25": 12.0,
         "mfe_p50": 27.0,
         "mfe_p75": 56.0,
@@ -2328,11 +2601,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.032,
           "ci90": [
-            -0.018,
-            0.084
+            -0.046,
+            0.114
           ],
-          "p_mean_le_0": 0.153,
-          "n": 2752
+          "p_mean_le_0": 0.256,
+          "expRnet": -0.128,
+          "ci90net": [
+            -0.207,
+            -0.046
+          ],
+          "p_net_le_0": 0.996,
+          "n": 2752,
+          "days": 59,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
@@ -2342,6 +2623,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 229,
         "expR": 0.029,
         "pf": 1.04,
+        "expRnet": -0.133,
+        "pfNet": 0.83,
         "mfe_p25": 12.0,
         "mfe_p50": 27.0,
         "mfe_p75": 59.0,
@@ -2355,11 +2638,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.029,
           "ci90": [
-            -0.027,
-            0.088
+            -0.062,
+            0.126
           ],
-          "p_mean_le_0": 0.209,
-          "n": 2277
+          "p_mean_le_0": 0.292,
+          "expRnet": -0.133,
+          "ci90net": [
+            -0.222,
+            -0.037
+          ],
+          "p_net_le_0": 0.991,
+          "n": 2277,
+          "days": 59,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
@@ -2369,6 +2660,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 177,
         "expR": 0.042,
         "pf": 1.06,
+        "expRnet": -0.122,
+        "pfNet": 0.86,
         "mfe_p25": 12.0,
         "mfe_p50": 29.0,
         "mfe_p75": 64.0,
@@ -2382,23 +2675,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.042,
           "ci90": [
-            -0.038,
-            0.126
+            -0.079,
+            0.167
           ],
-          "p_mean_le_0": 0.176,
-          "n": 1412
+          "p_mean_le_0": 0.291,
+          "expRnet": -0.122,
+          "ci90net": [
+            -0.243,
+            0.0
+          ],
+          "p_net_le_0": 0.95,
+          "n": 1412,
+          "days": 58,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "2/RETEST/SHORT": {
     "baseline": {
-      "n": 5859,
+      "n": 5866,
       "wrTP1": 49.2,
       "nSL": 2696,
-      "nTO": 278,
+      "nTO": 285,
       "expR": 0.054,
       "pf": 1.11,
+      "expRnet": -0.061,
+      "pfNet": 0.89,
       "mfe_p25": 11.0,
       "mfe_p50": 24.0,
       "mfe_p75": 51.0,
@@ -2412,21 +2715,31 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "ci90": {
         "expR": 0.054,
         "ci90": [
-          0.028,
-          0.079
+          0.014,
+          0.091
         ],
-        "p_mean_le_0": 0.001,
-        "n": 5678
+        "p_mean_le_0": 0.012,
+        "expRnet": -0.061,
+        "ci90net": [
+          -0.099,
+          -0.025
+        ],
+        "p_net_le_0": 0.996,
+        "n": 5678,
+        "days": 59,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.0": {
-        "n": 2729,
+        "n": 2733,
         "wrTP1": 32.5,
         "nSL": 1654,
-        "nTO": 188,
+        "nTO": 192,
         "expR": 0.036,
         "pf": 1.06,
+        "expRnet": -0.082,
+        "pfNet": 0.88,
         "mfe_p25": 16.0,
         "mfe_p50": 34.0,
         "mfe_p75": 69.0,
@@ -2440,20 +2753,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.036,
           "ci90": [
-            -0.014,
-            0.082
+            -0.038,
+            0.108
           ],
-          "p_mean_le_0": 0.113,
-          "n": 2629
+          "p_mean_le_0": 0.204,
+          "expRnet": -0.082,
+          "ci90net": [
+            -0.156,
+            -0.008
+          ],
+          "p_net_le_0": 0.971,
+          "n": 2629,
+          "days": 57,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
-        "n": 2218,
-        "wrTP1": 28.7,
+        "n": 2222,
+        "wrTP1": 28.6,
         "nSL": 1411,
-        "nTO": 171,
+        "nTO": 175,
         "expR": 0.021,
         "pf": 1.03,
+        "expRnet": -0.096,
+        "pfNet": 0.87,
         "mfe_p25": 17.0,
         "mfe_p50": 36.0,
         "mfe_p75": 73.0,
@@ -2467,20 +2790,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.021,
           "ci90": [
-            -0.034,
-            0.075
+            -0.064,
+            0.101
           ],
-          "p_mean_le_0": 0.259,
-          "n": 2132
+          "p_mean_le_0": 0.36,
+          "expRnet": -0.096,
+          "ci90net": [
+            -0.182,
+            -0.016
+          ],
+          "p_net_le_0": 0.975,
+          "n": 2132,
+          "days": 56,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 2008,
+        "n": 2012,
         "wrTP1": 27.0,
         "nSL": 1304,
-        "nTO": 161,
+        "nTO": 165,
         "expR": 0.012,
         "pf": 1.02,
+        "expRnet": -0.104,
+        "pfNet": 0.86,
         "mfe_p25": 17.0,
         "mfe_p50": 37.0,
         "mfe_p75": 74.0,
@@ -2494,20 +2827,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.012,
           "ci90": [
-            -0.047,
-            0.072
+            -0.074,
+            0.096
           ],
-          "p_mean_le_0": 0.37,
-          "n": 1930
+          "p_mean_le_0": 0.423,
+          "expRnet": -0.104,
+          "ci90net": [
+            -0.193,
+            -0.02
+          ],
+          "p_net_le_0": 0.983,
+          "n": 1930,
+          "days": 56,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 1668,
+        "n": 1671,
         "wrTP1": 24.7,
         "nSL": 1115,
-        "nTO": 141,
+        "nTO": 144,
         "expR": 0.014,
         "pf": 1.02,
+        "expRnet": -0.102,
+        "pfNet": 0.87,
         "mfe_p25": 18.0,
         "mfe_p50": 39.0,
         "mfe_p75": 78.0,
@@ -2521,20 +2864,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.014,
           "ci90": [
-            -0.056,
-            0.082
+            -0.08,
+            0.108
           ],
-          "p_mean_le_0": 0.375,
-          "n": 1606
+          "p_mean_le_0": 0.402,
+          "expRnet": -0.102,
+          "ci90net": [
+            -0.198,
+            -0.005
+          ],
+          "p_net_le_0": 0.962,
+          "n": 1606,
+          "days": 54,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 1090,
-        "wrTP1": 20.2,
+        "n": 1092,
+        "wrTP1": 20.1,
         "nSL": 758,
-        "nTO": 112,
+        "nTO": 114,
         "expR": 0.031,
         "pf": 1.04,
+        "expRnet": -0.088,
+        "pfNet": 0.89,
         "mfe_p25": 19.0,
         "mfe_p50": 41.0,
         "mfe_p75": 84.0,
@@ -2548,132 +2901,182 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.031,
           "ci90": [
-            -0.059,
-            0.126
+            -0.112,
+            0.171
           ],
-          "p_mean_le_0": 0.297,
-          "n": 1047
+          "p_mean_le_0": 0.403,
+          "expRnet": -0.088,
+          "ci90net": [
+            -0.229,
+            0.053
+          ],
+          "p_net_le_0": 0.867,
+          "n": 1047,
+          "days": 54,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "29/RETEST/LONG": {
     "baseline": {
-      "n": 409,
-      "wrTP1": 57.5,
-      "nSL": 149,
-      "nTO": 25,
+      "n": 414,
+      "wrTP1": 57.2,
+      "nSL": 150,
+      "nTO": 27,
       "expR": 0.334,
       "pf": 1.86,
+      "expRnet": 0.291,
+      "pfNet": 1.72,
       "mfe_p25": 44.0,
-      "mfe_p50": 126.5,
-      "mfe_p75": 804.5,
-      "winnerMAE_p75": 170.5,
-      "winnerMAE_p90": 3032.399999999994,
+      "mfe_p50": 131.0,
+      "mfe_p75": 830.5,
+      "winnerMAE_p75": 202.0,
+      "winnerMAE_p90": 3898.4000000000065,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -127.0,
-      "revAfterSL_rate": 65.8,
+      "entryZoneTk_p50": -131.0,
+      "revAfterSL_rate": 65.3,
       "ci90": {
         "expR": 0.334,
         "ci90": [
-          0.224,
-          0.45
+          0.21,
+          0.459
         ],
         "p_mean_le_0": 0.0,
-        "n": 384
+        "expRnet": 0.291,
+        "ci90net": [
+          0.166,
+          0.417
+        ],
+        "p_net_le_0": 0.0,
+        "n": 387,
+        "days": 18,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.0": {
-        "n": 162,
-        "wrTP1": 40.7,
+        "n": 164,
+        "wrTP1": 40.9,
         "nSL": 79,
-        "nTO": 17,
-        "expR": 0.465,
-        "pf": 1.85,
-        "mfe_p25": 55.0,
-        "mfe_p50": 142.0,
-        "mfe_p75": 1046.0,
-        "winnerMAE_p75": 136.25,
-        "winnerMAE_p90": 1598.0,
+        "nTO": 18,
+        "expR": 0.471,
+        "pf": 1.87,
+        "expRnet": 0.416,
+        "pfNet": 1.73,
+        "mfe_p25": 55.25,
+        "mfe_p50": 143.0,
+        "mfe_p75": 1119.5,
+        "winnerMAE_p75": 214.0,
+        "winnerMAE_p90": 2161.1999999999994,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -92.0,
+        "entryZoneTk_p50": -93.0,
         "revAfterSL_rate": 62.0,
         "ci90": {
-          "expR": 0.465,
+          "expR": 0.471,
           "ci90": [
-            0.232,
-            0.713
+            0.24,
+            0.684
           ],
-          "p_mean_le_0": 0.001,
-          "n": 145
+          "p_mean_le_0": 0.0,
+          "expRnet": 0.416,
+          "ci90net": [
+            0.192,
+            0.629
+          ],
+          "p_net_le_0": 0.002,
+          "n": 146,
+          "days": 18,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
-        "n": 135,
-        "wrTP1": 35.6,
+        "n": 137,
+        "wrTP1": 35.8,
         "nSL": 71,
-        "nTO": 16,
-        "expR": 0.418,
-        "pf": 1.7,
-        "mfe_p25": 55.5,
-        "mfe_p50": 142.0,
-        "mfe_p75": 1031.5,
+        "nTO": 17,
+        "expR": 0.426,
+        "pf": 1.72,
+        "expRnet": 0.371,
+        "pfNet": 1.59,
+        "mfe_p25": 55.75,
+        "mfe_p50": 143.0,
+        "mfe_p75": 1070.5,
         "winnerMAE_p75": 96.0,
-        "winnerMAE_p90": 1031.600000000001,
+        "winnerMAE_p90": 1355.6000000000022,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -85.0,
+        "entryZoneTk_p50": -88.0,
         "revAfterSL_rate": 59.2,
         "ci90": {
-          "expR": 0.418,
+          "expR": 0.426,
           "ci90": [
-            0.149,
-            0.704
+            0.142,
+            0.688
           ],
           "p_mean_le_0": 0.006,
-          "n": 119
+          "expRnet": 0.371,
+          "ci90net": [
+            0.092,
+            0.629
+          ],
+          "p_net_le_0": 0.015,
+          "n": 120,
+          "days": 17,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 120,
-        "wrTP1": 32.5,
+        "n": 122,
+        "wrTP1": 32.8,
         "nSL": 67,
-        "nTO": 14,
-        "expR": 0.391,
-        "pf": 1.62,
-        "mfe_p25": 56.25,
-        "mfe_p50": 150.0,
-        "mfe_p75": 1038.75,
-        "winnerMAE_p75": 119.5,
-        "winnerMAE_p90": 1008.4000000000007,
+        "nTO": 15,
+        "expR": 0.4,
+        "pf": 1.64,
+        "expRnet": 0.345,
+        "pfNet": 1.52,
+        "mfe_p25": 56.5,
+        "mfe_p50": 156.0,
+        "mfe_p75": 1095.0,
+        "winnerMAE_p75": 204.5,
+        "winnerMAE_p90": 1274.800000000001,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -78.0,
+        "entryZoneTk_p50": -86.5,
         "revAfterSL_rate": 56.7,
         "ci90": {
-          "expR": 0.391,
+          "expR": 0.4,
           "ci90": [
             0.083,
-            0.701
+            0.697
           ],
-          "p_mean_le_0": 0.015,
-          "n": 106
+          "p_mean_le_0": 0.021,
+          "expRnet": 0.345,
+          "ci90net": [
+            0.034,
+            0.64
+          ],
+          "p_net_le_0": 0.033,
+          "n": 107,
+          "days": 17,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 105,
-        "wrTP1": 30.5,
+        "n": 106,
+        "wrTP1": 30.2,
         "nSL": 61,
-        "nTO": 12,
+        "nTO": 13,
         "expR": 0.391,
         "pf": 1.6,
+        "expRnet": 0.337,
+        "pfNet": 1.49,
         "mfe_p25": 57.0,
         "mfe_p50": 162.0,
         "mfe_p75": 1017.0,
@@ -2682,16 +3085,24 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -88.0,
+        "entryZoneTk_p50": -90.0,
         "revAfterSL_rate": 55.7,
         "ci90": {
           "expR": 0.391,
           "ci90": [
             0.047,
-            0.745
+            0.701
           ],
-          "p_mean_le_0": 0.031,
-          "n": 93
+          "p_mean_le_0": 0.029,
+          "expRnet": 0.337,
+          "ci90net": [
+            0.003,
+            0.645
+          ],
+          "p_net_le_0": 0.048,
+          "n": 93,
+          "days": 16,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
@@ -2701,6 +3112,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 9,
         "expR": 0.494,
         "pf": 1.73,
+        "expRnet": 0.437,
+        "pfNet": 1.62,
         "mfe_p25": 71.0,
         "mfe_p50": 208.0,
         "mfe_p75": 1144.0,
@@ -2714,23 +3127,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.494,
           "ci90": [
-            0.04,
-            0.971
+            -0.016,
+            0.936
           ],
-          "p_mean_le_0": 0.035,
-          "n": 65
+          "p_mean_le_0": 0.053,
+          "expRnet": 0.437,
+          "ci90net": [
+            -0.066,
+            0.872
+          ],
+          "p_net_le_0": 0.069,
+          "n": 65,
+          "days": 15,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "29/RETEST/SHORT": {
     "baseline": {
-      "n": 468,
-      "wrTP1": 52.1,
+      "n": 469,
+      "wrTP1": 52.0,
       "nSL": 200,
-      "nTO": 24,
+      "nTO": 25,
       "expR": 0.186,
       "pf": 1.41,
+      "expRnet": 0.136,
+      "pfNet": 1.29,
       "mfe_p25": 38.75,
       "mfe_p50": 149.0,
       "mfe_p75": 997.25,
@@ -2739,16 +3162,24 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -194.0,
+      "entryZoneTk_p50": -191.0,
       "revAfterSL_rate": 79.5,
       "ci90": {
         "expR": 0.186,
         "ci90": [
-          0.086,
-          0.291
+          0.105,
+          0.276
         ],
-        "p_mean_le_0": 0.001,
-        "n": 444
+        "p_mean_le_0": 0.0,
+        "expRnet": 0.136,
+        "ci90net": [
+          0.05,
+          0.231
+        ],
+        "p_net_le_0": 0.002,
+        "n": 444,
+        "days": 18,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
@@ -2759,6 +3190,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 11,
         "expR": 0.297,
         "pf": 1.5,
+        "expRnet": 0.237,
+        "pfNet": 1.37,
         "mfe_p25": 50.75,
         "mfe_p50": 177.5,
         "mfe_p75": 1110.5,
@@ -2772,11 +3205,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.297,
           "ci90": [
-            0.075,
-            0.531
+            0.106,
+            0.529
           ],
-          "p_mean_le_0": 0.015,
-          "n": 162
+          "p_mean_le_0": 0.002,
+          "expRnet": 0.237,
+          "ci90net": [
+            0.043,
+            0.475
+          ],
+          "p_net_le_0": 0.016,
+          "n": 162,
+          "days": 18,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
@@ -2786,6 +3227,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 6,
         "expR": 0.257,
         "pf": 1.4,
+        "expRnet": 0.194,
+        "pfNet": 1.28,
         "mfe_p25": 53.75,
         "mfe_p50": 177.5,
         "mfe_p75": 1146.25,
@@ -2799,11 +3242,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.257,
           "ci90": [
-            -0.006,
-            0.527
+            0.036,
+            0.53
           ],
-          "p_mean_le_0": 0.056,
-          "n": 130
+          "p_mean_le_0": 0.017,
+          "expRnet": 0.194,
+          "ci90net": [
+            -0.028,
+            0.469
+          ],
+          "p_net_le_0": 0.086,
+          "n": 130,
+          "days": 18,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
@@ -2813,6 +3264,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 5,
         "expR": 0.233,
         "pf": 1.35,
+        "expRnet": 0.17,
+        "pfNet": 1.24,
         "mfe_p25": 60.0,
         "mfe_p50": 179.0,
         "mfe_p75": 1165.0,
@@ -2826,11 +3279,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.233,
           "ci90": [
-            -0.041,
-            0.528
+            -0.017,
+            0.539
           ],
-          "p_mean_le_0": 0.085,
-          "n": 121
+          "p_mean_le_0": 0.064,
+          "expRnet": 0.17,
+          "ci90net": [
+            -0.081,
+            0.476
+          ],
+          "p_net_le_0": 0.145,
+          "n": 121,
+          "days": 18,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
@@ -2840,6 +3301,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 4,
         "expR": 0.276,
         "pf": 1.41,
+        "expRnet": 0.212,
+        "pfNet": 1.29,
         "mfe_p25": 66.5,
         "mfe_p50": 178.0,
         "mfe_p75": 1098.5,
@@ -2853,11 +3316,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.276,
           "ci90": [
-            -0.063,
-            0.608
+            -0.042,
+            0.637
           ],
-          "p_mean_le_0": 0.093,
-          "n": 99
+          "p_mean_le_0": 0.085,
+          "expRnet": 0.212,
+          "ci90net": [
+            -0.107,
+            0.578
+          ],
+          "p_net_le_0": 0.164,
+          "n": 99,
+          "days": 18,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
@@ -2867,6 +3338,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 3,
         "expR": 0.278,
         "pf": 1.39,
+        "expRnet": 0.202,
+        "pfNet": 1.27,
         "mfe_p25": 53.0,
         "mfe_p50": 162.0,
         "mfe_p75": 979.5,
@@ -2880,23 +3353,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.278,
           "ci90": [
-            -0.133,
-            0.723
+            -0.116,
+            0.778
           ],
-          "p_mean_le_0": 0.138,
-          "n": 71
+          "p_mean_le_0": 0.141,
+          "expRnet": 0.202,
+          "ci90net": [
+            -0.193,
+            0.706
+          ],
+          "p_net_le_0": 0.245,
+          "n": 71,
+          "days": 16,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "3/RETEST/LONG": {
     "baseline": {
-      "n": 2781,
-      "wrTP1": 54.0,
+      "n": 2787,
+      "wrTP1": 53.9,
       "nSL": 1197,
-      "nTO": 83,
+      "nTO": 89,
       "expR": 0.103,
       "pf": 1.23,
+      "expRnet": -0.002,
+      "pfNet": 1.0,
       "mfe_p25": 12.0,
       "mfe_p50": 26.0,
       "mfe_p75": 57.0,
@@ -2910,21 +3393,31 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "ci90": {
         "expR": 0.103,
         "ci90": [
-          0.07,
-          0.139
+          0.062,
+          0.146
         ],
-        "p_mean_le_0": 0.0,
-        "n": 2713
+        "p_mean_le_0": 0.001,
+        "expRnet": -0.002,
+        "ci90net": [
+          -0.042,
+          0.035
+        ],
+        "p_net_le_0": 0.521,
+        "n": 2713,
+        "days": 16,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.0": {
-        "n": 1047,
-        "wrTP1": 39.1,
+        "n": 1048,
+        "wrTP1": 39.0,
         "nSL": 588,
-        "nTO": 50,
+        "nTO": 51,
         "expR": 0.14,
         "pf": 1.24,
+        "expRnet": 0.029,
+        "pfNet": 1.04,
         "mfe_p25": 18.0,
         "mfe_p50": 36.0,
         "mfe_p75": 77.0,
@@ -2938,20 +3431,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.14,
           "ci90": [
-            0.068,
-            0.213
+            0.042,
+            0.232
           ],
-          "p_mean_le_0": 0.001,
-          "n": 1012
+          "p_mean_le_0": 0.008,
+          "expRnet": 0.029,
+          "ci90net": [
+            -0.068,
+            0.118
+          ],
+          "p_net_le_0": 0.304,
+          "n": 1012,
+          "days": 16,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
-        "n": 816,
-        "wrTP1": 36.2,
+        "n": 817,
+        "wrTP1": 36.1,
         "nSL": 478,
-        "nTO": 43,
+        "nTO": 44,
         "expR": 0.138,
         "pf": 1.23,
+        "expRnet": 0.026,
+        "pfNet": 1.04,
         "mfe_p25": 20.0,
         "mfe_p50": 37.0,
         "mfe_p75": 85.0,
@@ -2965,20 +3468,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.138,
           "ci90": [
-            0.054,
-            0.224
+            0.032,
+            0.244
           ],
-          "p_mean_le_0": 0.004,
-          "n": 787
+          "p_mean_le_0": 0.018,
+          "expRnet": 0.026,
+          "ci90net": [
+            -0.078,
+            0.129
+          ],
+          "p_net_le_0": 0.338,
+          "n": 787,
+          "days": 16,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 707,
+        "n": 708,
         "wrTP1": 34.5,
         "nSL": 424,
-        "nTO": 39,
+        "nTO": 40,
         "expR": 0.133,
         "pf": 1.21,
+        "expRnet": 0.023,
+        "pfNet": 1.03,
         "mfe_p25": 21.0,
         "mfe_p50": 39.0,
         "mfe_p75": 88.0,
@@ -2992,20 +3505,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.133,
           "ci90": [
-            0.038,
-            0.23
+            0.011,
+            0.262
           ],
-          "p_mean_le_0": 0.007,
-          "n": 682
+          "p_mean_le_0": 0.036,
+          "expRnet": 0.023,
+          "ci90net": [
+            -0.096,
+            0.146
+          ],
+          "p_net_le_0": 0.364,
+          "n": 682,
+          "days": 16,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 522,
-        "wrTP1": 32.0,
+        "n": 523,
+        "wrTP1": 31.9,
         "nSL": 324,
-        "nTO": 31,
+        "nTO": 32,
         "expR": 0.156,
         "pf": 1.24,
+        "expRnet": 0.043,
+        "pfNet": 1.06,
         "mfe_p25": 22.0,
         "mfe_p50": 41.0,
         "mfe_p75": 88.0,
@@ -3019,20 +3542,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.156,
           "ci90": [
-            0.034,
-            0.276
+            -0.001,
+            0.316
           ],
-          "p_mean_le_0": 0.017,
-          "n": 503
+          "p_mean_le_0": 0.051,
+          "expRnet": 0.043,
+          "ci90net": [
+            -0.111,
+            0.199
+          ],
+          "p_net_le_0": 0.307,
+          "n": 503,
+          "days": 15,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 270,
-        "wrTP1": 29.6,
+        "n": 271,
+        "wrTP1": 29.5,
         "nSL": 167,
-        "nTO": 23,
+        "nTO": 24,
         "expR": 0.286,
         "pf": 1.44,
+        "expRnet": 0.175,
+        "pfNet": 1.24,
         "mfe_p25": 26.0,
         "mfe_p50": 45.0,
         "mfe_p75": 86.0,
@@ -3046,23 +3579,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.286,
           "ci90": [
-            0.104,
-            0.476
+            0.074,
+            0.493
           ],
-          "p_mean_le_0": 0.004,
-          "n": 257
+          "p_mean_le_0": 0.007,
+          "expRnet": 0.175,
+          "ci90net": [
+            -0.031,
+            0.375
+          ],
+          "p_net_le_0": 0.084,
+          "n": 257,
+          "days": 15,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "3/RETEST/SHORT": {
     "baseline": {
-      "n": 2344,
-      "wrTP1": 53.5,
+      "n": 2351,
+      "wrTP1": 53.3,
       "nSL": 992,
-      "nTO": 98,
+      "nTO": 105,
       "expR": 0.13,
       "pf": 1.3,
+      "expRnet": 0.016,
+      "pfNet": 1.03,
       "mfe_p25": 12.0,
       "mfe_p50": 25.0,
       "mfe_p75": 57.0,
@@ -3076,21 +3619,31 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "ci90": {
         "expR": 0.13,
         "ci90": [
-          0.092,
-          0.171
+          0.074,
+          0.19
         ],
         "p_mean_le_0": 0.0,
-        "n": 2260
+        "expRnet": 0.016,
+        "ci90net": [
+          -0.04,
+          0.075
+        ],
+        "p_net_le_0": 0.331,
+        "n": 2260,
+        "days": 16,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.0": {
-        "n": 903,
-        "wrTP1": 39.8,
+        "n": 909,
+        "wrTP1": 39.5,
         "nSL": 481,
-        "nTO": 63,
+        "nTO": 69,
         "expR": 0.2,
         "pf": 1.35,
+        "expRnet": 0.076,
+        "pfNet": 1.12,
         "mfe_p25": 16.0,
         "mfe_p50": 33.0,
         "mfe_p75": 73.75,
@@ -3099,25 +3652,35 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 4.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -26.0,
+        "entryZoneTk_p50": -27.0,
         "revAfterSL_rate": 48.4,
         "ci90": {
           "expR": 0.2,
           "ci90": [
-            0.117,
-            0.282
+            0.095,
+            0.31
           ],
           "p_mean_le_0": 0.0,
-          "n": 854
+          "expRnet": 0.076,
+          "ci90net": [
+            -0.026,
+            0.186
+          ],
+          "p_net_le_0": 0.118,
+          "n": 854,
+          "days": 16,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
-        "n": 687,
-        "wrTP1": 34.8,
+        "n": 693,
+        "wrTP1": 34.5,
         "nSL": 394,
-        "nTO": 54,
+        "nTO": 60,
         "expR": 0.166,
         "pf": 1.27,
+        "expRnet": 0.044,
+        "pfNet": 1.06,
         "mfe_p25": 17.0,
         "mfe_p50": 36.0,
         "mfe_p75": 79.0,
@@ -3131,20 +3694,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.166,
           "ci90": [
-            0.071,
-            0.272
+            0.033,
+            0.302
           ],
-          "p_mean_le_0": 0.003,
-          "n": 646
+          "p_mean_le_0": 0.015,
+          "expRnet": 0.044,
+          "ci90net": [
+            -0.088,
+            0.178
+          ],
+          "p_net_le_0": 0.305,
+          "n": 646,
+          "days": 16,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 601,
-        "wrTP1": 33.3,
+        "n": 607,
+        "wrTP1": 32.9,
         "nSL": 351,
-        "nTO": 50,
+        "nTO": 56,
         "expR": 0.168,
         "pf": 1.27,
+        "expRnet": 0.046,
+        "pfNet": 1.07,
         "mfe_p25": 18.0,
         "mfe_p50": 37.0,
         "mfe_p75": 80.25,
@@ -3158,20 +3731,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.168,
           "ci90": [
-            0.061,
-            0.274
+            0.017,
+            0.318
           ],
-          "p_mean_le_0": 0.004,
-          "n": 564
+          "p_mean_le_0": 0.029,
+          "expRnet": 0.046,
+          "ci90net": [
+            -0.103,
+            0.197
+          ],
+          "p_net_le_0": 0.329,
+          "n": 564,
+          "days": 16,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 479,
-        "wrTP1": 31.1,
+        "n": 482,
+        "wrTP1": 30.9,
         "nSL": 286,
-        "nTO": 44,
+        "nTO": 47,
         "expR": 0.18,
         "pf": 1.28,
+        "expRnet": 0.061,
+        "pfNet": 1.08,
         "mfe_p25": 19.0,
         "mfe_p50": 41.5,
         "mfe_p75": 89.0,
@@ -3185,20 +3768,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.18,
           "ci90": [
-            0.055,
-            0.312
+            0.025,
+            0.34
           ],
-          "p_mean_le_0": 0.009,
-          "n": 448
+          "p_mean_le_0": 0.025,
+          "expRnet": 0.061,
+          "ci90net": [
+            -0.092,
+            0.221
+          ],
+          "p_net_le_0": 0.279,
+          "n": 448,
+          "days": 16,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 229,
-        "wrTP1": 24.9,
+        "n": 232,
+        "wrTP1": 24.6,
         "nSL": 147,
-        "nTO": 25,
+        "nTO": 28,
         "expR": 0.189,
         "pf": 1.28,
+        "expRnet": 0.076,
+        "pfNet": 1.1,
         "mfe_p25": 21.0,
         "mfe_p50": 47.0,
         "mfe_p75": 100.0,
@@ -3207,348 +3800,476 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 12.0,
         "bars_win_p50": 5.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -31.0,
+        "entryZoneTk_p50": -31.5,
         "revAfterSL_rate": 34.0,
         "ci90": {
           "expR": 0.189,
           "ci90": [
-            -0.011,
-            0.4
+            -0.079,
+            0.453
           ],
-          "p_mean_le_0": 0.062,
-          "n": 215
+          "p_mean_le_0": 0.131,
+          "expRnet": 0.076,
+          "ci90net": [
+            -0.193,
+            0.34
+          ],
+          "p_net_le_0": 0.333,
+          "n": 215,
+          "days": 15,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "5/RETEST/LONG": {
     "baseline": {
-      "n": 4231,
-      "wrTP1": 53.1,
-      "nSL": 1817,
-      "nTO": 168,
-      "expR": 0.112,
-      "pf": 1.25,
+      "n": 4255,
+      "wrTP1": 53.2,
+      "nSL": 1824,
+      "nTO": 169,
+      "expR": 0.113,
+      "pf": 1.26,
+      "expRnet": 0.035,
+      "pfNet": 1.07,
       "mfe_p25": 18.0,
       "mfe_p50": 49.0,
-      "mfe_p75": 234.0,
-      "winnerMAE_p75": 52.0,
-      "winnerMAE_p90": 604.5,
+      "mfe_p75": 244.0,
+      "winnerMAE_p75": 54.75,
+      "winnerMAE_p90": 747.8000000000002,
       "loserMFEbeforeSL_p50": 1.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
       "entryZoneTk_p50": -52.0,
-      "revAfterSL_rate": 53.1,
+      "revAfterSL_rate": 53.2,
       "ci90": {
-        "expR": 0.112,
+        "expR": 0.113,
         "ci90": [
-          0.081,
-          0.141
+          0.074,
+          0.151
         ],
         "p_mean_le_0": 0.0,
-        "n": 4090
+        "expRnet": 0.035,
+        "ci90net": [
+          -0.006,
+          0.073
+        ],
+        "p_net_le_0": 0.084,
+        "n": 4113,
+        "days": 65,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.0": {
-        "n": 1758,
+        "n": 1766,
         "wrTP1": 36.5,
-        "nSL": 1004,
-        "nTO": 112,
-        "expR": 0.151,
+        "nSL": 1009,
+        "nTO": 113,
+        "expR": 0.15,
         "pf": 1.25,
+        "expRnet": 0.055,
+        "pfNet": 1.08,
         "mfe_p25": 24.0,
-        "mfe_p50": 59.0,
-        "mfe_p75": 249.25,
-        "winnerMAE_p75": 42.0,
-        "winnerMAE_p90": 476.39999999999986,
+        "mfe_p50": 60.0,
+        "mfe_p75": 256.0,
+        "winnerMAE_p75": 42.25,
+        "winnerMAE_p90": 517.6000000000026,
         "loserMFEbeforeSL_p50": 4.0,
         "bars_win_p50": 2.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -41.0,
-        "revAfterSL_rate": 47.1,
+        "entryZoneTk_p50": -41.5,
+        "revAfterSL_rate": 47.2,
         "ci90": {
-          "expR": 0.151,
+          "expR": 0.15,
           "ci90": [
-            0.089,
-            0.215
+            0.065,
+            0.233
           ],
-          "p_mean_le_0": 0.0,
-          "n": 1672
+          "p_mean_le_0": 0.002,
+          "expRnet": 0.055,
+          "ci90net": [
+            -0.033,
+            0.136
+          ],
+          "p_net_le_0": 0.142,
+          "n": 1679,
+          "days": 63,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
-        "n": 1425,
+        "n": 1431,
         "wrTP1": 34.2,
-        "nSL": 834,
-        "nTO": 103,
+        "nSL": 837,
+        "nTO": 104,
         "expR": 0.173,
         "pf": 1.28,
+        "expRnet": 0.075,
+        "pfNet": 1.11,
         "mfe_p25": 24.0,
-        "mfe_p50": 59.0,
-        "mfe_p75": 253.0,
-        "winnerMAE_p75": 36.0,
-        "winnerMAE_p90": 353.40000000000055,
+        "mfe_p50": 60.0,
+        "mfe_p75": 266.0,
+        "winnerMAE_p75": 36.75,
+        "winnerMAE_p90": 391.400000000001,
         "loserMFEbeforeSL_p50": 5.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -40.0,
-        "revAfterSL_rate": 44.8,
+        "revAfterSL_rate": 45.0,
         "ci90": {
           "expR": 0.173,
           "ci90": [
-            0.104,
-            0.247
+            0.072,
+            0.266
           ],
-          "p_mean_le_0": 0.001,
-          "n": 1348
+          "p_mean_le_0": 0.003,
+          "expRnet": 0.075,
+          "ci90net": [
+            -0.025,
+            0.165
+          ],
+          "p_net_le_0": 0.101,
+          "n": 1353,
+          "days": 63,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 1302,
+        "n": 1308,
         "wrTP1": 32.3,
-        "nSL": 786,
-        "nTO": 96,
+        "nSL": 789,
+        "nTO": 97,
         "expR": 0.156,
         "pf": 1.24,
-        "mfe_p25": 24.0,
-        "mfe_p50": 60.5,
-        "mfe_p75": 262.25,
-        "winnerMAE_p75": 37.25,
-        "winnerMAE_p90": 391.400000000001,
+        "expRnet": 0.059,
+        "pfNet": 1.08,
+        "mfe_p25": 25.0,
+        "mfe_p50": 61.0,
+        "mfe_p75": 275.0,
+        "winnerMAE_p75": 38.75,
+        "winnerMAE_p90": 426.6000000000015,
         "loserMFEbeforeSL_p50": 6.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -40.0,
-        "revAfterSL_rate": 43.6,
+        "revAfterSL_rate": 43.9,
         "ci90": {
           "expR": 0.156,
           "ci90": [
-            0.08,
-            0.233
+            0.052,
+            0.252
           ],
-          "p_mean_le_0": 0.001,
-          "n": 1232
+          "p_mean_le_0": 0.009,
+          "expRnet": 0.059,
+          "ci90net": [
+            -0.049,
+            0.152
+          ],
+          "p_net_le_0": 0.169,
+          "n": 1237,
+          "days": 63,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 1053,
+        "n": 1058,
         "wrTP1": 30.4,
-        "nSL": 655,
-        "nTO": 78,
-        "expR": 0.171,
+        "nSL": 657,
+        "nTO": 79,
+        "expR": 0.172,
         "pf": 1.26,
-        "mfe_p25": 24.0,
-        "mfe_p50": 61.0,
-        "mfe_p75": 269.75,
-        "winnerMAE_p75": 34.25,
-        "winnerMAE_p90": 334.5000000000001,
+        "expRnet": 0.072,
+        "pfNet": 1.1,
+        "mfe_p25": 24.75,
+        "mfe_p50": 61.5,
+        "mfe_p75": 277.75,
+        "winnerMAE_p75": 35.75,
+        "winnerMAE_p90": 338.50000000000017,
         "loserMFEbeforeSL_p50": 6.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -38.0,
-        "revAfterSL_rate": 42.1,
+        "revAfterSL_rate": 42.3,
         "ci90": {
-          "expR": 0.171,
+          "expR": 0.172,
           "ci90": [
-            0.079,
-            0.262
+            0.054,
+            0.283
           ],
-          "p_mean_le_0": 0.0,
-          "n": 1000
+          "p_mean_le_0": 0.007,
+          "expRnet": 0.072,
+          "ci90net": [
+            -0.047,
+            0.181
+          ],
+          "p_net_le_0": 0.15,
+          "n": 1004,
+          "days": 63,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 659,
-        "wrTP1": 23.8,
+        "n": 661,
+        "wrTP1": 23.9,
         "nSL": 442,
-        "nTO": 60,
-        "expR": 0.125,
+        "nTO": 61,
+        "expR": 0.128,
         "pf": 1.18,
+        "expRnet": 0.026,
+        "pfNet": 1.03,
         "mfe_p25": 26.0,
         "mfe_p50": 65.0,
-        "mfe_p75": 243.0,
-        "winnerMAE_p75": 29.0,
-        "winnerMAE_p90": 336.0,
+        "mfe_p75": 246.0,
+        "winnerMAE_p75": 30.5,
+        "winnerMAE_p90": 335.50000000000006,
         "loserMFEbeforeSL_p50": 9.0,
-        "bars_win_p50": 4.0,
+        "bars_win_p50": 3.5,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -38.0,
         "revAfterSL_rate": 34.4,
         "ci90": {
-          "expR": 0.125,
+          "expR": 0.128,
           "ci90": [
-            0.006,
-            0.253
+            -0.029,
+            0.28
           ],
-          "p_mean_le_0": 0.043,
-          "n": 623
+          "p_mean_le_0": 0.092,
+          "expRnet": 0.026,
+          "ci90net": [
+            -0.134,
+            0.177
+          ],
+          "p_net_le_0": 0.393,
+          "n": 624,
+          "days": 60,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "5/RETEST/SHORT": {
     "baseline": {
-      "n": 3020,
-      "wrTP1": 52.0,
-      "nSL": 1296,
-      "nTO": 155,
-      "expR": 0.096,
-      "pf": 1.21,
+      "n": 3067,
+      "wrTP1": 52.1,
+      "nSL": 1307,
+      "nTO": 162,
+      "expR": 0.102,
+      "pf": 1.23,
+      "expRnet": 0.036,
+      "pfNet": 1.08,
       "mfe_p25": 21.0,
-      "mfe_p50": 54.0,
-      "mfe_p75": 289.75,
-      "winnerMAE_p75": 56.0,
-      "winnerMAE_p90": 963.8000000000018,
+      "mfe_p50": 56.0,
+      "mfe_p75": 301.75,
+      "winnerMAE_p75": 59.75,
+      "winnerMAE_p90": 1118.9999999999995,
       "loserMFEbeforeSL_p50": 3.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
-      "entryZoneTk_p50": -55.0,
-      "revAfterSL_rate": 51.5,
+      "entryZoneTk_p50": -57.0,
+      "revAfterSL_rate": 51.7,
       "ci90": {
-        "expR": 0.096,
+        "expR": 0.102,
         "ci90": [
-          0.058,
-          0.132
+          0.054,
+          0.153
         ],
-        "p_mean_le_0": 0.0,
-        "n": 2886
+        "p_mean_le_0": 0.001,
+        "expRnet": 0.036,
+        "ci90net": [
+          -0.016,
+          0.089
+        ],
+        "p_net_le_0": 0.129,
+        "n": 2926,
+        "days": 65,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.0": {
-        "n": 1279,
-        "wrTP1": 33.8,
-        "nSL": 748,
-        "nTO": 99,
-        "expR": 0.105,
-        "pf": 1.17,
-        "mfe_p25": 26.0,
-        "mfe_p50": 64.5,
-        "mfe_p75": 303.5,
-        "winnerMAE_p75": 44.75,
-        "winnerMAE_p90": 810.5000000000052,
+        "n": 1299,
+        "wrTP1": 34.1,
+        "nSL": 751,
+        "nTO": 105,
+        "expR": 0.117,
+        "pf": 1.19,
+        "expRnet": 0.037,
+        "pfNet": 1.06,
+        "mfe_p25": 27.0,
+        "mfe_p50": 65.5,
+        "mfe_p75": 331.75,
+        "winnerMAE_p75": 48.0,
+        "winnerMAE_p90": 1167.6000000000017,
         "loserMFEbeforeSL_p50": 8.0,
         "bars_win_p50": 2.0,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -48.0,
-        "revAfterSL_rate": 44.9,
+        "revAfterSL_rate": 45.0,
         "ci90": {
-          "expR": 0.105,
+          "expR": 0.117,
           "ci90": [
-            0.031,
-            0.18
+            0.017,
+            0.226
           ],
-          "p_mean_le_0": 0.009,
-          "n": 1200
+          "p_mean_le_0": 0.028,
+          "expRnet": 0.037,
+          "ci90net": [
+            -0.066,
+            0.151
+          ],
+          "p_net_le_0": 0.296,
+          "n": 1214,
+          "days": 60,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.2": {
-        "n": 1042,
-        "wrTP1": 30.2,
-        "nSL": 644,
-        "nTO": 83,
-        "expR": 0.088,
-        "pf": 1.13,
+        "n": 1056,
+        "wrTP1": 30.4,
+        "nSL": 647,
+        "nTO": 88,
+        "expR": 0.097,
+        "pf": 1.15,
+        "expRnet": 0.018,
+        "pfNet": 1.03,
         "mfe_p25": 27.0,
-        "mfe_p50": 64.5,
-        "mfe_p75": 306.75,
-        "winnerMAE_p75": 48.0,
-        "winnerMAE_p90": 904.000000000003,
-        "loserMFEbeforeSL_p50": 8.5,
+        "mfe_p50": 66.0,
+        "mfe_p75": 331.5,
+        "winnerMAE_p75": 49.0,
+        "winnerMAE_p90": 1034.0,
+        "loserMFEbeforeSL_p50": 9.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -48.0,
-        "revAfterSL_rate": 41.9,
+        "entryZoneTk_p50": -49.0,
+        "revAfterSL_rate": 42.0,
         "ci90": {
-          "expR": 0.088,
+          "expR": 0.097,
           "ci90": [
-            -0.004,
-            0.176
+            -0.02,
+            0.226
           ],
-          "p_mean_le_0": 0.054,
-          "n": 978
+          "p_mean_le_0": 0.093,
+          "expRnet": 0.018,
+          "ci90net": [
+            -0.102,
+            0.151
+          ],
+          "p_net_le_0": 0.45,
+          "n": 987,
+          "days": 60,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 948,
-        "wrTP1": 28.5,
-        "nSL": 600,
-        "nTO": 78,
-        "expR": 0.064,
-        "pf": 1.1,
-        "mfe_p25": 27.0,
-        "mfe_p50": 64.0,
-        "mfe_p75": 300.0,
-        "winnerMAE_p75": 47.0,
-        "winnerMAE_p90": 325.1999999999981,
-        "loserMFEbeforeSL_p50": 8.5,
+        "n": 960,
+        "wrTP1": 28.6,
+        "nSL": 602,
+        "nTO": 83,
+        "expR": 0.074,
+        "pf": 1.11,
+        "expRnet": -0.006,
+        "pfNet": 0.99,
+        "mfe_p25": 28.0,
+        "mfe_p50": 65.0,
+        "mfe_p75": 319.0,
+        "winnerMAE_p75": 50.0,
+        "winnerMAE_p90": 652.1999999999997,
+        "loserMFEbeforeSL_p50": 9.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -48.0,
         "revAfterSL_rate": 42.2,
         "ci90": {
-          "expR": 0.064,
+          "expR": 0.074,
           "ci90": [
-            -0.032,
-            0.153
+            -0.049,
+            0.213
           ],
-          "p_mean_le_0": 0.126,
-          "n": 889
+          "p_mean_le_0": 0.158,
+          "expRnet": -0.006,
+          "ci90net": [
+            -0.131,
+            0.137
+          ],
+          "p_net_le_0": 0.527,
+          "n": 896,
+          "days": 60,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 779,
-        "wrTP1": 26.3,
-        "nSL": 500,
-        "nTO": 74,
-        "expR": 0.072,
-        "pf": 1.1,
-        "mfe_p25": 28.0,
-        "mfe_p50": 65.0,
-        "mfe_p75": 294.25,
-        "winnerMAE_p75": 44.0,
-        "winnerMAE_p90": 244.6,
+        "n": 789,
+        "wrTP1": 26.4,
+        "nSL": 502,
+        "nTO": 79,
+        "expR": 0.08,
+        "pf": 1.12,
+        "expRnet": -0.002,
+        "pfNet": 1.0,
+        "mfe_p25": 29.0,
+        "mfe_p50": 66.0,
+        "mfe_p75": 300.0,
+        "winnerMAE_p75": 48.0,
+        "winnerMAE_p90": 269.60000000000036,
         "loserMFEbeforeSL_p50": 10.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -48.0,
         "revAfterSL_rate": 38.8,
         "ci90": {
-          "expR": 0.072,
+          "expR": 0.08,
           "ci90": [
-            -0.036,
-            0.183
+            -0.054,
+            0.235
           ],
-          "p_mean_le_0": 0.138,
-          "n": 724
+          "p_mean_le_0": 0.17,
+          "expRnet": -0.002,
+          "ci90net": [
+            -0.137,
+            0.155
+          ],
+          "p_net_le_0": 0.518,
+          "n": 729,
+          "days": 59,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 500,
+        "n": 506,
         "wrTP1": 19.8,
-        "nSL": 344,
-        "nTO": 57,
-        "expR": 0.026,
-        "pf": 1.03,
+        "nSL": 345,
+        "nTO": 61,
+        "expR": 0.03,
+        "pf": 1.04,
+        "expRnet": -0.053,
+        "pfNet": 0.93,
         "mfe_p25": 31.0,
-        "mfe_p50": 68.0,
-        "mfe_p75": 277.0,
-        "winnerMAE_p75": 41.0,
-        "winnerMAE_p90": 140.8,
-        "loserMFEbeforeSL_p50": 13.5,
-        "bars_win_p50": 4.0,
+        "mfe_p50": 69.0,
+        "mfe_p75": 288.5,
+        "winnerMAE_p75": 41.75,
+        "winnerMAE_p90": 155.600000000001,
+        "loserMFEbeforeSL_p50": 14.0,
+        "bars_win_p50": 4.5,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -49.0,
-        "revAfterSL_rate": 34.6,
+        "entryZoneTk_p50": -49.5,
+        "revAfterSL_rate": 34.5,
         "ci90": {
-          "expR": 0.026,
+          "expR": 0.03,
           "ci90": [
-            -0.121,
-            0.177
+            -0.144,
+            0.25
           ],
-          "p_mean_le_0": 0.408,
-          "n": 461
+          "p_mean_le_0": 0.434,
+          "expRnet": -0.053,
+          "ci90net": [
+            -0.231,
+            0.167
+          ],
+          "p_net_le_0": 0.688,
+          "n": 463,
+          "days": 59,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
@@ -3565,12 +4286,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
   ],
   "1/RETEST/LONG": {
     "baseline": {
-      "n": 2721,
+      "n": 2723,
       "wrTP1": 44.8,
       "nSL": 1260,
-      "nTO": 241,
+      "nTO": 243,
       "expR": 0.071,
       "pf": 1.15,
+      "expRnet": -0.046,
+      "pfNet": 0.92,
       "mfe_p25": 10.0,
       "mfe_p50": 21.0,
       "mfe_p75": 48.0,
@@ -3584,21 +4307,31 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "ci90": {
         "expR": 0.071,
         "ci90": [
-          0.032,
-          0.112
+          -0.019,
+          0.148
         ],
-        "p_mean_le_0": 0.002,
-        "n": 2598
+        "p_mean_le_0": 0.093,
+        "expRnet": -0.046,
+        "ci90net": [
+          -0.142,
+          0.04
+        ],
+        "p_net_le_0": 0.813,
+        "n": 2598,
+        "days": 11,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.2": {
-        "n": 1212,
+        "n": 1213,
         "wrTP1": 27.6,
         "nSL": 697,
-        "nTO": 180,
+        "nTO": 181,
         "expR": 0.131,
         "pf": 1.21,
+        "expRnet": 0.008,
+        "pfNet": 1.01,
         "mfe_p25": 13.0,
         "mfe_p50": 30.0,
         "mfe_p75": 62.0,
@@ -3607,25 +4340,35 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 8.0,
         "bars_win_p50": 8.0,
         "bars_loss_p50": 5.0,
-        "entryZoneTk_p50": -12.5,
+        "entryZoneTk_p50": -12.0,
         "revAfterSL_rate": 18.8,
         "ci90": {
           "expR": 0.131,
           "ci90": [
-            0.051,
-            0.211
+            0.005,
+            0.26
           ],
-          "p_mean_le_0": 0.004,
-          "n": 1137
+          "p_mean_le_0": 0.045,
+          "expRnet": 0.008,
+          "ci90net": [
+            -0.123,
+            0.147
+          ],
+          "p_net_le_0": 0.475,
+          "n": 1137,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 1112,
-        "wrTP1": 26.3,
+        "n": 1113,
+        "wrTP1": 26.2,
         "nSL": 649,
-        "nTO": 171,
+        "nTO": 172,
         "expR": 0.136,
         "pf": 1.22,
+        "expRnet": 0.011,
+        "pfNet": 1.02,
         "mfe_p25": 13.0,
         "mfe_p50": 30.0,
         "mfe_p75": 62.0,
@@ -3639,11 +4382,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.136,
           "ci90": [
-            0.048,
-            0.221
+            0.006,
+            0.271
           ],
-          "p_mean_le_0": 0.004,
-          "n": 1044
+          "p_mean_le_0": 0.04,
+          "expRnet": 0.011,
+          "ci90net": [
+            -0.127,
+            0.157
+          ],
+          "p_net_le_0": 0.464,
+          "n": 1044,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
@@ -3653,6 +4404,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 156,
         "expR": 0.146,
         "pf": 1.23,
+        "expRnet": 0.02,
+        "pfNet": 1.03,
         "mfe_p25": 13.0,
         "mfe_p50": 31.0,
         "mfe_p75": 63.0,
@@ -3666,11 +4419,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.146,
           "ci90": [
-            0.05,
-            0.244
+            -0.013,
+            0.319
           ],
-          "p_mean_le_0": 0.005,
-          "n": 864
+          "p_mean_le_0": 0.067,
+          "expRnet": 0.02,
+          "ci90net": [
+            -0.15,
+            0.206
+          ],
+          "p_net_le_0": 0.434,
+          "n": 864,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
@@ -3680,6 +4441,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 128,
         "expR": 0.194,
         "pf": 1.29,
+        "expRnet": 0.067,
+        "pfNet": 1.09,
         "mfe_p25": 12.0,
         "mfe_p50": 32.0,
         "mfe_p75": 67.0,
@@ -3693,23 +4456,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.194,
           "ci90": [
-            0.068,
-            0.323
+            -0.012,
+            0.431
           ],
-          "p_mean_le_0": 0.004,
-          "n": 592
+          "p_mean_le_0": 0.067,
+          "expRnet": 0.067,
+          "ci90net": [
+            -0.142,
+            0.322
+          ],
+          "p_net_le_0": 0.344,
+          "n": 592,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "1/RETEST/SHORT": {
     "baseline": {
-      "n": 2729,
-      "wrTP1": 45.5,
+      "n": 2743,
+      "wrTP1": 45.3,
       "nSL": 1268,
-      "nTO": 219,
+      "nTO": 233,
       "expR": 0.05,
       "pf": 1.1,
+      "expRnet": -0.063,
+      "pfNet": 0.88,
       "mfe_p25": 10.0,
       "mfe_p50": 21.0,
       "mfe_p75": 46.0,
@@ -3723,21 +4496,31 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "ci90": {
         "expR": 0.05,
         "ci90": [
-          0.01,
-          0.093
+          -0.013,
+          0.112
         ],
-        "p_mean_le_0": 0.017,
-        "n": 2612
+        "p_mean_le_0": 0.092,
+        "expRnet": -0.063,
+        "ci90net": [
+          -0.127,
+          0.004
+        ],
+        "p_net_le_0": 0.938,
+        "n": 2612,
+        "days": 11,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.2": {
-        "n": 1144,
-        "wrTP1": 27.5,
+        "n": 1154,
+        "wrTP1": 27.3,
         "nSL": 666,
-        "nTO": 163,
+        "nTO": 173,
         "expR": 0.111,
         "pf": 1.18,
+        "expRnet": -0.001,
+        "pfNet": 1.0,
         "mfe_p25": 15.0,
         "mfe_p50": 33.0,
         "mfe_p75": 66.5,
@@ -3751,20 +4534,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.111,
           "ci90": [
-            0.028,
-            0.193
+            -0.008,
+            0.232
           ],
-          "p_mean_le_0": 0.011,
-          "n": 1071
+          "p_mean_le_0": 0.065,
+          "expRnet": -0.001,
+          "ci90net": [
+            -0.125,
+            0.129
+          ],
+          "p_net_le_0": 0.499,
+          "n": 1071,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 1065,
-        "wrTP1": 26.5,
+        "n": 1073,
+        "wrTP1": 26.3,
         "nSL": 623,
-        "nTO": 160,
+        "nTO": 168,
         "expR": 0.12,
         "pf": 1.19,
+        "expRnet": 0.008,
+        "pfNet": 1.01,
         "mfe_p25": 15.0,
         "mfe_p50": 33.0,
         "mfe_p75": 66.0,
@@ -3778,20 +4571,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.12,
           "ci90": [
-            0.032,
-            0.209
+            -0.008,
+            0.251
           ],
-          "p_mean_le_0": 0.013,
-          "n": 995
+          "p_mean_le_0": 0.063,
+          "expRnet": 0.008,
+          "ci90net": [
+            -0.125,
+            0.145
+          ],
+          "p_net_le_0": 0.451,
+          "n": 995,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 913,
-        "wrTP1": 24.8,
+        "n": 919,
+        "wrTP1": 24.6,
         "nSL": 538,
-        "nTO": 149,
+        "nTO": 155,
         "expR": 0.146,
         "pf": 1.23,
+        "expRnet": 0.033,
+        "pfNet": 1.05,
         "mfe_p25": 15.0,
         "mfe_p50": 35.0,
         "mfe_p75": 67.25,
@@ -3805,20 +4608,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.146,
           "ci90": [
-            0.044,
-            0.244
+            0.024,
+            0.273
           ],
-          "p_mean_le_0": 0.007,
-          "n": 852
+          "p_mean_le_0": 0.021,
+          "expRnet": 0.033,
+          "ci90net": [
+            -0.096,
+            0.168
+          ],
+          "p_net_le_0": 0.333,
+          "n": 852,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 616,
-        "wrTP1": 19.0,
+        "n": 622,
+        "wrTP1": 18.8,
         "nSL": 377,
-        "nTO": 122,
+        "nTO": 128,
         "expR": 0.158,
         "pf": 1.24,
+        "expRnet": 0.047,
+        "pfNet": 1.06,
         "mfe_p25": 17.0,
         "mfe_p50": 38.0,
         "mfe_p75": 73.0,
@@ -3832,180 +4645,248 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.158,
           "ci90": [
-            0.035,
-            0.295
+            -0.01,
+            0.338
           ],
-          "p_mean_le_0": 0.016,
-          "n": 575
+          "p_mean_le_0": 0.061,
+          "expRnet": 0.047,
+          "ci90net": [
+            -0.124,
+            0.236
+          ],
+          "p_net_le_0": 0.329,
+          "n": 575,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "15/RETEST/LONG": {
     "baseline": {
-      "n": 570,
+      "n": 576,
       "wrTP1": 51.9,
       "nSL": 242,
-      "nTO": 32,
-      "expR": 0.139,
-      "pf": 1.31,
+      "nTO": 35,
+      "expR": 0.149,
+      "pf": 1.33,
+      "expRnet": 0.106,
+      "pfNet": 1.23,
       "mfe_p25": 42.0,
-      "mfe_p50": 119.0,
-      "mfe_p75": 701.75,
-      "winnerMAE_p75": 277.0,
-      "winnerMAE_p90": 4096.5,
+      "mfe_p50": 121.0,
+      "mfe_p75": 762.0,
+      "winnerMAE_p75": 278.0,
+      "winnerMAE_p90": 3978.599999999996,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -200.5,
+      "entryZoneTk_p50": -197.0,
       "revAfterSL_rate": 63.6,
       "ci90": {
-        "expR": 0.139,
+        "expR": 0.149,
         "ci90": [
-          0.051,
-          0.226
+          0.036,
+          0.272
         ],
-        "p_mean_le_0": 0.004,
-        "n": 538
+        "p_mean_le_0": 0.015,
+        "expRnet": 0.106,
+        "ci90net": [
+          -0.008,
+          0.228
+        ],
+        "p_net_le_0": 0.06,
+        "n": 541,
+        "days": 13,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.2": {
-        "n": 187,
-        "wrTP1": 27.8,
+        "n": 190,
+        "wrTP1": 27.9,
         "nSL": 121,
-        "nTO": 14,
-        "expR": 0.024,
-        "pf": 1.03,
-        "mfe_p25": 57.0,
-        "mfe_p50": 154.0,
-        "mfe_p75": 882.0,
-        "winnerMAE_p75": 539.75,
-        "winnerMAE_p90": 3766.8999999999983,
+        "nTO": 16,
+        "expR": 0.044,
+        "pf": 1.06,
+        "expRnet": -0.008,
+        "pfNet": 0.99,
+        "mfe_p25": 57.25,
+        "mfe_p50": 155.0,
+        "mfe_p75": 933.0,
+        "winnerMAE_p75": 602.0,
+        "winnerMAE_p90": 3839.8000000000015,
+        "loserMFEbeforeSL_p50": 0.0,
+        "bars_win_p50": 1.0,
+        "bars_loss_p50": 1.0,
+        "entryZoneTk_p50": -124.0,
+        "revAfterSL_rate": 52.9,
+        "ci90": {
+          "expR": 0.044,
+          "ci90": [
+            -0.171,
+            0.314
+          ],
+          "p_mean_le_0": 0.376,
+          "expRnet": -0.008,
+          "ci90net": [
+            -0.219,
+            0.265
+          ],
+          "p_net_le_0": 0.521,
+          "n": 174,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
+        }
+      },
+      "1.3": {
+        "n": 167,
+        "wrTP1": 27.5,
+        "nSL": 109,
+        "nTO": 12,
+        "expR": 0.049,
+        "pf": 1.07,
+        "expRnet": -0.004,
+        "pfNet": 0.99,
+        "mfe_p25": 56.0,
+        "mfe_p50": 156.0,
+        "mfe_p75": 867.5,
+        "winnerMAE_p75": 1011.5,
+        "winnerMAE_p90": 3749.5,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
         "entryZoneTk_p50": -136.0,
-        "revAfterSL_rate": 52.9,
-        "ci90": {
-          "expR": 0.024,
-          "ci90": [
-            -0.181,
-            0.223
-          ],
-          "p_mean_le_0": 0.432,
-          "n": 173
-        }
-      },
-      "1.3": {
-        "n": 165,
-        "wrTP1": 27.3,
-        "nSL": 109,
-        "nTO": 11,
-        "expR": 0.026,
-        "pf": 1.04,
-        "mfe_p25": 55.5,
-        "mfe_p50": 155.0,
-        "mfe_p75": 852.75,
-        "winnerMAE_p75": 602.0,
-        "winnerMAE_p90": 3367.6000000000017,
-        "loserMFEbeforeSL_p50": 0.0,
-        "bars_win_p50": 1.0,
-        "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -138.0,
         "revAfterSL_rate": 52.3,
         "ci90": {
-          "expR": 0.026,
+          "expR": 0.049,
           "ci90": [
-            -0.195,
-            0.246
+            -0.184,
+            0.353
           ],
-          "p_mean_le_0": 0.426,
-          "n": 154
+          "p_mean_le_0": 0.367,
+          "expRnet": -0.004,
+          "ci90net": [
+            -0.235,
+            0.302
+          ],
+          "p_net_le_0": 0.504,
+          "n": 155,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 135,
-        "wrTP1": 26.7,
+        "n": 137,
+        "wrTP1": 27.0,
         "nSL": 89,
-        "nTO": 10,
-        "expR": 0.066,
-        "pf": 1.09,
+        "nTO": 11,
+        "expR": 0.092,
+        "pf": 1.13,
+        "expRnet": 0.043,
+        "pfNet": 1.06,
         "mfe_p25": 68.0,
-        "mfe_p50": 175.0,
-        "mfe_p75": 852.0,
-        "winnerMAE_p75": 738.5,
-        "winnerMAE_p90": 2546.0,
+        "mfe_p50": 179.0,
+        "mfe_p75": 852.75,
+        "winnerMAE_p75": 1148.0,
+        "winnerMAE_p90": 2980.9999999999986,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -108.0,
+        "entryZoneTk_p50": -107.0,
         "revAfterSL_rate": 48.3,
         "ci90": {
-          "expR": 0.066,
+          "expR": 0.092,
           "ci90": [
-            -0.195,
-            0.335
+            -0.219,
+            0.502
           ],
-          "p_mean_le_0": 0.353,
-          "n": 125
+          "p_mean_le_0": 0.313,
+          "expRnet": 0.043,
+          "ci90net": [
+            -0.269,
+            0.453
+          ],
+          "p_net_le_0": 0.406,
+          "n": 126,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 82,
-        "wrTP1": 25.6,
+        "n": 84,
+        "wrTP1": 26.2,
         "nSL": 55,
-        "nTO": 6,
-        "expR": 0.145,
-        "pf": 1.2,
+        "nTO": 7,
+        "expR": 0.188,
+        "pf": 1.26,
+        "expRnet": 0.136,
+        "pfNet": 1.18,
         "mfe_p25": 69.0,
-        "mfe_p50": 251.0,
-        "mfe_p75": 2546.25,
-        "winnerMAE_p75": 602.0,
-        "winnerMAE_p90": 2523.0,
+        "mfe_p50": 256.0,
+        "mfe_p75": 2757.0,
+        "winnerMAE_p75": 1168.25,
+        "winnerMAE_p90": 2564.4,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -95.0,
+        "entryZoneTk_p50": -78.5,
         "revAfterSL_rate": 45.5,
         "ci90": {
-          "expR": 0.145,
+          "expR": 0.188,
           "ci90": [
-            -0.194,
-            0.514
+            -0.137,
+            0.578
           ],
-          "p_mean_le_0": 0.262,
-          "n": 76
+          "p_mean_le_0": 0.172,
+          "expRnet": 0.136,
+          "ci90net": [
+            -0.197,
+            0.536
+          ],
+          "p_net_le_0": 0.247,
+          "n": 77,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "15/RETEST/SHORT": {
     "baseline": {
-      "n": 521,
-      "wrTP1": 53.0,
+      "n": 522,
+      "wrTP1": 53.1,
       "nSL": 220,
       "nTO": 25,
-      "expR": 0.239,
+      "expR": 0.241,
       "pf": 1.54,
+      "expRnet": 0.192,
+      "pfNet": 1.41,
       "mfe_p25": 36.0,
-      "mfe_p50": 104.0,
-      "mfe_p75": 717.0,
-      "winnerMAE_p75": 180.75,
-      "winnerMAE_p90": 3743.0,
+      "mfe_p50": 105.0,
+      "mfe_p75": 718.5,
+      "winnerMAE_p75": 180.0,
+      "winnerMAE_p90": 3732.000000000001,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -155.0,
+      "entryZoneTk_p50": -156.5,
       "revAfterSL_rate": 65.0,
       "ci90": {
-        "expR": 0.239,
+        "expR": 0.241,
         "ci90": [
-          0.124,
-          0.36
+          0.126,
+          0.408
         ],
-        "p_mean_le_0": 0.001,
-        "n": 497
+        "p_mean_le_0": 0.0,
+        "expRnet": 0.192,
+        "ci90net": [
+          0.07,
+          0.365
+        ],
+        "p_net_le_0": 0.004,
+        "n": 498,
+        "days": 13,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
@@ -4016,6 +4897,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 11,
         "expR": 0.508,
         "pf": 1.87,
+        "expRnet": 0.452,
+        "pfNet": 1.73,
         "mfe_p25": 50.5,
         "mfe_p50": 139.0,
         "mfe_p75": 718.0,
@@ -4029,11 +4912,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.508,
           "ci90": [
-            0.212,
-            0.857
+            0.122,
+            1.017
           ],
-          "p_mean_le_0": 0.001,
-          "n": 159
+          "p_mean_le_0": 0.009,
+          "expRnet": 0.452,
+          "ci90net": [
+            0.059,
+            0.967
+          ],
+          "p_net_le_0": 0.027,
+          "n": 159,
+          "days": 12,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
@@ -4043,6 +4934,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 10,
         "expR": 0.51,
         "pf": 1.83,
+        "expRnet": 0.453,
+        "pfNet": 1.7,
         "mfe_p25": 53.0,
         "mfe_p50": 153.0,
         "mfe_p75": 719.0,
@@ -4056,11 +4949,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.51,
           "ci90": [
-            0.179,
-            0.876
+            0.072,
+            1.076
           ],
-          "p_mean_le_0": 0.006,
-          "n": 141
+          "p_mean_le_0": 0.022,
+          "expRnet": 0.453,
+          "ci90net": [
+            -0.002,
+            1.023
+          ],
+          "p_net_le_0": 0.051,
+          "n": 141,
+          "days": 12,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
@@ -4070,6 +4971,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 9,
         "expR": 0.529,
         "pf": 1.83,
+        "expRnet": 0.474,
+        "pfNet": 1.7,
         "mfe_p25": 62.75,
         "mfe_p50": 153.5,
         "mfe_p75": 633.5,
@@ -4083,11 +4986,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.529,
           "ci90": [
-            0.145,
-            0.959
+            0.031,
+            1.17
           ],
-          "p_mean_le_0": 0.011,
-          "n": 116
+          "p_mean_le_0": 0.033,
+          "expRnet": 0.474,
+          "ci90net": [
+            -0.034,
+            1.125
+          ],
+          "p_net_le_0": 0.066,
+          "n": 116,
+          "days": 12,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
@@ -4097,6 +5008,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 6,
         "expR": 0.888,
         "pf": 2.42,
+        "expRnet": 0.831,
+        "pfNet": 2.26,
         "mfe_p25": 53.0,
         "mfe_p50": 153.0,
         "mfe_p75": 620.0,
@@ -4110,23 +5023,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.888,
           "ci90": [
-            0.267,
-            1.574
+            0.149,
+            1.759
           ],
-          "p_mean_le_0": 0.004,
-          "n": 69
+          "p_mean_le_0": 0.015,
+          "expRnet": 0.831,
+          "ci90net": [
+            0.093,
+            1.708
+          ],
+          "p_net_le_0": 0.03,
+          "n": 69,
+          "days": 12,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "2/RETEST/LONG": {
     "baseline": {
-      "n": 1321,
-      "wrTP1": 48.4,
+      "n": 1322,
+      "wrTP1": 48.3,
       "nSL": 599,
-      "nTO": 83,
+      "nTO": 84,
       "expR": 0.08,
       "pf": 1.17,
+      "expRnet": -0.029,
+      "pfNet": 0.94,
       "mfe_p25": 12.0,
       "mfe_p50": 24.0,
       "mfe_p75": 54.0,
@@ -4140,11 +5063,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "ci90": {
         "expR": 0.08,
         "ci90": [
-          0.022,
-          0.139
+          0.005,
+          0.133
         ],
-        "p_mean_le_0": 0.013,
-        "n": 1257
+        "p_mean_le_0": 0.042,
+        "expRnet": -0.029,
+        "ci90net": [
+          -0.105,
+          0.025
+        ],
+        "p_net_le_0": 0.792,
+        "n": 1257,
+        "days": 11,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
@@ -4155,6 +5086,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 52,
         "expR": 0.141,
         "pf": 1.22,
+        "expRnet": 0.021,
+        "pfNet": 1.03,
         "mfe_p25": 16.0,
         "mfe_p50": 32.0,
         "mfe_p75": 61.75,
@@ -4168,11 +5101,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.141,
           "ci90": [
-            0.013,
-            0.272
+            -0.033,
+            0.3
           ],
-          "p_mean_le_0": 0.035,
-          "n": 478
+          "p_mean_le_0": 0.088,
+          "expRnet": 0.021,
+          "ci90net": [
+            -0.153,
+            0.182
+          ],
+          "p_net_le_0": 0.406,
+          "n": 478,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
@@ -4182,6 +5123,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 46,
         "expR": 0.151,
         "pf": 1.23,
+        "expRnet": 0.031,
+        "pfNet": 1.04,
         "mfe_p25": 16.0,
         "mfe_p50": 33.0,
         "mfe_p75": 64.0,
@@ -4195,11 +5138,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.151,
           "ci90": [
-            0.024,
-            0.289
+            -0.043,
+            0.342
           ],
-          "p_mean_le_0": 0.02,
-          "n": 433
+          "p_mean_le_0": 0.102,
+          "expRnet": 0.031,
+          "ci90net": [
+            -0.167,
+            0.222
+          ],
+          "p_net_le_0": 0.373,
+          "n": 433,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
@@ -4209,6 +5160,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 40,
         "expR": 0.185,
         "pf": 1.28,
+        "expRnet": 0.062,
+        "pfNet": 1.08,
         "mfe_p25": 16.0,
         "mfe_p50": 33.0,
         "mfe_p75": 67.75,
@@ -4222,11 +5175,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.185,
           "ci90": [
-            0.034,
-            0.345
+            -0.044,
+            0.425
           ],
-          "p_mean_le_0": 0.021,
-          "n": 370
+          "p_mean_le_0": 0.094,
+          "expRnet": 0.062,
+          "ci90net": [
+            -0.174,
+            0.305
+          ],
+          "p_net_le_0": 0.31,
+          "n": 370,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
@@ -4236,6 +5197,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 28,
         "expR": 0.264,
         "pf": 1.39,
+        "expRnet": 0.134,
+        "pfNet": 1.17,
         "mfe_p25": 17.0,
         "mfe_p50": 37.5,
         "mfe_p75": 73.75,
@@ -4249,23 +5212,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.264,
           "ci90": [
-            0.033,
-            0.496
+            -0.057,
+            0.641
           ],
-          "p_mean_le_0": 0.022,
-          "n": 222
+          "p_mean_le_0": 0.089,
+          "expRnet": 0.134,
+          "ci90net": [
+            -0.194,
+            0.52
+          ],
+          "p_net_le_0": 0.253,
+          "n": 222,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "2/RETEST/SHORT": {
     "baseline": {
-      "n": 1148,
-      "wrTP1": 47.8,
+      "n": 1155,
+      "wrTP1": 47.5,
       "nSL": 543,
-      "nTO": 56,
+      "nTO": 63,
       "expR": 0.051,
       "pf": 1.1,
+      "expRnet": -0.045,
+      "pfNet": 0.92,
       "mfe_p25": 13.0,
       "mfe_p50": 27.0,
       "mfe_p75": 59.0,
@@ -4279,21 +5252,31 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "ci90": {
         "expR": 0.051,
         "ci90": [
-          -0.011,
-          0.114
+          -0.052,
+          0.142
         ],
-        "p_mean_le_0": 0.088,
-        "n": 1111
+        "p_mean_le_0": 0.194,
+        "expRnet": -0.045,
+        "ci90net": [
+          -0.145,
+          0.045
+        ],
+        "p_net_le_0": 0.801,
+        "n": 1111,
+        "days": 11,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.2": {
-        "n": 485,
-        "wrTP1": 25.6,
+        "n": 489,
+        "wrTP1": 25.4,
         "nSL": 326,
-        "nTO": 35,
+        "nTO": 39,
         "expR": -0.041,
         "pf": 0.94,
+        "expRnet": -0.137,
+        "pfNet": 0.82,
         "mfe_p25": 20.0,
         "mfe_p50": 42.5,
         "mfe_p75": 82.25,
@@ -4307,20 +5290,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": -0.041,
           "ci90": [
-            -0.163,
-            0.088
+            -0.208,
+            0.104
           ],
-          "p_mean_le_0": 0.701,
-          "n": 468
+          "p_mean_le_0": 0.677,
+          "expRnet": -0.137,
+          "ci90net": [
+            -0.308,
+            0.013
+          ],
+          "p_net_le_0": 0.937,
+          "n": 468,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 450,
-        "wrTP1": 24.7,
+        "n": 454,
+        "wrTP1": 24.4,
         "nSL": 306,
-        "nTO": 33,
+        "nTO": 37,
         "expR": -0.037,
         "pf": 0.95,
+        "expRnet": -0.131,
+        "pfNet": 0.83,
         "mfe_p25": 20.5,
         "mfe_p50": 43.0,
         "mfe_p75": 83.5,
@@ -4334,20 +5327,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": -0.037,
           "ci90": [
-            -0.165,
-            0.085
+            -0.206,
+            0.11
           ],
-          "p_mean_le_0": 0.681,
-          "n": 435
+          "p_mean_le_0": 0.648,
+          "expRnet": -0.131,
+          "ci90net": [
+            -0.301,
+            0.02
+          ],
+          "p_net_le_0": 0.924,
+          "n": 435,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 382,
-        "wrTP1": 24.1,
+        "n": 385,
+        "wrTP1": 23.9,
         "nSL": 260,
-        "nTO": 30,
+        "nTO": 33,
         "expR": 0.006,
         "pf": 1.01,
+        "expRnet": -0.087,
+        "pfNet": 0.89,
         "mfe_p25": 21.0,
         "mfe_p50": 46.0,
         "mfe_p75": 88.0,
@@ -4356,25 +5359,35 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 11.5,
         "bars_win_p50": 6.0,
         "bars_loss_p50": 4.0,
-        "entryZoneTk_p50": -23.5,
+        "entryZoneTk_p50": -24.0,
         "revAfterSL_rate": 26.2,
         "ci90": {
           "expR": 0.006,
           "ci90": [
-            -0.142,
-            0.157
+            -0.193,
+            0.181
           ],
-          "p_mean_le_0": 0.489,
-          "n": 369
+          "p_mean_le_0": 0.478,
+          "expRnet": -0.087,
+          "ci90net": [
+            -0.289,
+            0.091
+          ],
+          "p_net_le_0": 0.778,
+          "n": 369,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 254,
-        "wrTP1": 20.1,
+        "n": 256,
+        "wrTP1": 19.9,
         "nSL": 178,
-        "nTO": 25,
+        "nTO": 27,
         "expR": 0.041,
         "pf": 1.06,
+        "expRnet": -0.051,
+        "pfNet": 0.94,
         "mfe_p25": 22.75,
         "mfe_p50": 51.0,
         "mfe_p75": 99.0,
@@ -4383,110 +5396,150 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 12.5,
         "bars_win_p50": 8.0,
         "bars_loss_p50": 4.0,
-        "entryZoneTk_p50": -24.5,
+        "entryZoneTk_p50": -24.0,
         "revAfterSL_rate": 21.3,
         "ci90": {
           "expR": 0.041,
           "ci90": [
-            -0.152,
-            0.247
+            -0.236,
+            0.338
           ],
-          "p_mean_le_0": 0.386,
-          "n": 244
+          "p_mean_le_0": 0.427,
+          "expRnet": -0.051,
+          "ci90net": [
+            -0.331,
+            0.248
+          ],
+          "p_net_le_0": 0.634,
+          "n": 244,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "29/RETEST/LONG": {
     "baseline": {
-      "n": 295,
-      "wrTP1": 57.3,
-      "nSL": 101,
-      "nTO": 25,
-      "expR": 0.39,
+      "n": 300,
+      "wrTP1": 57.0,
+      "nSL": 102,
+      "nTO": 27,
+      "expR": 0.389,
       "pf": 2.04,
+      "expRnet": 0.346,
+      "pfNet": 1.89,
       "mfe_p25": 44.0,
-      "mfe_p50": 119.0,
-      "mfe_p75": 534.75,
-      "winnerMAE_p75": 151.0,
-      "winnerMAE_p90": 2034.8000000000027,
+      "mfe_p50": 130.0,
+      "mfe_p75": 614.0,
+      "winnerMAE_p75": 189.0,
+      "winnerMAE_p90": 2400.0,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -162.0,
-      "revAfterSL_rate": 65.3,
+      "entryZoneTk_p50": -165.0,
+      "revAfterSL_rate": 64.7,
       "ci90": {
-        "expR": 0.39,
+        "expR": 0.389,
         "ci90": [
-          0.258,
-          0.527
+          0.223,
+          0.528
         ],
         "p_mean_le_0": 0.0,
-        "n": 270
+        "expRnet": 0.346,
+        "ci90net": [
+          0.182,
+          0.485
+        ],
+        "p_net_le_0": 0.0,
+        "n": 273,
+        "days": 13,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.2": {
-        "n": 101,
-        "wrTP1": 36.6,
+        "n": 103,
+        "wrTP1": 36.9,
         "nSL": 48,
-        "nTO": 16,
-        "expR": 0.527,
-        "pf": 1.93,
-        "mfe_p25": 59.0,
-        "mfe_p50": 165.0,
-        "mfe_p75": 1144.0,
-        "winnerMAE_p75": 143.0,
-        "winnerMAE_p90": 1054.7999999999997,
+        "nTO": 17,
+        "expR": 0.537,
+        "pf": 1.96,
+        "expRnet": 0.486,
+        "pfNet": 1.83,
+        "mfe_p25": 60.25,
+        "mfe_p50": 171.5,
+        "mfe_p75": 1251.25,
+        "winnerMAE_p75": 327.5,
+        "winnerMAE_p90": 1436.4000000000035,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -110.0,
+        "entryZoneTk_p50": -118.0,
         "revAfterSL_rate": 52.1,
         "ci90": {
-          "expR": 0.527,
+          "expR": 0.537,
           "ci90": [
-            0.184,
-            0.883
+            0.167,
+            0.837
           ],
-          "p_mean_le_0": 0.004,
-          "n": 85
+          "p_mean_le_0": 0.011,
+          "expRnet": 0.486,
+          "ci90net": [
+            0.129,
+            0.78
+          ],
+          "p_net_le_0": 0.018,
+          "n": 86,
+          "days": 12,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 89,
-        "wrTP1": 32.6,
+        "n": 91,
+        "wrTP1": 33.0,
         "nSL": 46,
-        "nTO": 14,
-        "expR": 0.477,
-        "pf": 1.78,
-        "mfe_p25": 61.5,
-        "mfe_p50": 178.0,
-        "mfe_p75": 1384.5,
-        "winnerMAE_p75": 389.0,
-        "winnerMAE_p90": 1008.3999999999999,
+        "nTO": 15,
+        "expR": 0.489,
+        "pf": 1.81,
+        "expRnet": 0.439,
+        "pfNet": 1.69,
+        "mfe_p25": 62.75,
+        "mfe_p50": 179.5,
+        "mfe_p75": 1681.75,
+        "winnerMAE_p75": 398.0,
+        "winnerMAE_p90": 1274.800000000001,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -110.0,
+        "entryZoneTk_p50": -141.0,
         "revAfterSL_rate": 50.0,
         "ci90": {
-          "expR": 0.477,
+          "expR": 0.489,
           "ci90": [
-            0.096,
-            0.858
+            0.046,
+            0.867
           ],
-          "p_mean_le_0": 0.018,
-          "n": 75
+          "p_mean_le_0": 0.038,
+          "expRnet": 0.439,
+          "ci90net": [
+            0.004,
+            0.807
+          ],
+          "p_net_le_0": 0.048,
+          "n": 76,
+          "days": 12,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 78,
-        "wrTP1": 30.8,
+        "n": 79,
+        "wrTP1": 30.4,
         "nSL": 42,
-        "nTO": 12,
+        "nTO": 13,
         "expR": 0.477,
         "pf": 1.75,
+        "expRnet": 0.426,
+        "pfNet": 1.64,
         "mfe_p25": 60.25,
         "mfe_p50": 171.5,
         "mfe_p75": 1038.75,
@@ -4495,16 +5548,24 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -105.5,
+        "entryZoneTk_p50": -110.0,
         "revAfterSL_rate": 50.0,
         "ci90": {
           "expR": 0.477,
           "ci90": [
-            0.085,
-            0.914
+            -0.012,
+            0.873
           ],
-          "p_mean_le_0": 0.024,
-          "n": 66
+          "p_mean_le_0": 0.056,
+          "expRnet": 0.426,
+          "ci90net": [
+            -0.058,
+            0.819
+          ],
+          "p_net_le_0": 0.071,
+          "n": 66,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
@@ -4514,6 +5575,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 9,
         "expR": 0.486,
         "pf": 1.71,
+        "expRnet": 0.435,
+        "pfNet": 1.61,
         "mfe_p25": 70.5,
         "mfe_p50": 219.5,
         "mfe_p75": 1321.0,
@@ -4527,23 +5590,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.486,
           "ci90": [
-            -0.043,
-            1.065
+            -0.181,
+            1.056
           ],
-          "p_mean_le_0": 0.067,
-          "n": 48
+          "p_mean_le_0": 0.113,
+          "expRnet": 0.435,
+          "ci90net": [
+            -0.226,
+            0.992
+          ],
+          "p_net_le_0": 0.14,
+          "n": 48,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "29/RETEST/SHORT": {
     "baseline": {
-      "n": 294,
-      "wrTP1": 50.0,
+      "n": 295,
+      "wrTP1": 49.8,
       "nSL": 124,
-      "nTO": 23,
+      "nTO": 24,
       "expR": 0.214,
       "pf": 1.47,
+      "expRnet": 0.163,
+      "pfNet": 1.34,
       "mfe_p25": 45.0,
       "mfe_p50": 156.0,
       "mfe_p75": 997.5,
@@ -4552,16 +5625,24 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -158.0,
+      "entryZoneTk_p50": -157.0,
       "revAfterSL_rate": 83.9,
       "ci90": {
         "expR": 0.214,
         "ci90": [
-          0.082,
-          0.349
+          0.115,
+          0.35
         ],
-        "p_mean_le_0": 0.002,
-        "n": 271
+        "p_mean_le_0": 0.0,
+        "expRnet": 0.163,
+        "ci90net": [
+          0.059,
+          0.309
+        ],
+        "p_net_le_0": 0.002,
+        "n": 271,
+        "days": 12,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
@@ -4572,6 +5653,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 6,
         "expR": 0.308,
         "pf": 1.48,
+        "expRnet": 0.245,
+        "pfNet": 1.36,
         "mfe_p25": 60.0,
         "mfe_p50": 182.0,
         "mfe_p75": 1046.0,
@@ -4585,11 +5668,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.308,
           "ci90": [
-            -0.026,
-            0.663
+            0.018,
+            0.704
           ],
-          "p_mean_le_0": 0.065,
-          "n": 89
+          "p_mean_le_0": 0.035,
+          "expRnet": 0.245,
+          "ci90net": [
+            -0.04,
+            0.647
+          ],
+          "p_net_le_0": 0.098,
+          "n": 89,
+          "days": 12,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
@@ -4599,6 +5690,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 5,
         "expR": 0.27,
         "pf": 1.41,
+        "expRnet": 0.207,
+        "pfNet": 1.3,
         "mfe_p25": 59.0,
         "mfe_p50": 182.0,
         "mfe_p75": 1072.25,
@@ -4612,11 +5705,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.27,
           "ci90": [
-            -0.087,
-            0.631
+            -0.05,
+            0.704
           ],
-          "p_mean_le_0": 0.107,
-          "n": 84
+          "p_mean_le_0": 0.096,
+          "expRnet": 0.207,
+          "ci90net": [
+            -0.118,
+            0.652
+          ],
+          "p_net_le_0": 0.174,
+          "n": 84,
+          "days": 12,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
@@ -4626,6 +5727,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 4,
         "expR": 0.282,
         "pf": 1.41,
+        "expRnet": 0.219,
+        "pfNet": 1.3,
         "mfe_p25": 65.25,
         "mfe_p50": 193.5,
         "mfe_p75": 1124.75,
@@ -4639,11 +5742,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.282,
           "ci90": [
-            -0.124,
-            0.7
+            -0.126,
+            0.775
           ],
-          "p_mean_le_0": 0.127,
-          "n": 70
+          "p_mean_le_0": 0.147,
+          "expRnet": 0.219,
+          "ci90net": [
+            -0.189,
+            0.714
+          ],
+          "p_net_le_0": 0.216,
+          "n": 70,
+          "days": 12,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
@@ -4653,6 +5764,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 3,
         "expR": 0.369,
         "pf": 1.54,
+        "expRnet": 0.296,
+        "pfNet": 1.4,
         "mfe_p25": 58.0,
         "mfe_p50": 182.0,
         "mfe_p75": 1033.75,
@@ -4666,23 +5779,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.369,
           "ci90": [
-            -0.125,
-            0.896
+            -0.123,
+            1.001
           ],
-          "p_mean_le_0": 0.117,
-          "n": 54
+          "p_mean_le_0": 0.13,
+          "expRnet": 0.296,
+          "ci90net": [
+            -0.198,
+            0.931
+          ],
+          "p_net_le_0": 0.192,
+          "n": 54,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "3/RETEST/LONG": {
     "baseline": {
-      "n": 2003,
-      "wrTP1": 54.0,
+      "n": 2009,
+      "wrTP1": 53.9,
       "nSL": 845,
-      "nTO": 76,
+      "nTO": 82,
       "expR": 0.114,
       "pf": 1.26,
+      "expRnet": 0.016,
+      "pfNet": 1.03,
       "mfe_p25": 14.0,
       "mfe_p50": 26.5,
       "mfe_p75": 60.0,
@@ -4697,20 +5820,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.114,
         "ci90": [
           0.073,
-          0.157
+          0.156
         ],
         "p_mean_le_0": 0.0,
-        "n": 1940
+        "expRnet": 0.016,
+        "ci90net": [
+          -0.022,
+          0.054
+        ],
+        "p_net_le_0": 0.233,
+        "n": 1940,
+        "days": 11,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.2": {
-        "n": 612,
+        "n": 613,
         "wrTP1": 36.1,
         "nSL": 351,
-        "nTO": 40,
+        "nTO": 41,
         "expR": 0.148,
         "pf": 1.24,
+        "expRnet": 0.041,
+        "pfNet": 1.06,
         "mfe_p25": 20.0,
         "mfe_p50": 38.0,
         "mfe_p75": 88.0,
@@ -4719,25 +5852,35 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 7.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -25.5,
+        "entryZoneTk_p50": -25.0,
         "revAfterSL_rate": 41.6,
         "ci90": {
           "expR": 0.148,
           "ci90": [
-            0.045,
-            0.25
+            0.023,
+            0.269
           ],
-          "p_mean_le_0": 0.01,
-          "n": 584
+          "p_mean_le_0": 0.028,
+          "expRnet": 0.041,
+          "ci90net": [
+            -0.078,
+            0.158
+          ],
+          "p_net_le_0": 0.262,
+          "n": 584,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 532,
+        "n": 533,
         "wrTP1": 34.0,
         "nSL": 315,
-        "nTO": 36,
+        "nTO": 37,
         "expR": 0.132,
         "pf": 1.21,
+        "expRnet": 0.026,
+        "pfNet": 1.04,
         "mfe_p25": 20.75,
         "mfe_p50": 40.0,
         "mfe_p75": 90.0,
@@ -4751,20 +5894,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.132,
           "ci90": [
-            0.019,
-            0.245
+            -0.01,
+            0.28
           ],
-          "p_mean_le_0": 0.029,
-          "n": 508
+          "p_mean_le_0": 0.069,
+          "expRnet": 0.026,
+          "ci90net": [
+            -0.11,
+            0.167
+          ],
+          "p_net_le_0": 0.355,
+          "n": 508,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 392,
-        "wrTP1": 30.4,
+        "n": 393,
+        "wrTP1": 30.3,
         "nSL": 244,
-        "nTO": 29,
+        "nTO": 30,
         "expR": 0.128,
         "pf": 1.19,
+        "expRnet": 0.021,
+        "pfNet": 1.03,
         "mfe_p25": 22.0,
         "mfe_p50": 41.0,
         "mfe_p75": 93.0,
@@ -4773,25 +5926,35 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 7.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -24.5,
+        "entryZoneTk_p50": -24.0,
         "revAfterSL_rate": 37.3,
         "ci90": {
           "expR": 0.128,
           "ci90": [
-            -0.014,
-            0.27
+            -0.048,
+            0.348
           ],
-          "p_mean_le_0": 0.07,
-          "n": 373
+          "p_mean_le_0": 0.13,
+          "expRnet": 0.021,
+          "ci90net": [
+            -0.15,
+            0.233
+          ],
+          "p_net_le_0": 0.426,
+          "n": 373,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 198,
-        "wrTP1": 28.8,
+        "n": 199,
+        "wrTP1": 28.6,
         "nSL": 120,
-        "nTO": 21,
+        "nTO": 22,
         "expR": 0.297,
         "pf": 1.45,
+        "expRnet": 0.189,
+        "pfNet": 1.26,
         "mfe_p25": 26.0,
         "mfe_p50": 43.0,
         "mfe_p75": 85.0,
@@ -4805,23 +5968,33 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.297,
           "ci90": [
-            0.075,
-            0.522
+            0.027,
+            0.579
           ],
-          "p_mean_le_0": 0.011,
-          "n": 185
+          "p_mean_le_0": 0.034,
+          "expRnet": 0.189,
+          "ci90net": [
+            -0.074,
+            0.465
+          ],
+          "p_net_le_0": 0.131,
+          "n": 185,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "3/RETEST/SHORT": {
     "baseline": {
-      "n": 1606,
-      "wrTP1": 52.7,
+      "n": 1613,
+      "wrTP1": 52.5,
       "nSL": 674,
-      "nTO": 85,
+      "nTO": 92,
       "expR": 0.135,
       "pf": 1.31,
+      "expRnet": 0.027,
+      "pfNet": 1.05,
       "mfe_p25": 12.0,
       "mfe_p50": 27.0,
       "mfe_p75": 60.0,
@@ -4835,21 +6008,31 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "ci90": {
         "expR": 0.135,
         "ci90": [
-          0.087,
-          0.183
+          0.069,
+          0.206
         ],
         "p_mean_le_0": 0.0,
-        "n": 1529
+        "expRnet": 0.027,
+        "ci90net": [
+          -0.043,
+          0.101
+        ],
+        "p_net_le_0": 0.269,
+        "n": 1529,
+        "days": 11,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.2": {
-        "n": 498,
-        "wrTP1": 34.3,
+        "n": 504,
+        "wrTP1": 33.9,
         "nSL": 284,
-        "nTO": 43,
+        "nTO": 49,
         "expR": 0.155,
         "pf": 1.25,
+        "expRnet": 0.04,
+        "pfNet": 1.06,
         "mfe_p25": 18.0,
         "mfe_p50": 39.0,
         "mfe_p75": 89.75,
@@ -4858,25 +6041,35 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 6.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -29.0,
+        "entryZoneTk_p50": -29.5,
         "revAfterSL_rate": 46.5,
         "ci90": {
           "expR": 0.155,
           "ci90": [
-            0.037,
-            0.272
+            0.022,
+            0.307
           ],
-          "p_mean_le_0": 0.018,
-          "n": 462
+          "p_mean_le_0": 0.022,
+          "expRnet": 0.04,
+          "ci90net": [
+            -0.097,
+            0.194
+          ],
+          "p_net_le_0": 0.346,
+          "n": 462,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 437,
-        "wrTP1": 32.5,
+        "n": 443,
+        "wrTP1": 32.1,
         "nSL": 256,
-        "nTO": 39,
+        "nTO": 45,
         "expR": 0.144,
         "pf": 1.23,
+        "expRnet": 0.03,
+        "pfNet": 1.04,
         "mfe_p25": 18.0,
         "mfe_p50": 42.0,
         "mfe_p75": 94.0,
@@ -4890,20 +6083,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "ci90": {
           "expR": 0.144,
           "ci90": [
-            0.014,
-            0.271
+            -0.009,
+            0.32
           ],
-          "p_mean_le_0": 0.03,
-          "n": 405
+          "p_mean_le_0": 0.063,
+          "expRnet": 0.03,
+          "ci90net": [
+            -0.125,
+            0.21
+          ],
+          "p_net_le_0": 0.408,
+          "n": 405,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 343,
-        "wrTP1": 31.5,
+        "n": 346,
+        "wrTP1": 31.2,
         "nSL": 201,
-        "nTO": 34,
+        "nTO": 37,
         "expR": 0.191,
         "pf": 1.3,
+        "expRnet": 0.081,
+        "pfNet": 1.11,
         "mfe_p25": 20.75,
         "mfe_p50": 46.0,
         "mfe_p75": 100.25,
@@ -4912,25 +6115,35 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 6.0,
         "bars_win_p50": 4.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -30.0,
+        "entryZoneTk_p50": -30.5,
         "revAfterSL_rate": 43.3,
         "ci90": {
           "expR": 0.191,
           "ci90": [
-            0.033,
-            0.339
+            0.027,
+            0.379
           ],
-          "p_mean_le_0": 0.021,
-          "n": 316
+          "p_mean_le_0": 0.024,
+          "expRnet": 0.081,
+          "ci90net": [
+            -0.086,
+            0.274
+          ],
+          "p_net_le_0": 0.255,
+          "n": 316,
+          "days": 11,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 161,
-        "wrTP1": 22.4,
+        "n": 164,
+        "wrTP1": 22.0,
         "nSL": 105,
-        "nTO": 20,
+        "nTO": 23,
         "expR": 0.111,
         "pf": 1.16,
+        "expRnet": 0.005,
+        "pfNet": 1.01,
         "mfe_p25": 25.5,
         "mfe_p50": 50.5,
         "mfe_p75": 121.25,
@@ -4939,294 +6152,402 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "loserMFEbeforeSL_p50": 14.0,
         "bars_win_p50": 5.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -33.0,
+        "entryZoneTk_p50": -33.5,
         "revAfterSL_rate": 38.1,
         "ci90": {
           "expR": 0.111,
           "ci90": [
-            -0.126,
-            0.366
+            -0.166,
+            0.378
           ],
-          "p_mean_le_0": 0.225,
-          "n": 148
+          "p_mean_le_0": 0.262,
+          "expRnet": 0.005,
+          "ci90net": [
+            -0.273,
+            0.274
+          ],
+          "p_net_le_0": 0.495,
+          "n": 148,
+          "days": 10,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "5/RETEST/LONG": {
     "baseline": {
-      "n": 1214,
-      "wrTP1": 51.8,
-      "nSL": 543,
-      "nTO": 42,
-      "expR": 0.12,
-      "pf": 1.26,
-      "mfe_p25": 47.0,
-      "mfe_p50": 299.0,
-      "mfe_p75": 2385.5,
-      "winnerMAE_p75": 353.0,
-      "winnerMAE_p90": 4200.2,
+      "n": 1238,
+      "wrTP1": 52.1,
+      "nSL": 550,
+      "nTO": 43,
+      "expR": 0.123,
+      "pf": 1.27,
+      "expRnet": 0.088,
+      "pfNet": 1.19,
+      "mfe_p25": 49.0,
+      "mfe_p50": 311.5,
+      "mfe_p75": 2713.75,
+      "winnerMAE_p75": 431.0,
+      "winnerMAE_p90": 4595.8,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
-      "entryZoneTk_p50": -420.0,
-      "revAfterSL_rate": 56.4,
+      "entryZoneTk_p50": -427.5,
+      "revAfterSL_rate": 56.5,
       "ci90": {
-        "expR": 0.12,
+        "expR": 0.123,
         "ci90": [
-          0.062,
-          0.179
+          0.032,
+          0.193
         ],
-        "p_mean_le_0": 0.0,
-        "n": 1183
+        "p_mean_le_0": 0.01,
+        "expRnet": 0.088,
+        "ci90net": [
+          0.001,
+          0.157
+        ],
+        "p_net_le_0": 0.049,
+        "n": 1206,
+        "days": 13,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.2": {
-        "n": 421,
+        "n": 427,
         "wrTP1": 33.5,
-        "nSL": 251,
-        "nTO": 29,
+        "nSL": 254,
+        "nTO": 30,
         "expR": 0.178,
         "pf": 1.28,
-        "mfe_p25": 45.5,
-        "mfe_p50": 318.0,
-        "mfe_p75": 1576.5,
-        "winnerMAE_p75": 315.0,
-        "winnerMAE_p90": 3161.0,
+        "expRnet": 0.127,
+        "pfNet": 1.19,
+        "mfe_p25": 46.75,
+        "mfe_p50": 331.0,
+        "mfe_p75": 1598.5,
+        "winnerMAE_p75": 324.5,
+        "winnerMAE_p90": 3191.3999999999996,
         "loserMFEbeforeSL_p50": 9.0,
         "bars_win_p50": 2.0,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -218.0,
-        "revAfterSL_rate": 47.4,
+        "revAfterSL_rate": 48.0,
         "ci90": {
           "expR": 0.178,
           "ci90": [
-            0.041,
-            0.313
+            -0.024,
+            0.328
           ],
-          "p_mean_le_0": 0.013,
-          "n": 403
+          "p_mean_le_0": 0.071,
+          "expRnet": 0.127,
+          "ci90net": [
+            -0.068,
+            0.274
+          ],
+          "p_net_le_0": 0.126,
+          "n": 408,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 396,
+        "n": 402,
         "wrTP1": 33.1,
-        "nSL": 238,
-        "nTO": 27,
+        "nSL": 241,
+        "nTO": 28,
         "expR": 0.189,
         "pf": 1.3,
-        "mfe_p25": 44.75,
-        "mfe_p50": 322.5,
-        "mfe_p75": 1654.25,
-        "winnerMAE_p75": 336.5,
-        "winnerMAE_p90": 3199.0,
+        "expRnet": 0.139,
+        "pfNet": 1.21,
+        "mfe_p25": 46.0,
+        "mfe_p50": 334.0,
+        "mfe_p75": 1786.0,
+        "winnerMAE_p75": 339.0,
+        "winnerMAE_p90": 3359.7999999999993,
         "loserMFEbeforeSL_p50": 9.0,
         "bars_win_p50": 2.0,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -204.5,
-        "revAfterSL_rate": 45.4,
+        "revAfterSL_rate": 46.1,
         "ci90": {
           "expR": 0.189,
           "ci90": [
-            0.046,
-            0.33
+            0.0,
+            0.328
           ],
-          "p_mean_le_0": 0.015,
-          "n": 380
+          "p_mean_le_0": 0.05,
+          "expRnet": 0.139,
+          "ci90net": [
+            -0.043,
+            0.275
+          ],
+          "p_net_le_0": 0.095,
+          "n": 385,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 315,
-        "wrTP1": 29.8,
-        "nSL": 198,
-        "nTO": 23,
-        "expR": 0.184,
-        "pf": 1.28,
-        "mfe_p25": 46.5,
-        "mfe_p50": 345.0,
-        "mfe_p75": 1711.0,
-        "winnerMAE_p75": 310.0,
-        "winnerMAE_p90": 3409.8,
+        "n": 320,
+        "wrTP1": 30.0,
+        "nSL": 200,
+        "nTO": 24,
+        "expR": 0.188,
+        "pf": 1.29,
+        "expRnet": 0.137,
+        "pfNet": 1.2,
+        "mfe_p25": 47.0,
+        "mfe_p50": 356.0,
+        "mfe_p75": 1793.0,
+        "winnerMAE_p75": 335.25,
+        "winnerMAE_p90": 3448.5,
         "loserMFEbeforeSL_p50": 10.0,
         "bars_win_p50": 2.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -225.0,
-        "revAfterSL_rate": 42.4,
+        "entryZoneTk_p50": -218.5,
+        "revAfterSL_rate": 43.0,
         "ci90": {
-          "expR": 0.184,
+          "expR": 0.188,
           "ci90": [
-            0.004,
-            0.355
+            -0.007,
+            0.331
           ],
-          "p_mean_le_0": 0.046,
-          "n": 303
+          "p_mean_le_0": 0.058,
+          "expRnet": 0.137,
+          "ci90net": [
+            -0.05,
+            0.277
+          ],
+          "p_net_le_0": 0.118,
+          "n": 307,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 195,
-        "wrTP1": 22.1,
+        "n": 197,
+        "wrTP1": 22.3,
         "nSL": 132,
-        "nTO": 20,
-        "expR": 0.142,
-        "pf": 1.2,
+        "nTO": 21,
+        "expR": 0.152,
+        "pf": 1.21,
+        "expRnet": 0.096,
+        "pfNet": 1.13,
         "mfe_p25": 47.0,
-        "mfe_p50": 224.0,
-        "mfe_p75": 1312.75,
-        "winnerMAE_p75": 336.5,
-        "winnerMAE_p90": 1470.6000000000006,
+        "mfe_p50": 238.0,
+        "mfe_p75": 1303.5,
+        "winnerMAE_p75": 335.25,
+        "winnerMAE_p90": 1456.4000000000005,
         "loserMFEbeforeSL_p50": 10.5,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -146.0,
         "revAfterSL_rate": 34.8,
         "ci90": {
-          "expR": 0.142,
+          "expR": 0.152,
           "ci90": [
-            -0.093,
-            0.391
+            -0.132,
+            0.376
           ],
-          "p_mean_le_0": 0.178,
-          "n": 186
+          "p_mean_le_0": 0.185,
+          "expRnet": 0.096,
+          "ci90net": [
+            -0.181,
+            0.317
+          ],
+          "p_net_le_0": 0.279,
+          "n": 187,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
   },
   "5/RETEST/SHORT": {
     "baseline": {
-      "n": 946,
-      "wrTP1": 52.0,
-      "nSL": 407,
-      "nTO": 47,
-      "expR": 0.126,
-      "pf": 1.28,
-      "mfe_p25": 48.0,
-      "mfe_p50": 299.5,
-      "mfe_p75": 5576.5,
-      "winnerMAE_p75": 456.5,
-      "winnerMAE_p90": 3302.1000000000104,
+      "n": 993,
+      "wrTP1": 52.5,
+      "nSL": 418,
+      "nTO": 54,
+      "expR": 0.145,
+      "pf": 1.33,
+      "expRnet": 0.111,
+      "pfNet": 1.24,
+      "mfe_p25": 52.0,
+      "mfe_p50": 330.5,
+      "mfe_p75": 5725.75,
+      "winnerMAE_p75": 562.0,
+      "winnerMAE_p90": 3461.0,
       "loserMFEbeforeSL_p50": 1.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
-      "entryZoneTk_p50": -375.5,
-      "revAfterSL_rate": 59.0,
+      "entryZoneTk_p50": -408.0,
+      "revAfterSL_rate": 59.3,
       "ci90": {
-        "expR": 0.126,
+        "expR": 0.145,
         "ci90": [
-          0.055,
-          0.199
+          0.041,
+          0.275
         ],
-        "p_mean_le_0": 0.003,
-        "n": 908
+        "p_mean_le_0": 0.007,
+        "expRnet": 0.111,
+        "ci90net": [
+          0.003,
+          0.249
+        ],
+        "p_net_le_0": 0.048,
+        "n": 948,
+        "days": 14,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.2": {
-        "n": 335,
-        "wrTP1": 32.5,
-        "nSL": 200,
-        "nTO": 26,
-        "expR": 0.211,
-        "pf": 1.33,
-        "mfe_p25": 44.0,
-        "mfe_p50": 275.5,
-        "mfe_p75": 2913.25,
-        "winnerMAE_p75": 144.0,
-        "winnerMAE_p90": 2383.400000000001,
-        "loserMFEbeforeSL_p50": 11.5,
+        "n": 349,
+        "wrTP1": 33.0,
+        "nSL": 203,
+        "nTO": 31,
+        "expR": 0.234,
+        "pf": 1.38,
+        "expRnet": 0.185,
+        "pfNet": 1.28,
+        "mfe_p25": 45.5,
+        "mfe_p50": 295.0,
+        "mfe_p75": 3383.0,
+        "winnerMAE_p75": 175.0,
+        "winnerMAE_p90": 2655.2000000000003,
+        "loserMFEbeforeSL_p50": 13.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -203.0,
-        "revAfterSL_rate": 50.0,
+        "entryZoneTk_p50": -210.0,
+        "revAfterSL_rate": 50.2,
         "ci90": {
-          "expR": 0.211,
+          "expR": 0.234,
           "ci90": [
-            0.052,
-            0.39
+            -0.036,
+            0.557
           ],
-          "p_mean_le_0": 0.017,
-          "n": 318
+          "p_mean_le_0": 0.077,
+          "expRnet": 0.185,
+          "ci90net": [
+            -0.09,
+            0.51
+          ],
+          "p_net_le_0": 0.144,
+          "n": 327,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.3": {
-        "n": 302,
-        "wrTP1": 29.5,
-        "nSL": 187,
-        "nTO": 26,
-        "expR": 0.174,
-        "pf": 1.27,
-        "mfe_p25": 43.0,
-        "mfe_p50": 245.0,
-        "mfe_p75": 2569.0,
-        "winnerMAE_p75": 140.0,
-        "winnerMAE_p90": 2304.2,
-        "loserMFEbeforeSL_p50": 10.0,
+        "n": 314,
+        "wrTP1": 29.9,
+        "nSL": 189,
+        "nTO": 31,
+        "expR": 0.201,
+        "pf": 1.31,
+        "expRnet": 0.148,
+        "pfNet": 1.22,
+        "mfe_p25": 44.0,
+        "mfe_p50": 270.5,
+        "mfe_p75": 3040.25,
+        "winnerMAE_p75": 165.75,
+        "winnerMAE_p90": 2572.300000000001,
+        "loserMFEbeforeSL_p50": 11.0,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
-        "entryZoneTk_p50": -182.5,
+        "entryZoneTk_p50": -201.5,
         "revAfterSL_rate": 51.3,
         "ci90": {
-          "expR": 0.174,
+          "expR": 0.201,
           "ci90": [
-            -0.007,
-            0.374
+            -0.077,
+            0.542
           ],
-          "p_mean_le_0": 0.06,
-          "n": 285
+          "p_mean_le_0": 0.134,
+          "expRnet": 0.148,
+          "ci90net": [
+            -0.133,
+            0.498
+          ],
+          "p_net_le_0": 0.215,
+          "n": 292,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "1.5": {
-        "n": 249,
-        "wrTP1": 25.3,
-        "nSL": 160,
-        "nTO": 26,
-        "expR": 0.148,
-        "pf": 1.21,
-        "mfe_p25": 43.0,
-        "mfe_p50": 242.5,
-        "mfe_p75": 2224.0,
-        "winnerMAE_p75": 131.5,
-        "winnerMAE_p90": 1662.2000000000053,
-        "loserMFEbeforeSL_p50": 11.5,
+        "n": 259,
+        "wrTP1": 25.5,
+        "nSL": 162,
+        "nTO": 31,
+        "expR": 0.17,
+        "pf": 1.25,
+        "expRnet": 0.116,
+        "pfNet": 1.16,
+        "mfe_p25": 44.0,
+        "mfe_p50": 257.0,
+        "mfe_p75": 2431.0,
+        "winnerMAE_p75": 138.5,
+        "winnerMAE_p90": 2105.0,
+        "loserMFEbeforeSL_p50": 12.5,
         "bars_win_p50": 3.0,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -150.0,
         "revAfterSL_rate": 49.4,
         "ci90": {
-          "expR": 0.148,
+          "expR": 0.17,
           "ci90": [
-            -0.055,
-            0.384
+            -0.127,
+            0.544
           ],
-          "p_mean_le_0": 0.121,
-          "n": 232
+          "p_mean_le_0": 0.199,
+          "expRnet": 0.116,
+          "ci90net": [
+            -0.189,
+            0.502
+          ],
+          "p_net_le_0": 0.298,
+          "n": 237,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
         }
       },
       "2.0": {
-        "n": 155,
-        "wrTP1": 18.1,
-        "nSL": 103,
-        "nTO": 24,
-        "expR": 0.167,
-        "pf": 1.23,
-        "mfe_p25": 48.75,
-        "mfe_p50": 283.5,
-        "mfe_p75": 2224.0,
-        "winnerMAE_p75": 110.75,
-        "winnerMAE_p90": 2141.0000000000005,
-        "loserMFEbeforeSL_p50": 12.0,
+        "n": 161,
+        "wrTP1": 18.0,
+        "nSL": 104,
+        "nTO": 28,
+        "expR": 0.179,
+        "pf": 1.24,
+        "expRnet": 0.124,
+        "pfNet": 1.16,
+        "mfe_p25": 50.5,
+        "mfe_p50": 300.5,
+        "mfe_p75": 2270.0,
+        "winnerMAE_p75": 134.0,
+        "winnerMAE_p90": 2063.9999999999995,
+        "loserMFEbeforeSL_p50": 12.5,
         "bars_win_p50": 6.0,
         "bars_loss_p50": 2.0,
         "entryZoneTk_p50": -180.0,
-        "revAfterSL_rate": 48.5,
+        "revAfterSL_rate": 48.1,
         "ci90": {
-          "expR": 0.167,
+          "expR": 0.179,
           "ci90": [
-            -0.14,
-            0.514
+            -0.281,
+            0.733
           ],
-          "p_mean_le_0": 0.22,
-          "n": 140
+          "p_mean_le_0": 0.297,
+          "expRnet": 0.124,
+          "ci90net": [
+            -0.349,
+            0.692
+          ],
+          "p_net_le_0": 0.369,
+          "n": 142,
+          "days": 13,
+          "ci_method": "day-clustered bootstrap"
         }
       }
     }
@@ -5288,9 +6609,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     "expR": 0.121
   },
   "2026-W46": {
-    "n": 8146,
-    "wrTP1": 47.9,
-    "expR": 0.093
+    "n": 8282,
+    "wrTP1": 47.7,
+    "expR": 0.099
   }
 }
 ```
@@ -5303,73 +6624,97 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "n": 42,
       "wrTP1": 47.6,
       "expR": 0.276,
-      "pf": 1.64
+      "pf": 1.64,
+      "expRnet": 0.057,
+      "pfNet": 1.11
     },
     "1m/INV/SHORT": {
       "n": 19,
       "wrTP1": 68.4,
       "expR": 0.264,
-      "pf": 1.95
+      "pf": 1.95,
+      "expRnet": 0.129,
+      "pfNet": 1.38
     },
     "1m/RETEST/LONG": {
       "n": 1402,
       "wrTP1": 42.7,
       "expR": -0.017,
-      "pf": 0.97
+      "pf": 0.97,
+      "expRnet": -0.237,
+      "pfNet": 0.63
     },
     "1m/RETEST/SHORT": {
       "n": 471,
       "wrTP1": 43.1,
       "expR": -0.009,
-      "pf": 0.98
+      "pf": 0.98,
+      "expRnet": -0.177,
+      "pfNet": 0.7
     },
     "2m/INV/LONG": {
       "n": 18,
       "wrTP1": 38.9,
       "expR": -0.271,
-      "pf": 0.56
+      "pf": 0.56,
+      "expRnet": -0.481,
+      "pfNet": 0.37
     },
     "2m/INV/SHORT": {
       "n": 6,
       "wrTP1": 50.0,
       "expR": -0.267,
-      "pf": 0.47
+      "pf": 0.47,
+      "expRnet": -0.372,
+      "pfNet": 0.32
     },
     "2m/RETEST/LONG": {
       "n": 705,
       "wrTP1": 45.5,
       "expR": -0.071,
-      "pf": 0.87
+      "pf": 0.87,
+      "expRnet": -0.269,
+      "pfNet": 0.58
     },
     "2m/RETEST/SHORT": {
       "n": 217,
       "wrTP1": 41.0,
       "expR": -0.115,
-      "pf": 0.79
+      "pf": 0.79,
+      "expRnet": -0.256,
+      "pfNet": 0.59
     },
     "5m/INV/LONG": {
       "n": 6,
       "wrTP1": 100.0,
       "expR": 0.712,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 0.605,
+      "pfNet": 99.0
     },
     "5m/INV/SHORT": {
       "n": 4,
       "wrTP1": 75.0,
       "expR": 0.018,
-      "pf": 1.07
+      "pf": 1.07,
+      "expRnet": -0.021,
+      "pfNet": 0.92
     },
     "5m/RETEST/LONG": {
       "n": 245,
       "wrTP1": 52.7,
       "expR": 0.083,
-      "pf": 1.19
+      "pf": 1.19,
+      "expRnet": -0.061,
+      "pfNet": 0.88
     },
     "5m/RETEST/SHORT": {
       "n": 96,
       "wrTP1": 47.9,
       "expR": -0.018,
-      "pf": 0.96
+      "pf": 0.96,
+      "expRnet": -0.108,
+      "pfNet": 0.79
     }
   },
   "2026-W37": {
@@ -5377,73 +6722,97 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "n": 37,
       "wrTP1": 43.2,
       "expR": -0.008,
-      "pf": 0.98
+      "pf": 0.98,
+      "expRnet": -0.127,
+      "pfNet": 0.76
     },
     "1m/INV/SHORT": {
       "n": 57,
       "wrTP1": 42.1,
       "expR": 0.091,
-      "pf": 1.18
+      "pf": 1.18,
+      "expRnet": -0.027,
+      "pfNet": 0.95
     },
     "1m/RETEST/LONG": {
       "n": 1608,
       "wrTP1": 45.1,
       "expR": 0.045,
-      "pf": 1.09
+      "pf": 1.09,
+      "expRnet": -0.111,
+      "pfNet": 0.81
     },
     "1m/RETEST/SHORT": {
       "n": 1718,
       "wrTP1": 45.0,
       "expR": 0.045,
-      "pf": 1.09
+      "pf": 1.09,
+      "expRnet": -0.121,
+      "pfNet": 0.8
     },
     "2m/INV/LONG": {
       "n": 9,
       "wrTP1": 55.6,
       "expR": -0.009,
-      "pf": 0.98
+      "pf": 0.98,
+      "expRnet": -0.092,
+      "pfNet": 0.77
     },
     "2m/INV/SHORT": {
       "n": 31,
       "wrTP1": 35.5,
       "expR": 0.137,
-      "pf": 1.27
+      "pf": 1.27,
+      "expRnet": 0.007,
+      "pfNet": 1.01
     },
     "2m/RETEST/LONG": {
       "n": 694,
       "wrTP1": 47.6,
       "expR": 0.037,
-      "pf": 1.08
+      "pf": 1.08,
+      "expRnet": -0.104,
+      "pfNet": 0.81
     },
     "2m/RETEST/SHORT": {
       "n": 762,
       "wrTP1": 51.3,
       "expR": 0.151,
-      "pf": 1.33
+      "pf": 1.33,
+      "expRnet": 0.006,
+      "pfNet": 1.01
     },
     "5m/INV/LONG": {
       "n": 4,
       "wrTP1": 75.0,
       "expR": 1.055,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 1.002,
+      "pfNet": 99.0
     },
     "5m/INV/SHORT": {
       "n": 4,
       "wrTP1": 75.0,
       "expR": 1.212,
-      "pf": 5.85
+      "pf": 5.85,
+      "expRnet": 1.146,
+      "pfNet": 5.31
     },
     "5m/RETEST/LONG": {
       "n": 245,
       "wrTP1": 52.7,
       "expR": 0.209,
-      "pf": 1.47
+      "pf": 1.47,
+      "expRnet": 0.09,
+      "pfNet": 1.18
     },
     "5m/RETEST/SHORT": {
       "n": 221,
       "wrTP1": 51.6,
       "expR": 0.118,
-      "pf": 1.26
+      "pf": 1.26,
+      "expRnet": 0.007,
+      "pfNet": 1.01
     }
   },
   "2026-W38": {
@@ -5451,73 +6820,97 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "n": 59,
       "wrTP1": 40.7,
       "expR": -0.102,
-      "pf": 0.81
+      "pf": 0.81,
+      "expRnet": -0.241,
+      "pfNet": 0.6
     },
     "1m/INV/SHORT": {
       "n": 22,
       "wrTP1": 45.5,
       "expR": -0.098,
-      "pf": 0.8
+      "pf": 0.8,
+      "expRnet": -0.197,
+      "pfNet": 0.65
     },
     "1m/RETEST/LONG": {
       "n": 2038,
       "wrTP1": 48.2,
       "expR": 0.112,
-      "pf": 1.25
+      "pf": 1.25,
+      "expRnet": -0.049,
+      "pfNet": 0.91
     },
     "1m/RETEST/SHORT": {
       "n": 984,
       "wrTP1": 42.1,
       "expR": 0.094,
-      "pf": 1.2
+      "pf": 1.2,
+      "expRnet": -0.029,
+      "pfNet": 0.95
     },
     "2m/INV/LONG": {
       "n": 16,
       "wrTP1": 56.2,
       "expR": -0.059,
-      "pf": 0.79
+      "pf": 0.79,
+      "expRnet": -0.143,
+      "pfNet": 0.55
     },
     "2m/INV/SHORT": {
       "n": 4,
       "wrTP1": 0.0,
       "expR": -1.0,
-      "pf": 0.0
+      "pf": 0.0,
+      "expRnet": -1.071,
+      "pfNet": 0.0
     },
     "2m/RETEST/LONG": {
       "n": 907,
       "wrTP1": 46.9,
       "expR": 0.045,
-      "pf": 1.1
+      "pf": 1.1,
+      "expRnet": -0.098,
+      "pfNet": 0.82
     },
     "2m/RETEST/SHORT": {
       "n": 378,
       "wrTP1": 43.9,
       "expR": 0.007,
-      "pf": 1.01
+      "pf": 1.01,
+      "expRnet": -0.1,
+      "pfNet": 0.82
     },
     "5m/INV/LONG": {
       "n": 7,
       "wrTP1": 28.6,
       "expR": -0.478,
-      "pf": 0.2
+      "pf": 0.2,
+      "expRnet": -0.522,
+      "pfNet": 0.15
     },
     "5m/INV/SHORT": {
       "n": 1,
       "wrTP1": 0.0,
       "expR": -1.0,
-      "pf": 0.0
+      "pf": 0.0,
+      "expRnet": -1.118,
+      "pfNet": 0.0
     },
     "5m/RETEST/LONG": {
       "n": 323,
       "wrTP1": 50.8,
       "expR": 0.18,
-      "pf": 1.45
+      "pf": 1.45,
+      "expRnet": 0.093,
+      "pfNet": 1.21
     },
     "5m/RETEST/SHORT": {
       "n": 177,
       "wrTP1": 41.8,
       "expR": 0.093,
-      "pf": 1.19
+      "pf": 1.19,
+      "expRnet": 0.021,
+      "pfNet": 1.04
     }
   },
   "2026-W39": {
@@ -5525,73 +6918,97 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "n": 37,
       "wrTP1": 48.6,
       "expR": 0.702,
-      "pf": 3.36
+      "pf": 3.36,
+      "expRnet": 0.523,
+      "pfNet": 2.5
     },
     "1m/INV/SHORT": {
       "n": 43,
       "wrTP1": 48.8,
       "expR": 0.047,
-      "pf": 1.12
+      "pf": 1.12,
+      "expRnet": -0.063,
+      "pfNet": 0.85
     },
     "1m/RETEST/LONG": {
       "n": 2035,
       "wrTP1": 44.5,
       "expR": 0.057,
-      "pf": 1.12
+      "pf": 1.12,
+      "expRnet": -0.135,
+      "pfNet": 0.77
     },
     "1m/RETEST/SHORT": {
       "n": 1361,
       "wrTP1": 44.5,
       "expR": -0.007,
-      "pf": 0.99
+      "pf": 0.99,
+      "expRnet": -0.134,
+      "pfNet": 0.76
     },
     "2m/INV/LONG": {
       "n": 25,
       "wrTP1": 48.0,
       "expR": 0.267,
-      "pf": 1.68
+      "pf": 1.68,
+      "expRnet": 0.175,
+      "pfNet": 1.42
     },
     "2m/INV/SHORT": {
       "n": 17,
       "wrTP1": 52.9,
       "expR": 0.511,
-      "pf": 3.38
+      "pf": 3.38,
+      "expRnet": 0.419,
+      "pfNet": 2.81
     },
     "2m/RETEST/LONG": {
       "n": 783,
       "wrTP1": 45.7,
       "expR": 0.125,
-      "pf": 1.26
+      "pf": 1.26,
+      "expRnet": -0.025,
+      "pfNet": 0.95
     },
     "2m/RETEST/SHORT": {
       "n": 571,
       "wrTP1": 49.0,
       "expR": 0.036,
-      "pf": 1.08
+      "pf": 1.08,
+      "expRnet": -0.075,
+      "pfNet": 0.85
     },
     "5m/INV/LONG": {
       "n": 4,
       "wrTP1": 100.0,
       "expR": 0.632,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 0.523,
+      "pfNet": 210.19
     },
     "5m/INV/SHORT": {
       "n": 3,
       "wrTP1": 66.7,
       "expR": 0.195,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 0.136,
+      "pfNet": 99.0
     },
     "5m/RETEST/LONG": {
       "n": 271,
       "wrTP1": 45.0,
       "expR": 0.091,
-      "pf": 1.19
+      "pf": 1.19,
+      "expRnet": -0.02,
+      "pfNet": 0.96
     },
     "5m/RETEST/SHORT": {
       "n": 206,
       "wrTP1": 46.1,
       "expR": 0.069,
-      "pf": 1.14
+      "pf": 1.14,
+      "expRnet": -0.017,
+      "pfNet": 0.97
     }
   },
   "2026-W40": {
@@ -5599,73 +7016,97 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "n": 45,
       "wrTP1": 53.3,
       "expR": 0.285,
-      "pf": 1.74
+      "pf": 1.74,
+      "expRnet": 0.159,
+      "pfNet": 1.36
     },
     "1m/INV/SHORT": {
       "n": 49,
       "wrTP1": 38.8,
       "expR": -0.08,
-      "pf": 0.84
+      "pf": 0.84,
+      "expRnet": -0.204,
+      "pfNet": 0.64
     },
     "1m/RETEST/LONG": {
       "n": 1811,
       "wrTP1": 42.6,
       "expR": -0.031,
-      "pf": 0.94
+      "pf": 0.94,
+      "expRnet": -0.17,
+      "pfNet": 0.72
     },
     "1m/RETEST/SHORT": {
       "n": 1399,
       "wrTP1": 45.9,
       "expR": 0.027,
-      "pf": 1.06
+      "pf": 1.06,
+      "expRnet": -0.102,
+      "pfNet": 0.82
     },
     "2m/INV/LONG": {
       "n": 13,
       "wrTP1": 69.2,
       "expR": 0.156,
-      "pf": 1.51
+      "pf": 1.51,
+      "expRnet": 0.087,
+      "pfNet": 1.27
     },
     "2m/INV/SHORT": {
       "n": 20,
       "wrTP1": 55.0,
       "expR": -0.07,
-      "pf": 0.81
+      "pf": 0.81,
+      "expRnet": -0.157,
+      "pfNet": 0.6
     },
     "2m/RETEST/LONG": {
       "n": 855,
       "wrTP1": 46.3,
       "expR": -0.001,
-      "pf": 1.0
+      "pf": 1.0,
+      "expRnet": -0.114,
+      "pfNet": 0.8
     },
     "2m/RETEST/SHORT": {
       "n": 631,
       "wrTP1": 45.6,
       "expR": 0.113,
-      "pf": 1.23
+      "pf": 1.23,
+      "expRnet": -0.003,
+      "pfNet": 0.99
     },
     "5m/INV/LONG": {
       "n": 5,
       "wrTP1": 100.0,
       "expR": 0.374,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 0.301,
+      "pfNet": 99.0
     },
     "5m/INV/SHORT": {
       "n": 3,
       "wrTP1": 33.3,
       "expR": -0.36,
-      "pf": 0.28
+      "pf": 0.28,
+      "expRnet": -0.475,
+      "pfNet": 0.13
     },
     "5m/RETEST/LONG": {
       "n": 294,
       "wrTP1": 53.4,
       "expR": 0.1,
-      "pf": 1.22
+      "pf": 1.22,
+      "expRnet": 0.012,
+      "pfNet": 1.02
     },
     "5m/RETEST/SHORT": {
       "n": 233,
       "wrTP1": 43.3,
       "expR": 0.022,
-      "pf": 1.04
+      "pf": 1.04,
+      "expRnet": -0.061,
+      "pfNet": 0.89
     }
   },
   "2026-W41": {
@@ -5673,73 +7114,97 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "n": 55,
       "wrTP1": 47.3,
       "expR": 0.035,
-      "pf": 1.08
+      "pf": 1.08,
+      "expRnet": -0.114,
+      "pfNet": 0.79
     },
     "1m/INV/SHORT": {
       "n": 39,
       "wrTP1": 41.0,
       "expR": 0.165,
-      "pf": 1.39
+      "pf": 1.39,
+      "expRnet": 0.022,
+      "pfNet": 1.04
     },
     "1m/RETEST/LONG": {
       "n": 2054,
       "wrTP1": 45.7,
       "expR": 0.02,
-      "pf": 1.04
+      "pf": 1.04,
+      "expRnet": -0.17,
+      "pfNet": 0.71
     },
     "1m/RETEST/SHORT": {
       "n": 1081,
       "wrTP1": 41.4,
       "expR": 0.047,
-      "pf": 1.09
+      "pf": 1.09,
+      "expRnet": -0.099,
+      "pfNet": 0.83
     },
     "2m/INV/LONG": {
       "n": 27,
       "wrTP1": 44.4,
       "expR": -0.181,
-      "pf": 0.65
+      "pf": 0.65,
+      "expRnet": -0.284,
+      "pfNet": 0.51
     },
     "2m/INV/SHORT": {
       "n": 9,
       "wrTP1": 33.3,
       "expR": 0.377,
-      "pf": 1.68
+      "pf": 1.68,
+      "expRnet": 0.291,
+      "pfNet": 1.5
     },
     "2m/RETEST/LONG": {
       "n": 944,
       "wrTP1": 52.2,
       "expR": 0.107,
-      "pf": 1.25
+      "pf": 1.25,
+      "expRnet": -0.051,
+      "pfNet": 0.9
     },
     "2m/RETEST/SHORT": {
       "n": 481,
       "wrTP1": 45.1,
       "expR": 0.06,
-      "pf": 1.12
+      "pf": 1.12,
+      "expRnet": -0.063,
+      "pfNet": 0.89
     },
     "5m/INV/LONG": {
       "n": 8,
       "wrTP1": 50.0,
       "expR": -0.167,
-      "pf": 0.61
+      "pf": 0.61,
+      "expRnet": -0.272,
+      "pfNet": 0.44
     },
     "5m/INV/SHORT": {
       "n": 3,
       "wrTP1": 33.3,
       "expR": -0.513,
-      "pf": 0.23
+      "pf": 0.23,
+      "expRnet": -0.589,
+      "pfNet": 0.17
     },
     "5m/RETEST/LONG": {
       "n": 352,
       "wrTP1": 53.4,
       "expR": 0.16,
-      "pf": 1.37
+      "pf": 1.37,
+      "expRnet": 0.034,
+      "pfNet": 1.07
     },
     "5m/RETEST/SHORT": {
       "n": 172,
       "wrTP1": 50.6,
       "expR": 0.075,
-      "pf": 1.17
+      "pf": 1.17,
+      "expRnet": -0.035,
+      "pfNet": 0.93
     }
   },
   "2026-W42": {
@@ -5747,73 +7212,97 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "n": 76,
       "wrTP1": 34.2,
       "expR": -0.201,
-      "pf": 0.64
+      "pf": 0.64,
+      "expRnet": -0.354,
+      "pfNet": 0.45
     },
     "1m/INV/SHORT": {
       "n": 24,
       "wrTP1": 58.3,
       "expR": 0.133,
-      "pf": 1.39
+      "pf": 1.39,
+      "expRnet": 0.032,
+      "pfNet": 1.08
     },
     "1m/RETEST/LONG": {
       "n": 2224,
       "wrTP1": 46.5,
       "expR": 0.047,
-      "pf": 1.1
+      "pf": 1.1,
+      "expRnet": -0.144,
+      "pfNet": 0.76
     },
     "1m/RETEST/SHORT": {
       "n": 1009,
       "wrTP1": 48.8,
       "expR": 0.045,
-      "pf": 1.1
+      "pf": 1.1,
+      "expRnet": -0.059,
+      "pfNet": 0.89
     },
     "2m/INV/LONG": {
       "n": 23,
       "wrTP1": 52.2,
       "expR": 0.25,
-      "pf": 1.64
+      "pf": 1.64,
+      "expRnet": 0.132,
+      "pfNet": 1.29
     },
     "2m/INV/SHORT": {
       "n": 6,
       "wrTP1": 83.3,
       "expR": 0.845,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 0.781,
+      "pfNet": 99.0
     },
     "2m/RETEST/LONG": {
       "n": 857,
       "wrTP1": 49.6,
       "expR": 0.084,
-      "pf": 1.18
+      "pf": 1.18,
+      "expRnet": -0.084,
+      "pfNet": 0.85
     },
     "2m/RETEST/SHORT": {
       "n": 401,
       "wrTP1": 47.9,
       "expR": -0.053,
-      "pf": 0.89
+      "pf": 0.89,
+      "expRnet": -0.14,
+      "pfNet": 0.75
     },
     "5m/INV/LONG": {
       "n": 3,
       "wrTP1": 66.7,
       "expR": 0.017,
-      "pf": 1.05
+      "pf": 1.05,
+      "expRnet": -0.064,
+      "pfNet": 0.81
     },
     "5m/INV/SHORT": {
       "n": 1,
       "wrTP1": 0.0,
       "expR": -1.0,
-      "pf": 0.0
+      "pf": 0.0,
+      "expRnet": -1.009,
+      "pfNet": 0.0
     },
     "5m/RETEST/LONG": {
       "n": 321,
       "wrTP1": 53.3,
       "expR": 0.086,
-      "pf": 1.19
+      "pf": 1.19,
+      "expRnet": -0.036,
+      "pfNet": 0.93
     },
     "5m/RETEST/SHORT": {
       "n": 181,
       "wrTP1": 50.8,
       "expR": 0.124,
-      "pf": 1.27
+      "pf": 1.27,
+      "expRnet": 0.06,
+      "pfNet": 1.12
     }
   },
   "2026-W43": {
@@ -5821,73 +7310,97 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "n": 48,
       "wrTP1": 60.4,
       "expR": 0.321,
-      "pf": 1.91
+      "pf": 1.91,
+      "expRnet": 0.156,
+      "pfNet": 1.38
     },
     "1m/INV/SHORT": {
       "n": 25,
       "wrTP1": 56.0,
       "expR": 0.29,
-      "pf": 1.9
+      "pf": 1.9,
+      "expRnet": 0.207,
+      "pfNet": 1.6
     },
     "1m/RETEST/LONG": {
       "n": 1595,
       "wrTP1": 40.8,
       "expR": -0.029,
-      "pf": 0.95
+      "pf": 0.95,
+      "expRnet": -0.201,
+      "pfNet": 0.68
     },
     "1m/RETEST/SHORT": {
       "n": 1205,
       "wrTP1": 43.5,
       "expR": -0.001,
-      "pf": 1.0
+      "pf": 1.0,
+      "expRnet": -0.109,
+      "pfNet": 0.81
     },
     "2m/INV/LONG": {
       "n": 15,
       "wrTP1": 53.3,
       "expR": 0.035,
-      "pf": 1.08
+      "pf": 1.08,
+      "expRnet": -0.091,
+      "pfNet": 0.81
     },
     "2m/INV/SHORT": {
       "n": 8,
       "wrTP1": 50.0,
       "expR": -0.217,
-      "pf": 0.56
+      "pf": 0.56,
+      "expRnet": -0.28,
+      "pfNet": 0.47
     },
     "2m/RETEST/LONG": {
       "n": 741,
       "wrTP1": 43.7,
       "expR": 0.01,
-      "pf": 1.02
+      "pf": 1.02,
+      "expRnet": -0.136,
+      "pfNet": 0.77
     },
     "2m/RETEST/SHORT": {
       "n": 545,
       "wrTP1": 51.0,
       "expR": 0.07,
-      "pf": 1.15
+      "pf": 1.15,
+      "expRnet": -0.02,
+      "pfNet": 0.96
     },
     "5m/INV/LONG": {
       "n": 2,
       "wrTP1": 50.0,
       "expR": -0.395,
-      "pf": 0.21
+      "pf": 0.21,
+      "expRnet": -0.505,
+      "pfNet": 0.11
     },
     "5m/INV/SHORT": {
       "n": 4,
       "wrTP1": 75.0,
       "expR": 0.318,
-      "pf": 2.27
+      "pf": 2.27,
+      "expRnet": 0.286,
+      "pfNet": 2.13
     },
     "5m/RETEST/LONG": {
       "n": 289,
       "wrTP1": 46.4,
       "expR": -0.075,
-      "pf": 0.85
+      "pf": 0.85,
+      "expRnet": -0.174,
+      "pfNet": 0.69
     },
     "5m/RETEST/SHORT": {
       "n": 234,
       "wrTP1": 45.7,
       "expR": -0.001,
-      "pf": 1.0
+      "pf": 1.0,
+      "expRnet": -0.086,
+      "pfNet": 0.84
     }
   },
   "2026-W44": {
@@ -5895,139 +7408,185 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "n": 4,
       "wrTP1": 50.0,
       "expR": -0.115,
-      "pf": 0.77
+      "pf": 0.77,
+      "expRnet": -0.152,
+      "pfNet": 0.71
     },
     "15m/INV/SHORT": {
       "n": 1,
       "wrTP1": 100.0,
       "expR": 1.35,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 1.27,
+      "pfNet": 99.0
     },
     "15m/RETEST/LONG": {
       "n": 286,
       "wrTP1": 50.0,
       "expR": 0.036,
-      "pf": 1.07
+      "pf": 1.07,
+      "expRnet": -0.018,
+      "pfNet": 0.97
     },
     "15m/RETEST/SHORT": {
       "n": 303,
       "wrTP1": 51.5,
       "expR": 0.037,
-      "pf": 1.08
+      "pf": 1.08,
+      "expRnet": -0.009,
+      "pfNet": 0.98
     },
     "1m/INV/LONG": {
       "n": 53,
       "wrTP1": 50.9,
       "expR": 0.073,
-      "pf": 1.17
+      "pf": 1.17,
+      "expRnet": -0.047,
+      "pfNet": 0.9
     },
     "1m/INV/SHORT": {
       "n": 51,
       "wrTP1": 43.1,
       "expR": 0.084,
-      "pf": 1.2
+      "pf": 1.2,
+      "expRnet": -0.021,
+      "pfNet": 0.96
     },
     "1m/RETEST/LONG": {
       "n": 2330,
       "wrTP1": 46.9,
       "expR": 0.003,
-      "pf": 1.01
+      "pf": 1.01,
+      "expRnet": -0.15,
+      "pfNet": 0.74
     },
     "1m/RETEST/SHORT": {
       "n": 2137,
       "wrTP1": 47.1,
       "expR": 0.022,
-      "pf": 1.04
+      "pf": 1.04,
+      "expRnet": -0.12,
+      "pfNet": 0.79
     },
     "29m/INV/SHORT": {
       "n": 1,
       "wrTP1": 100.0,
       "expR": 0.14,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 0.134,
+      "pfNet": 99.0
     },
     "29m/RETEST/LONG": {
       "n": 121,
       "wrTP1": 54.5,
       "expR": 0.133,
-      "pf": 1.29
+      "pf": 1.29,
+      "expRnet": 0.088,
+      "pfNet": 1.19
     },
     "29m/RETEST/SHORT": {
       "n": 179,
       "wrTP1": 54.2,
       "expR": 0.11,
-      "pf": 1.24
+      "pf": 1.24,
+      "expRnet": 0.061,
+      "pfNet": 1.13
     },
     "2m/INV/LONG": {
       "n": 16,
       "wrTP1": 75.0,
       "expR": 0.192,
-      "pf": 1.77
+      "pf": 1.77,
+      "expRnet": 0.116,
+      "pfNet": 1.41
     },
     "2m/INV/SHORT": {
       "n": 19,
       "wrTP1": 68.4,
       "expR": 0.169,
-      "pf": 1.6
+      "pf": 1.6,
+      "expRnet": 0.122,
+      "pfNet": 1.42
     },
     "2m/RETEST/LONG": {
       "n": 992,
       "wrTP1": 48.1,
       "expR": -0.069,
-      "pf": 0.86
+      "pf": 0.86,
+      "expRnet": -0.212,
+      "pfNet": 0.64
     },
     "2m/RETEST/SHORT": {
       "n": 949,
       "wrTP1": 45.8,
       "expR": -0.022,
-      "pf": 0.96
+      "pf": 0.96,
+      "expRnet": -0.146,
+      "pfNet": 0.75
     },
     "3m/INV/LONG": {
       "n": 8,
       "wrTP1": 62.5,
       "expR": 0.02,
-      "pf": 1.05
+      "pf": 1.05,
+      "expRnet": -0.05,
+      "pfNet": 0.87
     },
     "3m/INV/SHORT": {
       "n": 5,
       "wrTP1": 100.0,
       "expR": 0.48,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 0.435,
+      "pfNet": 99.0
     },
     "3m/RETEST/LONG": {
       "n": 789,
       "wrTP1": 53.1,
       "expR": 0.069,
-      "pf": 1.15
+      "pf": 1.15,
+      "expRnet": -0.055,
+      "pfNet": 0.89
     },
     "3m/RETEST/SHORT": {
       "n": 755,
       "wrTP1": 53.9,
       "expR": 0.109,
-      "pf": 1.25
+      "pf": 1.25,
+      "expRnet": -0.016,
+      "pfNet": 0.97
     },
     "5m/INV/LONG": {
       "n": 16,
       "wrTP1": 68.8,
       "expR": -0.087,
-      "pf": 0.72
+      "pf": 0.72,
+      "expRnet": -0.125,
+      "pfNet": 0.62
     },
     "5m/INV/SHORT": {
       "n": 10,
       "wrTP1": 20.0,
       "expR": 0.272,
-      "pf": 1.45
+      "pf": 1.45,
+      "expRnet": 0.24,
+      "pfNet": 1.39
     },
     "5m/RETEST/LONG": {
       "n": 796,
       "wrTP1": 53.1,
       "expR": 0.075,
-      "pf": 1.17
+      "pf": 1.17,
+      "expRnet": 0.026,
+      "pfNet": 1.06
     },
     "5m/RETEST/SHORT": {
       "n": 675,
       "wrTP1": 53.5,
       "expR": 0.089,
-      "pf": 1.2
+      "pf": 1.2,
+      "expRnet": 0.023,
+      "pfNet": 1.05
     }
   },
   "2026-W45": {
@@ -6035,139 +7594,185 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "n": 1,
       "wrTP1": 100.0,
       "expR": 0.51,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 0.51,
+      "pfNet": 99.0
     },
     "15m/RETEST/LONG": {
       "n": 336,
       "wrTP1": 46.1,
       "expR": 0.137,
-      "pf": 1.28
+      "pf": 1.28,
+      "expRnet": 0.097,
+      "pfNet": 1.19
     },
     "15m/RETEST/SHORT": {
       "n": 285,
       "wrTP1": 53.3,
       "expR": 0.36,
-      "pf": 1.83
+      "pf": 1.83,
+      "expRnet": 0.328,
+      "pfNet": 1.73
     },
     "1m/INV/LONG": {
       "n": 32,
       "wrTP1": 43.8,
       "expR": 0.149,
-      "pf": 1.35
+      "pf": 1.35,
+      "expRnet": 0.061,
+      "pfNet": 1.13
     },
     "1m/INV/SHORT": {
       "n": 44,
       "wrTP1": 47.7,
       "expR": 0.438,
-      "pf": 2.28
+      "pf": 2.28,
+      "expRnet": 0.348,
+      "pfNet": 1.95
     },
     "1m/RETEST/LONG": {
       "n": 1035,
       "wrTP1": 40.4,
       "expR": 0.071,
-      "pf": 1.14
+      "pf": 1.14,
+      "expRnet": -0.029,
+      "pfNet": 0.95
     },
     "1m/RETEST/SHORT": {
       "n": 1754,
       "wrTP1": 44.0,
       "expR": 0.046,
-      "pf": 1.09
+      "pf": 1.09,
+      "expRnet": -0.059,
+      "pfNet": 0.89
     },
     "29m/INV/LONG": {
       "n": 4,
       "wrTP1": 75.0,
       "expR": 0.365,
-      "pf": 2.46
+      "pf": 2.46,
+      "expRnet": 0.362,
+      "pfNet": 2.44
     },
     "29m/INV/SHORT": {
       "n": 1,
       "wrTP1": 100.0,
       "expR": 0.92,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 0.91,
+      "pfNet": 99.0
     },
     "29m/RETEST/LONG": {
       "n": 168,
       "wrTP1": 51.8,
       "expR": 0.44,
-      "pf": 2.04
+      "pf": 2.04,
+      "expRnet": 0.402,
+      "pfNet": 1.91
     },
     "29m/RETEST/SHORT": {
       "n": 151,
       "wrTP1": 51.7,
       "expR": 0.313,
-      "pf": 1.73
+      "pf": 1.73,
+      "expRnet": 0.288,
+      "pfNet": 1.65
     },
     "2m/INV/LONG": {
       "n": 12,
       "wrTP1": 50.0,
       "expR": -0.033,
-      "pf": 0.93
+      "pf": 0.93,
+      "expRnet": -0.109,
+      "pfNet": 0.8
     },
     "2m/INV/SHORT": {
       "n": 16,
       "wrTP1": 43.8,
       "expR": -0.105,
-      "pf": 0.77
+      "pf": 0.77,
+      "expRnet": -0.169,
+      "pfNet": 0.65
     },
     "2m/RETEST/LONG": {
       "n": 502,
       "wrTP1": 43.0,
       "expR": 0.051,
-      "pf": 1.1
+      "pf": 1.1,
+      "expRnet": -0.042,
+      "pfNet": 0.92
     },
     "2m/RETEST/SHORT": {
       "n": 694,
       "wrTP1": 46.5,
       "expR": 0.097,
-      "pf": 1.2
+      "pf": 1.2,
+      "expRnet": 0.009,
+      "pfNet": 1.02
     },
     "3m/INV/LONG": {
       "n": 11,
       "wrTP1": 36.4,
       "expR": -0.293,
-      "pf": 0.46
+      "pf": 0.46,
+      "expRnet": -0.343,
+      "pfNet": 0.41
     },
     "3m/INV/SHORT": {
       "n": 11,
       "wrTP1": 72.7,
       "expR": 0.054,
-      "pf": 1.2
+      "pf": 1.2,
+      "expRnet": 0.01,
+      "pfNet": 1.03
     },
     "3m/RETEST/LONG": {
       "n": 1011,
       "wrTP1": 52.1,
       "expR": 0.105,
-      "pf": 1.23
+      "pf": 1.23,
+      "expRnet": 0.015,
+      "pfNet": 1.03
     },
     "3m/RETEST/SHORT": {
       "n": 831,
       "wrTP1": 55.4,
       "expR": 0.204,
-      "pf": 1.49
+      "pf": 1.49,
+      "expRnet": 0.105,
+      "pfNet": 1.23
     },
     "5m/INV/LONG": {
       "n": 2,
       "wrTP1": 0.0,
       "expR": -1.0,
-      "pf": 0.0
+      "pf": 0.0,
+      "expRnet": -1.001,
+      "pfNet": 0.0
     },
     "5m/INV/SHORT": {
       "n": 10,
       "wrTP1": 60.0,
       "expR": -0.067,
-      "pf": 0.83
+      "pf": 0.83,
+      "expRnet": -0.091,
+      "pfNet": 0.77
     },
     "5m/RETEST/LONG": {
       "n": 563,
       "wrTP1": 49.6,
       "expR": 0.087,
-      "pf": 1.18
+      "pf": 1.18,
+      "expRnet": 0.069,
+      "pfNet": 1.14
     },
     "5m/RETEST/SHORT": {
       "n": 569,
       "wrTP1": 53.1,
       "expR": 0.207,
-      "pf": 1.47
+      "pf": 1.47,
+      "expRnet": 0.177,
+      "pfNet": 1.39
     }
   },
   "2026-W46": {
@@ -6175,133 +7780,177 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "n": 2,
       "wrTP1": 50.0,
       "expR": 0.405,
-      "pf": 1.81
+      "pf": 1.81,
+      "expRnet": 0.346,
+      "pfNet": 1.64
     },
     "15m/RETEST/LONG": {
-      "n": 264,
-      "wrTP1": 53.4,
-      "expR": 0.216,
-      "pf": 1.49
+      "n": 271,
+      "wrTP1": 53.1,
+      "expR": 0.237,
+      "pf": 1.55,
+      "expRnet": 0.191,
+      "pfNet": 1.42
     },
     "15m/RETEST/SHORT": {
-      "n": 255,
-      "wrTP1": 48.6,
-      "expR": 0.101,
-      "pf": 1.21
+      "n": 256,
+      "wrTP1": 48.8,
+      "expR": 0.105,
+      "pf": 1.22,
+      "expRnet": 0.04,
+      "pfNet": 1.08
     },
     "1m/INV/LONG": {
-      "n": 54,
-      "wrTP1": 48.1,
+      "n": 55,
+      "wrTP1": 47.3,
       "expR": 0.291,
-      "pf": 1.74
+      "pf": 1.74,
+      "expRnet": 0.171,
+      "pfNet": 1.38
     },
     "1m/INV/SHORT": {
       "n": 41,
       "wrTP1": 51.2,
       "expR": 0.41,
-      "pf": 2.14
+      "pf": 2.14,
+      "expRnet": 0.304,
+      "pfNet": 1.74
     },
     "1m/RETEST/LONG": {
-      "n": 1814,
+      "n": 1816,
       "wrTP1": 44.2,
       "expR": 0.103,
-      "pf": 1.21
+      "pf": 1.21,
+      "expRnet": -0.02,
+      "pfNet": 0.96
     },
     "1m/RETEST/SHORT": {
-      "n": 1098,
-      "wrTP1": 42.8,
+      "n": 1116,
+      "wrTP1": 42.1,
       "expR": 0.032,
-      "pf": 1.06
+      "pf": 1.06,
+      "expRnet": -0.091,
+      "pfNet": 0.84
     },
     "29m/INV/SHORT": {
       "n": 1,
       "wrTP1": 0.0,
       "expR": -1.0,
-      "pf": 0.0
+      "pf": 0.0,
+      "expRnet": -1.0,
+      "pfNet": 0.0
     },
     "29m/RETEST/LONG": {
-      "n": 148,
-      "wrTP1": 55.4,
-      "expR": 0.438,
-      "pf": 2.18
+      "n": 153,
+      "wrTP1": 54.9,
+      "expR": 0.435,
+      "pf": 2.17,
+      "expRnet": 0.39,
+      "pfNet": 2.01
     },
     "29m/RETEST/SHORT": {
-      "n": 152,
-      "wrTP1": 45.4,
+      "n": 153,
+      "wrTP1": 45.1,
       "expR": 0.142,
-      "pf": 1.29
+      "pf": 1.29,
+      "expRnet": 0.067,
+      "pfNet": 1.12
     },
     "2m/INV/LONG": {
       "n": 23,
       "wrTP1": 39.1,
       "expR": -0.263,
-      "pf": 0.57
+      "pf": 0.57,
+      "expRnet": -0.326,
+      "pfNet": 0.5
     },
     "2m/INV/SHORT": {
       "n": 11,
       "wrTP1": 63.6,
       "expR": 0.485,
-      "pf": 2.62
+      "pf": 2.62,
+      "expRnet": 0.386,
+      "pfNet": 2.14
     },
     "2m/RETEST/LONG": {
-      "n": 853,
-      "wrTP1": 49.6,
+      "n": 854,
+      "wrTP1": 49.5,
       "expR": 0.107,
-      "pf": 1.23
+      "pf": 1.23,
+      "expRnet": -0.01,
+      "pfNet": 0.98
     },
     "2m/RETEST/SHORT": {
-      "n": 501,
-      "wrTP1": 45.1,
+      "n": 510,
+      "wrTP1": 44.3,
       "expR": -0.056,
-      "pf": 0.89
+      "pf": 0.89,
+      "expRnet": -0.161,
+      "pfNet": 0.72
     },
     "3m/INV/LONG": {
       "n": 14,
       "wrTP1": 57.1,
       "expR": -0.138,
-      "pf": 0.68
+      "pf": 0.68,
+      "expRnet": -0.202,
+      "pfNet": 0.56
     },
     "3m/INV/SHORT": {
       "n": 4,
       "wrTP1": 75.0,
       "expR": 0.533,
-      "pf": 99.0
+      "pf": 99.0,
+      "expRnet": 0.485,
+      "pfNet": 99.0
     },
     "3m/RETEST/LONG": {
-      "n": 1019,
-      "wrTP1": 54.5,
+      "n": 1025,
+      "wrTP1": 54.1,
       "expR": 0.122,
-      "pf": 1.29
+      "pf": 1.29,
+      "expRnet": 0.018,
+      "pfNet": 1.04
     },
     "3m/RETEST/SHORT": {
-      "n": 795,
-      "wrTP1": 48.7,
+      "n": 803,
+      "wrTP1": 48.2,
       "expR": 0.041,
-      "pf": 1.09
+      "pf": 1.09,
+      "expRnet": -0.077,
+      "pfNet": 0.86
     },
     "5m/INV/LONG": {
       "n": 7,
       "wrTP1": 57.1,
       "expR": 0.1,
-      "pf": 1.23
+      "pf": 1.23,
+      "expRnet": 0.054,
+      "pfNet": 1.12
     },
     "5m/INV/SHORT": {
-      "n": 2,
+      "n": 4,
       "wrTP1": 100.0,
-      "expR": 0.505,
-      "pf": 99.0
+      "expR": 0.477,
+      "pf": 99.0,
+      "expRnet": 0.477,
+      "pfNet": 99.0
     },
     "5m/RETEST/LONG": {
-      "n": 680,
-      "wrTP1": 51.5,
-      "expR": 0.16,
-      "pf": 1.35
+      "n": 704,
+      "wrTP1": 52.0,
+      "expR": 0.165,
+      "pf": 1.36,
+      "expRnet": 0.116,
+      "pfNet": 1.24
     },
     "5m/RETEST/SHORT": {
-      "n": 408,
-      "wrTP1": 46.6,
-      "expR": 0.009,
-      "pf": 1.02
+      "n": 459,
+      "wrTP1": 47.7,
+      "expR": 0.099,
+      "pf": 1.22,
+      "expRnet": 0.061,
+      "pfNet": 1.13
     }
   }
 }
@@ -6311,9 +7960,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
 ```json
 {
   "fitted": true,
-  "n": 61555,
+  "n": 61627,
   "brier": 0.2223,
-  "bias": -0.077,
+  "bias": -0.076,
   "coefficients": [
     {
       "feature": "rr1",
@@ -6328,12 +7977,12 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "weight": -0.047
     },
     {
-      "feature": "nearTk",
-      "weight": -0.034
+      "feature": "aligned",
+      "weight": -0.026
     },
     {
-      "feature": "aligned",
-      "weight": -0.025
+      "feature": "nearTk",
+      "weight": -0.026
     },
     {
       "feature": "hourNY",
@@ -6341,7 +7990,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     },
     {
       "feature": "biasScore",
-      "weight": -0.019
+      "weight": -0.02
     },
     {
       "feature": "chopIdx",
@@ -6352,12 +8001,12 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "weight": 0.011
     },
     {
-      "feature": "entryZoneTk",
-      "weight": -0.01
-    },
-    {
       "feature": "nearEdge",
       "weight": 0.006
+    },
+    {
+      "feature": "entryZoneTk",
+      "weight": -0.005
     },
     {
       "feature": "emaStack",
@@ -6365,69 +8014,69 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     },
     {
       "feature": "structDir",
-      "weight": 0.002
+      "weight": 0.001
     }
   ],
   "calibration_deciles": [
     {
       "bin": 0,
       "pred": 0.171,
-      "actual": 0.179,
-      "n": 6155
+      "actual": 0.178,
+      "n": 6162
     },
     {
       "bin": 1,
-      "pred": 0.373,
-      "actual": 0.322,
-      "n": 6156
+      "pred": 0.374,
+      "actual": 0.324,
+      "n": 6163
     },
     {
       "bin": 2,
       "pred": 0.452,
-      "actual": 0.327,
-      "n": 6155
+      "actual": 0.326,
+      "n": 6163
     },
     {
       "bin": 3,
-      "pred": 0.496,
-      "actual": 0.424,
-      "n": 6156
+      "pred": 0.497,
+      "actual": 0.425,
+      "n": 6162
     },
     {
       "bin": 4,
       "pred": 0.534,
-      "actual": 0.514,
-      "n": 6155
+      "actual": 0.515,
+      "n": 6163
     },
     {
       "bin": 5,
       "pred": 0.563,
       "actual": 0.574,
-      "n": 6156
+      "n": 6163
     },
     {
       "bin": 6,
       "pred": 0.585,
       "actual": 0.606,
-      "n": 6155
+      "n": 6162
     },
     {
       "bin": 7,
-      "pred": 0.604,
+      "pred": 0.605,
       "actual": 0.642,
-      "n": 6156
+      "n": 6163
     },
     {
       "bin": 8,
       "pred": 0.623,
-      "actual": 0.693,
-      "n": 6155
+      "actual": 0.694,
+      "n": 6163
     },
     {
       "bin": 9,
       "pred": 0.649,
-      "actual": 0.755,
-      "n": 6156
+      "actual": 0.754,
+      "n": 6163
     }
   ],
   "note": "in-sample; interpretar signo/magnitud, no como verdad fuera de muestra hasta 200+"
@@ -6439,18 +8088,18 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
 {
   "ready": true,
   "trainN": 49809,
-  "testN": 16189,
+  "testN": 16325,
   "testWeeks": [
     "2026-W45",
     "2026-W46"
   ],
-  "model_oos_brier": 0.2234,
-  "model_oos_n": 16189,
+  "model_oos_brier": 0.2235,
+  "model_oos_n": 16325,
   "best_scheme_in_sample": {
     "scheme": "fixed_1_5R",
     "trainExpR": 0.047
   },
-  "best_scheme_oos_expR": 0.083
+  "best_scheme_oos_expR": 0.085
 }
 ```
 
@@ -6458,204 +8107,384 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
 ```json
 {
   "15m/RETEST/LONG": {
-    "expR": 0.127,
+    "expR": 0.133,
     "ci90": [
-      0.045,
-      0.214
+      0.043,
+      0.241
     ],
     "p_mean_le_0": 0.006,
-    "n": 848,
-    "survives_fdr10": true
+    "expRnet": 0.087,
+    "ci90net": [
+      -0.004,
+      0.197
+    ],
+    "p_net_le_0": 0.06,
+    "n": 851,
+    "days": 19,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   },
   "15m/RETEST/SHORT": {
-    "expR": 0.164,
+    "expR": 0.165,
     "ci90": [
-      0.077,
-      0.253
+      0.085,
+      0.282
     ],
     "p_mean_le_0": 0.0,
-    "n": 814,
-    "survives_fdr10": true
+    "expRnet": 0.118,
+    "ci90net": [
+      0.034,
+      0.238
+    ],
+    "p_net_le_0": 0.009,
+    "n": 815,
+    "days": 20,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": true,
+    "survives_fdr10_gross": true
   },
   "1m/INV/LONG": {
     "expR": 0.135,
     "ci90": [
-      0.047,
-      0.231
+      0.029,
+      0.238
     ],
-    "p_mean_le_0": 0.009,
+    "p_mean_le_0": 0.018,
+    "expRnet": -0.01,
+    "ci90net": [
+      -0.113,
+      0.09
+    ],
+    "p_net_le_0": 0.544,
     "n": 516,
-    "survives_fdr10": true
+    "days": 57,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   },
   "1m/INV/SHORT": {
     "expR": 0.155,
     "ci90": [
-      0.055,
-      0.25
+      0.056,
+      0.249
     ],
-    "p_mean_le_0": 0.004,
+    "p_mean_le_0": 0.007,
+    "expRnet": 0.044,
+    "ci90net": [
+      -0.057,
+      0.139
+    ],
+    "p_net_le_0": 0.241,
     "n": 392,
-    "survives_fdr10": true
+    "days": 55,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   },
   "1m/RETEST/LONG": {
     "expR": 0.035,
     "ci90": [
-      0.021,
-      0.049
+      0.007,
+      0.064
     ],
-    "p_mean_le_0": 0.0,
+    "p_mean_le_0": 0.019,
+    "expRnet": -0.131,
+    "ci90net": [
+      -0.16,
+      -0.1
+    ],
+    "p_net_le_0": 1.0,
     "n": 19346,
-    "survives_fdr10": true
+    "days": 62,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   },
   "1m/RETEST/SHORT": {
     "expR": 0.031,
     "ci90": [
-      0.015,
-      0.049
+      0.001,
+      0.061
     ],
-    "p_mean_le_0": 0.001,
+    "p_mean_le_0": 0.046,
+    "expRnet": -0.099,
+    "ci90net": [
+      -0.131,
+      -0.068
+    ],
+    "p_net_le_0": 1.0,
     "n": 13598,
-    "survives_fdr10": true
+    "days": 62,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   },
   "29m/RETEST/LONG": {
     "expR": 0.348,
     "ci90": [
-      0.212,
-      0.489
+      0.2,
+      0.506
     ],
     "p_mean_le_0": 0.0,
-    "n": 407,
-    "survives_fdr10": true
+    "expRnet": 0.305,
+    "ci90net": [
+      0.157,
+      0.464
+    ],
+    "p_net_le_0": 0.0,
+    "n": 410,
+    "days": 18,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": true,
+    "survives_fdr10_gross": true
   },
   "29m/RETEST/SHORT": {
     "expR": 0.182,
     "ci90": [
-      0.077,
-      0.289
+      0.094,
+      0.28
     ],
-    "p_mean_le_0": 0.002,
+    "p_mean_le_0": 0.001,
+    "expRnet": 0.132,
+    "ci90net": [
+      0.043,
+      0.236
+    ],
+    "p_net_le_0": 0.006,
     "n": 454,
-    "survives_fdr10": true
+    "days": 18,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": true,
+    "survives_fdr10_gross": true
   },
   "2m/INV/LONG": {
     "expR": 0.002,
     "ci90": [
-      -0.122,
-      0.127
+      -0.115,
+      0.129
     ],
-    "p_mean_le_0": 0.507,
+    "p_mean_le_0": 0.498,
+    "expRnet": -0.1,
+    "ci90net": [
+      -0.221,
+      0.03
+    ],
+    "p_net_le_0": 0.903,
     "n": 192,
-    "survives_fdr10": false
+    "days": 50,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": false
   },
   "2m/INV/SHORT": {
     "expR": 0.124,
     "ci90": [
-      -0.042,
-      0.294
+      -0.051,
+      0.304
     ],
-    "p_mean_le_0": 0.111,
+    "p_mean_le_0": 0.127,
+    "expRnet": 0.036,
+    "ci90net": [
+      -0.139,
+      0.217
+    ],
+    "p_net_le_0": 0.369,
     "n": 142,
-    "survives_fdr10": false
+    "days": 43,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": false
   },
   "2m/RETEST/LONG": {
     "expR": 0.038,
     "ci90": [
-      0.016,
-      0.059
+      -0.005,
+      0.081
     ],
-    "p_mean_le_0": 0.001,
+    "p_mean_le_0": 0.074,
+    "expRnet": -0.106,
+    "ci90net": [
+      -0.149,
+      -0.064
+    ],
+    "p_net_le_0": 1.0,
     "n": 8561,
-    "survives_fdr10": true
+    "days": 63,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   },
   "2m/RETEST/SHORT": {
     "expR": 0.041,
     "ci90": [
-      0.015,
-      0.068
+      0.002,
+      0.078
     ],
-    "p_mean_le_0": 0.004,
+    "p_mean_le_0": 0.043,
+    "expRnet": -0.072,
+    "ci90net": [
+      -0.111,
+      -0.033
+    ],
+    "p_net_le_0": 0.999,
     "n": 5921,
-    "survives_fdr10": true
+    "days": 59,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   },
   "3m/INV/LONG": {
     "expR": -0.151,
     "ci90": [
-      -0.398,
-      0.087
+      -0.297,
+      -0.051
     ],
-    "p_mean_le_0": 0.843,
+    "p_mean_le_0": 0.996,
+    "expRnet": -0.212,
+    "ci90net": [
+      -0.361,
+      -0.11
+    ],
+    "p_net_le_0": 1.0,
     "n": 33,
-    "survives_fdr10": false
+    "days": 12,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": false
   },
   "3m/INV/SHORT": {
     "expR": 0.242,
     "ci90": [
-      0.014,
-      0.449
+      0.004,
+      0.469
     ],
-    "p_mean_le_0": 0.04,
+    "p_mean_le_0": 0.048,
+    "expRnet": 0.197,
+    "ci90net": [
+      -0.041,
+      0.423
+    ],
+    "p_net_le_0": 0.088,
     "n": 19,
-    "survives_fdr10": true
+    "days": 10,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   },
   "3m/RETEST/LONG": {
     "expR": 0.101,
     "ci90": [
-      0.067,
-      0.138
+      0.063,
+      0.139
     ],
     "p_mean_le_0": 0.0,
+    "expRnet": -0.004,
+    "ci90net": [
+      -0.041,
+      0.029
+    ],
+    "p_net_le_0": 0.552,
     "n": 2750,
-    "survives_fdr10": true
+    "days": 16,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   },
   "3m/RETEST/SHORT": {
     "expR": 0.119,
     "ci90": [
-      0.082,
-      0.159
+      0.064,
+      0.18
     ],
     "p_mean_le_0": 0.0,
+    "expRnet": 0.006,
+    "ci90net": [
+      -0.05,
+      0.065
+    ],
+    "p_net_le_0": 0.441,
     "n": 2292,
-    "survives_fdr10": true
+    "days": 16,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   },
   "5m/INV/LONG": {
     "expR": 0.097,
     "ci90": [
-      -0.082,
-      0.28
+      -0.102,
+      0.304
     ],
-    "p_mean_le_0": 0.199,
+    "p_mean_le_0": 0.221,
+    "expRnet": 0.031,
+    "ci90net": [
+      -0.166,
+      0.241
+    ],
+    "p_net_le_0": 0.403,
     "n": 61,
-    "survives_fdr10": false
+    "days": 33,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": false
   },
   "5m/INV/SHORT": {
-    "expR": 0.125,
+    "expR": 0.14,
     "ci90": [
-      -0.151,
-      0.428
+      -0.244,
+      0.505
     ],
-    "p_mean_le_0": 0.248,
-    "n": 43,
-    "survives_fdr10": false
+    "p_mean_le_0": 0.3,
+    "expRnet": 0.099,
+    "ci90net": [
+      -0.284,
+      0.464
+    ],
+    "p_net_le_0": 0.365,
+    "n": 45,
+    "days": 26,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": false
   },
   "5m/RETEST/LONG": {
-    "expR": 0.106,
+    "expR": 0.107,
     "ci90": [
-      0.075,
-      0.137
+      0.066,
+      0.148
     ],
     "p_mean_le_0": 0.0,
-    "n": 4225,
-    "survives_fdr10": true
+    "expRnet": 0.029,
+    "ci90net": [
+      -0.015,
+      0.074
+    ],
+    "p_net_le_0": 0.137,
+    "n": 4248,
+    "days": 66,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   },
   "5m/RETEST/SHORT": {
-    "expR": 0.089,
+    "expR": 0.1,
     "ci90": [
-      0.05,
-      0.126
+      0.048,
+      0.154
     ],
-    "p_mean_le_0": 0.0,
-    "n": 3016,
-    "survives_fdr10": true
+    "p_mean_le_0": 0.001,
+    "expRnet": 0.034,
+    "ci90net": [
+      -0.02,
+      0.091
+    ],
+    "p_net_le_0": 0.149,
+    "n": 3059,
+    "days": 65,
+    "ci_method": "day-clustered bootstrap",
+    "survives_fdr10": false,
+    "survives_fdr10_gross": true
   }
 }
 ```
@@ -6668,54 +8497,54 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
   "clusters": [
     {
       "id": 1,
-      "n": 6941,
+      "n": 7229,
       "wrTP1": 43.1,
-      "expR": 0.071,
+      "expR": 0.072,
       "pf": 1.14,
       "defining_features": {
-        "stretchAtr": 1.87,
-        "rvol": 1.62,
-        "chopIdx": -1.42,
-        "nearTk": 0.19
-      }
-    },
-    {
-      "id": 2,
-      "n": 12854,
-      "wrTP1": 51.8,
-      "expR": 0.065,
-      "pf": 1.15,
-      "defining_features": {
-        "structDir": -1.02,
-        "biasScore": 0.66,
-        "nearEdge": 0.49,
-        "emaStack": 0.34
-      }
-    },
-    {
-      "id": 3,
-      "n": 22601,
-      "wrTP1": 45.8,
-      "expR": 0.055,
-      "pf": 1.11,
-      "defining_features": {
-        "structDir": 0.98,
-        "biasScore": 0.8,
-        "emaStack": 0.8,
-        "nearEdge": 0.6
+        "stretchAtr": 1.84,
+        "rvol": 1.57,
+        "chopIdx": -1.39,
+        "nearTk": 0.18
       }
     },
     {
       "id": 0,
-      "n": 23602,
-      "wrTP1": 46.5,
-      "expR": 0.047,
-      "pf": 1.1,
+      "n": 10578,
+      "wrTP1": 50.3,
+      "expR": 0.06,
+      "pf": 1.13,
       "defining_features": {
-        "biasScore": -1.13,
-        "emaStack": -0.95,
-        "nearEdge": -0.84,
-        "structDir": -0.41
+        "hourNY": 1.33,
+        "atrPctUsed": -0.76,
+        "emaStack": 0.66,
+        "biasScore": 0.65
+      }
+    },
+    {
+      "id": 3,
+      "n": 24489,
+      "wrTP1": 47.0,
+      "expR": 0.056,
+      "pf": 1.12,
+      "defining_features": {
+        "biasScore": 0.77,
+        "emaStack": 0.66,
+        "nearEdge": 0.63,
+        "hourNY": -0.5
+      }
+    },
+    {
+      "id": 2,
+      "n": 23838,
+      "wrTP1": 46.6,
+      "expR": 0.051,
+      "pf": 1.11,
+      "defining_features": {
+        "biasScore": -1.08,
+        "emaStack": -0.97,
+        "nearEdge": -0.83,
+        "structDir": -0.47
       }
     }
   ]
@@ -6728,8 +8557,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
   "15m/RETEST/LONG": {
     "symbols": {
       "ES": {
-        "n": 85,
-        "wrTP1": 43.5,
+        "n": 86,
+        "wrTP1": 43.0,
         "expR": 0.061
       },
       "NQ": {
@@ -6743,24 +8572,24 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.204
       },
       "CL": {
-        "n": 128,
-        "wrTP1": 51.6,
+        "n": 130,
+        "wrTP1": 50.8,
         "expR": 0.007
       },
       "YM": {
-        "n": 139,
-        "wrTP1": 51.1,
+        "n": 140,
+        "wrTP1": 50.7,
         "expR": 0.474
       },
       "ETHUSDT": {
-        "n": 155,
-        "wrTP1": 56.1,
-        "expR": 0.133
+        "n": 157,
+        "wrTP1": 56.7,
+        "expR": 0.148
       },
       "BTCUSDT": {
-        "n": 158,
-        "wrTP1": 46.8,
-        "expR": 0.021
+        "n": 159,
+        "wrTP1": 47.2,
+        "expR": 0.042
       }
     },
     "expR_spread": 0.506,
@@ -6774,9 +8603,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.1
       },
       "ETHUSDT": {
-        "n": 143,
-        "wrTP1": 47.6,
-        "expR": -0.036
+        "n": 144,
+        "wrTP1": 47.9,
+        "expR": -0.029
       },
       "YM": {
         "n": 102,
@@ -6804,14 +8633,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.256
       }
     },
-    "expR_spread": 0.376,
+    "expR_spread": 0.369,
     "verdict": "universal"
   },
   "1m/INV/LONG": {
     "symbols": {
       "CL": {
-        "n": 101,
-        "wrTP1": 45.5,
+        "n": 102,
+        "wrTP1": 45.1,
         "expR": 0.22
       },
       "GC": {
@@ -6887,7 +8716,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.008
       },
       "CL": {
-        "n": 3937,
+        "n": 3939,
         "wrTP1": 44.5,
         "expR": 0.029
       },
@@ -6903,23 +8732,23 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
   "1m/RETEST/SHORT": {
     "symbols": {
       "NQ": {
-        "n": 2125,
+        "n": 2126,
         "wrTP1": 40.8,
         "expR": 0.036
       },
       "GC": {
-        "n": 3992,
+        "n": 4000,
         "wrTP1": 44.8,
         "expR": 0.035
       },
       "YM": {
-        "n": 3167,
-        "wrTP1": 44.6,
+        "n": 3172,
+        "wrTP1": 44.5,
         "expR": 0.046
       },
       "ES": {
-        "n": 2446,
-        "wrTP1": 46.2,
+        "n": 2450,
+        "wrTP1": 46.1,
         "expR": 0.021
       },
       "CL": {
@@ -6939,8 +8768,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.738
       },
       "NQ": {
-        "n": 57,
-        "wrTP1": 47.4,
+        "n": 59,
+        "wrTP1": 45.8,
         "expR": 0.118
       },
       "ES": {
@@ -6954,9 +8783,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.286
       },
       "BTCUSDT": {
-        "n": 73,
-        "wrTP1": 56.2,
-        "expR": 0.24
+        "n": 76,
+        "wrTP1": 56.6,
+        "expR": 0.242
       },
       "GC": {
         "n": 60,
@@ -6980,8 +8809,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.113
       },
       "CL": {
-        "n": 61,
-        "wrTP1": 42.6,
+        "n": 62,
+        "wrTP1": 41.9,
         "expR": 0.064
       },
       "YM": {
@@ -7088,8 +8917,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.011
       },
       "CL": {
-        "n": 1725,
-        "wrTP1": 48.2,
+        "n": 1726,
+        "wrTP1": 48.1,
         "expR": 0.043
       },
       "ES": {
@@ -7109,18 +8938,18 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
   "2m/RETEST/SHORT": {
     "symbols": {
       "ES": {
-        "n": 1078,
-        "wrTP1": 46.8,
+        "n": 1081,
+        "wrTP1": 46.6,
         "expR": -0.006
       },
       "YM": {
-        "n": 1316,
-        "wrTP1": 47.4,
+        "n": 1318,
+        "wrTP1": 47.3,
         "expR": 0.061
       },
       "GC": {
-        "n": 1646,
-        "wrTP1": 47.3,
+        "n": 1650,
+        "wrTP1": 47.2,
         "expR": 0.06
       },
       "NQ": {
@@ -7197,23 +9026,23 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
   "3m/RETEST/LONG": {
     "symbols": {
       "YM": {
-        "n": 569,
-        "wrTP1": 55.5,
+        "n": 570,
+        "wrTP1": 55.4,
         "expR": 0.118
       },
       "ES": {
-        "n": 606,
-        "wrTP1": 52.3,
+        "n": 607,
+        "wrTP1": 52.2,
         "expR": 0.061
       },
       "NQ": {
-        "n": 578,
-        "wrTP1": 51.9,
+        "n": 580,
+        "wrTP1": 51.7,
         "expR": 0.051
       },
       "CL": {
-        "n": 521,
-        "wrTP1": 55.1,
+        "n": 523,
+        "wrTP1": 54.9,
         "expR": 0.112
       },
       "GC": {
@@ -7233,13 +9062,13 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.13
       },
       "ES": {
-        "n": 436,
-        "wrTP1": 48.4,
+        "n": 439,
+        "wrTP1": 48.1,
         "expR": 0.009
       },
       "GC": {
-        "n": 430,
-        "wrTP1": 51.9,
+        "n": 434,
+        "wrTP1": 51.4,
         "expR": 0.129
       },
       "CL": {
@@ -7248,8 +9077,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.109
       },
       "YM": {
-        "n": 521,
-        "wrTP1": 54.3,
+        "n": 522,
+        "wrTP1": 54.2,
         "expR": 0.207
       }
     },
@@ -7325,9 +9154,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.213
       },
       "BTCUSDT": {
-        "n": 8,
-        "wrTP1": 62.5,
-        "expR": -0.018
+        "n": 10,
+        "wrTP1": 70.0,
+        "expR": 0.076
       },
       "ETHUSDT": {
         "n": 4,
@@ -7356,8 +9185,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.107
       },
       "CL": {
-        "n": 615,
-        "wrTP1": 54.0,
+        "n": 616,
+        "wrTP1": 53.9,
         "expR": 0.161
       },
       "NQ": {
@@ -7366,39 +9195,39 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.065
       },
       "BTCUSDT": {
-        "n": 600,
-        "wrTP1": 53.2,
-        "expR": 0.099
+        "n": 618,
+        "wrTP1": 53.6,
+        "expR": 0.101
       },
       "ETHUSDT": {
-        "n": 616,
-        "wrTP1": 52.8,
-        "expR": 0.061
+        "n": 621,
+        "wrTP1": 53.0,
+        "expR": 0.067
       }
     },
-    "expR_spread": 0.1,
+    "expR_spread": 0.096,
     "verdict": "universal"
   },
   "5m/RETEST/SHORT": {
     "symbols": {
       "NQ": {
-        "n": 353,
-        "wrTP1": 45.9,
+        "n": 354,
+        "wrTP1": 45.8,
         "expR": 0.035
       },
       "ES": {
-        "n": 423,
-        "wrTP1": 49.2,
+        "n": 426,
+        "wrTP1": 48.8,
         "expR": 0.201
       },
       "GC": {
-        "n": 603,
-        "wrTP1": 46.8,
+        "n": 606,
+        "wrTP1": 46.5,
         "expR": 0.026
       },
       "YM": {
-        "n": 489,
-        "wrTP1": 48.5,
+        "n": 490,
+        "wrTP1": 48.4,
         "expR": 0.11
       },
       "CL": {
@@ -7407,14 +9236,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "expR": 0.056
       },
       "ETHUSDT": {
-        "n": 405,
-        "wrTP1": 54.3,
-        "expR": 0.124
+        "n": 430,
+        "wrTP1": 55.1,
+        "expR": 0.186
       },
       "BTCUSDT": {
-        "n": 481,
-        "wrTP1": 53.4,
-        "expR": 0.085
+        "n": 499,
+        "wrTP1": 53.9,
+        "expR": 0.099
       }
     },
     "expR_spread": 0.175,
@@ -7435,6 +9264,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     "nTO": 42,
     "expR": 0.271,
     "pf": 1.62,
+    "expRnet": 0.21,
+    "pfNet": 1.46,
     "mfe_p25": 24.0,
     "mfe_p50": 62.0,
     "mfe_p75": 191.5,
@@ -7447,17 +9278,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     "revAfterSL_rate": 44.0
   },
   "away_from_news": {
-    "n": 65733,
-    "wrTP1": 47.0,
-    "nSL": 30466,
-    "nTO": 4401,
-    "expR": 0.055,
-    "pf": 1.11,
+    "n": 65869,
+    "wrTP1": 46.9,
+    "nSL": 30485,
+    "nTO": 4465,
+    "expR": 0.056,
+    "pf": 1.12,
+    "expRnet": -0.074,
+    "pfNet": 0.87,
     "mfe_p25": 9.0,
     "mfe_p50": 22.0,
     "mfe_p75": 52.0,
-    "winnerMAE_p75": 15.0,
-    "winnerMAE_p90": 40.0,
+    "winnerMAE_p75": 16.0,
+    "winnerMAE_p90": 40.20000000000073,
     "loserMFEbeforeSL_p50": 4.0,
     "bars_win_p50": 2.0,
     "bars_loss_p50": 3.0,
@@ -7472,7 +9305,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
 {
   "n": 7,
   "scored": 6,
-  "mae_deltaER": 0.253,
+  "mae_deltaER": 0.251,
   "hit_direction_rate": 50.0
 }
 ```
@@ -7634,7 +9467,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     ],
     "appliedNote": "2026-09-26: aplicado en scalp_command.pine (input sc_sl_retest_basis, default 'Auto (como se midio)'): en RETEST el SL real pasa a la mecha de la vela del retest; 1m SHORT suma la vela previa (retestBar2), igual que la medicion paralela. Base: los 6 segmentos RETEST certifican con CI90 > 0 (n=11273, E[R] 0.238 vs 0.065). El tier se sigue calculando con el stop de 3 capas. El feed NO cambia: sigue registrando el 3 capas como rMultiple y la mecha como rOrig, asi que sl_origin_vs_layer sigue siendo la vigilancia. Rige en cada grafico desde que Jesus re-pega scalp_cc_FULL_for_tradingview.pine. Revertir = poner la base en '3 capas'.",
     "beforeN": 18341,
-    "afterN": 46184,
+    "afterN": 46317,
     "before": {
       "n": 18341,
       "wrTP1": 45.8,
@@ -7642,6 +9475,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "nTO": 1513,
       "expR": 0.052,
       "pf": 1.11,
+      "expRnet": -0.103,
+      "pfNet": 0.82,
       "mfe_p25": 8.0,
       "mfe_p50": 18.0,
       "mfe_p75": 40.0,
@@ -7654,17 +9489,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "revAfterSL_rate": 32.8
     },
     "after": {
-      "n": 46184,
-      "wrTP1": 47.4,
-      "nSL": 21548,
-      "nTO": 2766,
-      "expR": 0.056,
-      "pf": 1.11,
+      "n": 46317,
+      "wrTP1": 47.3,
+      "nSL": 21567,
+      "nTO": 2829,
+      "expR": 0.057,
+      "pf": 1.12,
+      "expRnet": -0.063,
+      "pfNet": 0.88,
       "mfe_p25": 10.0,
       "mfe_p50": 23.0,
       "mfe_p75": 58.0,
       "winnerMAE_p75": 17.0,
-      "winnerMAE_p90": 51.0,
+      "winnerMAE_p90": 52.0,
       "loserMFEbeforeSL_p50": 4.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
@@ -7823,15 +9660,17 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
 ```json
 {
   "available": true,
-  "n_matched": 42230,
+  "n_matched": 42237,
   "by_verdict": {
     "AVOID": {
-      "n": 4915,
-      "wrTP1": 46.2,
+      "n": 4921,
+      "wrTP1": 46.1,
       "nSL": 2320,
-      "nTO": 326,
+      "nTO": 332,
       "expR": 0.077,
       "pf": 1.16,
+      "expRnet": -0.052,
+      "pfNet": 0.91,
       "mfe_p25": 10.0,
       "mfe_p50": 23.0,
       "mfe_p75": 47.0,
@@ -7850,6 +9689,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "nTO": 218,
       "expR": -0.006,
       "pf": 0.99,
+      "expRnet": -0.167,
+      "pfNet": 0.71,
       "mfe_p25": 7.0,
       "mfe_p50": 17.0,
       "mfe_p75": 36.0,
@@ -7862,12 +9703,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "revAfterSL_rate": 40.3
     },
     "WAIT": {
-      "n": 33003,
+      "n": 33004,
       "wrTP1": 47.3,
       "nSL": 15349,
-      "nTO": 2030,
+      "nTO": 2031,
       "expR": 0.067,
       "pf": 1.14,
+      "expRnet": -0.081,
+      "pfNet": 0.85,
       "mfe_p25": 8.0,
       "mfe_p50": 19.0,
       "mfe_p75": 45.0,
@@ -7884,39 +9727,65 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     "AVOID": {
       "expR": 0.077,
       "ci90": [
-        0.045,
-        0.11
+        0.004,
+        0.16
       ],
-      "p_mean_le_0": 0.0,
-      "n": 4725
+      "p_mean_le_0": 0.039,
+      "expRnet": -0.052,
+      "ci90net": [
+        -0.125,
+        0.032
+      ],
+      "p_net_le_0": 0.86,
+      "n": 4725,
+      "days": 31,
+      "ci_method": "day-clustered bootstrap"
     },
     "GO": {
       "expR": -0.006,
       "ci90": [
-        -0.034,
-        0.023
+        -0.062,
+        0.049
       ],
-      "p_mean_le_0": 0.636,
-      "n": 4192
+      "p_mean_le_0": 0.568,
+      "expRnet": -0.167,
+      "ci90net": [
+        -0.218,
+        -0.112
+      ],
+      "p_net_le_0": 1.0,
+      "n": 4192,
+      "days": 29,
+      "ci_method": "day-clustered bootstrap"
     },
     "WAIT": {
       "expR": 0.067,
       "ci90": [
-        0.055,
-        0.079
+        0.041,
+        0.093
       ],
       "p_mean_le_0": 0.0,
-      "n": 31976
+      "expRnet": -0.081,
+      "ci90net": [
+        -0.108,
+        -0.052
+      ],
+      "p_net_le_0": 1.0,
+      "n": 31976,
+      "days": 53,
+      "ci_method": "day-clustered bootstrap"
     }
   },
   "avoid_vs_rest": {
     "AVOID": {
-      "n": 4915,
-      "wrTP1": 46.2,
+      "n": 4921,
+      "wrTP1": 46.1,
       "nSL": 2320,
-      "nTO": 326,
+      "nTO": 332,
       "expR": 0.077,
       "pf": 1.16,
+      "expRnet": -0.052,
+      "pfNet": 0.91,
       "mfe_p25": 10.0,
       "mfe_p50": 23.0,
       "mfe_p75": 47.0,
@@ -7929,12 +9798,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "revAfterSL_rate": 38.8
     },
     "GO_or_WAIT": {
-      "n": 37315,
+      "n": 37316,
       "wrTP1": 47.3,
       "nSL": 17413,
-      "nTO": 2248,
+      "nTO": 2249,
       "expR": 0.059,
       "pf": 1.12,
+      "expRnet": -0.091,
+      "pfNet": 0.84,
       "mfe_p25": 8.0,
       "mfe_p50": 19.0,
       "mfe_p75": 44.0,
@@ -7951,20 +9822,36 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     "AVOID": {
       "expR": 0.077,
       "ci90": [
-        0.045,
-        0.11
+        0.004,
+        0.16
       ],
-      "p_mean_le_0": 0.0,
-      "n": 4725
+      "p_mean_le_0": 0.039,
+      "expRnet": -0.052,
+      "ci90net": [
+        -0.125,
+        0.032
+      ],
+      "p_net_le_0": 0.86,
+      "n": 4725,
+      "days": 31,
+      "ci_method": "day-clustered bootstrap"
     },
     "GO_or_WAIT": {
       "expR": 0.059,
       "ci90": [
-        0.047,
-        0.069
+        0.035,
+        0.083
       ],
       "p_mean_le_0": 0.0,
-      "n": 36168
+      "expRnet": -0.091,
+      "ci90net": [
+        -0.116,
+        -0.063
+      ],
+      "p_net_le_0": 1.0,
+      "n": 36168,
+      "days": 53,
+      "ci_method": "day-clustered bootstrap"
     }
   },
   "by_kind_side": {
@@ -7976,6 +9863,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 6,
         "expR": -0.016,
         "pf": 0.96,
+        "expRnet": -0.12,
+        "pfNet": 0.75,
         "mfe_p25": 7.75,
         "mfe_p50": 21.0,
         "mfe_p75": 34.25,
@@ -7994,6 +9883,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 5,
         "expR": 0.247,
         "pf": 1.68,
+        "expRnet": 0.112,
+        "pfNet": 1.26,
         "mfe_p25": 7.0,
         "mfe_p50": 19.0,
         "mfe_p75": 41.0,
@@ -8012,6 +9903,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 44,
         "expR": 0.07,
         "pf": 1.16,
+        "expRnet": -0.069,
+        "pfNet": 0.87,
         "mfe_p25": 6.0,
         "mfe_p50": 16.0,
         "mfe_p75": 34.0,
@@ -8032,6 +9925,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 7,
         "expR": 0.036,
         "pf": 1.08,
+        "expRnet": -0.085,
+        "pfNet": 0.83,
         "mfe_p25": 9.0,
         "mfe_p50": 20.0,
         "mfe_p75": 34.5,
@@ -8050,6 +9945,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 3,
         "expR": 0.123,
         "pf": 1.4,
+        "expRnet": 0.034,
+        "pfNet": 1.1,
         "mfe_p25": 12.75,
         "mfe_p50": 25.0,
         "mfe_p75": 59.75,
@@ -8068,6 +9965,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 39,
         "expR": 0.151,
         "pf": 1.38,
+        "expRnet": 0.043,
+        "pfNet": 1.1,
         "mfe_p25": 8.0,
         "mfe_p50": 24.0,
         "mfe_p75": 53.0,
@@ -8082,12 +9981,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     },
     "RETEST/LONG": {
       "AVOID": {
-        "n": 2995,
-        "wrTP1": 45.8,
+        "n": 2998,
+        "wrTP1": 45.7,
         "nSL": 1431,
-        "nTO": 193,
+        "nTO": 196,
         "expR": 0.068,
         "pf": 1.14,
+        "expRnet": -0.071,
+        "pfNet": 0.88,
         "mfe_p25": 10.0,
         "mfe_p50": 21.0,
         "mfe_p75": 45.0,
@@ -8106,6 +10007,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 137,
         "expR": 0.008,
         "pf": 1.02,
+        "expRnet": -0.169,
+        "pfNet": 0.71,
         "mfe_p25": 6.0,
         "mfe_p50": 16.0,
         "mfe_p75": 34.0,
@@ -8118,12 +10021,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "revAfterSL_rate": 39.5
       },
       "WAIT": {
-        "n": 17967,
+        "n": 17968,
         "wrTP1": 47.2,
         "nSL": 8417,
-        "nTO": 1073,
+        "nTO": 1074,
         "expR": 0.068,
         "pf": 1.14,
+        "expRnet": -0.095,
+        "pfNet": 0.83,
         "mfe_p25": 7.0,
         "mfe_p50": 17.0,
         "mfe_p75": 41.0,
@@ -8138,12 +10043,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     },
     "RETEST/SHORT": {
       "AVOID": {
-        "n": 1803,
-        "wrTP1": 46.7,
+        "n": 1806,
+        "wrTP1": 46.6,
         "nSL": 841,
-        "nTO": 120,
+        "nTO": 123,
         "expR": 0.097,
         "pf": 1.2,
+        "expRnet": -0.018,
+        "pfNet": 0.97,
         "mfe_p25": 12.0,
         "mfe_p50": 25.0,
         "mfe_p75": 52.0,
@@ -8162,6 +10069,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 73,
         "expR": -0.052,
         "pf": 0.9,
+        "expRnet": -0.184,
+        "pfNet": 0.68,
         "mfe_p25": 9.0,
         "mfe_p50": 19.0,
         "mfe_p75": 38.0,
@@ -8180,6 +10089,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
         "nTO": 874,
         "expR": 0.063,
         "pf": 1.13,
+        "expRnet": -0.066,
+        "pfNet": 0.88,
         "mfe_p25": 10.0,
         "mfe_p50": 22.0,
         "mfe_p75": 49.0,
@@ -8198,116 +10109,212 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
       "AVOID": {
         "expR": -0.016,
         "ci90": [
-          -0.209,
-          0.181
+          -0.253,
+          0.159
         ],
-        "p_mean_le_0": 0.552,
-        "n": 64
+        "p_mean_le_0": 0.553,
+        "expRnet": -0.12,
+        "ci90net": [
+          -0.349,
+          0.047
+        ],
+        "p_net_le_0": 0.871,
+        "n": 64,
+        "days": 22,
+        "ci_method": "day-clustered bootstrap"
       },
       "GO": {
         "expR": 0.247,
         "ci90": [
-          0.02,
-          0.48
+          -0.009,
+          0.475
         ],
-        "p_mean_le_0": 0.034,
-        "n": 67
+        "p_mean_le_0": 0.057,
+        "expRnet": 0.112,
+        "ci90net": [
+          -0.152,
+          0.345
+        ],
+        "p_net_le_0": 0.234,
+        "n": 67,
+        "days": 19,
+        "ci_method": "day-clustered bootstrap"
       },
       "WAIT": {
         "expR": 0.07,
         "ci90": [
-          -0.025,
-          0.166
+          -0.046,
+          0.19
         ],
-        "p_mean_le_0": 0.127,
-        "n": 473
+        "p_mean_le_0": 0.178,
+        "expRnet": -0.069,
+        "ci90net": [
+          -0.183,
+          0.049
+        ],
+        "p_net_le_0": 0.845,
+        "n": 473,
+        "days": 50,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "INV/SHORT": {
       "AVOID": {
         "expR": 0.036,
         "ci90": [
-          -0.21,
-          0.296
+          -0.352,
+          0.352
         ],
-        "p_mean_le_0": 0.427,
-        "n": 47
+        "p_mean_le_0": 0.425,
+        "expRnet": -0.085,
+        "ci90net": [
+          -0.452,
+          0.251
+        ],
+        "p_net_le_0": 0.657,
+        "n": 47,
+        "days": 11,
+        "ci_method": "day-clustered bootstrap"
       },
       "GO": {
         "expR": 0.123,
         "ci90": [
-          -0.122,
-          0.362
+          -0.077,
+          0.314
         ],
-        "p_mean_le_0": 0.209,
-        "n": 30
+        "p_mean_le_0": 0.142,
+        "expRnet": 0.034,
+        "ci90net": [
+          -0.172,
+          0.23
+        ],
+        "p_net_le_0": 0.381,
+        "n": 30,
+        "days": 12,
+        "ci_method": "day-clustered bootstrap"
       },
       "WAIT": {
         "expR": 0.151,
         "ci90": [
-          0.046,
-          0.253
+          0.071,
+          0.238
         ],
-        "p_mean_le_0": 0.004,
-        "n": 344
+        "p_mean_le_0": 0.002,
+        "expRnet": 0.043,
+        "ci90net": [
+          -0.042,
+          0.13
+        ],
+        "p_net_le_0": 0.202,
+        "n": 344,
+        "days": 47,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "RETEST/LONG": {
       "AVOID": {
         "expR": 0.068,
         "ci90": [
-          0.028,
-          0.108
+          -0.019,
+          0.171
         ],
-        "p_mean_le_0": 0.003,
-        "n": 2884
+        "p_mean_le_0": 0.114,
+        "expRnet": -0.071,
+        "ci90net": [
+          -0.161,
+          0.037
+        ],
+        "p_net_le_0": 0.878,
+        "n": 2884,
+        "days": 30,
+        "ci_method": "day-clustered bootstrap"
       },
       "GO": {
         "expR": 0.008,
         "ci90": [
-          -0.028,
-          0.042
+          -0.073,
+          0.089
         ],
-        "p_mean_le_0": 0.36,
-        "n": 2819
+        "p_mean_le_0": 0.428,
+        "expRnet": -0.169,
+        "ci90net": [
+          -0.249,
+          -0.09
+        ],
+        "p_net_le_0": 1.0,
+        "n": 2819,
+        "days": 27,
+        "ci_method": "day-clustered bootstrap"
       },
       "WAIT": {
         "expR": 0.068,
         "ci90": [
-          0.052,
-          0.083
+          0.029,
+          0.106
         ],
         "p_mean_le_0": 0.0,
-        "n": 17483
+        "expRnet": -0.095,
+        "ci90net": [
+          -0.139,
+          -0.053
+        ],
+        "p_net_le_0": 1.0,
+        "n": 17483,
+        "days": 52,
+        "ci_method": "day-clustered bootstrap"
       }
     },
     "RETEST/SHORT": {
       "AVOID": {
         "expR": 0.097,
         "ci90": [
-          0.045,
-          0.152
+          -0.008,
+          0.222
         ],
-        "p_mean_le_0": 0.002,
-        "n": 1730
+        "p_mean_le_0": 0.065,
+        "expRnet": -0.018,
+        "ci90net": [
+          -0.127,
+          0.106
+        ],
+        "p_net_le_0": 0.588,
+        "n": 1730,
+        "days": 23,
+        "ci_method": "day-clustered bootstrap"
       },
       "GO": {
         "expR": -0.052,
         "ci90": [
-          -0.106,
-          -0.004
+          -0.128,
+          0.018
         ],
-        "p_mean_le_0": 0.962,
-        "n": 1276
+        "p_mean_le_0": 0.895,
+        "expRnet": -0.184,
+        "ci90net": [
+          -0.255,
+          -0.114
+        ],
+        "p_net_le_0": 1.0,
+        "n": 1276,
+        "days": 23,
+        "ci_method": "day-clustered bootstrap"
       },
       "WAIT": {
         "expR": 0.063,
         "ci90": [
-          0.046,
-          0.081
+          0.035,
+          0.093
         ],
         "p_mean_le_0": 0.0,
-        "n": 13676
+        "expRnet": -0.066,
+        "ci90net": [
+          -0.094,
+          -0.035
+        ],
+        "p_net_le_0": 1.0,
+        "n": 13676,
+        "days": 53,
+        "ci_method": "day-clustered bootstrap"
       }
     }
   },
@@ -8340,12 +10347,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     "rationale": "REVISION SEMANAL 2026-11-01 (v3->v4): se agrega 3/LONG y 3/SHORT a tf_side. shadow_weekly venia marcando shadow_beats_raw=false de forma sostenida (W41-W44) porque desde que aparecieron TF nuevos en el bus (3m/15m/29m, ~2026-10-29) raw_indicator los incluye pero shadow (criterio v3) no, asi que shadow dejo de ser un subconjunto distinto de raw -- en las semanas donde el criterio v3 cubre todo el universo clasico (W36-W43, antes de que 3m/15m/29m tuvieran muestra) shadow_n era literalmente igual a raw_n (comparacion trivial, nunca puede batir a algo idéntico a si mismo); en W44 (con los TF nuevos ya con muestra) raw_expR=0.027 > shadow_expR=0.01 porque las senales nuevas que shadow excluye rinden bien y raw si las cuenta. De los tres TF nuevos, 3m/RETEST/LONG (n=764, survives_fdr10=true, CI90=[0.008,0.141]) y 3m/RETEST/SHORT (n=738, survives_fdr10=true, CI90=[0.04,0.177]) cumplen HOY el mismo estandar que uso la revision v1->v2 para sumar 2m LONG/5m SHORT (FDR 10% + cross_instrument verdict=universal, spread 0.323 y 0.327 respectivamente) -- se agregan. 15m (survives_fdr10=false en ambos lados) y 29m (survives_fdr10=true en SHORT pero cross_instrument=instrument-specific, spread 0.916, y sin una sola semana ISO cerrada de historial, todo su n vive en W44) NO cumplen el estandar todavia -- quedan fuera de v4, igual que 2m LONG/5m SHORT se quedaron fuera de v1 hasta madurar. Ver reviews/2026-week-44.md para el detalle. Historia v1/v2/v3 abajo. REVISION 2026-10-31 (v2->v3): se quita el filtro por veredicto Session Analyst. Con n=24k cruzados, AVOID rinde E[R] +0.022 (mejor que GO +0.005) y WAIT es el mejor (+0.043, CI90 limpio, estable desde 2026-09-11); excluir AVOID dejaba la sombra en +0.036 contra +0.038 del indicador crudo, o sea el filtro restaba. El veredicto SA es un plan de sesion para el trader, no un filtro de senales scalp: no volver a excluir por SA salvo que session_analyst_cross muestre AVOID con CI90 negativo durante 3 semanas. Historia v1/v2 abajo. kind=RETEST (prioridad 1; INV no tiene ningun segmento con survives_fdr10=true todavia). REVISION SEMANAL 2026-09-27 (v1->v2): v1 (2026-09-20) limitaba tf_side a 4 segmentos (1/LONG, 1/SHORT, 2/SHORT, 5/LONG) porque 2m LONG y 5m SHORT todavia cruzaban/rozaban cero en ese momento. Desde entonces segment_significance certifico ambos de forma sostenida durante varias corridas seguidas (2m LONG desde 2026-09-18, 5m SHORT desde antes) sin ninguna reversion, y hoy los 6 segmentos RETEST (1m/2m/5m x LONG/SHORT) tienen survives_fdr10=true con CI90 que no cruza cero -- ver segment_significance de hoy. Se amplia tf_side a los 6 segmentos certificados; la justificacion vieja de v1 (excluir 2m LONG/5m SHORT por CI90 rozando cero) ya no la sostiene el dato, quedaba pendiente de esta revision semanal desde 2026-09-24 (ver playbook buy-retest.md, historico). Se excluyen senales del dia/sesion en un instrumento con veredicto Session Analyst=AVOID: avoid_vs_rest_ci90.AVOID no es significativo (p_mean_le_0 alto) mientras GO y WAIT si lo son (session_analyst_cross). SL/objetivo = el mismo del indicador (3 capas); el SL estructural de experiments.json (sl-retest-wick) SE APLICO en TradingView el 2026-09-26 pero el feed sigue registrando el 3-capas como rMultiple (el SL real ya cambio, la medicion paralela sigue corriendo en sl_origin_vs_layer) -- no se incorpora a la sombra hasta que haya muestra post-cambio suficiente para decidir si usar rOrig en vez de rMultiple."
   },
   "shadow": {
-    "n": 61877,
+    "n": 61996,
     "wrTP1": 46.7,
-    "nSL": 28823,
-    "nTO": 4142,
-    "expR": 0.049,
+    "nSL": 28841,
+    "nTO": 4198,
+    "expR": 0.05,
     "pf": 1.1,
+    "expRnet": -0.083,
+    "pfNet": 0.85,
     "mfe_p25": 9.0,
     "mfe_p50": 21.0,
     "mfe_p75": 48.0,
@@ -8355,29 +10364,39 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     "bars_win_p50": 2.0,
     "bars_loss_p50": 3.0,
     "entryZoneTk_p50": -16.0,
-    "revAfterSL_rate": 35.4
+    "revAfterSL_rate": 35.5
   },
   "shadow_ci90": {
-    "expR": 0.049,
+    "expR": 0.05,
     "ci90": [
-      0.041,
-      0.058
+      0.03,
+      0.071
     ],
     "p_mean_le_0": 0.0,
-    "n": 59709
+    "expRnet": -0.083,
+    "ci90net": [
+      -0.105,
+      -0.06
+    ],
+    "p_net_le_0": 1.0,
+    "n": 59775,
+    "days": 68,
+    "ci_method": "day-clustered bootstrap"
   },
   "raw_indicator": {
-    "n": 64525,
+    "n": 64658,
     "wrTP1": 46.9,
-    "nSL": 29984,
-    "nTO": 4279,
+    "nSL": 30003,
+    "nTO": 4342,
     "expR": 0.055,
     "pf": 1.11,
+    "expRnet": -0.074,
+    "pfNet": 0.86,
     "mfe_p25": 9.0,
     "mfe_p50": 22.0,
     "mfe_p75": 52.0,
-    "winnerMAE_p75": 15.0,
-    "winnerMAE_p90": 40.0,
+    "winnerMAE_p75": 16.0,
+    "winnerMAE_p90": 41.0,
     "loserMFEbeforeSL_p50": 4.0,
     "bars_win_p50": 2.0,
     "bars_loss_p50": 3.0,
@@ -8387,19 +10406,29 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
   "raw_indicator_ci90": {
     "expR": 0.055,
     "ci90": [
-      0.046,
-      0.063
+      0.035,
+      0.077
     ],
     "p_mean_le_0": 0.0,
-    "n": 62232
+    "expRnet": -0.074,
+    "ci90net": [
+      -0.097,
+      -0.051
+    ],
+    "p_net_le_0": 1.0,
+    "n": 62305,
+    "days": 68,
+    "ci_method": "day-clustered bootstrap"
   },
   "tier_ap_b_only": {
-    "n": 32001,
-    "wrTP1": 44.4,
-    "nSL": 15472,
-    "nTO": 2334,
+    "n": 32061,
+    "wrTP1": 44.3,
+    "nSL": 15480,
+    "nTO": 2370,
     "expR": 0.043,
-    "pf": 1.08,
+    "pf": 1.09,
+    "expRnet": -0.092,
+    "pfNet": 0.84,
     "mfe_p25": 9.0,
     "mfe_p50": 21.0,
     "mfe_p75": 47.0,
@@ -8414,11 +10443,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
   "tier_ap_b_only_ci90": {
     "expR": 0.043,
     "ci90": [
-      0.03,
-      0.054
+      0.018,
+      0.068
     ],
-    "p_mean_le_0": 0.0,
-    "n": 30866
+    "p_mean_le_0": 0.004,
+    "expRnet": -0.092,
+    "ci90net": [
+      -0.118,
+      -0.066
+    ],
+    "p_net_le_0": 1.0,
+    "n": 30891,
+    "days": 68,
+    "ci_method": "day-clustered bootstrap"
   },
   "note": "compara el conjunto de reglas condicionales (shadow) contra (a) el indicador crudo (todo RETEST) y (b) RETEST tier A+/B solo. Gate peldano 0->1 de execution-ladder.md: shadow debe batir a raw_indicator en E[R] durante 3 semanas seguidas, n>=60 en el segmento objetivo. bootstrap_er_ci requiere n>=8, si no devuelve null."
 }
@@ -8498,10 +10535,10 @@ ejemplos por causa: {"stop-en-el-minimo": ["ES-5-21300-L", "YM-2-22619-L", "YM-1
     "shadow_beats_raw": false
   },
   "2026-W46": {
-    "shadow_n": 7168,
-    "shadow_expR": 0.078,
-    "raw_n": 7987,
-    "raw_expR": 0.091,
+    "shadow_n": 7287,
+    "shadow_expR": 0.084,
+    "raw_n": 8120,
+    "raw_expR": 0.097,
     "shadow_beats_raw": false
   }
 }

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T02:14:08.131176+00:00",
+  "updatedAt": "2026-11-15T02:14:48.768311+00:00",
   "recommendedParams": {
     "note": "vacio salvo un candidato experimental (sc_aplus_rr=1.2 en 5m/RETEST/LONG). Estado 2026-W41: la propuesta formal sigue rejected_oos (no confirmo con la ventana W39-W40); con la ventana actual W40-W41 reaparece marginal (CI90=[0.01,0.395], limite inferior al filo) pero no se reactiva con una sola lectura tras el rechazo previo -- ver reviews/2026-week-41.md.",
     "sc_min_rr": null,
@@ -19,10 +19,10 @@
     "segment": "29m/RETEST/LONG"
   },
   "totals": {
-    "signals": 66064,
-    "outcomes": 63708,
-    "pairs_resolved": 65998,
-    "pending": 66,
+    "signals": 66136,
+    "outcomes": 63783,
+    "pairs_resolved": 66134,
+    "pending": 2,
     "orphan_outcomes": 63
   },
   "metrics_by_tf_kind_side": {
@@ -33,6 +33,8 @@
       "nTO": 0,
       "expR": -0.115,
       "pf": 0.77,
+      "expRnet": -0.152,
+      "pfNet": 0.71,
       "mfe_p25": 67.0,
       "mfe_p50": 92.0,
       "mfe_p75": 309.75,
@@ -51,6 +53,8 @@
       "nTO": 0,
       "expR": 0.667,
       "pf": 3.67,
+      "expRnet": 0.618,
+      "pfNet": 3.27,
       "mfe_p25": 31.0,
       "mfe_p50": 91.5,
       "mfe_p75": 1208.25,
@@ -63,48 +67,54 @@
       "revAfterSL_rate": 0.0
     },
     "15m/RETEST/LONG": {
-      "n": 886,
+      "n": 893,
       "wrTP1": 49.5,
       "nSL": 404,
-      "nTO": 43,
-      "expR": 0.127,
-      "pf": 1.27,
+      "nTO": 47,
+      "expR": 0.133,
+      "pf": 1.28,
+      "expRnet": 0.087,
+      "pfNet": 1.17,
       "mfe_p25": 39.0,
-      "mfe_p50": 115.0,
-      "mfe_p75": 665.25,
+      "mfe_p50": 117.0,
+      "mfe_p75": 687.0,
       "winnerMAE_p75": 204.0,
-      "winnerMAE_p90": 2685.199999999999,
+      "winnerMAE_p90": 2741.900000000003,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -143.0,
+      "entryZoneTk_p50": -141.0,
       "revAfterSL_rate": 56.9
     },
     "15m/RETEST/SHORT": {
-      "n": 843,
-      "wrTP1": 51.2,
+      "n": 844,
+      "wrTP1": 51.3,
       "nSL": 379,
       "nTO": 32,
-      "expR": 0.164,
+      "expR": 0.165,
       "pf": 1.35,
+      "expRnet": 0.118,
+      "pfNet": 1.24,
       "mfe_p25": 37.0,
-      "mfe_p50": 133.0,
-      "mfe_p75": 1068.75,
-      "winnerMAE_p75": 232.5,
-      "winnerMAE_p90": 4160.300000000003,
+      "mfe_p50": 134.0,
+      "mfe_p75": 1071.0,
+      "winnerMAE_p75": 230.0,
+      "winnerMAE_p90": 4151.600000000001,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -182.0,
+      "entryZoneTk_p50": -182.5,
       "revAfterSL_rate": 64.4
     },
     "1m/INV/LONG": {
-      "n": 538,
-      "wrTP1": 46.5,
+      "n": 539,
+      "wrTP1": 46.4,
       "nSL": 224,
-      "nTO": 64,
+      "nTO": 65,
       "expR": 0.135,
       "pf": 1.31,
+      "expRnet": -0.01,
+      "pfNet": 0.98,
       "mfe_p25": 7.0,
       "mfe_p50": 15.5,
       "mfe_p75": 33.25,
@@ -123,6 +133,8 @@
       "nTO": 61,
       "expR": 0.155,
       "pf": 1.38,
+      "expRnet": 0.044,
+      "pfNet": 1.1,
       "mfe_p25": 9.0,
       "mfe_p50": 22.0,
       "mfe_p75": 48.0,
@@ -135,12 +147,14 @@
       "revAfterSL_rate": 17.1
     },
     "1m/RETEST/LONG": {
-      "n": 19946,
+      "n": 19948,
       "wrTP1": 44.7,
       "nSL": 9534,
-      "nTO": 1492,
+      "nTO": 1494,
       "expR": 0.035,
       "pf": 1.07,
+      "expRnet": -0.131,
+      "pfNet": 0.77,
       "mfe_p25": 7.0,
       "mfe_p50": 15.0,
       "mfe_p75": 35.0,
@@ -153,12 +167,14 @@
       "revAfterSL_rate": 28.7
     },
     "1m/RETEST/SHORT": {
-      "n": 14217,
-      "wrTP1": 44.7,
+      "n": 14235,
+      "wrTP1": 44.6,
       "nSL": 6679,
-      "nTO": 1189,
+      "nTO": 1207,
       "expR": 0.031,
       "pf": 1.06,
+      "expRnet": -0.099,
+      "pfNet": 0.82,
       "mfe_p25": 9.0,
       "mfe_p50": 19.0,
       "mfe_p75": 41.0,
@@ -177,6 +193,8 @@
       "nTO": 0,
       "expR": 0.365,
       "pf": 2.46,
+      "expRnet": 0.362,
+      "pfNet": 2.44,
       "mfe_p25": 1172.5,
       "mfe_p50": 1251.0,
       "mfe_p75": 10379.25,
@@ -195,6 +213,8 @@
       "nTO": 0,
       "expR": 0.02,
       "pf": 1.06,
+      "expRnet": 0.014,
+      "pfNet": 1.04,
       "mfe_p25": 411.5,
       "mfe_p50": 766.0,
       "mfe_p75": 27020.0,
@@ -207,30 +227,34 @@
       "revAfterSL_rate": 0.0
     },
     "29m/RETEST/LONG": {
-      "n": 437,
-      "wrTP1": 53.8,
-      "nSL": 169,
-      "nTO": 33,
+      "n": 442,
+      "wrTP1": 53.6,
+      "nSL": 170,
+      "nTO": 35,
       "expR": 0.348,
       "pf": 1.84,
+      "expRnet": 0.305,
+      "pfNet": 1.71,
       "mfe_p25": 45.0,
-      "mfe_p50": 140.0,
-      "mfe_p75": 977.5,
-      "winnerMAE_p75": 170.5,
-      "winnerMAE_p90": 3032.399999999994,
+      "mfe_p50": 141.5,
+      "mfe_p75": 1038.5,
+      "winnerMAE_p75": 202.0,
+      "winnerMAE_p90": 3898.4000000000065,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -128.0,
-      "revAfterSL_rate": 58.0
+      "entryZoneTk_p50": -134.5,
+      "revAfterSL_rate": 57.6
     },
     "29m/RETEST/SHORT": {
-      "n": 482,
-      "wrTP1": 50.6,
+      "n": 483,
+      "wrTP1": 50.5,
       "nSL": 209,
-      "nTO": 29,
+      "nTO": 30,
       "expR": 0.182,
       "pf": 1.39,
+      "expRnet": 0.132,
+      "pfNet": 1.27,
       "mfe_p25": 40.0,
       "mfe_p50": 157.0,
       "mfe_p75": 1010.0,
@@ -249,6 +273,8 @@
       "nTO": 12,
       "expR": 0.002,
       "pf": 1.0,
+      "expRnet": -0.1,
+      "pfNet": 0.8,
       "mfe_p25": 8.0,
       "mfe_p50": 18.5,
       "mfe_p75": 41.25,
@@ -267,6 +293,8 @@
       "nTO": 17,
       "expR": 0.124,
       "pf": 1.31,
+      "expRnet": 0.036,
+      "pfNet": 1.08,
       "mfe_p25": 12.25,
       "mfe_p50": 28.5,
       "mfe_p75": 62.5,
@@ -279,12 +307,14 @@
       "revAfterSL_rate": 29.8
     },
     "2m/RETEST/LONG": {
-      "n": 8833,
+      "n": 8834,
       "wrTP1": 47.4,
       "nSL": 4159,
-      "nTO": 486,
+      "nTO": 487,
       "expR": 0.038,
       "pf": 1.08,
+      "expRnet": -0.106,
+      "pfNet": 0.81,
       "mfe_p25": 9.0,
       "mfe_p50": 19.0,
       "mfe_p75": 44.0,
@@ -297,12 +327,14 @@
       "revAfterSL_rate": 38.9
     },
     "2m/RETEST/SHORT": {
-      "n": 6130,
-      "wrTP1": 47.1,
+      "n": 6139,
+      "wrTP1": 47.0,
       "nSL": 2890,
-      "nTO": 355,
+      "nTO": 364,
       "expR": 0.041,
       "pf": 1.08,
+      "expRnet": -0.072,
+      "pfNet": 0.87,
       "mfe_p25": 11.0,
       "mfe_p50": 25.0,
       "mfe_p75": 53.0,
@@ -321,6 +353,8 @@
       "nTO": 1,
       "expR": -0.151,
       "pf": 0.67,
+      "expRnet": -0.212,
+      "pfNet": 0.56,
       "mfe_p25": 12.0,
       "mfe_p50": 22.0,
       "mfe_p75": 38.0,
@@ -339,6 +373,8 @@
       "nTO": 1,
       "expR": 0.242,
       "pf": 2.53,
+      "expRnet": 0.197,
+      "pfNet": 2.22,
       "mfe_p25": 18.5,
       "mfe_p50": 37.0,
       "mfe_p75": 52.5,
@@ -351,12 +387,14 @@
       "revAfterSL_rate": 0.0
     },
     "3m/RETEST/LONG": {
-      "n": 2819,
-      "wrTP1": 53.2,
+      "n": 2825,
+      "wrTP1": 53.1,
       "nSL": 1222,
-      "nTO": 96,
+      "nTO": 102,
       "expR": 0.101,
       "pf": 1.23,
+      "expRnet": -0.004,
+      "pfNet": 0.99,
       "mfe_p25": 13.0,
       "mfe_p50": 26.0,
       "mfe_p75": 58.0,
@@ -369,12 +407,14 @@
       "revAfterSL_rate": 51.0
     },
     "3m/RETEST/SHORT": {
-      "n": 2381,
-      "wrTP1": 52.7,
+      "n": 2389,
+      "wrTP1": 52.5,
       "nSL": 1020,
-      "nTO": 107,
+      "nTO": 115,
       "expR": 0.119,
       "pf": 1.27,
+      "expRnet": 0.006,
+      "pfNet": 1.01,
       "mfe_p25": 12.0,
       "mfe_p50": 25.0,
       "mfe_p75": 58.0,
@@ -393,6 +433,8 @@
       "nTO": 4,
       "expR": 0.097,
       "pf": 1.33,
+      "expRnet": 0.031,
+      "pfNet": 1.1,
       "mfe_p25": 13.0,
       "mfe_p50": 31.0,
       "mfe_p75": 74.0,
@@ -405,35 +447,39 @@
       "revAfterSL_rate": 55.6
     },
     "5m/INV/SHORT": {
-      "n": 45,
-      "wrTP1": 51.1,
+      "n": 47,
+      "wrTP1": 53.2,
       "nSL": 18,
       "nTO": 4,
-      "expR": 0.125,
-      "pf": 1.3,
-      "mfe_p25": 11.0,
-      "mfe_p50": 82.0,
-      "mfe_p75": 370.5,
-      "winnerMAE_p75": 63.5,
-      "winnerMAE_p90": 223.0000000000001,
+      "expR": 0.14,
+      "pf": 1.35,
+      "expRnet": 0.099,
+      "pfNet": 1.24,
+      "mfe_p25": 13.0,
+      "mfe_p50": 88.0,
+      "mfe_p75": 476.0,
+      "winnerMAE_p75": 79.0,
+      "winnerMAE_p90": 1811.2000000000035,
       "loserMFEbeforeSL_p50": 4.5,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 3.0,
-      "entryZoneTk_p50": -54.5,
+      "entryZoneTk_p50": -72.0,
       "revAfterSL_rate": 38.9
     },
     "5m/RETEST/LONG": {
-      "n": 4379,
-      "wrTP1": 51.3,
-      "nSL": 1920,
-      "nTO": 213,
-      "expR": 0.106,
+      "n": 4403,
+      "wrTP1": 51.4,
+      "nSL": 1927,
+      "nTO": 214,
+      "expR": 0.107,
       "pf": 1.23,
+      "expRnet": 0.029,
+      "pfNet": 1.06,
       "mfe_p25": 18.0,
-      "mfe_p50": 50.0,
-      "mfe_p75": 235.0,
-      "winnerMAE_p75": 52.0,
-      "winnerMAE_p90": 604.5,
+      "mfe_p50": 51.0,
+      "mfe_p75": 244.25,
+      "winnerMAE_p75": 54.75,
+      "winnerMAE_p90": 747.8000000000002,
       "loserMFEbeforeSL_p50": 2.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
@@ -441,62 +487,68 @@
       "revAfterSL_rate": 50.3
     },
     "5m/RETEST/SHORT": {
-      "n": 3172,
-      "wrTP1": 49.5,
-      "nSL": 1399,
-      "nTO": 204,
-      "expR": 0.089,
-      "pf": 1.19,
-      "mfe_p25": 21.0,
-      "mfe_p50": 56.0,
-      "mfe_p75": 287.25,
-      "winnerMAE_p75": 56.0,
-      "winnerMAE_p90": 963.8000000000018,
+      "n": 3223,
+      "wrTP1": 49.6,
+      "nSL": 1410,
+      "nTO": 215,
+      "expR": 0.1,
+      "pf": 1.22,
+      "expRnet": 0.034,
+      "pfNet": 1.07,
+      "mfe_p25": 22.0,
+      "mfe_p50": 58.0,
+      "mfe_p75": 300.0,
+      "winnerMAE_p75": 59.75,
+      "winnerMAE_p90": 1118.9999999999995,
       "loserMFEbeforeSL_p50": 4.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
-      "entryZoneTk_p50": -56.0,
-      "revAfterSL_rate": 47.7
+      "entryZoneTk_p50": -57.0,
+      "revAfterSL_rate": 47.9
     }
   },
   "sl_causes": {
-    "RR-bajo": 11904,
-    "stop-en-el-minimo": 11065,
-    "contra-estructura": 11040,
+    "RR-bajo": 11915,
+    "stop-en-el-minimo": 11078,
+    "contra-estructura": 11049,
     "killzone-Asia-largo": 6334,
     "estirado": 5296,
     "sin-nivel-detras": 4771,
-    "chop": 4520,
-    "SL-muy-pegado": 3710,
+    "chop": 4524,
+    "SL-muy-pegado": 3711,
     "sin-causa-clara": 3077,
-    "contra-sesgo": 2681
+    "contra-sesgo": 2691
   },
   "metrics_by_symbol": {
     "BTCUSDT": {
-      "n": 1611,
-      "wrTP1": 52.8,
-      "nSL": 730,
-      "nTO": 30,
-      "expR": 0.087,
-      "pf": 1.19,
-      "mfe_p25": 4608.5,
-      "mfe_p50": 8721.0,
-      "mfe_p75": 16815.0,
-      "winnerMAE_p75": 5348.0,
-      "winnerMAE_p90": 10490.0,
+      "n": 1653,
+      "wrTP1": 53.2,
+      "nSL": 742,
+      "nTO": 31,
+      "expR": 0.095,
+      "pf": 1.21,
+      "expRnet": 0.095,
+      "pfNet": 1.21,
+      "mfe_p25": 4638.75,
+      "mfe_p50": 8807.5,
+      "mfe_p75": 16968.75,
+      "winnerMAE_p75": 5406.0,
+      "winnerMAE_p90": 10564.900000000001,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -12780.0,
+      "entryZoneTk_p50": -12800.0,
       "revAfterSL_rate": 58.2
     },
     "CL": {
-      "n": 11897,
-      "wrTP1": 47.7,
+      "n": 11907,
+      "wrTP1": 47.6,
       "nSL": 5475,
-      "nTO": 749,
+      "nTO": 759,
       "expR": 0.051,
       "pf": 1.11,
+      "expRnet": -0.118,
+      "pfNet": 0.79,
       "mfe_p25": 7.0,
       "mfe_p50": 14.0,
       "mfe_p75": 25.0,
@@ -509,12 +561,14 @@
       "revAfterSL_rate": 35.7
     },
     "ES": {
-      "n": 12596,
+      "n": 12611,
       "wrTP1": 46.7,
       "nSL": 5851,
-      "nTO": 859,
+      "nTO": 874,
       "expR": 0.028,
       "pf": 1.06,
+      "expRnet": -0.211,
+      "pfNet": 0.65,
       "mfe_p25": 5.0,
       "mfe_p50": 10.0,
       "mfe_p75": 19.0,
@@ -527,30 +581,34 @@
       "revAfterSL_rate": 36.2
     },
     "ETHUSDT": {
-      "n": 1465,
-      "wrTP1": 53.6,
-      "nSL": 649,
-      "nTO": 31,
-      "expR": 0.09,
-      "pf": 1.2,
-      "mfe_p25": 176.75,
-      "mfe_p50": 350.5,
-      "mfe_p75": 700.25,
-      "winnerMAE_p75": 220.0,
-      "winnerMAE_p90": 451.4000000000001,
+      "n": 1498,
+      "wrTP1": 54.0,
+      "nSL": 656,
+      "nTO": 33,
+      "expR": 0.113,
+      "pf": 1.25,
+      "expRnet": 0.105,
+      "pfNet": 1.23,
+      "mfe_p25": 182.0,
+      "mfe_p50": 355.0,
+      "mfe_p75": 714.0,
+      "winnerMAE_p75": 219.0,
+      "winnerMAE_p90": 442.2000000000003,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -580.0,
-      "revAfterSL_rate": 60.1
+      "entryZoneTk_p50": -577.5,
+      "revAfterSL_rate": 60.4
     },
     "GC": {
-      "n": 12857,
-      "wrTP1": 46.0,
+      "n": 12876,
+      "wrTP1": 45.9,
       "nSL": 5995,
-      "nTO": 954,
+      "nTO": 973,
       "expR": 0.052,
       "pf": 1.11,
+      "expRnet": -0.03,
+      "pfNet": 0.94,
       "mfe_p25": 15.0,
       "mfe_p50": 29.0,
       "mfe_p75": 51.0,
@@ -563,12 +621,14 @@
       "revAfterSL_rate": 35.4
     },
     "NQ": {
-      "n": 10950,
+      "n": 10956,
       "wrTP1": 45.6,
       "nSL": 5193,
-      "nTO": 763,
+      "nTO": 769,
       "expR": 0.043,
       "pf": 1.09,
+      "expRnet": 0.01,
+      "pfNet": 1.02,
       "mfe_p25": 36.0,
       "mfe_p50": 72.0,
       "mfe_p75": 138.0,
@@ -581,12 +641,14 @@
       "revAfterSL_rate": 33.8
     },
     "YM": {
-      "n": 14622,
+      "n": 14633,
       "wrTP1": 47.1,
       "nSL": 6673,
-      "nTO": 1057,
+      "nTO": 1068,
       "expR": 0.091,
       "pf": 1.19,
+      "expRnet": -0.054,
+      "pfNet": 0.9,
       "mfe_p25": 8.0,
       "mfe_p50": 18.0,
       "mfe_p75": 35.0,
@@ -651,26 +713,26 @@
       "expR": 0.121
     },
     "2026-W46": {
-      "n": 8146,
-      "wrTP1": 47.9,
-      "expR": 0.093
+      "n": 8282,
+      "wrTP1": 47.7,
+      "expR": 0.099
     }
   },
   "walk_forward": {
     "ready": true,
     "trainN": 49809,
-    "testN": 16189,
+    "testN": 16325,
     "testWeeks": [
       "2026-W45",
       "2026-W46"
     ],
-    "model_oos_brier": 0.2234,
-    "model_oos_n": 16189,
+    "model_oos_brier": 0.2235,
+    "model_oos_n": 16325,
     "best_scheme_in_sample": {
       "scheme": "fixed_1_5R",
       "trainExpR": 0.047
     },
-    "best_scheme_oos_expR": 0.083
+    "best_scheme_oos_expR": 0.085
   },
   "gate": {
     "readyForLive": true,
@@ -680,52 +742,55 @@
       {
         "week": "2026-W43",
         "wrTP1": null,
-        "pf": null,
+        "pfNet": null,
         "ok": false
       },
       {
         "week": "2026-W44",
         "wrTP1": 54.5,
-        "pf": 1.29,
+        "pfNet": 1.19,
         "ok": false
       },
       {
         "week": "2026-W45",
         "wrTP1": 51.8,
-        "pf": 2.04,
+        "pfNet": 1.91,
         "ok": true
       }
     ],
     "slCauseMitigated": false,
     "fullyReady": false,
-    "note": "readyForLive: n>=100 & E[R]>0 & PF>=1.3 & WR>=50 en un segmento tf/kind/side (solo agregado historico). fullyReady exige ademas weeklyStable3 (3 semanas CERRADAS seguidas con WR>=50 & PF>=1.3 en ese mismo segmento) y slCauseMitigated (experimento con verdict=confirmed dirigido a ese segmento). Solo fullyReady=true es luz verde real para subir de peldano; readyForLive=true con fullyReady=false es un near-miss a vigilar."
+    "costTicks": {
+      "default": 2.0
+    },
+    "note": "Todo NETO de costes (COST_TICKS). readyForLive: n>=100 & E[R] neto>0 & PF neto>=1.3 & WR>=50 en un segmento tf/kind/side (solo agregado historico). fullyReady exige ademas weeklyStable3 (3 semanas CERRADAS seguidas con WR>=50 & PF neto>=1.3 en ese mismo segmento) y slCauseMitigated (experimento con verdict=confirmed dirigido a ese segmento). Solo fullyReady=true es luz verde real para subir de peldano; readyForLive=true con fullyReady=false es un near-miss a vigilar."
   },
   "alerts": [
     "GATE: 29m/RETEST/LONG cumple el chequeo numerico agregado (n/PF/WR) pero NO el gate completo todavia -- weeklyStable3=False, slCauseMitigated=False. Es un near-miss a vigilar, no subir de peldano.",
-    "SL: SL en la vela 1 del FVG (inversion) BATE al de 3 capas fuera de ruido (E[R] 1.876 vs 0.116, delta 1.76 CI90 [0.014, 5.058], n 1204). Candidato para experiments.json + revision semanal.",
-    "SL: SL en la mecha de la vela del retest BATE al de 3 capas fuera de ruido (E[R] 0.223 vs 0.061, delta 0.162 CI90 [0.128, 0.201], n 41101). Candidato para experiments.json + revision semanal.",
+    "SL: SL en la vela 1 del FVG (inversion) BATE al de 3 capas fuera de ruido (E[R] 1.879 vs 0.117, delta 1.762 CI90 [0.019, 5.054], n 1206). Candidato para experiments.json + revision semanal.",
+    "SL: SL en la mecha de la vela del retest BATE al de 3 capas fuera de ruido (E[R] 0.225 vs 0.062, delta 0.163 CI90 [0.129, 0.204], n 41171). Candidato para experiments.json + revision semanal.",
     "SL: SL en la mecha del retest + vela previa (1m short) BATE al de 3 capas fuera de ruido (E[R] 0.056 vs 0.024, delta 0.032 CI90 [0.006, 0.059], n 11140). Candidato para experiments.json + revision semanal.",
-    "SESSION ANALYST: senales scalp con veredicto SA=AVOID rinden MEJOR de forma no-random (E[R] 0.077 CI90 [0.045, 0.11], n 4725). Contrario a la hipotesis original de agent-instructions.md.",
-    "SESSION ANALYST: senales scalp con veredicto SA=WAIT rinden MEJOR de forma no-random (E[R] 0.067 CI90 [0.055, 0.079], n 31976). Consistente con la hipotesis original de agent-instructions.md.",
+    "SESSION ANALYST: senales scalp con veredicto SA=AVOID rinden MEJOR de forma no-random (E[R] 0.077 CI90 [0.004, 0.16], n 4725). Contrario a la hipotesis original de agent-instructions.md.",
+    "SESSION ANALYST: senales scalp con veredicto SA=WAIT rinden MEJOR de forma no-random (E[R] 0.067 CI90 [0.041, 0.093], n 31976). Consistente con la hipotesis original de agent-instructions.md.",
     "MODO SOMBRA: 3 semanas CERRADAS seguidas sin batir al indicador crudo (2026-W43, 2026-W44, 2026-W45) -- espejo inverso del gate de promocion del peldano 0->1. No implica bajar de peldano (ya promovido), pero revisar shadow_rules en la revision semanal."
   ],
   "prediction_scoreboard": {
     "n": 7,
     "scored": 6,
-    "mae_deltaER": 0.253,
+    "mae_deltaER": 0.251,
     "hit_direction_rate": 50.0
   },
   "managed_vs_naive": {
     "overall": {
-      "n": 63632,
-      "naive_expR": 0.056,
+      "n": 63707,
+      "naive_expR": 0.057,
       "managed_expR": 0.114,
-      "delta": 0.058,
+      "delta": 0.057,
       "avgEntryBetterTk_p50": 2.8,
-      "fill_t3plus_pct": 44.8,
+      "fill_t3plus_pct": 44.7,
       "fill_full_pct": 31.7,
-      "m1_rate": 37.2,
-      "m2_rate": 22.5,
+      "m1_rate": 37.3,
+      "m2_rate": 22.6,
       "m3_rate": 11.7,
       "beAfterM1_rate": 18.5
     },
@@ -757,30 +822,30 @@
         "beAfterM1_rate": 25.0
       },
       "15m/RETEST/LONG": {
-        "n": 848,
-        "naive_expR": 0.127,
-        "managed_expR": -0.101,
+        "n": 851,
+        "naive_expR": 0.133,
+        "managed_expR": -0.095,
         "delta": -0.228,
-        "avgEntryBetterTk_p50": 1.45,
-        "fill_t3plus_pct": 31.7,
-        "fill_full_pct": 22.5,
-        "m1_rate": 33.8,
-        "m2_rate": 18.6,
-        "m3_rate": 10.1,
-        "beAfterM1_rate": 18.5
+        "avgEntryBetterTk_p50": 1.5,
+        "fill_t3plus_pct": 31.6,
+        "fill_full_pct": 22.4,
+        "m1_rate": 34.1,
+        "m2_rate": 18.9,
+        "m3_rate": 10.3,
+        "beAfterM1_rate": 18.4
       },
       "15m/RETEST/SHORT": {
-        "n": 814,
-        "naive_expR": 0.164,
+        "n": 815,
+        "naive_expR": 0.165,
         "managed_expR": 0.015,
-        "delta": -0.149,
+        "delta": -0.15,
         "avgEntryBetterTk_p50": 0.0,
-        "fill_t3plus_pct": 29.5,
+        "fill_t3plus_pct": 29.4,
         "fill_full_pct": 18.8,
         "m1_rate": 37.5,
         "m2_rate": 21.0,
         "m3_rate": 12.3,
-        "beAfterM1_rate": 20.5
+        "beAfterM1_rate": 20.6
       },
       "1m/INV/LONG": {
         "n": 516,
@@ -861,17 +926,17 @@
         "beAfterM1_rate": 0.0
       },
       "29m/RETEST/LONG": {
-        "n": 407,
+        "n": 410,
         "naive_expR": 0.348,
-        "managed_expR": 0.062,
-        "delta": -0.286,
-        "avgEntryBetterTk_p50": 8.5,
-        "fill_t3plus_pct": 35.6,
-        "fill_full_pct": 25.8,
-        "m1_rate": 39.1,
-        "m2_rate": 26.3,
-        "m3_rate": 15.5,
-        "beAfterM1_rate": 15.2
+        "managed_expR": 0.056,
+        "delta": -0.292,
+        "avgEntryBetterTk_p50": 8.55,
+        "fill_t3plus_pct": 35.9,
+        "fill_full_pct": 25.9,
+        "m1_rate": 38.8,
+        "m2_rate": 26.1,
+        "m3_rate": 15.4,
+        "beAfterM1_rate": 15.1
       },
       "29m/RETEST/SHORT": {
         "n": 454,
@@ -1004,43 +1069,43 @@
         "beAfterM1_rate": 11.5
       },
       "5m/INV/SHORT": {
-        "n": 43,
-        "naive_expR": 0.125,
-        "managed_expR": 0.218,
-        "delta": 0.093,
+        "n": 45,
+        "naive_expR": 0.14,
+        "managed_expR": 0.224,
+        "delta": 0.085,
         "avgEntryBetterTk_p50": 7.0,
-        "fill_t3plus_pct": 53.5,
-        "fill_full_pct": 37.2,
-        "m1_rate": 30.2,
-        "m2_rate": 20.9,
-        "m3_rate": 14.0,
-        "beAfterM1_rate": 14.0
+        "fill_t3plus_pct": 51.1,
+        "fill_full_pct": 35.6,
+        "m1_rate": 31.1,
+        "m2_rate": 20.0,
+        "m3_rate": 13.3,
+        "beAfterM1_rate": 15.6
       },
       "5m/RETEST/LONG": {
-        "n": 4225,
-        "naive_expR": 0.106,
-        "managed_expR": 0.072,
+        "n": 4248,
+        "naive_expR": 0.107,
+        "managed_expR": 0.074,
         "delta": -0.033,
-        "avgEntryBetterTk_p50": 1.7,
-        "fill_t3plus_pct": 35.5,
-        "fill_full_pct": 24.9,
+        "avgEntryBetterTk_p50": 1.9,
+        "fill_t3plus_pct": 35.6,
+        "fill_full_pct": 25.0,
         "m1_rate": 37.2,
         "m2_rate": 21.8,
         "m3_rate": 10.9,
         "beAfterM1_rate": 20.5
       },
       "5m/RETEST/SHORT": {
-        "n": 3015,
-        "naive_expR": 0.089,
-        "managed_expR": 0.086,
-        "delta": -0.002,
+        "n": 3058,
+        "naive_expR": 0.1,
+        "managed_expR": 0.092,
+        "delta": -0.008,
         "avgEntryBetterTk_p50": 3.6,
-        "fill_t3plus_pct": 36.7,
-        "fill_full_pct": 24.9,
-        "m1_rate": 36.2,
-        "m2_rate": 21.8,
-        "m3_rate": 11.1,
-        "beAfterM1_rate": 19.3
+        "fill_t3plus_pct": 36.5,
+        "fill_full_pct": 24.8,
+        "m1_rate": 36.4,
+        "m2_rate": 22.1,
+        "m3_rate": 11.2,
+        "beAfterM1_rate": 19.2
       }
     }
   },
@@ -1052,6 +1117,8 @@
       "nTO": 1,
       "expR": -0.008,
       "pf": 0.98,
+      "expRnet": -0.109,
+      "pfNet": 0.8,
       "mfe_p25": 8.0,
       "mfe_p50": 23.0,
       "mfe_p75": 40.5,
@@ -1070,6 +1137,8 @@
       "nTO": 21,
       "expR": 0.176,
       "pf": 1.49,
+      "expRnet": 0.047,
+      "pfNet": 1.12,
       "mfe_p25": 7.0,
       "mfe_p50": 19.0,
       "mfe_p75": 45.0,
@@ -1082,12 +1151,14 @@
       "revAfterSL_rate": 30.5
     },
     "INV/LONG|edge=1": {
-      "n": 494,
-      "wrTP1": 43.5,
+      "n": 495,
+      "wrTP1": 43.4,
       "nSL": 220,
-      "nTO": 59,
+      "nTO": 60,
       "expR": 0.042,
       "pf": 1.09,
+      "expRnet": -0.081,
+      "pfNet": 0.85,
       "mfe_p25": 8.0,
       "mfe_p50": 17.0,
       "mfe_p75": 34.0,
@@ -1100,17 +1171,19 @@
       "revAfterSL_rate": 13.6
     },
     "INV/SHORT|edge=-1": {
-      "n": 376,
-      "wrTP1": 45.2,
+      "n": 377,
+      "wrTP1": 45.4,
       "nSL": 152,
       "nTO": 54,
-      "expR": 0.13,
+      "expR": 0.131,
       "pf": 1.31,
+      "expRnet": 0.037,
+      "pfNet": 1.08,
       "mfe_p25": 12.0,
       "mfe_p50": 27.0,
-      "mfe_p75": 62.5,
-      "winnerMAE_p75": 12.0,
-      "winnerMAE_p90": 35.099999999999994,
+      "mfe_p75": 63.0,
+      "winnerMAE_p75": 12.5,
+      "winnerMAE_p90": 36.0,
       "loserMFEbeforeSL_p50": 8.0,
       "bars_win_p50": 3.0,
       "bars_loss_p50": 7.0,
@@ -1118,21 +1191,23 @@
       "revAfterSL_rate": 18.4
     },
     "INV/SHORT|edge=0": {
-      "n": 225,
-      "wrTP1": 52.9,
+      "n": 226,
+      "wrTP1": 53.1,
       "nSL": 77,
       "nTO": 29,
-      "expR": 0.165,
+      "expR": 0.167,
       "pf": 1.44,
+      "expRnet": 0.06,
+      "pfNet": 1.14,
       "mfe_p25": 8.0,
-      "mfe_p50": 20.5,
-      "mfe_p75": 42.75,
-      "winnerMAE_p75": 19.5,
-      "winnerMAE_p90": 31.0,
+      "mfe_p50": 21.0,
+      "mfe_p75": 45.0,
+      "winnerMAE_p75": 20.25,
+      "winnerMAE_p90": 31.900000000000077,
       "loserMFEbeforeSL_p50": 4.0,
-      "bars_win_p50": 4.0,
+      "bars_win_p50": 3.5,
       "bars_loss_p50": 4.0,
-      "entryZoneTk_p50": -12.5,
+      "entryZoneTk_p50": -13.0,
       "revAfterSL_rate": 28.6
     },
     "INV/SHORT|edge=1": {
@@ -1142,6 +1217,8 @@
       "nTO": 0,
       "expR": 0.296,
       "pf": 2.05,
+      "expRnet": 0.229,
+      "pfNet": 1.74,
       "mfe_p25": 15.0,
       "mfe_p50": 40.5,
       "mfe_p75": 96.5,
@@ -1154,30 +1231,34 @@
       "revAfterSL_rate": 11.1
     },
     "RETEST/LONG|edge=-1": {
-      "n": 4943,
+      "n": 4977,
       "wrTP1": 51.4,
-      "nSL": 2230,
-      "nTO": 174,
-      "expR": 0.116,
-      "pf": 1.25,
+      "nSL": 2238,
+      "nTO": 179,
+      "expR": 0.119,
+      "pf": 1.26,
+      "expRnet": 0.002,
+      "pfNet": 1.0,
       "mfe_p25": 12.0,
-      "mfe_p50": 29.0,
-      "mfe_p75": 103.0,
-      "winnerMAE_p75": 31.0,
-      "winnerMAE_p90": 175.60000000000082,
+      "mfe_p50": 30.0,
+      "mfe_p75": 106.75,
+      "winnerMAE_p75": 32.0,
+      "winnerMAE_p90": 191.39999999999964,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
       "entryZoneTk_p50": -22.0,
-      "revAfterSL_rate": 54.0
+      "revAfterSL_rate": 54.1
     },
     "RETEST/LONG|edge=0": {
-      "n": 14371,
+      "n": 14375,
       "wrTP1": 48.8,
       "nSL": 6599,
-      "nTO": 757,
+      "nTO": 761,
       "expR": 0.047,
       "pf": 1.1,
+      "expRnet": -0.112,
+      "pfNet": 0.8,
       "mfe_p25": 7.0,
       "mfe_p50": 18.0,
       "mfe_p75": 42.0,
@@ -1190,12 +1271,14 @@
       "revAfterSL_rate": 37.7
     },
     "RETEST/LONG|edge=1": {
-      "n": 17986,
+      "n": 17993,
       "wrTP1": 44.3,
       "nSL": 8579,
-      "nTO": 1432,
+      "nTO": 1439,
       "expR": 0.044,
       "pf": 1.09,
+      "expRnet": -0.091,
+      "pfNet": 0.84,
       "mfe_p25": 9.0,
       "mfe_p50": 20.0,
       "mfe_p75": 46.0,
@@ -1208,16 +1291,18 @@
       "revAfterSL_rate": 29.9
     },
     "RETEST/SHORT|edge=-1": {
-      "n": 13396,
-      "wrTP1": 43.5,
-      "nSL": 6381,
-      "nTO": 1191,
-      "expR": 0.021,
-      "pf": 1.04,
+      "n": 13443,
+      "wrTP1": 43.4,
+      "nSL": 6385,
+      "nTO": 1220,
+      "expR": 0.023,
+      "pf": 1.05,
+      "expRnet": -0.082,
+      "pfNet": 0.85,
       "mfe_p25": 11.0,
       "mfe_p50": 25.0,
       "mfe_p75": 56.0,
-      "winnerMAE_p75": 16.0,
+      "winnerMAE_p75": 17.0,
       "winnerMAE_p90": 39.0,
       "loserMFEbeforeSL_p50": 6.0,
       "bars_win_p50": 2.0,
@@ -1226,17 +1311,19 @@
       "revAfterSL_rate": 30.0
     },
     "RETEST/SHORT|edge=0": {
-      "n": 9415,
-      "wrTP1": 48.6,
-      "nSL": 4246,
-      "nTO": 594,
+      "n": 9435,
+      "wrTP1": 48.5,
+      "nSL": 4249,
+      "nTO": 606,
       "expR": 0.075,
       "pf": 1.16,
+      "expRnet": -0.048,
+      "pfNet": 0.91,
       "mfe_p25": 10.0,
       "mfe_p50": 22.0,
       "mfe_p75": 48.0,
       "winnerMAE_p75": 14.0,
-      "winnerMAE_p90": 32.0,
+      "winnerMAE_p90": 32.100000000000364,
       "loserMFEbeforeSL_p50": 4.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
@@ -1244,22 +1331,24 @@
       "revAfterSL_rate": 37.8
     },
     "RETEST/SHORT|edge=1": {
-      "n": 4414,
+      "n": 4435,
       "wrTP1": 52.9,
-      "nSL": 1949,
-      "nTO": 131,
-      "expR": 0.11,
-      "pf": 1.24,
+      "nSL": 1953,
+      "nTO": 137,
+      "expR": 0.112,
+      "pf": 1.25,
+      "expRnet": -0.003,
+      "pfNet": 0.99,
       "mfe_p25": 12.0,
       "mfe_p50": 29.0,
-      "mfe_p75": 109.0,
+      "mfe_p75": 112.0,
       "winnerMAE_p75": 30.0,
-      "winnerMAE_p90": 226.8000000000011,
+      "winnerMAE_p90": 229.19999999999982,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
       "entryZoneTk_p50": -28.0,
-      "revAfterSL_rate": 59.7
+      "revAfterSL_rate": 59.8
     }
   },
   "metrics_by_kindside_aligned": {
@@ -1270,6 +1359,8 @@
       "nTO": 0,
       "expR": -0.049,
       "pf": 0.9,
+      "expRnet": -0.107,
+      "pfNet": 0.79,
       "mfe_p25": 21.0,
       "mfe_p50": 27.0,
       "mfe_p75": 79.0,
@@ -1282,12 +1373,14 @@
       "revAfterSL_rate": 50.0
     },
     "INV/LONG|aligned=1": {
-      "n": 823,
+      "n": 824,
       "wrTP1": 49.3,
       "nSL": 336,
-      "nTO": 81,
+      "nTO": 82,
       "expR": 0.092,
       "pf": 1.21,
+      "expRnet": -0.034,
+      "pfNet": 0.93,
       "mfe_p25": 7.0,
       "mfe_p50": 18.0,
       "mfe_p75": 37.0,
@@ -1306,6 +1399,8 @@
       "nTO": 0,
       "expR": 0.122,
       "pf": 1.46,
+      "expRnet": 0.084,
+      "pfNet": 1.3,
       "mfe_p25": 18.0,
       "mfe_p50": 45.0,
       "mfe_p75": 309.0,
@@ -1318,17 +1413,19 @@
       "revAfterSL_rate": 20.0
     },
     "INV/SHORT|aligned=1": {
-      "n": 614,
-      "wrTP1": 48.5,
+      "n": 616,
+      "wrTP1": 48.7,
       "nSL": 233,
       "nTO": 83,
-      "expR": 0.152,
-      "pf": 1.37,
+      "expR": 0.153,
+      "pf": 1.38,
+      "expRnet": 0.054,
+      "pfNet": 1.12,
       "mfe_p25": 10.0,
       "mfe_p50": 25.0,
-      "mfe_p75": 57.25,
-      "winnerMAE_p75": 14.75,
-      "winnerMAE_p90": 35.30000000000001,
+      "mfe_p75": 58.0,
+      "winnerMAE_p75": 15.5,
+      "winnerMAE_p90": 36.0,
       "loserMFEbeforeSL_p50": 6.0,
       "bars_win_p50": 3.0,
       "bars_loss_p50": 6.0,
@@ -1336,30 +1433,34 @@
       "revAfterSL_rate": 21.5
     },
     "RETEST/LONG|aligned=0": {
-      "n": 2845,
-      "wrTP1": 52.8,
-      "nSL": 1263,
-      "nTO": 81,
-      "expR": 0.127,
-      "pf": 1.28,
+      "n": 2877,
+      "wrTP1": 52.9,
+      "nSL": 1271,
+      "nTO": 84,
+      "expR": 0.131,
+      "pf": 1.29,
+      "expRnet": 0.038,
+      "pfNet": 1.08,
       "mfe_p25": 15.0,
-      "mfe_p50": 41.0,
-      "mfe_p75": 195.0,
-      "winnerMAE_p75": 50.0,
-      "winnerMAE_p90": 414.0,
+      "mfe_p50": 42.0,
+      "mfe_p75": 209.5,
+      "winnerMAE_p75": 52.75,
+      "winnerMAE_p90": 495.0,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -36.0,
+      "entryZoneTk_p50": -37.0,
       "revAfterSL_rate": 61.0
     },
     "RETEST/LONG|aligned=1": {
-      "n": 34455,
+      "n": 34468,
       "wrTP1": 46.5,
       "nSL": 16145,
-      "nTO": 2282,
+      "nTO": 2295,
       "expR": 0.049,
       "pf": 1.1,
+      "expRnet": -0.097,
+      "pfNet": 0.83,
       "mfe_p25": 8.0,
       "mfe_p50": 19.0,
       "mfe_p75": 45.0,
@@ -1372,34 +1473,38 @@
       "revAfterSL_rate": 34.0
     },
     "RETEST/SHORT|aligned=0": {
-      "n": 3226,
-      "wrTP1": 53.8,
-      "nSL": 1405,
-      "nTO": 84,
-      "expR": 0.123,
-      "pf": 1.27,
+      "n": 3236,
+      "wrTP1": 53.9,
+      "nSL": 1407,
+      "nTO": 85,
+      "expR": 0.124,
+      "pf": 1.28,
+      "expRnet": 0.014,
+      "pfNet": 1.03,
       "mfe_p25": 13.0,
       "mfe_p50": 32.0,
-      "mfe_p75": 140.0,
-      "winnerMAE_p75": 37.0,
-      "winnerMAE_p90": 434.8000000000011,
+      "mfe_p75": 144.0,
+      "winnerMAE_p75": 37.25,
+      "winnerMAE_p90": 438.40000000000055,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -31.0,
-      "revAfterSL_rate": 63.2
+      "entryZoneTk_p50": -32.0,
+      "revAfterSL_rate": 63.3
     },
     "RETEST/SHORT|aligned=1": {
-      "n": 23999,
+      "n": 24077,
       "wrTP1": 45.8,
-      "nSL": 11171,
-      "nTO": 1832,
-      "expR": 0.045,
-      "pf": 1.09,
+      "nSL": 11180,
+      "nTO": 1878,
+      "expR": 0.047,
+      "pf": 1.1,
+      "expRnet": -0.067,
+      "pfNet": 0.88,
       "mfe_p25": 10.0,
       "mfe_p50": 24.0,
       "mfe_p75": 53.0,
-      "winnerMAE_p75": 15.0,
+      "winnerMAE_p75": 16.0,
       "winnerMAE_p90": 37.0,
       "loserMFEbeforeSL_p50": 5.0,
       "bars_win_p50": 2.0,
@@ -1410,12 +1515,14 @@
   },
   "metrics_by_kindside_tier": {
     "INV/LONG|tier=B": {
-      "n": 310,
-      "wrTP1": 41.3,
+      "n": 311,
+      "wrTP1": 41.2,
       "nSL": 145,
-      "nTO": 37,
+      "nTO": 38,
       "expR": 0.039,
       "pf": 1.08,
+      "expRnet": -0.09,
+      "pfNet": 0.84,
       "mfe_p25": 8.0,
       "mfe_p50": 17.0,
       "mfe_p75": 33.25,
@@ -1434,6 +1541,8 @@
       "nTO": 44,
       "expR": 0.118,
       "pf": 1.3,
+      "expRnet": -0.003,
+      "pfNet": 0.99,
       "mfe_p25": 7.0,
       "mfe_p50": 19.0,
       "mfe_p75": 43.0,
@@ -1452,6 +1561,8 @@
       "nTO": 23,
       "expR": 0.095,
       "pf": 1.22,
+      "expRnet": -0.007,
+      "pfNet": 0.98,
       "mfe_p25": 9.75,
       "mfe_p50": 24.5,
       "mfe_p75": 49.0,
@@ -1464,17 +1575,19 @@
       "revAfterSL_rate": 9.9
     },
     "INV/SHORT|tier=C": {
-      "n": 435,
-      "wrTP1": 50.1,
+      "n": 437,
+      "wrTP1": 50.3,
       "nSL": 157,
       "nTO": 60,
-      "expR": 0.177,
-      "pf": 1.45,
+      "expR": 0.178,
+      "pf": 1.46,
+      "expRnet": 0.084,
+      "pfNet": 1.2,
       "mfe_p25": 10.0,
       "mfe_p50": 26.0,
-      "mfe_p75": 61.0,
+      "mfe_p75": 62.0,
       "winnerMAE_p75": 23.0,
-      "winnerMAE_p90": 53.60000000000002,
+      "winnerMAE_p90": 58.599999999999966,
       "loserMFEbeforeSL_p50": 5.0,
       "bars_win_p50": 3.0,
       "bars_loss_p50": 5.0,
@@ -1488,6 +1601,8 @@
       "nTO": 295,
       "expR": 0.061,
       "pf": 1.09,
+      "expRnet": -0.101,
+      "pfNet": 0.87,
       "mfe_p25": 10.0,
       "mfe_p50": 25.0,
       "mfe_p75": 54.0,
@@ -1500,12 +1615,14 @@
       "revAfterSL_rate": 17.3
     },
     "RETEST/LONG|tier=B": {
-      "n": 15917,
+      "n": 15925,
       "wrTP1": 48.0,
       "nSL": 7270,
-      "nTO": 1008,
+      "nTO": 1015,
       "expR": 0.055,
       "pf": 1.12,
+      "expRnet": -0.089,
+      "pfNet": 0.84,
       "mfe_p25": 8.0,
       "mfe_p50": 18.0,
       "mfe_p75": 42.0,
@@ -1518,17 +1635,19 @@
       "revAfterSL_rate": 38.2
     },
     "RETEST/LONG|tier=C": {
-      "n": 18765,
+      "n": 18802,
       "wrTP1": 49.4,
-      "nSL": 8431,
-      "nTO": 1060,
+      "nSL": 8439,
+      "nTO": 1069,
       "expR": 0.054,
       "pf": 1.12,
+      "expRnet": -0.082,
+      "pfNet": 0.85,
       "mfe_p25": 8.0,
       "mfe_p50": 21.0,
       "mfe_p75": 54.0,
       "winnerMAE_p75": 17.0,
-      "winnerMAE_p90": 49.0,
+      "winnerMAE_p90": 50.0,
       "loserMFEbeforeSL_p50": 3.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
@@ -1536,12 +1655,14 @@
       "revAfterSL_rate": 37.9
     },
     "RETEST/SHORT|tier=A+": {
-      "n": 1658,
+      "n": 1665,
       "wrTP1": 22.9,
       "nSL": 1045,
-      "nTO": 233,
-      "expR": 0.033,
+      "nTO": 239,
+      "expR": 0.035,
       "pf": 1.05,
+      "expRnet": -0.083,
+      "pfNet": 0.89,
       "mfe_p25": 17.0,
       "mfe_p50": 39.0,
       "mfe_p75": 81.0,
@@ -1554,12 +1675,14 @@
       "revAfterSL_rate": 22.3
     },
     "RETEST/SHORT|tier=B": {
-      "n": 11808,
-      "wrTP1": 47.1,
-      "nSL": 5450,
-      "nTO": 798,
-      "expR": 0.023,
+      "n": 11853,
+      "wrTP1": 47.0,
+      "nSL": 5458,
+      "nTO": 821,
+      "expR": 0.024,
       "pf": 1.05,
+      "expRnet": -0.094,
+      "pfNet": 0.83,
       "mfe_p25": 10.0,
       "mfe_p50": 21.0,
       "mfe_p75": 47.0,
@@ -1568,21 +1691,23 @@
       "loserMFEbeforeSL_p50": 5.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
-      "entryZoneTk_p50": -17.0,
+      "entryZoneTk_p50": -18.0,
       "revAfterSL_rate": 36.2
     },
     "RETEST/SHORT|tier=C": {
-      "n": 13759,
+      "n": 13795,
       "wrTP1": 49.4,
-      "nSL": 6081,
-      "nTO": 885,
-      "expR": 0.084,
-      "pf": 1.18,
+      "nSL": 6084,
+      "nTO": 903,
+      "expR": 0.086,
+      "pf": 1.19,
+      "expRnet": -0.022,
+      "pfNet": 0.96,
       "mfe_p25": 11.0,
       "mfe_p50": 26.0,
       "mfe_p75": 64.0,
       "winnerMAE_p75": 20.0,
-      "winnerMAE_p90": 62.80000000000018,
+      "winnerMAE_p90": 64.0,
       "loserMFEbeforeSL_p50": 4.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
@@ -1596,13 +1721,13 @@
   },
   "sl_origin_vs_layer": {
     "overall": {
-      "n": 53445,
-      "layer_expR": 0.054,
-      "orig_expR": 0.226,
-      "delta_orig_minus_layer": 0.171,
+      "n": 53517,
+      "layer_expR": 0.055,
+      "orig_expR": 0.227,
+      "delta_orig_minus_layer": 0.172,
       "delta_ci90": [
-        0.114,
-        0.248
+        0.116,
+        0.245
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
@@ -1612,22 +1737,22 @@
       "slOrigTk_p50": 11.0,
       "orig_wider_pct": 5.6,
       "orig_saved_from_SL": 177,
-      "orig_caused_SL": 7016
+      "orig_caused_SL": 7024
     },
     "note": "overall/by_tf_kind_side = solo build retestBar (legacy excluido)",
-    "invalid_geometry": 4546,
+    "invalid_geometry": 4548,
     "invalid_by_seg": {
       "2m/RETEST/LONG": 560,
       "1m/RETEST/SHORT": 919,
       "2m/RETEST/SHORT": 295,
       "1m/RETEST/LONG": 1969,
       "1m/INV/SHORT": 60,
-      "5m/RETEST/LONG": 156,
+      "5m/RETEST/LONG": 157,
       "1m/INV/LONG": 95,
       "2m/INV/LONG": 24,
       "5m/INV/LONG": 4,
       "2m/INV/SHORT": 9,
-      "5m/RETEST/SHORT": 106,
+      "5m/RETEST/SHORT": 107,
       "5m/INV/SHORT": 3,
       "3m/RETEST/LONG": 161,
       "3m/RETEST/SHORT": 130,
@@ -1639,18 +1764,18 @@
     },
     "by_basis": {
       "candle1": {
-        "n": 1204,
-        "layer_expR": 0.116,
-        "orig_expR": 1.876,
-        "delta_orig_minus_layer": 1.76,
+        "n": 1206,
+        "layer_expR": 0.117,
+        "orig_expR": 1.879,
+        "delta_orig_minus_layer": 1.762,
         "delta_ci90": [
-          0.014,
-          5.058
+          0.019,
+          5.054
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
-        "layer_wrTP1": 52.1,
-        "orig_wrTP1": 28.5,
+        "layer_wrTP1": 52.2,
+        "orig_wrTP1": 28.6,
         "slTk_p50": 24.0,
         "slOrigTk_p50": 7.0,
         "orig_wider_pct": 3.6,
@@ -1677,23 +1802,23 @@
         "orig_caused_SL": 0
       },
       "retestBar": {
-        "n": 41101,
-        "layer_expR": 0.061,
-        "orig_expR": 0.223,
-        "delta_orig_minus_layer": 0.162,
+        "n": 41171,
+        "layer_expR": 0.062,
+        "orig_expR": 0.225,
+        "delta_orig_minus_layer": 0.163,
         "delta_ci90": [
-          0.128,
-          0.201
+          0.129,
+          0.204
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
-        "layer_wrTP1": 49.2,
-        "orig_wrTP1": 36.7,
+        "layer_wrTP1": 49.3,
+        "orig_wrTP1": 36.8,
         "slTk_p50": 25.0,
         "slOrigTk_p50": 12.0,
         "orig_wider_pct": 6.5,
         "orig_saved_from_SL": 166,
-        "orig_caused_SL": 5297
+        "orig_caused_SL": 5305
       },
       "retestBar2": {
         "n": 11140,
@@ -1717,40 +1842,40 @@
     },
     "by_tf_kind_side": {
       "15m/RETEST/LONG": {
-        "n": 823,
-        "layer_expR": 0.131,
-        "orig_expR": 1.539,
-        "delta_orig_minus_layer": 1.408,
+        "n": 826,
+        "layer_expR": 0.138,
+        "orig_expR": 1.555,
+        "delta_orig_minus_layer": 1.418,
         "delta_ci90": [
-          0.622,
-          2.412
+          0.636,
+          2.399
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
-        "layer_wrTP1": 52.2,
-        "orig_wrTP1": 49.3,
+        "layer_wrTP1": 52.4,
+        "orig_wrTP1": 49.4,
         "slTk_p50": 77.0,
         "slOrigTk_p50": 77.0,
-        "orig_wider_pct": 30.4,
+        "orig_wider_pct": 30.3,
         "orig_saved_from_SL": 23,
-        "orig_caused_SL": 47
+        "orig_caused_SL": 48
       },
       "15m/RETEST/SHORT": {
-        "n": 767,
-        "layer_expR": 0.174,
-        "orig_expR": 0.294,
-        "delta_orig_minus_layer": 0.12,
+        "n": 768,
+        "layer_expR": 0.175,
+        "orig_expR": 0.295,
+        "delta_orig_minus_layer": 0.119,
         "delta_ci90": [
-          -0.011,
-          0.268
+          -0.009,
+          0.269
         ],
         "delta_beats_zero": false,
         "delta_below_zero": false,
-        "layer_wrTP1": 53.8,
-        "orig_wrTP1": 47.2,
+        "layer_wrTP1": 53.9,
+        "orig_wrTP1": 47.3,
         "slTk_p50": 81.0,
         "slOrigTk_p50": 79.0,
-        "orig_wider_pct": 28.2,
+        "orig_wider_pct": 28.3,
         "orig_saved_from_SL": 18,
         "orig_caused_SL": 69
       },
@@ -1831,21 +1956,21 @@
         "orig_caused_SL": 1448
       },
       "29m/RETEST/LONG": {
-        "n": 400,
-        "layer_expR": 0.342,
-        "orig_expR": 0.882,
-        "delta_orig_minus_layer": 0.54,
+        "n": 403,
+        "layer_expR": 0.341,
+        "orig_expR": 0.885,
+        "delta_orig_minus_layer": 0.544,
         "delta_ci90": [
-          0.209,
-          0.921
+          0.226,
+          0.918
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
         "layer_wrTP1": 57.8,
-        "orig_wrTP1": 58.2,
-        "slTk_p50": 66.0,
-        "slOrigTk_p50": 97.0,
-        "orig_wider_pct": 49.0,
+        "orig_wrTP1": 58.3,
+        "slTk_p50": 67.0,
+        "slOrigTk_p50": 98.0,
+        "orig_wider_pct": 48.6,
         "orig_saved_from_SL": 17,
         "orig_caused_SL": 15
       },
@@ -2040,102 +2165,102 @@
         "orig_caused_SL": 14
       },
       "5m/INV/SHORT": {
-        "n": 39,
-        "layer_expR": 0.202,
-        "orig_expR": 51.063,
-        "delta_orig_minus_layer": 50.861,
+        "n": 41,
+        "layer_expR": 0.214,
+        "orig_expR": 48.745,
+        "delta_orig_minus_layer": 48.531,
         "delta_ci90": [
-          -0.654,
-          153.446
+          -0.512,
+          146.074
         ],
         "delta_beats_zero": false,
         "delta_below_zero": false,
-        "layer_wrTP1": 56.4,
-        "orig_wrTP1": 28.2,
-        "slTk_p50": 72.0,
-        "slOrigTk_p50": 19.0,
-        "orig_wider_pct": 12.8,
+        "layer_wrTP1": 58.5,
+        "orig_wrTP1": 31.7,
+        "slTk_p50": 117.0,
+        "slOrigTk_p50": 28.0,
+        "orig_wider_pct": 12.2,
         "orig_saved_from_SL": 0,
         "orig_caused_SL": 11
       },
       "5m/RETEST/LONG": {
-        "n": 3865,
-        "layer_expR": 0.092,
-        "orig_expR": 0.473,
-        "delta_orig_minus_layer": 0.381,
+        "n": 3886,
+        "layer_expR": 0.093,
+        "orig_expR": 0.471,
+        "delta_orig_minus_layer": 0.378,
         "delta_ci90": [
-          0.168,
-          0.712
+          0.165,
+          0.722
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
-        "layer_wrTP1": 53.1,
+        "layer_wrTP1": 53.2,
         "orig_wrTP1": 45.2,
         "slTk_p50": 45.0,
-        "slOrigTk_p50": 31.0,
+        "slOrigTk_p50": 32.0,
         "orig_wider_pct": 14.4,
         "orig_saved_from_SL": 34,
-        "orig_caused_SL": 339
+        "orig_caused_SL": 344
       },
       "5m/RETEST/SHORT": {
-        "n": 2767,
-        "layer_expR": 0.076,
-        "orig_expR": 0.418,
-        "delta_orig_minus_layer": 0.342,
+        "n": 2809,
+        "layer_expR": 0.088,
+        "orig_expR": 0.432,
+        "delta_orig_minus_layer": 0.345,
         "delta_ci90": [
-          0.182,
-          0.545
+          0.187,
+          0.538
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
-        "layer_wrTP1": 51.8,
-        "orig_wrTP1": 43.3,
-        "slTk_p50": 50.0,
-        "slOrigTk_p50": 37.0,
-        "orig_wider_pct": 15.7,
+        "layer_wrTP1": 52.0,
+        "orig_wrTP1": 43.6,
+        "slTk_p50": 52.0,
+        "slOrigTk_p50": 39.0,
+        "orig_wider_pct": 15.6,
         "orig_saved_from_SL": 21,
-        "orig_caused_SL": 254
+        "orig_caused_SL": 256
       }
     },
     "since_change": {
       "changeDate": "2026-09-26",
-      "n": 39126,
+      "n": 39198,
       "by_tf_kind_side": {
         "15m/RETEST/LONG": {
-          "n": 823,
-          "layer_expR": 0.131,
-          "orig_expR": 1.539,
-          "delta_orig_minus_layer": 1.408,
+          "n": 826,
+          "layer_expR": 0.138,
+          "orig_expR": 1.555,
+          "delta_orig_minus_layer": 1.418,
           "delta_ci90": [
-            0.622,
-            2.412
+            0.636,
+            2.399
           ],
           "delta_beats_zero": true,
           "delta_below_zero": false,
-          "layer_wrTP1": 52.2,
-          "orig_wrTP1": 49.3,
+          "layer_wrTP1": 52.4,
+          "orig_wrTP1": 49.4,
           "slTk_p50": 77.0,
           "slOrigTk_p50": 77.0,
-          "orig_wider_pct": 30.4,
+          "orig_wider_pct": 30.3,
           "orig_saved_from_SL": 23,
-          "orig_caused_SL": 47
+          "orig_caused_SL": 48
         },
         "15m/RETEST/SHORT": {
-          "n": 767,
-          "layer_expR": 0.174,
-          "orig_expR": 0.294,
-          "delta_orig_minus_layer": 0.12,
+          "n": 768,
+          "layer_expR": 0.175,
+          "orig_expR": 0.295,
+          "delta_orig_minus_layer": 0.119,
           "delta_ci90": [
-            -0.011,
-            0.268
+            -0.009,
+            0.269
           ],
           "delta_beats_zero": false,
           "delta_below_zero": false,
-          "layer_wrTP1": 53.8,
-          "orig_wrTP1": 47.2,
+          "layer_wrTP1": 53.9,
+          "orig_wrTP1": 47.3,
           "slTk_p50": 81.0,
           "slOrigTk_p50": 79.0,
-          "orig_wider_pct": 28.2,
+          "orig_wider_pct": 28.3,
           "orig_saved_from_SL": 18,
           "orig_caused_SL": 69
         },
@@ -2216,21 +2341,21 @@
           "orig_caused_SL": 1041
         },
         "29m/RETEST/LONG": {
-          "n": 400,
-          "layer_expR": 0.342,
-          "orig_expR": 0.882,
-          "delta_orig_minus_layer": 0.54,
+          "n": 403,
+          "layer_expR": 0.341,
+          "orig_expR": 0.885,
+          "delta_orig_minus_layer": 0.544,
           "delta_ci90": [
-            0.209,
-            0.921
+            0.226,
+            0.918
           ],
           "delta_beats_zero": true,
           "delta_below_zero": false,
           "layer_wrTP1": 57.8,
-          "orig_wrTP1": 58.2,
-          "slTk_p50": 66.0,
-          "slOrigTk_p50": 97.0,
-          "orig_wider_pct": 49.0,
+          "orig_wrTP1": 58.3,
+          "slTk_p50": 67.0,
+          "slOrigTk_p50": 98.0,
+          "orig_wider_pct": 48.6,
           "orig_saved_from_SL": 17,
           "orig_caused_SL": 15
         },
@@ -2425,61 +2550,61 @@
           "orig_caused_SL": 7
         },
         "5m/INV/SHORT": {
-          "n": 29,
-          "layer_expR": 0.14,
-          "orig_expR": 68.82,
-          "delta_orig_minus_layer": 68.68,
+          "n": 31,
+          "layer_expR": 0.16,
+          "orig_expR": 64.61,
+          "delta_orig_minus_layer": 64.449,
           "delta_ci90": [
-            -0.607,
-            206.621
+            -0.402,
+            193.442
           ],
           "delta_beats_zero": false,
           "delta_below_zero": false,
-          "layer_wrTP1": 51.7,
-          "orig_wrTP1": 24.1,
-          "slTk_p50": 182.0,
-          "slOrigTk_p50": 19.0,
-          "orig_wider_pct": 6.9,
+          "layer_wrTP1": 54.8,
+          "orig_wrTP1": 29.0,
+          "slTk_p50": 207.0,
+          "slOrigTk_p50": 28.0,
+          "orig_wider_pct": 6.5,
           "orig_saved_from_SL": 0,
           "orig_caused_SL": 8
         },
         "5m/RETEST/LONG": {
-          "n": 2942,
-          "layer_expR": 0.083,
-          "orig_expR": 0.534,
-          "delta_orig_minus_layer": 0.451,
+          "n": 2963,
+          "layer_expR": 0.084,
+          "orig_expR": 0.532,
+          "delta_orig_minus_layer": 0.447,
           "delta_ci90": [
-            0.184,
-            0.918
+            0.181,
+            0.895
           ],
           "delta_beats_zero": true,
           "delta_below_zero": false,
-          "layer_wrTP1": 52.8,
+          "layer_wrTP1": 52.9,
           "orig_wrTP1": 45.2,
-          "slTk_p50": 55.0,
-          "slOrigTk_p50": 38.0,
-          "orig_wider_pct": 13.7,
+          "slTk_p50": 56.0,
+          "slOrigTk_p50": 39.0,
+          "orig_wider_pct": 13.6,
           "orig_saved_from_SL": 27,
-          "orig_caused_SL": 250
+          "orig_caused_SL": 255
         },
         "5m/RETEST/SHORT": {
-          "n": 2191,
-          "layer_expR": 0.083,
-          "orig_expR": 0.479,
-          "delta_orig_minus_layer": 0.396,
+          "n": 2233,
+          "layer_expR": 0.098,
+          "orig_expR": 0.496,
+          "delta_orig_minus_layer": 0.398,
           "delta_ci90": [
-            0.201,
-            0.651
+            0.208,
+            0.646
           ],
           "delta_beats_zero": true,
           "delta_below_zero": false,
-          "layer_wrTP1": 52.1,
-          "orig_wrTP1": 43.3,
-          "slTk_p50": 59.0,
-          "slOrigTk_p50": 46.0,
+          "layer_wrTP1": 52.4,
+          "orig_wrTP1": 43.7,
+          "slTk_p50": 62.0,
+          "slOrigTk_p50": 47.0,
           "orig_wider_pct": 13.9,
           "orig_saved_from_SL": 14,
-          "orig_caused_SL": 207
+          "orig_caused_SL": 209
         }
       },
       "note": "emparejado (rOrig vs rMultiple) solo con recvDate >= changeDate; compara contra by_tf_kind_side (todo el historico) para ver si el efecto se mantiene, se encoge (optimismo in-sample esperable) o se invierte en la ventana nueva. NO confundir con prediction_scoreboard."
@@ -2552,7 +2677,8 @@
     "signals/2026-11-11.jsonl": 1868,
     "signals/2026-11-12.jsonl": 1823,
     "signals/2026-11-13.jsonl": 1598,
-    "signals/2026-11-14.jsonl": 17,
+    "signals/2026-11-14.jsonl": 83,
+    "signals/2026-11-15.jsonl": 6,
     "outcomes/2026-09-01.jsonl": 90,
     "outcomes/2026-09-02.jsonl": 920,
     "outcomes/2026-09-03.jsonl": 1257,
@@ -2618,41 +2744,42 @@
     "outcomes/2026-11-11.jsonl": 1813,
     "outcomes/2026-11-12.jsonl": 1588,
     "outcomes/2026-11-13.jsonl": 1586,
-    "outcomes/2026-11-14.jsonl": 19
+    "outcomes/2026-11-14.jsonl": 87,
+    "outcomes/2026-11-15.jsonl": 7
   },
   "segment_n_history": {
     "by_tf_kind_side/15m/INV/LONG": 4,
     "by_tf_kind_side/15m/INV/SHORT": 4,
-    "by_tf_kind_side/15m/RETEST/LONG": 886,
-    "by_tf_kind_side/15m/RETEST/SHORT": 843,
-    "by_tf_kind_side/1m/INV/LONG": 538,
+    "by_tf_kind_side/15m/RETEST/LONG": 893,
+    "by_tf_kind_side/15m/RETEST/SHORT": 844,
+    "by_tf_kind_side/1m/INV/LONG": 539,
     "by_tf_kind_side/1m/INV/SHORT": 414,
-    "by_tf_kind_side/1m/RETEST/LONG": 19946,
-    "by_tf_kind_side/1m/RETEST/SHORT": 14217,
+    "by_tf_kind_side/1m/RETEST/LONG": 19948,
+    "by_tf_kind_side/1m/RETEST/SHORT": 14235,
     "by_tf_kind_side/29m/INV/LONG": 4,
     "by_tf_kind_side/29m/INV/SHORT": 3,
-    "by_tf_kind_side/29m/RETEST/LONG": 437,
-    "by_tf_kind_side/29m/RETEST/SHORT": 482,
+    "by_tf_kind_side/29m/RETEST/LONG": 442,
+    "by_tf_kind_side/29m/RETEST/SHORT": 483,
     "by_tf_kind_side/2m/INV/LONG": 197,
     "by_tf_kind_side/2m/INV/SHORT": 147,
-    "by_tf_kind_side/2m/RETEST/LONG": 8833,
-    "by_tf_kind_side/2m/RETEST/SHORT": 6130,
+    "by_tf_kind_side/2m/RETEST/LONG": 8834,
+    "by_tf_kind_side/2m/RETEST/SHORT": 6139,
     "by_tf_kind_side/3m/INV/LONG": 33,
     "by_tf_kind_side/3m/INV/SHORT": 20,
-    "by_tf_kind_side/3m/RETEST/LONG": 2819,
-    "by_tf_kind_side/3m/RETEST/SHORT": 2381,
+    "by_tf_kind_side/3m/RETEST/LONG": 2825,
+    "by_tf_kind_side/3m/RETEST/SHORT": 2389,
     "by_tf_kind_side/5m/INV/LONG": 64,
-    "by_tf_kind_side/5m/INV/SHORT": 45,
-    "by_tf_kind_side/5m/RETEST/LONG": 4379,
-    "by_tf_kind_side/5m/RETEST/SHORT": 3172,
+    "by_tf_kind_side/5m/INV/SHORT": 47,
+    "by_tf_kind_side/5m/RETEST/LONG": 4403,
+    "by_tf_kind_side/5m/RETEST/SHORT": 3223,
     "by_kindside_aligned/INV/LONG|aligned=0": 17,
-    "by_kindside_aligned/INV/LONG|aligned=1": 823,
+    "by_kindside_aligned/INV/LONG|aligned=1": 824,
     "by_kindside_aligned/INV/SHORT|aligned=0": 19,
-    "by_kindside_aligned/INV/SHORT|aligned=1": 614,
-    "by_kindside_aligned/RETEST/LONG|aligned=0": 2845,
-    "by_kindside_aligned/RETEST/LONG|aligned=1": 34455,
-    "by_kindside_aligned/RETEST/SHORT|aligned=0": 3226,
-    "by_kindside_aligned/RETEST/SHORT|aligned=1": 23999,
+    "by_kindside_aligned/INV/SHORT|aligned=1": 616,
+    "by_kindside_aligned/RETEST/LONG|aligned=0": 2877,
+    "by_kindside_aligned/RETEST/LONG|aligned=1": 34468,
+    "by_kindside_aligned/RETEST/SHORT|aligned=0": 3236,
+    "by_kindside_aligned/RETEST/SHORT|aligned=1": 24077,
     "decay_weekly/2026-W36": 3231,
     "decay_weekly/2026-W37": 5390,
     "decay_weekly/2026-W38": 4916,
@@ -2670,73 +2797,97 @@
         "n": 42,
         "wrTP1": 47.6,
         "expR": 0.276,
-        "pf": 1.64
+        "pf": 1.64,
+        "expRnet": 0.057,
+        "pfNet": 1.11
       },
       "1m/INV/SHORT": {
         "n": 19,
         "wrTP1": 68.4,
         "expR": 0.264,
-        "pf": 1.95
+        "pf": 1.95,
+        "expRnet": 0.129,
+        "pfNet": 1.38
       },
       "1m/RETEST/LONG": {
         "n": 1402,
         "wrTP1": 42.7,
         "expR": -0.017,
-        "pf": 0.97
+        "pf": 0.97,
+        "expRnet": -0.237,
+        "pfNet": 0.63
       },
       "1m/RETEST/SHORT": {
         "n": 471,
         "wrTP1": 43.1,
         "expR": -0.009,
-        "pf": 0.98
+        "pf": 0.98,
+        "expRnet": -0.177,
+        "pfNet": 0.7
       },
       "2m/INV/LONG": {
         "n": 18,
         "wrTP1": 38.9,
         "expR": -0.271,
-        "pf": 0.56
+        "pf": 0.56,
+        "expRnet": -0.481,
+        "pfNet": 0.37
       },
       "2m/INV/SHORT": {
         "n": 6,
         "wrTP1": 50.0,
         "expR": -0.267,
-        "pf": 0.47
+        "pf": 0.47,
+        "expRnet": -0.372,
+        "pfNet": 0.32
       },
       "2m/RETEST/LONG": {
         "n": 705,
         "wrTP1": 45.5,
         "expR": -0.071,
-        "pf": 0.87
+        "pf": 0.87,
+        "expRnet": -0.269,
+        "pfNet": 0.58
       },
       "2m/RETEST/SHORT": {
         "n": 217,
         "wrTP1": 41.0,
         "expR": -0.115,
-        "pf": 0.79
+        "pf": 0.79,
+        "expRnet": -0.256,
+        "pfNet": 0.59
       },
       "5m/INV/LONG": {
         "n": 6,
         "wrTP1": 100.0,
         "expR": 0.712,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 0.605,
+        "pfNet": 99.0
       },
       "5m/INV/SHORT": {
         "n": 4,
         "wrTP1": 75.0,
         "expR": 0.018,
-        "pf": 1.07
+        "pf": 1.07,
+        "expRnet": -0.021,
+        "pfNet": 0.92
       },
       "5m/RETEST/LONG": {
         "n": 245,
         "wrTP1": 52.7,
         "expR": 0.083,
-        "pf": 1.19
+        "pf": 1.19,
+        "expRnet": -0.061,
+        "pfNet": 0.88
       },
       "5m/RETEST/SHORT": {
         "n": 96,
         "wrTP1": 47.9,
         "expR": -0.018,
-        "pf": 0.96
+        "pf": 0.96,
+        "expRnet": -0.108,
+        "pfNet": 0.79
       }
     },
     "2026-W37": {
@@ -2744,73 +2895,97 @@
         "n": 37,
         "wrTP1": 43.2,
         "expR": -0.008,
-        "pf": 0.98
+        "pf": 0.98,
+        "expRnet": -0.127,
+        "pfNet": 0.76
       },
       "1m/INV/SHORT": {
         "n": 57,
         "wrTP1": 42.1,
         "expR": 0.091,
-        "pf": 1.18
+        "pf": 1.18,
+        "expRnet": -0.027,
+        "pfNet": 0.95
       },
       "1m/RETEST/LONG": {
         "n": 1608,
         "wrTP1": 45.1,
         "expR": 0.045,
-        "pf": 1.09
+        "pf": 1.09,
+        "expRnet": -0.111,
+        "pfNet": 0.81
       },
       "1m/RETEST/SHORT": {
         "n": 1718,
         "wrTP1": 45.0,
         "expR": 0.045,
-        "pf": 1.09
+        "pf": 1.09,
+        "expRnet": -0.121,
+        "pfNet": 0.8
       },
       "2m/INV/LONG": {
         "n": 9,
         "wrTP1": 55.6,
         "expR": -0.009,
-        "pf": 0.98
+        "pf": 0.98,
+        "expRnet": -0.092,
+        "pfNet": 0.77
       },
       "2m/INV/SHORT": {
         "n": 31,
         "wrTP1": 35.5,
         "expR": 0.137,
-        "pf": 1.27
+        "pf": 1.27,
+        "expRnet": 0.007,
+        "pfNet": 1.01
       },
       "2m/RETEST/LONG": {
         "n": 694,
         "wrTP1": 47.6,
         "expR": 0.037,
-        "pf": 1.08
+        "pf": 1.08,
+        "expRnet": -0.104,
+        "pfNet": 0.81
       },
       "2m/RETEST/SHORT": {
         "n": 762,
         "wrTP1": 51.3,
         "expR": 0.151,
-        "pf": 1.33
+        "pf": 1.33,
+        "expRnet": 0.006,
+        "pfNet": 1.01
       },
       "5m/INV/LONG": {
         "n": 4,
         "wrTP1": 75.0,
         "expR": 1.055,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 1.002,
+        "pfNet": 99.0
       },
       "5m/INV/SHORT": {
         "n": 4,
         "wrTP1": 75.0,
         "expR": 1.212,
-        "pf": 5.85
+        "pf": 5.85,
+        "expRnet": 1.146,
+        "pfNet": 5.31
       },
       "5m/RETEST/LONG": {
         "n": 245,
         "wrTP1": 52.7,
         "expR": 0.209,
-        "pf": 1.47
+        "pf": 1.47,
+        "expRnet": 0.09,
+        "pfNet": 1.18
       },
       "5m/RETEST/SHORT": {
         "n": 221,
         "wrTP1": 51.6,
         "expR": 0.118,
-        "pf": 1.26
+        "pf": 1.26,
+        "expRnet": 0.007,
+        "pfNet": 1.01
       }
     },
     "2026-W38": {
@@ -2818,73 +2993,97 @@
         "n": 59,
         "wrTP1": 40.7,
         "expR": -0.102,
-        "pf": 0.81
+        "pf": 0.81,
+        "expRnet": -0.241,
+        "pfNet": 0.6
       },
       "1m/INV/SHORT": {
         "n": 22,
         "wrTP1": 45.5,
         "expR": -0.098,
-        "pf": 0.8
+        "pf": 0.8,
+        "expRnet": -0.197,
+        "pfNet": 0.65
       },
       "1m/RETEST/LONG": {
         "n": 2038,
         "wrTP1": 48.2,
         "expR": 0.112,
-        "pf": 1.25
+        "pf": 1.25,
+        "expRnet": -0.049,
+        "pfNet": 0.91
       },
       "1m/RETEST/SHORT": {
         "n": 984,
         "wrTP1": 42.1,
         "expR": 0.094,
-        "pf": 1.2
+        "pf": 1.2,
+        "expRnet": -0.029,
+        "pfNet": 0.95
       },
       "2m/INV/LONG": {
         "n": 16,
         "wrTP1": 56.2,
         "expR": -0.059,
-        "pf": 0.79
+        "pf": 0.79,
+        "expRnet": -0.143,
+        "pfNet": 0.55
       },
       "2m/INV/SHORT": {
         "n": 4,
         "wrTP1": 0.0,
         "expR": -1.0,
-        "pf": 0.0
+        "pf": 0.0,
+        "expRnet": -1.071,
+        "pfNet": 0.0
       },
       "2m/RETEST/LONG": {
         "n": 907,
         "wrTP1": 46.9,
         "expR": 0.045,
-        "pf": 1.1
+        "pf": 1.1,
+        "expRnet": -0.098,
+        "pfNet": 0.82
       },
       "2m/RETEST/SHORT": {
         "n": 378,
         "wrTP1": 43.9,
         "expR": 0.007,
-        "pf": 1.01
+        "pf": 1.01,
+        "expRnet": -0.1,
+        "pfNet": 0.82
       },
       "5m/INV/LONG": {
         "n": 7,
         "wrTP1": 28.6,
         "expR": -0.478,
-        "pf": 0.2
+        "pf": 0.2,
+        "expRnet": -0.522,
+        "pfNet": 0.15
       },
       "5m/INV/SHORT": {
         "n": 1,
         "wrTP1": 0.0,
         "expR": -1.0,
-        "pf": 0.0
+        "pf": 0.0,
+        "expRnet": -1.118,
+        "pfNet": 0.0
       },
       "5m/RETEST/LONG": {
         "n": 323,
         "wrTP1": 50.8,
         "expR": 0.18,
-        "pf": 1.45
+        "pf": 1.45,
+        "expRnet": 0.093,
+        "pfNet": 1.21
       },
       "5m/RETEST/SHORT": {
         "n": 177,
         "wrTP1": 41.8,
         "expR": 0.093,
-        "pf": 1.19
+        "pf": 1.19,
+        "expRnet": 0.021,
+        "pfNet": 1.04
       }
     },
     "2026-W39": {
@@ -2892,73 +3091,97 @@
         "n": 37,
         "wrTP1": 48.6,
         "expR": 0.702,
-        "pf": 3.36
+        "pf": 3.36,
+        "expRnet": 0.523,
+        "pfNet": 2.5
       },
       "1m/INV/SHORT": {
         "n": 43,
         "wrTP1": 48.8,
         "expR": 0.047,
-        "pf": 1.12
+        "pf": 1.12,
+        "expRnet": -0.063,
+        "pfNet": 0.85
       },
       "1m/RETEST/LONG": {
         "n": 2035,
         "wrTP1": 44.5,
         "expR": 0.057,
-        "pf": 1.12
+        "pf": 1.12,
+        "expRnet": -0.135,
+        "pfNet": 0.77
       },
       "1m/RETEST/SHORT": {
         "n": 1361,
         "wrTP1": 44.5,
         "expR": -0.007,
-        "pf": 0.99
+        "pf": 0.99,
+        "expRnet": -0.134,
+        "pfNet": 0.76
       },
       "2m/INV/LONG": {
         "n": 25,
         "wrTP1": 48.0,
         "expR": 0.267,
-        "pf": 1.68
+        "pf": 1.68,
+        "expRnet": 0.175,
+        "pfNet": 1.42
       },
       "2m/INV/SHORT": {
         "n": 17,
         "wrTP1": 52.9,
         "expR": 0.511,
-        "pf": 3.38
+        "pf": 3.38,
+        "expRnet": 0.419,
+        "pfNet": 2.81
       },
       "2m/RETEST/LONG": {
         "n": 783,
         "wrTP1": 45.7,
         "expR": 0.125,
-        "pf": 1.26
+        "pf": 1.26,
+        "expRnet": -0.025,
+        "pfNet": 0.95
       },
       "2m/RETEST/SHORT": {
         "n": 571,
         "wrTP1": 49.0,
         "expR": 0.036,
-        "pf": 1.08
+        "pf": 1.08,
+        "expRnet": -0.075,
+        "pfNet": 0.85
       },
       "5m/INV/LONG": {
         "n": 4,
         "wrTP1": 100.0,
         "expR": 0.632,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 0.523,
+        "pfNet": 210.19
       },
       "5m/INV/SHORT": {
         "n": 3,
         "wrTP1": 66.7,
         "expR": 0.195,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 0.136,
+        "pfNet": 99.0
       },
       "5m/RETEST/LONG": {
         "n": 271,
         "wrTP1": 45.0,
         "expR": 0.091,
-        "pf": 1.19
+        "pf": 1.19,
+        "expRnet": -0.02,
+        "pfNet": 0.96
       },
       "5m/RETEST/SHORT": {
         "n": 206,
         "wrTP1": 46.1,
         "expR": 0.069,
-        "pf": 1.14
+        "pf": 1.14,
+        "expRnet": -0.017,
+        "pfNet": 0.97
       }
     },
     "2026-W40": {
@@ -2966,73 +3189,97 @@
         "n": 45,
         "wrTP1": 53.3,
         "expR": 0.285,
-        "pf": 1.74
+        "pf": 1.74,
+        "expRnet": 0.159,
+        "pfNet": 1.36
       },
       "1m/INV/SHORT": {
         "n": 49,
         "wrTP1": 38.8,
         "expR": -0.08,
-        "pf": 0.84
+        "pf": 0.84,
+        "expRnet": -0.204,
+        "pfNet": 0.64
       },
       "1m/RETEST/LONG": {
         "n": 1811,
         "wrTP1": 42.6,
         "expR": -0.031,
-        "pf": 0.94
+        "pf": 0.94,
+        "expRnet": -0.17,
+        "pfNet": 0.72
       },
       "1m/RETEST/SHORT": {
         "n": 1399,
         "wrTP1": 45.9,
         "expR": 0.027,
-        "pf": 1.06
+        "pf": 1.06,
+        "expRnet": -0.102,
+        "pfNet": 0.82
       },
       "2m/INV/LONG": {
         "n": 13,
         "wrTP1": 69.2,
         "expR": 0.156,
-        "pf": 1.51
+        "pf": 1.51,
+        "expRnet": 0.087,
+        "pfNet": 1.27
       },
       "2m/INV/SHORT": {
         "n": 20,
         "wrTP1": 55.0,
         "expR": -0.07,
-        "pf": 0.81
+        "pf": 0.81,
+        "expRnet": -0.157,
+        "pfNet": 0.6
       },
       "2m/RETEST/LONG": {
         "n": 855,
         "wrTP1": 46.3,
         "expR": -0.001,
-        "pf": 1.0
+        "pf": 1.0,
+        "expRnet": -0.114,
+        "pfNet": 0.8
       },
       "2m/RETEST/SHORT": {
         "n": 631,
         "wrTP1": 45.6,
         "expR": 0.113,
-        "pf": 1.23
+        "pf": 1.23,
+        "expRnet": -0.003,
+        "pfNet": 0.99
       },
       "5m/INV/LONG": {
         "n": 5,
         "wrTP1": 100.0,
         "expR": 0.374,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 0.301,
+        "pfNet": 99.0
       },
       "5m/INV/SHORT": {
         "n": 3,
         "wrTP1": 33.3,
         "expR": -0.36,
-        "pf": 0.28
+        "pf": 0.28,
+        "expRnet": -0.475,
+        "pfNet": 0.13
       },
       "5m/RETEST/LONG": {
         "n": 294,
         "wrTP1": 53.4,
         "expR": 0.1,
-        "pf": 1.22
+        "pf": 1.22,
+        "expRnet": 0.012,
+        "pfNet": 1.02
       },
       "5m/RETEST/SHORT": {
         "n": 233,
         "wrTP1": 43.3,
         "expR": 0.022,
-        "pf": 1.04
+        "pf": 1.04,
+        "expRnet": -0.061,
+        "pfNet": 0.89
       }
     },
     "2026-W41": {
@@ -3040,73 +3287,97 @@
         "n": 55,
         "wrTP1": 47.3,
         "expR": 0.035,
-        "pf": 1.08
+        "pf": 1.08,
+        "expRnet": -0.114,
+        "pfNet": 0.79
       },
       "1m/INV/SHORT": {
         "n": 39,
         "wrTP1": 41.0,
         "expR": 0.165,
-        "pf": 1.39
+        "pf": 1.39,
+        "expRnet": 0.022,
+        "pfNet": 1.04
       },
       "1m/RETEST/LONG": {
         "n": 2054,
         "wrTP1": 45.7,
         "expR": 0.02,
-        "pf": 1.04
+        "pf": 1.04,
+        "expRnet": -0.17,
+        "pfNet": 0.71
       },
       "1m/RETEST/SHORT": {
         "n": 1081,
         "wrTP1": 41.4,
         "expR": 0.047,
-        "pf": 1.09
+        "pf": 1.09,
+        "expRnet": -0.099,
+        "pfNet": 0.83
       },
       "2m/INV/LONG": {
         "n": 27,
         "wrTP1": 44.4,
         "expR": -0.181,
-        "pf": 0.65
+        "pf": 0.65,
+        "expRnet": -0.284,
+        "pfNet": 0.51
       },
       "2m/INV/SHORT": {
         "n": 9,
         "wrTP1": 33.3,
         "expR": 0.377,
-        "pf": 1.68
+        "pf": 1.68,
+        "expRnet": 0.291,
+        "pfNet": 1.5
       },
       "2m/RETEST/LONG": {
         "n": 944,
         "wrTP1": 52.2,
         "expR": 0.107,
-        "pf": 1.25
+        "pf": 1.25,
+        "expRnet": -0.051,
+        "pfNet": 0.9
       },
       "2m/RETEST/SHORT": {
         "n": 481,
         "wrTP1": 45.1,
         "expR": 0.06,
-        "pf": 1.12
+        "pf": 1.12,
+        "expRnet": -0.063,
+        "pfNet": 0.89
       },
       "5m/INV/LONG": {
         "n": 8,
         "wrTP1": 50.0,
         "expR": -0.167,
-        "pf": 0.61
+        "pf": 0.61,
+        "expRnet": -0.272,
+        "pfNet": 0.44
       },
       "5m/INV/SHORT": {
         "n": 3,
         "wrTP1": 33.3,
         "expR": -0.513,
-        "pf": 0.23
+        "pf": 0.23,
+        "expRnet": -0.589,
+        "pfNet": 0.17
       },
       "5m/RETEST/LONG": {
         "n": 352,
         "wrTP1": 53.4,
         "expR": 0.16,
-        "pf": 1.37
+        "pf": 1.37,
+        "expRnet": 0.034,
+        "pfNet": 1.07
       },
       "5m/RETEST/SHORT": {
         "n": 172,
         "wrTP1": 50.6,
         "expR": 0.075,
-        "pf": 1.17
+        "pf": 1.17,
+        "expRnet": -0.035,
+        "pfNet": 0.93
       }
     },
     "2026-W42": {
@@ -3114,73 +3385,97 @@
         "n": 76,
         "wrTP1": 34.2,
         "expR": -0.201,
-        "pf": 0.64
+        "pf": 0.64,
+        "expRnet": -0.354,
+        "pfNet": 0.45
       },
       "1m/INV/SHORT": {
         "n": 24,
         "wrTP1": 58.3,
         "expR": 0.133,
-        "pf": 1.39
+        "pf": 1.39,
+        "expRnet": 0.032,
+        "pfNet": 1.08
       },
       "1m/RETEST/LONG": {
         "n": 2224,
         "wrTP1": 46.5,
         "expR": 0.047,
-        "pf": 1.1
+        "pf": 1.1,
+        "expRnet": -0.144,
+        "pfNet": 0.76
       },
       "1m/RETEST/SHORT": {
         "n": 1009,
         "wrTP1": 48.8,
         "expR": 0.045,
-        "pf": 1.1
+        "pf": 1.1,
+        "expRnet": -0.059,
+        "pfNet": 0.89
       },
       "2m/INV/LONG": {
         "n": 23,
         "wrTP1": 52.2,
         "expR": 0.25,
-        "pf": 1.64
+        "pf": 1.64,
+        "expRnet": 0.132,
+        "pfNet": 1.29
       },
       "2m/INV/SHORT": {
         "n": 6,
         "wrTP1": 83.3,
         "expR": 0.845,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 0.781,
+        "pfNet": 99.0
       },
       "2m/RETEST/LONG": {
         "n": 857,
         "wrTP1": 49.6,
         "expR": 0.084,
-        "pf": 1.18
+        "pf": 1.18,
+        "expRnet": -0.084,
+        "pfNet": 0.85
       },
       "2m/RETEST/SHORT": {
         "n": 401,
         "wrTP1": 47.9,
         "expR": -0.053,
-        "pf": 0.89
+        "pf": 0.89,
+        "expRnet": -0.14,
+        "pfNet": 0.75
       },
       "5m/INV/LONG": {
         "n": 3,
         "wrTP1": 66.7,
         "expR": 0.017,
-        "pf": 1.05
+        "pf": 1.05,
+        "expRnet": -0.064,
+        "pfNet": 0.81
       },
       "5m/INV/SHORT": {
         "n": 1,
         "wrTP1": 0.0,
         "expR": -1.0,
-        "pf": 0.0
+        "pf": 0.0,
+        "expRnet": -1.009,
+        "pfNet": 0.0
       },
       "5m/RETEST/LONG": {
         "n": 321,
         "wrTP1": 53.3,
         "expR": 0.086,
-        "pf": 1.19
+        "pf": 1.19,
+        "expRnet": -0.036,
+        "pfNet": 0.93
       },
       "5m/RETEST/SHORT": {
         "n": 181,
         "wrTP1": 50.8,
         "expR": 0.124,
-        "pf": 1.27
+        "pf": 1.27,
+        "expRnet": 0.06,
+        "pfNet": 1.12
       }
     },
     "2026-W43": {
@@ -3188,73 +3483,97 @@
         "n": 48,
         "wrTP1": 60.4,
         "expR": 0.321,
-        "pf": 1.91
+        "pf": 1.91,
+        "expRnet": 0.156,
+        "pfNet": 1.38
       },
       "1m/INV/SHORT": {
         "n": 25,
         "wrTP1": 56.0,
         "expR": 0.29,
-        "pf": 1.9
+        "pf": 1.9,
+        "expRnet": 0.207,
+        "pfNet": 1.6
       },
       "1m/RETEST/LONG": {
         "n": 1595,
         "wrTP1": 40.8,
         "expR": -0.029,
-        "pf": 0.95
+        "pf": 0.95,
+        "expRnet": -0.201,
+        "pfNet": 0.68
       },
       "1m/RETEST/SHORT": {
         "n": 1205,
         "wrTP1": 43.5,
         "expR": -0.001,
-        "pf": 1.0
+        "pf": 1.0,
+        "expRnet": -0.109,
+        "pfNet": 0.81
       },
       "2m/INV/LONG": {
         "n": 15,
         "wrTP1": 53.3,
         "expR": 0.035,
-        "pf": 1.08
+        "pf": 1.08,
+        "expRnet": -0.091,
+        "pfNet": 0.81
       },
       "2m/INV/SHORT": {
         "n": 8,
         "wrTP1": 50.0,
         "expR": -0.217,
-        "pf": 0.56
+        "pf": 0.56,
+        "expRnet": -0.28,
+        "pfNet": 0.47
       },
       "2m/RETEST/LONG": {
         "n": 741,
         "wrTP1": 43.7,
         "expR": 0.01,
-        "pf": 1.02
+        "pf": 1.02,
+        "expRnet": -0.136,
+        "pfNet": 0.77
       },
       "2m/RETEST/SHORT": {
         "n": 545,
         "wrTP1": 51.0,
         "expR": 0.07,
-        "pf": 1.15
+        "pf": 1.15,
+        "expRnet": -0.02,
+        "pfNet": 0.96
       },
       "5m/INV/LONG": {
         "n": 2,
         "wrTP1": 50.0,
         "expR": -0.395,
-        "pf": 0.21
+        "pf": 0.21,
+        "expRnet": -0.505,
+        "pfNet": 0.11
       },
       "5m/INV/SHORT": {
         "n": 4,
         "wrTP1": 75.0,
         "expR": 0.318,
-        "pf": 2.27
+        "pf": 2.27,
+        "expRnet": 0.286,
+        "pfNet": 2.13
       },
       "5m/RETEST/LONG": {
         "n": 289,
         "wrTP1": 46.4,
         "expR": -0.075,
-        "pf": 0.85
+        "pf": 0.85,
+        "expRnet": -0.174,
+        "pfNet": 0.69
       },
       "5m/RETEST/SHORT": {
         "n": 234,
         "wrTP1": 45.7,
         "expR": -0.001,
-        "pf": 1.0
+        "pf": 1.0,
+        "expRnet": -0.086,
+        "pfNet": 0.84
       }
     },
     "2026-W44": {
@@ -3262,139 +3581,185 @@
         "n": 4,
         "wrTP1": 50.0,
         "expR": -0.115,
-        "pf": 0.77
+        "pf": 0.77,
+        "expRnet": -0.152,
+        "pfNet": 0.71
       },
       "15m/INV/SHORT": {
         "n": 1,
         "wrTP1": 100.0,
         "expR": 1.35,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 1.27,
+        "pfNet": 99.0
       },
       "15m/RETEST/LONG": {
         "n": 286,
         "wrTP1": 50.0,
         "expR": 0.036,
-        "pf": 1.07
+        "pf": 1.07,
+        "expRnet": -0.018,
+        "pfNet": 0.97
       },
       "15m/RETEST/SHORT": {
         "n": 303,
         "wrTP1": 51.5,
         "expR": 0.037,
-        "pf": 1.08
+        "pf": 1.08,
+        "expRnet": -0.009,
+        "pfNet": 0.98
       },
       "1m/INV/LONG": {
         "n": 53,
         "wrTP1": 50.9,
         "expR": 0.073,
-        "pf": 1.17
+        "pf": 1.17,
+        "expRnet": -0.047,
+        "pfNet": 0.9
       },
       "1m/INV/SHORT": {
         "n": 51,
         "wrTP1": 43.1,
         "expR": 0.084,
-        "pf": 1.2
+        "pf": 1.2,
+        "expRnet": -0.021,
+        "pfNet": 0.96
       },
       "1m/RETEST/LONG": {
         "n": 2330,
         "wrTP1": 46.9,
         "expR": 0.003,
-        "pf": 1.01
+        "pf": 1.01,
+        "expRnet": -0.15,
+        "pfNet": 0.74
       },
       "1m/RETEST/SHORT": {
         "n": 2137,
         "wrTP1": 47.1,
         "expR": 0.022,
-        "pf": 1.04
+        "pf": 1.04,
+        "expRnet": -0.12,
+        "pfNet": 0.79
       },
       "29m/INV/SHORT": {
         "n": 1,
         "wrTP1": 100.0,
         "expR": 0.14,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 0.134,
+        "pfNet": 99.0
       },
       "29m/RETEST/LONG": {
         "n": 121,
         "wrTP1": 54.5,
         "expR": 0.133,
-        "pf": 1.29
+        "pf": 1.29,
+        "expRnet": 0.088,
+        "pfNet": 1.19
       },
       "29m/RETEST/SHORT": {
         "n": 179,
         "wrTP1": 54.2,
         "expR": 0.11,
-        "pf": 1.24
+        "pf": 1.24,
+        "expRnet": 0.061,
+        "pfNet": 1.13
       },
       "2m/INV/LONG": {
         "n": 16,
         "wrTP1": 75.0,
         "expR": 0.192,
-        "pf": 1.77
+        "pf": 1.77,
+        "expRnet": 0.116,
+        "pfNet": 1.41
       },
       "2m/INV/SHORT": {
         "n": 19,
         "wrTP1": 68.4,
         "expR": 0.169,
-        "pf": 1.6
+        "pf": 1.6,
+        "expRnet": 0.122,
+        "pfNet": 1.42
       },
       "2m/RETEST/LONG": {
         "n": 992,
         "wrTP1": 48.1,
         "expR": -0.069,
-        "pf": 0.86
+        "pf": 0.86,
+        "expRnet": -0.212,
+        "pfNet": 0.64
       },
       "2m/RETEST/SHORT": {
         "n": 949,
         "wrTP1": 45.8,
         "expR": -0.022,
-        "pf": 0.96
+        "pf": 0.96,
+        "expRnet": -0.146,
+        "pfNet": 0.75
       },
       "3m/INV/LONG": {
         "n": 8,
         "wrTP1": 62.5,
         "expR": 0.02,
-        "pf": 1.05
+        "pf": 1.05,
+        "expRnet": -0.05,
+        "pfNet": 0.87
       },
       "3m/INV/SHORT": {
         "n": 5,
         "wrTP1": 100.0,
         "expR": 0.48,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 0.435,
+        "pfNet": 99.0
       },
       "3m/RETEST/LONG": {
         "n": 789,
         "wrTP1": 53.1,
         "expR": 0.069,
-        "pf": 1.15
+        "pf": 1.15,
+        "expRnet": -0.055,
+        "pfNet": 0.89
       },
       "3m/RETEST/SHORT": {
         "n": 755,
         "wrTP1": 53.9,
         "expR": 0.109,
-        "pf": 1.25
+        "pf": 1.25,
+        "expRnet": -0.016,
+        "pfNet": 0.97
       },
       "5m/INV/LONG": {
         "n": 16,
         "wrTP1": 68.8,
         "expR": -0.087,
-        "pf": 0.72
+        "pf": 0.72,
+        "expRnet": -0.125,
+        "pfNet": 0.62
       },
       "5m/INV/SHORT": {
         "n": 10,
         "wrTP1": 20.0,
         "expR": 0.272,
-        "pf": 1.45
+        "pf": 1.45,
+        "expRnet": 0.24,
+        "pfNet": 1.39
       },
       "5m/RETEST/LONG": {
         "n": 796,
         "wrTP1": 53.1,
         "expR": 0.075,
-        "pf": 1.17
+        "pf": 1.17,
+        "expRnet": 0.026,
+        "pfNet": 1.06
       },
       "5m/RETEST/SHORT": {
         "n": 675,
         "wrTP1": 53.5,
         "expR": 0.089,
-        "pf": 1.2
+        "pf": 1.2,
+        "expRnet": 0.023,
+        "pfNet": 1.05
       }
     },
     "2026-W45": {
@@ -3402,139 +3767,185 @@
         "n": 1,
         "wrTP1": 100.0,
         "expR": 0.51,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 0.51,
+        "pfNet": 99.0
       },
       "15m/RETEST/LONG": {
         "n": 336,
         "wrTP1": 46.1,
         "expR": 0.137,
-        "pf": 1.28
+        "pf": 1.28,
+        "expRnet": 0.097,
+        "pfNet": 1.19
       },
       "15m/RETEST/SHORT": {
         "n": 285,
         "wrTP1": 53.3,
         "expR": 0.36,
-        "pf": 1.83
+        "pf": 1.83,
+        "expRnet": 0.328,
+        "pfNet": 1.73
       },
       "1m/INV/LONG": {
         "n": 32,
         "wrTP1": 43.8,
         "expR": 0.149,
-        "pf": 1.35
+        "pf": 1.35,
+        "expRnet": 0.061,
+        "pfNet": 1.13
       },
       "1m/INV/SHORT": {
         "n": 44,
         "wrTP1": 47.7,
         "expR": 0.438,
-        "pf": 2.28
+        "pf": 2.28,
+        "expRnet": 0.348,
+        "pfNet": 1.95
       },
       "1m/RETEST/LONG": {
         "n": 1035,
         "wrTP1": 40.4,
         "expR": 0.071,
-        "pf": 1.14
+        "pf": 1.14,
+        "expRnet": -0.029,
+        "pfNet": 0.95
       },
       "1m/RETEST/SHORT": {
         "n": 1754,
         "wrTP1": 44.0,
         "expR": 0.046,
-        "pf": 1.09
+        "pf": 1.09,
+        "expRnet": -0.059,
+        "pfNet": 0.89
       },
       "29m/INV/LONG": {
         "n": 4,
         "wrTP1": 75.0,
         "expR": 0.365,
-        "pf": 2.46
+        "pf": 2.46,
+        "expRnet": 0.362,
+        "pfNet": 2.44
       },
       "29m/INV/SHORT": {
         "n": 1,
         "wrTP1": 100.0,
         "expR": 0.92,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 0.91,
+        "pfNet": 99.0
       },
       "29m/RETEST/LONG": {
         "n": 168,
         "wrTP1": 51.8,
         "expR": 0.44,
-        "pf": 2.04
+        "pf": 2.04,
+        "expRnet": 0.402,
+        "pfNet": 1.91
       },
       "29m/RETEST/SHORT": {
         "n": 151,
         "wrTP1": 51.7,
         "expR": 0.313,
-        "pf": 1.73
+        "pf": 1.73,
+        "expRnet": 0.288,
+        "pfNet": 1.65
       },
       "2m/INV/LONG": {
         "n": 12,
         "wrTP1": 50.0,
         "expR": -0.033,
-        "pf": 0.93
+        "pf": 0.93,
+        "expRnet": -0.109,
+        "pfNet": 0.8
       },
       "2m/INV/SHORT": {
         "n": 16,
         "wrTP1": 43.8,
         "expR": -0.105,
-        "pf": 0.77
+        "pf": 0.77,
+        "expRnet": -0.169,
+        "pfNet": 0.65
       },
       "2m/RETEST/LONG": {
         "n": 502,
         "wrTP1": 43.0,
         "expR": 0.051,
-        "pf": 1.1
+        "pf": 1.1,
+        "expRnet": -0.042,
+        "pfNet": 0.92
       },
       "2m/RETEST/SHORT": {
         "n": 694,
         "wrTP1": 46.5,
         "expR": 0.097,
-        "pf": 1.2
+        "pf": 1.2,
+        "expRnet": 0.009,
+        "pfNet": 1.02
       },
       "3m/INV/LONG": {
         "n": 11,
         "wrTP1": 36.4,
         "expR": -0.293,
-        "pf": 0.46
+        "pf": 0.46,
+        "expRnet": -0.343,
+        "pfNet": 0.41
       },
       "3m/INV/SHORT": {
         "n": 11,
         "wrTP1": 72.7,
         "expR": 0.054,
-        "pf": 1.2
+        "pf": 1.2,
+        "expRnet": 0.01,
+        "pfNet": 1.03
       },
       "3m/RETEST/LONG": {
         "n": 1011,
         "wrTP1": 52.1,
         "expR": 0.105,
-        "pf": 1.23
+        "pf": 1.23,
+        "expRnet": 0.015,
+        "pfNet": 1.03
       },
       "3m/RETEST/SHORT": {
         "n": 831,
         "wrTP1": 55.4,
         "expR": 0.204,
-        "pf": 1.49
+        "pf": 1.49,
+        "expRnet": 0.105,
+        "pfNet": 1.23
       },
       "5m/INV/LONG": {
         "n": 2,
         "wrTP1": 0.0,
         "expR": -1.0,
-        "pf": 0.0
+        "pf": 0.0,
+        "expRnet": -1.001,
+        "pfNet": 0.0
       },
       "5m/INV/SHORT": {
         "n": 10,
         "wrTP1": 60.0,
         "expR": -0.067,
-        "pf": 0.83
+        "pf": 0.83,
+        "expRnet": -0.091,
+        "pfNet": 0.77
       },
       "5m/RETEST/LONG": {
         "n": 563,
         "wrTP1": 49.6,
         "expR": 0.087,
-        "pf": 1.18
+        "pf": 1.18,
+        "expRnet": 0.069,
+        "pfNet": 1.14
       },
       "5m/RETEST/SHORT": {
         "n": 569,
         "wrTP1": 53.1,
         "expR": 0.207,
-        "pf": 1.47
+        "pf": 1.47,
+        "expRnet": 0.177,
+        "pfNet": 1.39
       }
     },
     "2026-W46": {
@@ -3542,169 +3953,213 @@
         "n": 2,
         "wrTP1": 50.0,
         "expR": 0.405,
-        "pf": 1.81
+        "pf": 1.81,
+        "expRnet": 0.346,
+        "pfNet": 1.64
       },
       "15m/RETEST/LONG": {
-        "n": 264,
-        "wrTP1": 53.4,
-        "expR": 0.216,
-        "pf": 1.49
+        "n": 271,
+        "wrTP1": 53.1,
+        "expR": 0.237,
+        "pf": 1.55,
+        "expRnet": 0.191,
+        "pfNet": 1.42
       },
       "15m/RETEST/SHORT": {
-        "n": 255,
-        "wrTP1": 48.6,
-        "expR": 0.101,
-        "pf": 1.21
+        "n": 256,
+        "wrTP1": 48.8,
+        "expR": 0.105,
+        "pf": 1.22,
+        "expRnet": 0.04,
+        "pfNet": 1.08
       },
       "1m/INV/LONG": {
-        "n": 54,
-        "wrTP1": 48.1,
+        "n": 55,
+        "wrTP1": 47.3,
         "expR": 0.291,
-        "pf": 1.74
+        "pf": 1.74,
+        "expRnet": 0.171,
+        "pfNet": 1.38
       },
       "1m/INV/SHORT": {
         "n": 41,
         "wrTP1": 51.2,
         "expR": 0.41,
-        "pf": 2.14
+        "pf": 2.14,
+        "expRnet": 0.304,
+        "pfNet": 1.74
       },
       "1m/RETEST/LONG": {
-        "n": 1814,
+        "n": 1816,
         "wrTP1": 44.2,
         "expR": 0.103,
-        "pf": 1.21
+        "pf": 1.21,
+        "expRnet": -0.02,
+        "pfNet": 0.96
       },
       "1m/RETEST/SHORT": {
-        "n": 1098,
-        "wrTP1": 42.8,
+        "n": 1116,
+        "wrTP1": 42.1,
         "expR": 0.032,
-        "pf": 1.06
+        "pf": 1.06,
+        "expRnet": -0.091,
+        "pfNet": 0.84
       },
       "29m/INV/SHORT": {
         "n": 1,
         "wrTP1": 0.0,
         "expR": -1.0,
-        "pf": 0.0
+        "pf": 0.0,
+        "expRnet": -1.0,
+        "pfNet": 0.0
       },
       "29m/RETEST/LONG": {
-        "n": 148,
-        "wrTP1": 55.4,
-        "expR": 0.438,
-        "pf": 2.18
+        "n": 153,
+        "wrTP1": 54.9,
+        "expR": 0.435,
+        "pf": 2.17,
+        "expRnet": 0.39,
+        "pfNet": 2.01
       },
       "29m/RETEST/SHORT": {
-        "n": 152,
-        "wrTP1": 45.4,
+        "n": 153,
+        "wrTP1": 45.1,
         "expR": 0.142,
-        "pf": 1.29
+        "pf": 1.29,
+        "expRnet": 0.067,
+        "pfNet": 1.12
       },
       "2m/INV/LONG": {
         "n": 23,
         "wrTP1": 39.1,
         "expR": -0.263,
-        "pf": 0.57
+        "pf": 0.57,
+        "expRnet": -0.326,
+        "pfNet": 0.5
       },
       "2m/INV/SHORT": {
         "n": 11,
         "wrTP1": 63.6,
         "expR": 0.485,
-        "pf": 2.62
+        "pf": 2.62,
+        "expRnet": 0.386,
+        "pfNet": 2.14
       },
       "2m/RETEST/LONG": {
-        "n": 853,
-        "wrTP1": 49.6,
+        "n": 854,
+        "wrTP1": 49.5,
         "expR": 0.107,
-        "pf": 1.23
+        "pf": 1.23,
+        "expRnet": -0.01,
+        "pfNet": 0.98
       },
       "2m/RETEST/SHORT": {
-        "n": 501,
-        "wrTP1": 45.1,
+        "n": 510,
+        "wrTP1": 44.3,
         "expR": -0.056,
-        "pf": 0.89
+        "pf": 0.89,
+        "expRnet": -0.161,
+        "pfNet": 0.72
       },
       "3m/INV/LONG": {
         "n": 14,
         "wrTP1": 57.1,
         "expR": -0.138,
-        "pf": 0.68
+        "pf": 0.68,
+        "expRnet": -0.202,
+        "pfNet": 0.56
       },
       "3m/INV/SHORT": {
         "n": 4,
         "wrTP1": 75.0,
         "expR": 0.533,
-        "pf": 99.0
+        "pf": 99.0,
+        "expRnet": 0.485,
+        "pfNet": 99.0
       },
       "3m/RETEST/LONG": {
-        "n": 1019,
-        "wrTP1": 54.5,
+        "n": 1025,
+        "wrTP1": 54.1,
         "expR": 0.122,
-        "pf": 1.29
+        "pf": 1.29,
+        "expRnet": 0.018,
+        "pfNet": 1.04
       },
       "3m/RETEST/SHORT": {
-        "n": 795,
-        "wrTP1": 48.7,
+        "n": 803,
+        "wrTP1": 48.2,
         "expR": 0.041,
-        "pf": 1.09
+        "pf": 1.09,
+        "expRnet": -0.077,
+        "pfNet": 0.86
       },
       "5m/INV/LONG": {
         "n": 7,
         "wrTP1": 57.1,
         "expR": 0.1,
-        "pf": 1.23
+        "pf": 1.23,
+        "expRnet": 0.054,
+        "pfNet": 1.12
       },
       "5m/INV/SHORT": {
-        "n": 2,
+        "n": 4,
         "wrTP1": 100.0,
-        "expR": 0.505,
-        "pf": 99.0
+        "expR": 0.477,
+        "pf": 99.0,
+        "expRnet": 0.477,
+        "pfNet": 99.0
       },
       "5m/RETEST/LONG": {
-        "n": 680,
-        "wrTP1": 51.5,
-        "expR": 0.16,
-        "pf": 1.35
+        "n": 704,
+        "wrTP1": 52.0,
+        "expR": 0.165,
+        "pf": 1.36,
+        "expRnet": 0.116,
+        "pfNet": 1.24
       },
       "5m/RETEST/SHORT": {
-        "n": 408,
-        "wrTP1": 46.6,
-        "expR": 0.009,
-        "pf": 1.02
+        "n": 459,
+        "wrTP1": 47.7,
+        "expR": 0.099,
+        "pf": 1.22,
+        "expRnet": 0.061,
+        "pfNet": 1.13
       }
     }
   },
   "segment_n_last": {
     "by_tf_kind_side/15m/INV/LONG": 4,
     "by_tf_kind_side/15m/INV/SHORT": 4,
-    "by_tf_kind_side/15m/RETEST/LONG": 886,
-    "by_tf_kind_side/15m/RETEST/SHORT": 843,
-    "by_tf_kind_side/1m/INV/LONG": 538,
+    "by_tf_kind_side/15m/RETEST/LONG": 893,
+    "by_tf_kind_side/15m/RETEST/SHORT": 844,
+    "by_tf_kind_side/1m/INV/LONG": 539,
     "by_tf_kind_side/1m/INV/SHORT": 414,
-    "by_tf_kind_side/1m/RETEST/LONG": 19946,
-    "by_tf_kind_side/1m/RETEST/SHORT": 14217,
+    "by_tf_kind_side/1m/RETEST/LONG": 19948,
+    "by_tf_kind_side/1m/RETEST/SHORT": 14235,
     "by_tf_kind_side/29m/INV/LONG": 4,
     "by_tf_kind_side/29m/INV/SHORT": 3,
-    "by_tf_kind_side/29m/RETEST/LONG": 437,
-    "by_tf_kind_side/29m/RETEST/SHORT": 482,
+    "by_tf_kind_side/29m/RETEST/LONG": 442,
+    "by_tf_kind_side/29m/RETEST/SHORT": 483,
     "by_tf_kind_side/2m/INV/LONG": 197,
     "by_tf_kind_side/2m/INV/SHORT": 147,
-    "by_tf_kind_side/2m/RETEST/LONG": 8833,
-    "by_tf_kind_side/2m/RETEST/SHORT": 6130,
+    "by_tf_kind_side/2m/RETEST/LONG": 8834,
+    "by_tf_kind_side/2m/RETEST/SHORT": 6139,
     "by_tf_kind_side/3m/INV/LONG": 33,
     "by_tf_kind_side/3m/INV/SHORT": 20,
-    "by_tf_kind_side/3m/RETEST/LONG": 2819,
-    "by_tf_kind_side/3m/RETEST/SHORT": 2381,
+    "by_tf_kind_side/3m/RETEST/LONG": 2825,
+    "by_tf_kind_side/3m/RETEST/SHORT": 2389,
     "by_tf_kind_side/5m/INV/LONG": 64,
-    "by_tf_kind_side/5m/INV/SHORT": 45,
-    "by_tf_kind_side/5m/RETEST/LONG": 4379,
-    "by_tf_kind_side/5m/RETEST/SHORT": 3172,
+    "by_tf_kind_side/5m/INV/SHORT": 47,
+    "by_tf_kind_side/5m/RETEST/LONG": 4403,
+    "by_tf_kind_side/5m/RETEST/SHORT": 3223,
     "by_kindside_aligned/INV/LONG|aligned=0": 17,
-    "by_kindside_aligned/INV/LONG|aligned=1": 823,
+    "by_kindside_aligned/INV/LONG|aligned=1": 824,
     "by_kindside_aligned/INV/SHORT|aligned=0": 19,
-    "by_kindside_aligned/INV/SHORT|aligned=1": 614,
-    "by_kindside_aligned/RETEST/LONG|aligned=0": 2845,
-    "by_kindside_aligned/RETEST/LONG|aligned=1": 34455,
-    "by_kindside_aligned/RETEST/SHORT|aligned=0": 3226,
-    "by_kindside_aligned/RETEST/SHORT|aligned=1": 23999,
+    "by_kindside_aligned/INV/SHORT|aligned=1": 616,
+    "by_kindside_aligned/RETEST/LONG|aligned=0": 2877,
+    "by_kindside_aligned/RETEST/LONG|aligned=1": 34468,
+    "by_kindside_aligned/RETEST/SHORT|aligned=0": 3236,
+    "by_kindside_aligned/RETEST/SHORT|aligned=1": 24077,
     "decay_weekly/2026-W36": 3231,
     "decay_weekly/2026-W37": 5390,
     "decay_weekly/2026-W38": 4916,
@@ -3739,12 +4194,14 @@
       "rationale": "REVISION SEMANAL 2026-11-01 (v3->v4): se agrega 3/LONG y 3/SHORT a tf_side. shadow_weekly venia marcando shadow_beats_raw=false de forma sostenida (W41-W44) porque desde que aparecieron TF nuevos en el bus (3m/15m/29m, ~2026-10-29) raw_indicator los incluye pero shadow (criterio v3) no, asi que shadow dejo de ser un subconjunto distinto de raw -- en las semanas donde el criterio v3 cubre todo el universo clasico (W36-W43, antes de que 3m/15m/29m tuvieran muestra) shadow_n era literalmente igual a raw_n (comparacion trivial, nunca puede batir a algo idéntico a si mismo); en W44 (con los TF nuevos ya con muestra) raw_expR=0.027 > shadow_expR=0.01 porque las senales nuevas que shadow excluye rinden bien y raw si las cuenta. De los tres TF nuevos, 3m/RETEST/LONG (n=764, survives_fdr10=true, CI90=[0.008,0.141]) y 3m/RETEST/SHORT (n=738, survives_fdr10=true, CI90=[0.04,0.177]) cumplen HOY el mismo estandar que uso la revision v1->v2 para sumar 2m LONG/5m SHORT (FDR 10% + cross_instrument verdict=universal, spread 0.323 y 0.327 respectivamente) -- se agregan. 15m (survives_fdr10=false en ambos lados) y 29m (survives_fdr10=true en SHORT pero cross_instrument=instrument-specific, spread 0.916, y sin una sola semana ISO cerrada de historial, todo su n vive en W44) NO cumplen el estandar todavia -- quedan fuera de v4, igual que 2m LONG/5m SHORT se quedaron fuera de v1 hasta madurar. Ver reviews/2026-week-44.md para el detalle. Historia v1/v2/v3 abajo. REVISION 2026-10-31 (v2->v3): se quita el filtro por veredicto Session Analyst. Con n=24k cruzados, AVOID rinde E[R] +0.022 (mejor que GO +0.005) y WAIT es el mejor (+0.043, CI90 limpio, estable desde 2026-09-11); excluir AVOID dejaba la sombra en +0.036 contra +0.038 del indicador crudo, o sea el filtro restaba. El veredicto SA es un plan de sesion para el trader, no un filtro de senales scalp: no volver a excluir por SA salvo que session_analyst_cross muestre AVOID con CI90 negativo durante 3 semanas. Historia v1/v2 abajo. kind=RETEST (prioridad 1; INV no tiene ningun segmento con survives_fdr10=true todavia). REVISION SEMANAL 2026-09-27 (v1->v2): v1 (2026-09-20) limitaba tf_side a 4 segmentos (1/LONG, 1/SHORT, 2/SHORT, 5/LONG) porque 2m LONG y 5m SHORT todavia cruzaban/rozaban cero en ese momento. Desde entonces segment_significance certifico ambos de forma sostenida durante varias corridas seguidas (2m LONG desde 2026-09-18, 5m SHORT desde antes) sin ninguna reversion, y hoy los 6 segmentos RETEST (1m/2m/5m x LONG/SHORT) tienen survives_fdr10=true con CI90 que no cruza cero -- ver segment_significance de hoy. Se amplia tf_side a los 6 segmentos certificados; la justificacion vieja de v1 (excluir 2m LONG/5m SHORT por CI90 rozando cero) ya no la sostiene el dato, quedaba pendiente de esta revision semanal desde 2026-09-24 (ver playbook buy-retest.md, historico). Se excluyen senales del dia/sesion en un instrumento con veredicto Session Analyst=AVOID: avoid_vs_rest_ci90.AVOID no es significativo (p_mean_le_0 alto) mientras GO y WAIT si lo son (session_analyst_cross). SL/objetivo = el mismo del indicador (3 capas); el SL estructural de experiments.json (sl-retest-wick) SE APLICO en TradingView el 2026-09-26 pero el feed sigue registrando el 3-capas como rMultiple (el SL real ya cambio, la medicion paralela sigue corriendo en sl_origin_vs_layer) -- no se incorpora a la sombra hasta que haya muestra post-cambio suficiente para decidir si usar rOrig en vez de rMultiple."
     },
     "shadow": {
-      "n": 61877,
+      "n": 61996,
       "wrTP1": 46.7,
-      "nSL": 28823,
-      "nTO": 4142,
-      "expR": 0.049,
+      "nSL": 28841,
+      "nTO": 4198,
+      "expR": 0.05,
       "pf": 1.1,
+      "expRnet": -0.083,
+      "pfNet": 0.85,
       "mfe_p25": 9.0,
       "mfe_p50": 21.0,
       "mfe_p75": 48.0,
@@ -3754,29 +4211,39 @@
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
       "entryZoneTk_p50": -16.0,
-      "revAfterSL_rate": 35.4
+      "revAfterSL_rate": 35.5
     },
     "shadow_ci90": {
-      "expR": 0.049,
+      "expR": 0.05,
       "ci90": [
-        0.041,
-        0.058
+        0.03,
+        0.071
       ],
       "p_mean_le_0": 0.0,
-      "n": 59709
+      "expRnet": -0.083,
+      "ci90net": [
+        -0.105,
+        -0.06
+      ],
+      "p_net_le_0": 1.0,
+      "n": 59775,
+      "days": 68,
+      "ci_method": "day-clustered bootstrap"
     },
     "raw_indicator": {
-      "n": 64525,
+      "n": 64658,
       "wrTP1": 46.9,
-      "nSL": 29984,
-      "nTO": 4279,
+      "nSL": 30003,
+      "nTO": 4342,
       "expR": 0.055,
       "pf": 1.11,
+      "expRnet": -0.074,
+      "pfNet": 0.86,
       "mfe_p25": 9.0,
       "mfe_p50": 22.0,
       "mfe_p75": 52.0,
-      "winnerMAE_p75": 15.0,
-      "winnerMAE_p90": 40.0,
+      "winnerMAE_p75": 16.0,
+      "winnerMAE_p90": 41.0,
       "loserMFEbeforeSL_p50": 4.0,
       "bars_win_p50": 2.0,
       "bars_loss_p50": 3.0,
@@ -3786,19 +4253,29 @@
     "raw_indicator_ci90": {
       "expR": 0.055,
       "ci90": [
-        0.046,
-        0.063
+        0.035,
+        0.077
       ],
       "p_mean_le_0": 0.0,
-      "n": 62232
+      "expRnet": -0.074,
+      "ci90net": [
+        -0.097,
+        -0.051
+      ],
+      "p_net_le_0": 1.0,
+      "n": 62305,
+      "days": 68,
+      "ci_method": "day-clustered bootstrap"
     },
     "tier_ap_b_only": {
-      "n": 32001,
-      "wrTP1": 44.4,
-      "nSL": 15472,
-      "nTO": 2334,
+      "n": 32061,
+      "wrTP1": 44.3,
+      "nSL": 15480,
+      "nTO": 2370,
       "expR": 0.043,
-      "pf": 1.08,
+      "pf": 1.09,
+      "expRnet": -0.092,
+      "pfNet": 0.84,
       "mfe_p25": 9.0,
       "mfe_p50": 21.0,
       "mfe_p75": 47.0,
@@ -3813,11 +4290,19 @@
     "tier_ap_b_only_ci90": {
       "expR": 0.043,
       "ci90": [
-        0.03,
-        0.054
+        0.018,
+        0.068
       ],
-      "p_mean_le_0": 0.0,
-      "n": 30866
+      "p_mean_le_0": 0.004,
+      "expRnet": -0.092,
+      "ci90net": [
+        -0.118,
+        -0.066
+      ],
+      "p_net_le_0": 1.0,
+      "n": 30891,
+      "days": 68,
+      "ci_method": "day-clustered bootstrap"
     },
     "note": "compara el conjunto de reglas condicionales (shadow) contra (a) el indicador crudo (todo RETEST) y (b) RETEST tier A+/B solo. Gate peldano 0->1 de execution-ladder.md: shadow debe batir a raw_indicator en E[R] durante 3 semanas seguidas, n>=60 en el segmento objetivo. bootstrap_er_ci requiere n>=8, si no devuelve null."
   },
@@ -3893,21 +4378,21 @@
       "shadow_beats_raw": false
     },
     "2026-W46": {
-      "shadow_n": 7168,
-      "shadow_expR": 0.078,
-      "raw_n": 7987,
-      "raw_expR": 0.091,
+      "shadow_n": 7287,
+      "shadow_expR": 0.084,
+      "raw_n": 8120,
+      "raw_expR": 0.097,
       "shadow_beats_raw": false
     }
   },
   "sigid_integrity": {
     "signals": {
-      "total_sigIds": 58866,
-      "collided_sigIds": 6530,
+      "total_sigIds": 58930,
+      "collided_sigIds": 6538,
       "collided_pct": 11.09,
       "delta_days_histogram": {
-        "14": 1311,
-        "7": 1229,
+        "14": 1315,
+        "7": 1233,
         "42": 560,
         "21": 551,
         "28": 539,
@@ -3921,12 +4406,12 @@
       "conflicting_result_examples": []
     },
     "outcomes": {
-      "total_sigIds": 57013,
-      "collided_sigIds": 6102,
+      "total_sigIds": 57080,
+      "collided_sigIds": 6110,
       "collided_pct": 10.7,
       "delta_days_histogram": {
-        "14": 1267,
-        "7": 1155,
+        "14": 1271,
+        "7": 1159,
         "21": 511,
         "28": 497,
         "42": 490,
@@ -3936,7 +4421,7 @@
         "63": 142,
         "48": 105
       },
-      "conflicting_result_n": 3588,
+      "conflicting_result_n": 3592,
       "conflicting_result_examples": [
         "NQ-2-22054-L",
         "GC-1-23394-S",
@@ -4052,17 +4537,17 @@
       }
     },
     "2026-W46": {
-      "n_losses": 3662,
+      "n_losses": 3681,
       "causes_pct": {
-        "stop-en-el-minimo": 41.8,
-        "RR-bajo": 39.5,
+        "stop-en-el-minimo": 41.9,
+        "RR-bajo": 39.6,
         "contra-estructura": 39.4,
-        "killzone-Asia-largo": 21.5,
-        "contra-sesgo": 17.9,
-        "estirado": 17.6,
-        "sin-nivel-detras": 15.1,
-        "chop": 15.0,
-        "SL-muy-pegado": 11.5,
+        "killzone-Asia-largo": 21.4,
+        "contra-sesgo": 18.1,
+        "estirado": 17.5,
+        "chop": 15.1,
+        "sin-nivel-detras": 15.0,
+        "SL-muy-pegado": 11.4,
         "sin-causa-clara": 8.1
       }
     }
