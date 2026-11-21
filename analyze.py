@@ -1163,6 +1163,12 @@ def sl_origin_vs_layer(pairs):
         paired = [(r["rMultiple"], r["rOrig"]) for r in rows
                   if r["rMultiple"] is not None and r["rOrig"] is not None]
         deltas = [o - l for l, o in paired]
+        # NET of costs: each stop pays COST_TICKS / its own stop in ticks (a 2-tick stop pays 1R)
+        def _c(r, tk):
+            return COST_TICKS.get(r["sigId"].split("-")[0], COST_TICKS["default"]) / tk if tk and tk > 0 else 0.0
+        pn = [r for r in rows if r["rMultiple"] is not None and r["rOrig"] is not None]
+        dnet = [(_day(r), (r["rOrig"] - _c(r, r.get("slOrigTk"))) - (r["rMultiple"] - _c(r, r.get("slTk")))) for r in pn]
+        cinet = _day_ci(dnet) or {}
         slt = [r["slTk"] for r in rows if r.get("slTk")]
         slot = [r["slOrigTk"] for r in rows if r.get("slOrigTk")]
         wider = sum(1 for r in rows if r.get("slOrigTk") and r.get("slTk") and r["slOrigTk"] > r["slTk"])
@@ -1179,6 +1185,12 @@ def sl_origin_vs_layer(pairs):
             "delta_ci90": ci,
             "delta_beats_zero": (ci[0] is not None and ci[0] > 0),
             "delta_below_zero": (ci[1] is not None and ci[1] < 0),
+            "layer_expRnet": round(st.mean(r["rMultiple"] - _c(r, r.get("slTk")) for r in pn), 3) if pn else None,
+            "orig_expRnet": round(st.mean(r["rOrig"] - _c(r, r.get("slOrigTk")) for r in pn), 3) if pn else None,
+            "orig_medianRnet": round(st.median(r["rOrig"] - _c(r, r.get("slOrigTk")) for r in pn), 3) if pn else None,
+            "delta_net": cinet.get("mean"), "delta_net_ci90_days": cinet.get("ci90"),
+            "delta_net_beats_zero": bool(cinet.get("ci90") and cinet["ci90"][0] > 0),
+            "delta_net_below_zero": bool(cinet.get("ci90") and cinet["ci90"][1] < 0),
             "layer_wrTP1": round(100 * win_layer / len(rows), 1),
             "orig_wrTP1": round(100 * win_orig / len(rows), 1),
             "slTk_p50": _pct(slt, .5), "slOrigTk_p50": _pct(slot, .5),
@@ -1195,6 +1207,20 @@ def sl_origin_vs_layer(pairs):
         gb[r.get("slBasis") or "?"].append(r)
     for k, rs in sorted(gb.items()):
         out["by_basis"][k] = blk(rs) if len(rs) >= 5 else {"n": len(rs)}
+    # Robust version for alerts: structural stop >= MIN_STOP_ATR1M x ATR(1m). Tiny stops (1-3 ticks)
+    # turn a few winners into tens of R and carry the gross mean (2026-11-21 review).
+    MIN_STOP_ATR1M = 0.3
+    def _stop_atr(r):
+        try:
+            tick = abs(r["entry"] - r["sl"]) / r["slTk"]
+            return r["slOrigTk"] * tick / r["atr1m"]
+        except Exception:
+            return None
+    out["min_stop_atr1m"] = MIN_STOP_ATR1M
+    out["by_basis_min_stop"] = {}
+    for k, rs in sorted(gb.items()):
+        big = [r for r in rs if (_stop_atr(r) or 0) >= MIN_STOP_ATR1M]
+        out["by_basis_min_stop"][k] = blk(big) if len(big) >= 5 else {"n": len(big)}
     g = defaultdict(list)
     for r in res:
         g[f"{r['tf']}m/{r['kind']}/{r['side']}"].append(r)
@@ -1627,17 +1653,19 @@ def material_alerts(rep, prev_state=None):
     _sl_label = {"retestBar": "SL en la mecha de la vela del retest",
                  "retestBar2": "SL en la mecha del retest + vela previa (1m short)",
                  "candle1": "SL en la vela 1 del FVG (inversion)"}
-    for _bk, _bv in ((rep.get("sl_origin_vs_layer", {}) or {}).get("by_basis", {}) or {}).items():
-        if not isinstance(_bv, dict) or _bv.get("n", 0) < 30 or _bv.get("delta_orig_minus_layer") is None:
+    # NET of costs, day-clustered CI, structural stop >= min_stop_atr1m x ATR(1m) (by_basis_min_stop)
+    _slv = rep.get("sl_origin_vs_layer", {}) or {}
+    for _bk, _bv in (_slv.get("by_basis_min_stop", {}) or {}).items():
+        if not isinstance(_bv, dict) or _bv.get("n", 0) < 30 or _bv.get("delta_net") is None:
             continue
         _lab = _sl_label.get(_bk, _bk)
-        if _bv.get("delta_beats_zero"):
-            a.append(f"SL: {_lab} BATE al de 3 capas fuera de ruido "
-                     f"(E[R] {_bv.get('orig_expR')} vs {_bv.get('layer_expR')}, delta {_bv['delta_orig_minus_layer']} "
-                     f"CI90 {_bv.get('delta_ci90')}, n {_bv['n']}). Candidato para experiments.json + revision semanal.")
-        elif _bv.get("delta_below_zero"):
-            a.append(f"SL: {_lab} rinde PEOR que el de 3 capas "
-                     f"(delta {_bv['delta_orig_minus_layer']} CI90 {_bv.get('delta_ci90')}, n {_bv['n']}). Mantener el actual ahi.")
+        _tail = (f"(E[R] neto {_bv.get('orig_expRnet')} vs {_bv.get('layer_expRnet')}, mediana {_bv.get('orig_medianRnet')}, "
+                 f"delta neto {_bv['delta_net']} CI90 por dias {_bv.get('delta_net_ci90_days')}, n {_bv['n']}, "
+                 f"stop >= {_slv.get('min_stop_atr1m')} ATR 1m)")
+        if _bv.get("delta_net_beats_zero"):
+            a.append(f"SL: {_lab} BATE al de 3 capas fuera de ruido {_tail}. Candidato para experiments.json + revision semanal.")
+        elif _bv.get("delta_net_below_zero"):
+            a.append(f"SL: {_lab} rinde PEOR que el de 3 capas {_tail}. Mantener el actual ahi.")
     sac = rep.get("session_analyst_cross", {}) or {}
     for _v, _ci in (sac.get("by_verdict_ci90", {}) or {}).items():
         if not _ci or _ci.get("n", 0) < 30:
