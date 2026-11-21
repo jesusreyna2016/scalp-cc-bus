@@ -90,9 +90,11 @@ Si hay < 5 pares resueltos (excl. `TEST-`): sólo corre `analyze.py`, commitea
    INVERSIÓN = vela 1 (origen) del FVG; `retestBar` en RETEST 2m/5m = mecha de la
    vela del retest; `retestBar2` en RETEST 1m SHORT = mecha más extrema de la vela
    del retest Y la anterior (en 1m la vela sola daba ~1 tick). Long = mínimo,
-   short = máximo. Crudo, mecha exacta, sin pad. Mira `delta_orig_minus_layer`
-   y su `delta_ci90`: sólo trátalo como real si `delta_beats_zero` o
-   `delta_below_zero` (CI90 no cruza 0) con n>=30. `orig_saved_from_SL` /
+   short = máximo. Crudo, mecha exacta, sin pad. Mira `by_basis_min_stop`
+   (stop estructural >= 0.3 ATR de 1m), `delta_net` y `delta_net_ci90_days`: sólo trátalo
+   como real si `delta_net_beats_zero` o `delta_net_below_zero` con n>=30. El delta bruto
+   sin filtro (`delta_orig_minus_layer`) lo inflan los stops de 1-3 ticks (2026-11-21: vela 1
+   en INV daba +1.76 R bruto y es -0.22 R neto con stop >= 0.3 ATR); no decidas con él. `orig_saved_from_SL` /
    `orig_caused_SL` = cuántos stops se evitan o se provocan al mover el SL.
    `invalid_geometry` = filas con slOrigTk<=0, excluidas. Usa `by_basis`:
    `candle1` y `retestBar` son dos reglas distintas, no las mezcles.
