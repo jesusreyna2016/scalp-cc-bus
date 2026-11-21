@@ -244,6 +244,28 @@
       "targetMetric": "by_aligned.expR / sl_post_mortem causa contra-sesgo (share)",
       "minAfterN": 40,
       "note": "PENDIENTE DE CONFIRMAR CON JESUS: preguntar si cambio algun input de sesgo/alineacion (o el indicador en si) alrededor del 2026-10-26, coincide con la aparicion de BTCUSDT/ETHUSDT y del tf=29m nuevo en el bus. Mientras no se confirme, NO se trata como experimento con before/after formal (no hay un input concreto que medir antes/despues), solo se vigila que by_aligned siga sano."
+    },
+    {
+      "id": "sl-inv-fvg-candle1-2026-11-21",
+      "status": "proposed",
+      "hypothesis": "En INV (inversion de FVG), poner el SL en la vela 1 del FVG en vez del stop de 3 capas sube el E[R]: el stop baja de ~24 a ~7 ticks (p50), el WR a TP1 cae de 52% a 29%, pero cada ganador paga mucha mas R. Es la misma logica que ya se aplico en RETEST (sl-retest-wick-2026-09-03).",
+      "param": "SL basis en INV (hoy 3 capas; input nuevo o extender sc_sl_retest_basis a INV)",
+      "from": "3-capas (sc_slbuf x ATR1m + piso sc_floor_atr5 + techo sc_cap_atr5 / sc_cap_adr)",
+      "to": "vela 1 del FVG (basis candle1)",
+      "changeDate": null,
+      "segment": {
+        "kind": "INV"
+      },
+      "targetMetric": "expR neto de costes",
+      "minAfterN": 40,
+      "evidence": "report.md 2026-11-15, sl_origin_vs_layer.by_basis.candle1 (medicion PARALELA, misma entrada y mismos TP): n 1206, E[R] bruto 3 capas 0.117 vs vela 1 1.879, delta 1.762 CI90 [0.019, 5.054]; WR TP1 52.2% vs 28.6%; slTk p50 24 vs 7; orig_caused_SL 287 vs orig_saved_from_SL 3. Alerta del reporte: 'candidato para experiments.json + revision semanal'.",
+      "risks": "1) Es BRUTO: con COST_TICKS 2 sobre un stop de ~7 ticks el coste es ~0.29R por trade (vs ~0.08R con 3 capas); hay que confirmarlo NETO. 2) El CI90 es muy ancho (limite inferior 0.019): lo empujan pocos ganadores grandes; mirar mediana y el peso del top 5% antes de aplicar. 3) Stops de 7 ticks son sensibles a slippage real. 4) 'RETEST stops: sin outcomes del build con SL vela 1 todavia': el build que lo mide en vivo aun no manda datos.",
+      "next_steps": [
+        "2026-11-21: propuesto (no aplicado). Antes de tocar el Pine: (a) la revision semanal lo evalua NETO con day-clustered bootstrap por tf/side dentro de INV; (b) solo pasa a 'applied' si el CI90 neto no cruza cero en el segmento objetivo y lo aprueba Jesus; (c) al aplicarlo, poner changeDate y medir since_change con sl_origin_vs_layer (no con before/after de rMultiple, ver nota 2026-10-03 de sl-retest-wick)."
+      ],
+      "notes": [
+        "2026-11-21: alta por pedido de Jesus en la revision del bus (Claude). Sin cambio en scalp_command.pine."
+      ]
     }
   ]
 }
