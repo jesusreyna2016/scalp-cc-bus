@@ -1,17 +1,17 @@
-# Scalp CC · report 2026-11-22T02:14Z
-- signals=76414 outcomes=73828 pares_resueltos=76412 pendientes=2 huerfanos=66
+# Scalp CC · report 2026-11-22T02:47Z
+- signals=76417 outcomes=73831 pares_resueltos=76415 pendientes=2 huerfanos=66
 
 ## ⚠ ALERTAS (llevar al frente del resumen)
+- EXPERIMENTO RECHAZADO (revertir): SL basis en INV (hoy 3 capas; input nuevo o extender sc_sl_retest_basis a INV) 3-capas (sc_slbuf x ATR1m + piso sc_floor_atr5 + techo sc_cap_atr5 / sc_cap_adr)->vela 1 del FVG (basis candle1) (sl-inv-fvg-candle1-2026-11-21).
 - GATE: 29m/RETEST/LONG cumple el chequeo numerico agregado (n/PF/WR) pero NO el gate completo todavia -- weeklyStable3=False, slCauseMitigated=False. Es un near-miss a vigilar, no subir de peldano.
 - SL: SL en la vela 1 del FVG (inversion) rinde PEOR que el de 3 capas (E[R] neto -0.183 vs 0.037, mediana -1.143, delta neto -0.22 CI90 por dias [-0.322, -0.115], n 1099, stop >= 0.3 ATR 1m). Mantener el actual ahi.
-- SL: SL en la mecha de la vela del retest rinde PEOR que el de 3 capas (E[R] neto -0.109 vs -0.043, mediana -1.034, delta neto -0.066 CI90 por dias [-0.084, -0.049], n 41318, stop >= 0.3 ATR 1m). Mantener el actual ahi.
+- SL: SL en la mecha de la vela del retest rinde PEOR que el de 3 capas (E[R] neto -0.109 vs -0.043, mediana -1.034, delta neto -0.066 CI90 por dias [-0.084, -0.049], n 41320, stop >= 0.3 ATR 1m). Mantener el actual ahi.
 - SL: SL en la mecha del retest + vela previa (1m short) rinde PEOR que el de 3 capas (E[R] neto -0.167 vs -0.073, mediana -1.057, delta neto -0.094 CI90 por dias [-0.115, -0.073], n 11913, stop >= 0.3 ATR 1m). Mantener el actual ahi.
 - SESSION ANALYST: senales scalp con veredicto SA=AVOID rinden MEJOR de forma no-random (E[R] 0.076 CI90 [0.014, 0.152], n 5569). Contrario a la hipotesis original de agent-instructions.md.
 - SESSION ANALYST: senales scalp con veredicto SA=WAIT rinden MEJOR de forma no-random (E[R] 0.071 CI90 [0.047, 0.095], n 36993). Consistente con la hipotesis original de agent-instructions.md.
-- METODO: tus predicciones de direccion aciertan 33.3% (peor que un volado, n=6, MAE=0.243). Se mas conservador con 'cambio del mes' y marcar experimental mas tiempo antes de subir confianza.
-- MODO SOMBRA: 3 semanas CERRADAS seguidas sin batir al indicador crudo (2026-W44, 2026-W45, 2026-W46) -- espejo inverso del gate de promocion del peldano 0->1. No implica bajar de peldano (ya promovido), pero revisar shadow_rules en la revision semanal.
+- METODO: tus predicciones de direccion aciertan 33.3% (peor que un volado, n=6, MAE=0.242). Se mas conservador con 'cambio del mes' y marcar experimental mas tiempo antes de subir confianza.
 
-- E[R] global: {"expR": 0.062, "ci90": [0.044, 0.082], "p_mean_le_0": 0.0, "expRnet": -0.06, "ci90net": [-0.082, -0.037], "p_net_le_0": 1.0, "n": 73762, "days": 75, "ci_method": "day-clustered bootstrap"}
+- E[R] global: {"expR": 0.062, "ci90": [0.044, 0.082], "p_mean_le_0": 0.0, "expRnet": -0.06, "ci90net": [-0.082, -0.037], "p_net_le_0": 1.0, "n": 73765, "days": 75, "ci_method": "day-clustered bootstrap"}
 - gate ejecucion: {"readyForLive": true, "segment": "29m/RETEST/LONG", "weeklyStable3": false, "weeklyDetail": [{"week": "2026-W44", "wrTP1": 54.5, "pfNet": 1.19, "ok": false}, {"week": "2026-W45", "wrTP1": 51.8, "pfNet": 1.91, "ok": true}, {"week": "2026-W46", "wrTP1": 53.7, "pfNet": 1.77, "ok": true}], "slCauseMitigated": false, "fullyReady": false, "costTicks": {"default": 2.0}, "note": "Todo NETO de costes (COST_TICKS). readyForLive: n>=100 & E[R] neto>0 & PF neto>=1.3 & WR>=50 en un segmento tf/kind/side (solo agregado historico). fullyReady exige ademas weeklyStable3 (3 semanas CERRADAS seguidas con WR>=50 & PF neto>=1.3 en ese mismo segmento) y slCauseMitigated (experimento con verdict=confirmed dirigido a ese segmento). Solo fullyReady=true es luz verde real para subir de peldano; readyForLive=true con fullyReady=false es un near-miss a vigilar."}
 - RETEST stops: sin outcomes del build con SL vela 1 todavia
 
@@ -19,7 +19,7 @@
 ```json
 {
   "signals": {
-    "total_sigIds": 67055,
+    "total_sigIds": 67058,
     "collided_sigIds": 8391,
     "collided_pct": 12.51,
     "delta_days_histogram": {
@@ -38,9 +38,9 @@
     "conflicting_result_examples": []
   },
   "outcomes": {
-    "total_sigIds": 65096,
+    "total_sigIds": 65099,
     "collided_sigIds": 7867,
-    "collided_pct": 12.09,
+    "collided_pct": 12.08,
     "delta_days_histogram": {
       "14": 1545,
       "7": 1304,
@@ -75,7 +75,7 @@
 | 15m/INV/LONG | 10 | 70.0 | 0.268 | 0.234 | 1.89 | 1.75 | 3 | 82.0 | 137.5 | 33.3 |
 | 15m/INV/SHORT | 5 | 80.0 | 0.768 | 0.728 | 4.84 | 4.35 | 1 | 144.0 | 4312.25 | 0.0 |
 | 15m/RETEST/LONG | 1258 | 50.6 | 0.121 | 0.074 | 1.26 | 1.15 | 565 | 115.0 | 279.25 | 58.1 |
-| 15m/RETEST/SHORT | 1113 | 53.1 | 0.207 | 0.16 | 1.47 | 1.35 | 470 | 146.0 | 207.5 | 65.7 |
+| 15m/RETEST/SHORT | 1114 | 53.1 | 0.206 | 0.159 | 1.47 | 1.34 | 471 | 147.0 | 207.5 | 65.8 |
 | 1m/INV/LONG | 560 | 45.7 | 0.129 | -0.014 | 1.29 | 0.97 | 236 | 15.0 | 11.0 | 16.5 |
 | 1m/INV/SHORT | 491 | 47.5 | 0.161 | 0.054 | 1.4 | 1.12 | 186 | 23.0 | 14.0 | 18.3 |
 | 1m/RETEST/LONG | 20430 | 44.5 | 0.032 | -0.132 | 1.06 | 0.77 | 9798 | 15.0 | 10.0 | 28.8 |
@@ -94,20 +94,20 @@
 | 3m/RETEST/SHORT | 3431 | 53.4 | 0.126 | 0.02 | 1.29 | 1.04 | 1457 | 27.0 | 20.0 | 54.9 |
 | 5m/INV/LONG | 74 | 66.2 | 0.111 | 0.053 | 1.39 | 1.18 | 20 | 39.0 | 52.0 | 55.0 |
 | 5m/INV/SHORT | 56 | 51.8 | 0.058 | 0.015 | 1.14 | 1.03 | 23 | 73.5 | 74.0 | 43.5 |
-| 5m/RETEST/LONG | 4899 | 51.2 | 0.104 | 0.033 | 1.23 | 1.07 | 2165 | 62.0 | 82.5 | 50.5 |
-| 5m/RETEST/SHORT | 4092 | 50.8 | 0.121 | 0.062 | 1.27 | 1.13 | 1765 | 69.0 | 84.0 | 49.6 |
+| 5m/RETEST/LONG | 4900 | 51.2 | 0.104 | 0.033 | 1.23 | 1.07 | 2165 | 62.0 | 83.0 | 50.5 |
+| 5m/RETEST/SHORT | 4093 | 50.8 | 0.121 | 0.062 | 1.27 | 1.13 | 1765 | 69.0 | 84.0 | 49.6 |
 
 ## Por tier
 | seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|--|--|
 | A+ | 4924 | 23.5 | 0.051 | -0.088 | 1.07 | 0.89 | 3168 | 32.0 | 15.0 | 20.1 |
-| B | 32468 | 47.3 | 0.046 | -0.081 | 1.1 | 0.85 | 14925 | 21.0 | 14.0 | 37.1 |
-| C | 39020 | 49.9 | 0.078 | -0.039 | 1.17 | 0.92 | 17227 | 25.0 | 20.0 | 39.9 |
+| B | 32469 | 47.3 | 0.046 | -0.081 | 1.1 | 0.85 | 14926 | 21.0 | 14.0 | 37.1 |
+| C | 39022 | 49.9 | 0.078 | -0.039 | 1.17 | 0.92 | 17227 | 25.0 | 20.0 | 39.9 |
 
 ## Por killzone
 | seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|--|--|
-| Asia | 27235 | 49.5 | 0.076 | -0.084 | 1.16 | 0.84 | 12291 | 17.0 | 13.0 | 38.2 |
+| Asia | 27238 | 49.5 | 0.076 | -0.084 | 1.16 | 0.84 | 12292 | 17.0 | 13.0 | 38.2 |
 | London | 11102 | 46.8 | 0.036 | -0.092 | 1.07 | 0.84 | 5377 | 22.0 | 16.0 | 38.9 |
 | NY | 14054 | 45.4 | 0.074 | -0.012 | 1.15 | 0.98 | 6626 | 34.0 | 24.0 | 40.6 |
 | Sin KZ | 24021 | 45.5 | 0.053 | -0.046 | 1.11 | 0.91 | 11026 | 26.0 | 19.0 | 32.3 |
@@ -115,14 +115,14 @@
 ## Por nearEdge
 | seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|--|--|
-| edge=-1 | 23851 | 45.5 | 0.06 | -0.042 | 1.12 | 0.92 | 11179 | 28.0 | 21.0 | 36.5 |
+| edge=-1 | 23852 | 45.5 | 0.06 | -0.042 | 1.12 | 0.92 | 11179 | 28.0 | 21.0 | 36.5 |
 | edge=0 | 27620 | 49.3 | 0.068 | -0.07 | 1.14 | 0.87 | 12456 | 20.0 | 14.0 | 38.3 |
-| edge=1 | 24941 | 46.2 | 0.059 | -0.067 | 1.12 | 0.88 | 11685 | 22.0 | 17.0 | 35.9 |
+| edge=1 | 24943 | 46.2 | 0.059 | -0.067 | 1.12 | 0.88 | 11686 | 22.0 | 17.0 | 35.9 |
 
 ## Por aligned
 | seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
 |---|--|--|--|--|--|--|--|--|--|--|
-| aligned=0 | 7967 | 53.4 | 0.129 | 0.035 | 1.29 | 1.07 | 3512 | 41.0 | 59.0 | 62.8 |
+| aligned=0 | 7970 | 53.4 | 0.129 | 0.035 | 1.29 | 1.07 | 3513 | 41.0 | 59.0 | 62.8 |
 | aligned=1 | 68445 | 46.4 | 0.055 | -0.071 | 1.11 | 0.87 | 31808 | 22.0 | 15.0 | 34.1 |
 
 ## Por kind/side x nearEdge
@@ -134,12 +134,12 @@
 | INV/SHORT|edge=-1 | 454 | 47.1 | 0.18 | 0.089 | 1.45 | 1.2 | 173 | 27.0 | 14.0 | 19.1 |
 | INV/SHORT|edge=0 | 270 | 52.6 | 0.127 | 0.025 | 1.32 | 1.06 | 97 | 22.0 | 22.0 | 29.9 |
 | INV/SHORT|edge=1 | 40 | 77.5 | 0.356 | 0.294 | 2.58 | 2.18 | 9 | 44.5 | 80.0 | 11.1 |
-| RETEST/LONG|edge=-1 | 6235 | 50.8 | 0.104 | -0.004 | 1.22 | 0.99 | 2868 | 33.0 | 42.0 | 55.3 |
+| RETEST/LONG|edge=-1 | 6236 | 50.8 | 0.104 | -0.004 | 1.22 | 0.99 | 2868 | 33.0 | 42.0 | 55.3 |
 | RETEST/LONG|edge=0 | 14971 | 48.8 | 0.046 | -0.11 | 1.1 | 0.8 | 6889 | 18.0 | 13.0 | 38.0 |
 | RETEST/LONG|edge=1 | 18831 | 44.0 | 0.036 | -0.095 | 1.07 | 0.83 | 9033 | 20.0 | 14.0 | 29.9 |
 | RETEST/SHORT|edge=-1 | 17113 | 43.5 | 0.041 | -0.06 | 1.08 | 0.89 | 8119 | 27.0 | 18.0 | 30.2 |
 | RETEST/SHORT|edge=0 | 12049 | 49.6 | 0.091 | -0.025 | 1.19 | 0.95 | 5360 | 24.0 | 16.0 | 38.9 |
-| RETEST/SHORT|edge=1 | 5550 | 53.5 | 0.134 | 0.028 | 1.3 | 1.06 | 2411 | 34.0 | 39.0 | 60.8 |
+| RETEST/SHORT|edge=1 | 5552 | 53.5 | 0.134 | 0.028 | 1.3 | 1.06 | 2412 | 34.0 | 39.0 | 60.8 |
 
 ## Por kind/side x tier
 | seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
@@ -150,10 +150,10 @@
 | INV/SHORT|tier=C | 508 | 51.8 | 0.173 | 0.083 | 1.45 | 1.2 | 182 | 27.0 | 26.0 | 29.1 |
 | RETEST/LONG|tier=A+ | 2713 | 23.4 | 0.06 | -0.1 | 1.09 | 0.87 | 1768 | 26.0 | 12.0 | 17.5 |
 | RETEST/LONG|tier=B | 16894 | 47.5 | 0.045 | -0.096 | 1.09 | 0.82 | 7805 | 19.0 | 13.0 | 38.5 |
-| RETEST/LONG|tier=C | 20430 | 49.5 | 0.054 | -0.077 | 1.11 | 0.85 | 9217 | 23.0 | 19.0 | 38.9 |
+| RETEST/LONG|tier=C | 20431 | 49.5 | 0.054 | -0.077 | 1.11 | 0.85 | 9217 | 23.0 | 19.0 | 38.9 |
 | RETEST/SHORT|tier=A+ | 2211 | 23.6 | 0.039 | -0.072 | 1.06 | 0.9 | 1400 | 42.0 | 18.0 | 23.4 |
-| RETEST/SHORT|tier=B | 14997 | 47.2 | 0.045 | -0.067 | 1.09 | 0.87 | 6871 | 23.0 | 16.0 | 36.4 |
-| RETEST/SHORT|tier=C | 17504 | 50.2 | 0.102 | 0.001 | 1.22 | 1.0 | 7619 | 28.0 | 22.0 | 41.7 |
+| RETEST/SHORT|tier=B | 14998 | 47.2 | 0.045 | -0.067 | 1.09 | 0.87 | 6872 | 23.0 | 16.0 | 36.5 |
+| RETEST/SHORT|tier=C | 17505 | 50.2 | 0.102 | 0.001 | 1.22 | 1.0 | 7619 | 28.0 | 22.0 | 41.7 |
 
 ## Por kind/side x aligned
 | seg | n | WR TP1 | E[R] bruto | E[R] neto | PF | PF neto | SL | MFE p50 | winMAE p75 | rev% |
@@ -162,20 +162,20 @@
 | INV/LONG|aligned=1 | 873 | 49.0 | 0.094 | -0.028 | 1.22 | 0.94 | 353 | 18.0 | 14.0 | 19.3 |
 | INV/SHORT|aligned=0 | 21 | 76.2 | 0.17 | 0.132 | 1.72 | 1.53 | 5 | 45.0 | 86.75 | 20.0 |
 | INV/SHORT|aligned=1 | 743 | 49.9 | 0.171 | 0.077 | 1.44 | 1.18 | 274 | 26.0 | 18.0 | 22.6 |
-| RETEST/LONG|aligned=0 | 3947 | 51.9 | 0.115 | 0.027 | 1.25 | 1.05 | 1801 | 45.0 | 63.0 | 61.0 |
+| RETEST/LONG|aligned=0 | 3948 | 51.9 | 0.115 | 0.027 | 1.25 | 1.05 | 1801 | 45.0 | 63.0 | 61.0 |
 | RETEST/LONG|aligned=1 | 36090 | 46.3 | 0.043 | -0.099 | 1.09 | 0.82 | 16989 | 19.0 | 14.0 | 34.2 |
-| RETEST/SHORT|aligned=0 | 3973 | 54.7 | 0.142 | 0.041 | 1.33 | 1.08 | 1698 | 37.0 | 56.0 | 64.8 |
+| RETEST/SHORT|aligned=0 | 3975 | 54.7 | 0.142 | 0.041 | 1.32 | 1.08 | 1699 | 37.0 | 56.0 | 64.9 |
 | RETEST/SHORT|aligned=1 | 30739 | 46.2 | 0.064 | -0.043 | 1.13 | 0.92 | 14192 | 26.0 | 17.0 | 34.6 |
 
 ## Autopsia de SL
-n_losses=35320  causas: RR-bajo×13850, stop-en-el-minimo×13045, contra-estructura×12846, killzone-Asia-largo×6785, estirado×6088, sin-nivel-detras×5349, chop×5271, SL-muy-pegado×4285, sin-causa-clara×3547, contra-sesgo×3512
+n_losses=35321  causas: RR-bajo×13850, stop-en-el-minimo×13046, contra-estructura×12847, killzone-Asia-largo×6785, estirado×6088, sin-nivel-detras×5349, chop×5271, SL-muy-pegado×4285, sin-causa-clara×3547, contra-sesgo×3513
 - INV/LONG (n=361): killzone-Asia-largo×171, RR-bajo×141, contra-estructura×120, estirado×80, stop-en-el-minimo×72, sin-nivel-detras×44, SL-muy-pegado×43, chop×42, sin-causa-clara×25, contra-sesgo×8
 - INV/SHORT (n=279): RR-bajo×123, contra-estructura×80, stop-en-el-minimo×63, estirado×50, sin-causa-clara×47, SL-muy-pegado×39, chop×33, sin-nivel-detras×27, contra-sesgo×5
 - RETEST/LONG (n=18790): RR-bajo×7410, contra-estructura×7103, stop-en-el-minimo×6905, killzone-Asia-largo×6614, estirado×3267, sin-nivel-detras×2994, chop×2748, SL-muy-pegado×2137, contra-sesgo×1801, sin-causa-clara×1490
-- RETEST/SHORT (n=15890): RR-bajo×6176, stop-en-el-minimo×6005, contra-estructura×5543, estirado×2691, chop×2448, sin-nivel-detras×2284, SL-muy-pegado×2066, sin-causa-clara×1985, contra-sesgo×1698
+- RETEST/SHORT (n=15891): RR-bajo×6176, stop-en-el-minimo×6006, contra-estructura×5544, estirado×2691, chop×2448, sin-nivel-detras×2284, SL-muy-pegado×2066, sin-causa-clara×1985, contra-sesgo×1699
 
 ## Autopsia de SL · semana 2026-W47 (para revision semanal)
-n_losses=4589  causas: stop-en-el-minimo×1905, RR-bajo×1879, contra-estructura×1745, contra-sesgo×779, estirado×758, chop×734, sin-nivel-detras×570, SL-muy-pegado×559, sin-causa-clara×454, killzone-Asia-largo×426
+n_losses=4590  causas: stop-en-el-minimo×1906, RR-bajo×1879, contra-estructura×1746, contra-sesgo×780, estirado×758, chop×734, sin-nivel-detras×570, SL-muy-pegado×559, sin-causa-clara×454, killzone-Asia-largo×426
 ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1-23696-S", "ES-1-23699-S", "GC-1-23700-S"], "RR-bajo": ["GC-2-22086-S", "ES-1-23696-S", "ES-1-23699-S", "GC-1-23700-S", "ES-1-23747-S"], "contra-estructura": ["GC-2-22086-S", "ES-1-23720-S", "NQ-1-23724-S", "NQ-1-23727-S", "ES-1-23747-S"]}
 
 ## Autopsia de SL · tendencia semanal de causas (% de las perdidas de esa semana)
@@ -283,7 +283,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     }
   },
   "2026-W47": {
-    "n_losses": 4589,
+    "n_losses": 4590,
     "causes_pct": {
       "stop-en-el-minimo": 41.5,
       "RR-bajo": 40.9,
@@ -337,7 +337,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
 ```json
 {
   "overall": {
-    "n": 73749,
+    "n": 73752,
     "naive_expR": 0.062,
     "managed_expR": 0.114,
     "delta": 0.052,
@@ -390,13 +390,13 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "beAfterM1_rate": 17.6
     },
     "15m/RETEST/SHORT": {
-      "n": 1069,
-      "naive_expR": 0.207,
-      "managed_expR": 0.057,
+      "n": 1070,
+      "naive_expR": 0.206,
+      "managed_expR": 0.056,
       "delta": -0.15,
       "avgEntryBetterTk_p50": 0.0,
       "fill_t3plus_pct": 26.4,
-      "fill_full_pct": 16.5,
+      "fill_full_pct": 16.4,
       "m1_rate": 38.6,
       "m2_rate": 22.0,
       "m3_rate": 13.1,
@@ -637,12 +637,12 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "beAfterM1_rate": 13.0
     },
     "5m/RETEST/LONG": {
-      "n": 4738,
+      "n": 4739,
       "naive_expR": 0.104,
       "managed_expR": 0.066,
       "delta": -0.038,
       "avgEntryBetterTk_p50": 1.9,
-      "fill_t3plus_pct": 35.1,
+      "fill_t3plus_pct": 35.2,
       "fill_full_pct": 24.7,
       "m1_rate": 37.1,
       "m2_rate": 21.8,
@@ -650,7 +650,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "beAfterM1_rate": 20.2
     },
     "5m/RETEST/SHORT": {
-      "n": 3915,
+      "n": 3916,
       "naive_expR": 0.121,
       "managed_expR": 0.101,
       "delta": -0.02,
@@ -660,7 +660,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "m1_rate": 36.9,
       "m2_rate": 21.9,
       "m3_rate": 11.3,
-      "beAfterM1_rate": 19.8
+      "beAfterM1_rate": 19.9
     }
   }
 }
@@ -670,7 +670,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
 ```json
 {
   "overall": {
-    "n": 62661,
+    "n": 62664,
     "layer_expR": 0.061,
     "orig_expR": 0.245,
     "delta_orig_minus_layer": 0.184,
@@ -696,7 +696,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     "slOrigTk_p50": 12.0,
     "orig_wider_pct": 5.6,
     "orig_saved_from_SL": 207,
-    "orig_caused_SL": 8239
+    "orig_caused_SL": 8240
   },
   "note": "overall/by_tf_kind_side = solo build retestBar (legacy excluido)",
   "invalid_geometry": 4948,
@@ -779,7 +779,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "orig_caused_SL": 0
     },
     "retestBar": {
-      "n": 47110,
+      "n": 47113,
       "layer_expR": 0.064,
       "orig_expR": 0.254,
       "delta_orig_minus_layer": 0.19,
@@ -805,7 +805,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "slOrigTk_p50": 13.0,
       "orig_wider_pct": 6.7,
       "orig_saved_from_SL": 195,
-      "orig_caused_SL": 6060
+      "orig_caused_SL": 6061
     },
     "retestBar2": {
       "n": 14179,
@@ -923,31 +923,31 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "orig_caused_SL": 63
     },
     "15m/RETEST/SHORT": {
-      "n": 1020,
-      "layer_expR": 0.219,
-      "orig_expR": 0.37,
+      "n": 1021,
+      "layer_expR": 0.218,
+      "orig_expR": 0.369,
       "delta_orig_minus_layer": 0.151,
       "delta_ci90": [
-        0.037,
-        0.285
+        0.034,
+        0.284
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
-      "layer_expRnet": 0.172,
-      "orig_expRnet": 0.28,
-      "orig_medianRnet": 0.06,
+      "layer_expRnet": 0.171,
+      "orig_expRnet": 0.278,
+      "orig_medianRnet": 0.05,
       "delta_net": 0.107,
       "delta_net_ci90_days": [
         -0.018,
-        0.228
+        0.227
       ],
       "delta_net_beats_zero": false,
       "delta_net_below_zero": false,
-      "layer_wrTP1": 56.1,
+      "layer_wrTP1": 56.0,
       "orig_wrTP1": 49.3,
       "slTk_p50": 84.0,
-      "slOrigTk_p50": 77.5,
-      "orig_wider_pct": 27.1,
+      "slOrigTk_p50": 78.0,
+      "orig_wider_pct": 27.0,
       "orig_saved_from_SL": 22,
       "orig_caused_SL": 91
     },
@@ -1468,23 +1468,23 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "orig_caused_SL": 13
     },
     "5m/RETEST/LONG": {
-      "n": 4343,
+      "n": 4344,
       "layer_expR": 0.09,
       "orig_expR": 0.522,
       "delta_orig_minus_layer": 0.432,
       "delta_ci90": [
-        0.224,
-        0.729
+        0.223,
+        0.731
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
       "layer_expRnet": 0.025,
-      "orig_expRnet": 0.39,
+      "orig_expRnet": 0.389,
       "orig_medianRnet": -1.0,
       "delta_net": 0.365,
       "delta_net_ci90_days": [
-        0.152,
-        0.649
+        0.158,
+        0.645
       ],
       "delta_net_beats_zero": true,
       "delta_net_below_zero": false,
@@ -1494,16 +1494,16 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "slOrigTk_p50": 37.0,
       "orig_wider_pct": 14.0,
       "orig_saved_from_SL": 35,
-      "orig_caused_SL": 389
+      "orig_caused_SL": 390
     },
     "5m/RETEST/SHORT": {
-      "n": 3627,
+      "n": 3628,
       "layer_expR": 0.112,
       "orig_expR": 0.507,
       "delta_orig_minus_layer": 0.394,
       "delta_ci90": [
-        0.239,
-        0.591
+        0.24,
+        0.59
       ],
       "delta_beats_zero": true,
       "delta_below_zero": false,
@@ -1584,7 +1584,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "orig_caused_SL": 0
     },
     "retestBar": {
-      "n": 41318,
+      "n": 41320,
       "layer_expR": 0.061,
       "orig_expR": 0.106,
       "delta_orig_minus_layer": 0.044,
@@ -1644,7 +1644,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
   },
   "since_change": {
     "changeDate": "2026-09-26",
-    "n": 48342,
+    "n": 48345,
     "by_tf_kind_side": {
       "15m/INV/LONG": {
         "n": 10,
@@ -1731,31 +1731,31 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
         "orig_caused_SL": 63
       },
       "15m/RETEST/SHORT": {
-        "n": 1020,
-        "layer_expR": 0.219,
-        "orig_expR": 0.37,
+        "n": 1021,
+        "layer_expR": 0.218,
+        "orig_expR": 0.369,
         "delta_orig_minus_layer": 0.151,
         "delta_ci90": [
-          0.037,
-          0.285
+          0.034,
+          0.284
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
-        "layer_expRnet": 0.172,
-        "orig_expRnet": 0.28,
-        "orig_medianRnet": 0.06,
+        "layer_expRnet": 0.171,
+        "orig_expRnet": 0.278,
+        "orig_medianRnet": 0.05,
         "delta_net": 0.107,
         "delta_net_ci90_days": [
           -0.018,
-          0.228
+          0.227
         ],
         "delta_net_beats_zero": false,
         "delta_net_below_zero": false,
-        "layer_wrTP1": 56.1,
+        "layer_wrTP1": 56.0,
         "orig_wrTP1": 49.3,
         "slTk_p50": 84.0,
-        "slOrigTk_p50": 77.5,
-        "orig_wider_pct": 27.1,
+        "slOrigTk_p50": 78.0,
+        "orig_wider_pct": 27.0,
         "orig_saved_from_SL": 22,
         "orig_caused_SL": 91
       },
@@ -2276,42 +2276,42 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
         "orig_caused_SL": 10
       },
       "5m/RETEST/LONG": {
-        "n": 3420,
+        "n": 3421,
         "layer_expR": 0.081,
         "orig_expR": 0.588,
-        "delta_orig_minus_layer": 0.507,
+        "delta_orig_minus_layer": 0.506,
         "delta_ci90": [
           0.241,
-          0.883
+          0.885
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
         "layer_expRnet": 0.026,
         "orig_expRnet": 0.474,
         "orig_medianRnet": -1.0,
-        "delta_net": 0.449,
+        "delta_net": 0.448,
         "delta_net_ci90_days": [
-          0.182,
-          0.823
+          0.186,
+          0.828
         ],
         "delta_net_beats_zero": true,
         "delta_net_below_zero": false,
         "layer_wrTP1": 52.5,
-        "orig_wrTP1": 44.6,
+        "orig_wrTP1": 44.5,
         "slTk_p50": 76.0,
         "slOrigTk_p50": 52.0,
         "orig_wider_pct": 13.2,
         "orig_saved_from_SL": 28,
-        "orig_caused_SL": 300
+        "orig_caused_SL": 301
       },
       "5m/RETEST/SHORT": {
-        "n": 3051,
-        "layer_expR": 0.124,
+        "n": 3052,
+        "layer_expR": 0.125,
         "orig_expR": 0.567,
         "delta_orig_minus_layer": 0.443,
         "delta_ci90": [
-          0.261,
-          0.66
+          0.26,
+          0.662
         ],
         "delta_beats_zero": true,
         "delta_below_zero": false,
@@ -2334,7 +2334,671 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
         "orig_caused_SL": 319
       }
     },
-    "note": "emparejado (rOrig vs rMultiple) solo con recvDate >= changeDate; compara contra by_tf_kind_side (todo el historico) para ver si el efecto se mantiene, se encoge (optimismo in-sample esperable) o se invierte en la ventana nueva. NO confundir con prediction_scoreboard."
+    "by_tf_kind_side_min_stop": {
+      "15m/INV/LONG": {
+        "n": 10,
+        "layer_expR": 0.268,
+        "orig_expR": 0.851,
+        "delta_orig_minus_layer": 0.583,
+        "delta_ci90": [
+          -0.384,
+          1.658
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.234,
+        "orig_expRnet": 0.729,
+        "orig_medianRnet": -0.395,
+        "delta_net": 0.495,
+        "delta_net_ci90_days": [
+          -0.42,
+          1.314
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 70.0,
+        "orig_wrTP1": 50.0,
+        "slTk_p50": 51.5,
+        "slOrigTk_p50": 14.5,
+        "orig_wider_pct": 30.0,
+        "orig_saved_from_SL": 0,
+        "orig_caused_SL": 2
+      },
+      "15m/RETEST/LONG": {
+        "n": 1095,
+        "layer_expR": 0.085,
+        "orig_expR": 0.234,
+        "delta_orig_minus_layer": 0.149,
+        "delta_ci90": [
+          0.095,
+          0.205
+        ],
+        "delta_beats_zero": true,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.04,
+        "orig_expRnet": 0.164,
+        "orig_medianRnet": 0.12,
+        "delta_net": 0.124,
+        "delta_net_ci90_days": [
+          0.063,
+          0.194
+        ],
+        "delta_net_beats_zero": true,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 52.6,
+        "orig_wrTP1": 50.6,
+        "slTk_p50": 80.0,
+        "slOrigTk_p50": 84.0,
+        "orig_wider_pct": 32.4,
+        "orig_saved_from_SL": 30,
+        "orig_caused_SL": 52
+      },
+      "15m/RETEST/SHORT": {
+        "n": 967,
+        "layer_expR": 0.208,
+        "orig_expR": 0.22,
+        "delta_orig_minus_layer": 0.013,
+        "delta_ci90": [
+          -0.058,
+          0.081
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.161,
+        "orig_expRnet": 0.145,
+        "orig_medianRnet": 0.123,
+        "delta_net": -0.016,
+        "delta_net_ci90_days": [
+          -0.092,
+          0.046
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 55.9,
+        "orig_wrTP1": 50.6,
+        "slTk_p50": 88.0,
+        "slOrigTk_p50": 82.0,
+        "orig_wider_pct": 28.5,
+        "orig_saved_from_SL": 22,
+        "orig_caused_SL": 74
+      },
+      "1m/INV/LONG": {
+        "n": 254,
+        "layer_expR": 0.082,
+        "orig_expR": 0.164,
+        "delta_orig_minus_layer": 0.082,
+        "delta_ci90": [
+          -0.113,
+          0.28
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": -0.046,
+        "orig_expRnet": -0.233,
+        "orig_medianRnet": -1.222,
+        "delta_net": -0.186,
+        "delta_net_ci90_days": [
+          -0.382,
+          0.018
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 46.5,
+        "orig_wrTP1": 27.6,
+        "slTk_p50": 18.0,
+        "slOrigTk_p50": 6.0,
+        "orig_wider_pct": 1.2,
+        "orig_saved_from_SL": 0,
+        "orig_caused_SL": 48
+      },
+      "1m/INV/SHORT": {
+        "n": 209,
+        "layer_expR": 0.215,
+        "orig_expR": 0.186,
+        "delta_orig_minus_layer": -0.029,
+        "delta_ci90": [
+          -0.225,
+          0.176
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.114,
+        "orig_expRnet": -0.122,
+        "orig_medianRnet": -1.154,
+        "delta_net": -0.236,
+        "delta_net_ci90_days": [
+          -0.45,
+          -0.022
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": true,
+        "layer_wrTP1": 50.7,
+        "orig_wrTP1": 31.6,
+        "slTk_p50": 25.0,
+        "slOrigTk_p50": 8.0,
+        "orig_wider_pct": 1.9,
+        "orig_saved_from_SL": 2,
+        "orig_caused_SL": 42
+      },
+      "1m/RETEST/LONG": {
+        "n": 8541,
+        "layer_expR": 0.014,
+        "orig_expR": 0.039,
+        "delta_orig_minus_layer": 0.025,
+        "delta_ci90": [
+          0.001,
+          0.05
+        ],
+        "delta_beats_zero": true,
+        "delta_below_zero": false,
+        "layer_expRnet": -0.122,
+        "orig_expRnet": -0.267,
+        "orig_medianRnet": -1.118,
+        "delta_net": -0.145,
+        "delta_net_ci90_days": [
+          -0.18,
+          -0.107
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": true,
+        "layer_wrTP1": 44.6,
+        "orig_wrTP1": 32.0,
+        "slTk_p50": 17.0,
+        "slOrigTk_p50": 9.0,
+        "orig_wider_pct": 1.5,
+        "orig_saved_from_SL": 3,
+        "orig_caused_SL": 1077
+      },
+      "1m/RETEST/SHORT": {
+        "n": 9185,
+        "layer_expR": 0.039,
+        "orig_expR": 0.052,
+        "delta_orig_minus_layer": 0.013,
+        "delta_ci90": [
+          -0.007,
+          0.033
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": -0.066,
+        "orig_expRnet": -0.152,
+        "orig_medianRnet": -1.053,
+        "delta_net": -0.086,
+        "delta_net_ci90_days": [
+          -0.112,
+          -0.061
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": true,
+        "layer_wrTP1": 45.5,
+        "orig_wrTP1": 36.0,
+        "slTk_p50": 23.0,
+        "slOrigTk_p50": 15.0,
+        "orig_wider_pct": 2.4,
+        "orig_saved_from_SL": 8,
+        "orig_caused_SL": 882
+      },
+      "29m/INV/LONG": {
+        "n": 5,
+        "layer_expR": 0.36,
+        "orig_expR": 0.85,
+        "delta_orig_minus_layer": 0.49,
+        "delta_ci90": [
+          null,
+          null
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.358,
+        "orig_expRnet": 0.848,
+        "orig_medianRnet": 0.48,
+        "delta_net": null,
+        "delta_net_ci90_days": null,
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 80.0,
+        "orig_wrTP1": 80.0,
+        "slTk_p50": 926.0,
+        "slOrigTk_p50": 1429.0,
+        "orig_wider_pct": 60.0,
+        "orig_saved_from_SL": 0,
+        "orig_caused_SL": 0
+      },
+      "29m/INV/SHORT": {
+        "n": 5,
+        "layer_expR": 0.358,
+        "orig_expR": -0.51,
+        "delta_orig_minus_layer": -0.868,
+        "delta_ci90": [
+          null,
+          null
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.344,
+        "orig_expRnet": -0.565,
+        "orig_medianRnet": -1.024,
+        "delta_net": null,
+        "delta_net_ci90_days": null,
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 80.0,
+        "orig_wrTP1": 20.0,
+        "slTk_p50": 191.0,
+        "slOrigTk_p50": 85.0,
+        "orig_wider_pct": 20.0,
+        "orig_saved_from_SL": 0,
+        "orig_caused_SL": 3
+      },
+      "29m/RETEST/LONG": {
+        "n": 482,
+        "layer_expR": 0.261,
+        "orig_expR": 0.338,
+        "delta_orig_minus_layer": 0.077,
+        "delta_ci90": [
+          -0.028,
+          0.18
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.222,
+        "orig_expRnet": 0.288,
+        "orig_medianRnet": 0.188,
+        "delta_net": 0.066,
+        "delta_net_ci90_days": [
+          -0.037,
+          0.166
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 55.2,
+        "orig_wrTP1": 56.4,
+        "slTk_p50": 79.0,
+        "slOrigTk_p50": 128.5,
+        "orig_wider_pct": 52.7,
+        "orig_saved_from_SL": 19,
+        "orig_caused_SL": 13
+      },
+      "29m/RETEST/SHORT": {
+        "n": 528,
+        "layer_expR": 0.212,
+        "orig_expR": 0.275,
+        "delta_orig_minus_layer": 0.063,
+        "delta_ci90": [
+          -0.025,
+          0.151
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.169,
+        "orig_expRnet": 0.216,
+        "orig_medianRnet": 0.215,
+        "delta_net": 0.047,
+        "delta_net_ci90_days": [
+          -0.05,
+          0.133
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 54.4,
+        "orig_wrTP1": 55.1,
+        "slTk_p50": 77.0,
+        "slOrigTk_p50": 108.5,
+        "orig_wider_pct": 43.4,
+        "orig_saved_from_SL": 28,
+        "orig_caused_SL": 24
+      },
+      "2m/INV/LONG": {
+        "n": 109,
+        "layer_expR": 0.066,
+        "orig_expR": 0.422,
+        "delta_orig_minus_layer": 0.356,
+        "delta_ci90": [
+          -0.066,
+          0.904
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": -0.025,
+        "orig_expRnet": 0.101,
+        "orig_medianRnet": -1.154,
+        "delta_net": 0.125,
+        "delta_net_ci90_days": [
+          -0.281,
+          0.579
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 56.0,
+        "orig_wrTP1": 33.0,
+        "slTk_p50": 28.0,
+        "slOrigTk_p50": 10.0,
+        "orig_wider_pct": 2.8,
+        "orig_saved_from_SL": 0,
+        "orig_caused_SL": 25
+      },
+      "2m/INV/SHORT": {
+        "n": 83,
+        "layer_expR": 0.108,
+        "orig_expR": 0.039,
+        "delta_orig_minus_layer": -0.069,
+        "delta_ci90": [
+          -0.299,
+          0.169
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.034,
+        "orig_expRnet": -0.223,
+        "orig_medianRnet": -1.1,
+        "delta_net": -0.257,
+        "delta_net_ci90_days": [
+          -0.472,
+          -0.018
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": true,
+        "layer_wrTP1": 57.8,
+        "orig_wrTP1": 34.9,
+        "slTk_p50": 32.0,
+        "slOrigTk_p50": 9.0,
+        "orig_wider_pct": 4.8,
+        "orig_saved_from_SL": 0,
+        "orig_caused_SL": 19
+      },
+      "2m/RETEST/LONG": {
+        "n": 4546,
+        "layer_expR": 0.019,
+        "orig_expR": 0.039,
+        "delta_orig_minus_layer": 0.02,
+        "delta_ci90": [
+          -0.007,
+          0.047
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": -0.101,
+        "orig_expRnet": -0.204,
+        "orig_medianRnet": -1.067,
+        "delta_net": -0.102,
+        "delta_net_ci90_days": [
+          -0.131,
+          -0.073
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": true,
+        "layer_wrTP1": 48.9,
+        "orig_wrTP1": 37.7,
+        "slTk_p50": 21.0,
+        "slOrigTk_p50": 12.0,
+        "orig_wider_pct": 4.3,
+        "orig_saved_from_SL": 3,
+        "orig_caused_SL": 516
+      },
+      "2m/RETEST/SHORT": {
+        "n": 4460,
+        "layer_expR": 0.046,
+        "orig_expR": 0.054,
+        "delta_orig_minus_layer": 0.008,
+        "delta_ci90": [
+          -0.023,
+          0.039
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": -0.045,
+        "orig_expRnet": -0.135,
+        "orig_medianRnet": -1.051,
+        "delta_net": -0.09,
+        "delta_net_ci90_days": [
+          -0.123,
+          -0.052
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": true,
+        "layer_wrTP1": 49.1,
+        "orig_wrTP1": 37.0,
+        "slTk_p50": 28.0,
+        "slOrigTk_p50": 17.0,
+        "orig_wider_pct": 3.5,
+        "orig_saved_from_SL": 10,
+        "orig_caused_SL": 549
+      },
+      "3m/INV/LONG": {
+        "n": 30,
+        "layer_expR": -0.047,
+        "orig_expR": 0.013,
+        "delta_orig_minus_layer": 0.06,
+        "delta_ci90": [
+          -0.289,
+          0.457
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": -0.113,
+        "orig_expRnet": -0.268,
+        "orig_medianRnet": -1.115,
+        "delta_net": -0.156,
+        "delta_net_ci90_days": [
+          -0.48,
+          0.171
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 60.0,
+        "orig_wrTP1": 36.7,
+        "slTk_p50": 35.0,
+        "slOrigTk_p50": 8.0,
+        "orig_wider_pct": 6.7,
+        "orig_saved_from_SL": 0,
+        "orig_caused_SL": 7
+      },
+      "3m/INV/SHORT": {
+        "n": 20,
+        "layer_expR": 0.349,
+        "orig_expR": 0.537,
+        "delta_orig_minus_layer": 0.189,
+        "delta_ci90": [
+          -0.384,
+          0.813
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.298,
+        "orig_expRnet": 0.307,
+        "orig_medianRnet": -0.28,
+        "delta_net": 0.009,
+        "delta_net_ci90_days": [
+          -0.561,
+          0.514
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 90.0,
+        "orig_wrTP1": 50.0,
+        "slTk_p50": 38.5,
+        "slOrigTk_p50": 8.0,
+        "orig_wider_pct": 0.0,
+        "orig_saved_from_SL": 0,
+        "orig_caused_SL": 8
+      },
+      "3m/RETEST/LONG": {
+        "n": 2802,
+        "layer_expR": 0.046,
+        "orig_expR": 0.118,
+        "delta_orig_minus_layer": 0.072,
+        "delta_ci90": [
+          0.035,
+          0.107
+        ],
+        "delta_beats_zero": true,
+        "delta_below_zero": false,
+        "layer_expRnet": -0.051,
+        "orig_expRnet": -0.081,
+        "orig_medianRnet": -1.036,
+        "delta_net": -0.03,
+        "delta_net_ci90_days": [
+          -0.057,
+          -0.002
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": true,
+        "layer_wrTP1": 53.0,
+        "orig_wrTP1": 41.6,
+        "slTk_p50": 26.0,
+        "slOrigTk_p50": 15.0,
+        "orig_wider_pct": 5.4,
+        "orig_saved_from_SL": 7,
+        "orig_caused_SL": 327
+      },
+      "3m/RETEST/SHORT": {
+        "n": 2524,
+        "layer_expR": 0.12,
+        "orig_expR": 0.161,
+        "delta_orig_minus_layer": 0.041,
+        "delta_ci90": [
+          0.002,
+          0.081
+        ],
+        "delta_beats_zero": true,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.023,
+        "orig_expRnet": -0.041,
+        "orig_medianRnet": -1.034,
+        "delta_net": -0.064,
+        "delta_net_ci90_days": [
+          -0.107,
+          -0.023
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": true,
+        "layer_wrTP1": 56.0,
+        "orig_wrTP1": 43.0,
+        "slTk_p50": 26.0,
+        "slOrigTk_p50": 15.0,
+        "orig_wider_pct": 3.6,
+        "orig_saved_from_SL": 7,
+        "orig_caused_SL": 336
+      },
+      "5m/INV/LONG": {
+        "n": 42,
+        "layer_expR": 0.028,
+        "orig_expR": 0.179,
+        "delta_orig_minus_layer": 0.151,
+        "delta_ci90": [
+          -0.187,
+          0.548
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": -0.02,
+        "orig_expRnet": 0.025,
+        "orig_medianRnet": 0.017,
+        "delta_net": 0.045,
+        "delta_net_ci90_days": [
+          -0.375,
+          0.442
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 69.0,
+        "orig_wrTP1": 52.4,
+        "slTk_p50": 42.0,
+        "slOrigTk_p50": 17.0,
+        "orig_wider_pct": 11.9,
+        "orig_saved_from_SL": 0,
+        "orig_caused_SL": 7
+      },
+      "5m/INV/SHORT": {
+        "n": 25,
+        "layer_expR": 0.226,
+        "orig_expR": 0.138,
+        "delta_orig_minus_layer": -0.088,
+        "delta_ci90": [
+          -0.577,
+          0.472
+        ],
+        "delta_beats_zero": false,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.184,
+        "orig_expRnet": -0.019,
+        "orig_medianRnet": -1.001,
+        "delta_net": -0.203,
+        "delta_net_ci90_days": [
+          -0.895,
+          0.587
+        ],
+        "delta_net_beats_zero": false,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 56.0,
+        "orig_wrTP1": 36.0,
+        "slTk_p50": 69.0,
+        "slOrigTk_p50": 15.0,
+        "orig_wider_pct": 12.0,
+        "orig_saved_from_SL": 0,
+        "orig_caused_SL": 5
+      },
+      "5m/RETEST/LONG": {
+        "n": 3101,
+        "layer_expR": 0.082,
+        "orig_expR": 0.179,
+        "delta_orig_minus_layer": 0.097,
+        "delta_ci90": [
+          0.067,
+          0.127
+        ],
+        "delta_beats_zero": true,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.024,
+        "orig_expRnet": 0.08,
+        "orig_medianRnet": -1.0,
+        "delta_net": 0.055,
+        "delta_net_ci90_days": [
+          0.022,
+          0.09
+        ],
+        "delta_net_beats_zero": true,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 53.4,
+        "orig_wrTP1": 46.8,
+        "slTk_p50": 69.0,
+        "slOrigTk_p50": 56.0,
+        "orig_wider_pct": 14.6,
+        "orig_saved_from_SL": 28,
+        "orig_caused_SL": 231
+      },
+      "5m/RETEST/SHORT": {
+        "n": 2782,
+        "layer_expR": 0.114,
+        "orig_expR": 0.209,
+        "delta_orig_minus_layer": 0.095,
+        "delta_ci90": [
+          0.053,
+          0.14
+        ],
+        "delta_beats_zero": true,
+        "delta_below_zero": false,
+        "layer_expRnet": 0.064,
+        "orig_expRnet": 0.119,
+        "orig_medianRnet": -1.0,
+        "delta_net": 0.056,
+        "delta_net_ci90_days": [
+          0.004,
+          0.106
+        ],
+        "delta_net_beats_zero": true,
+        "delta_net_below_zero": false,
+        "layer_wrTP1": 53.6,
+        "orig_wrTP1": 45.5,
+        "slTk_p50": 72.0,
+        "slOrigTk_p50": 58.0,
+        "orig_wider_pct": 13.5,
+        "orig_saved_from_SL": 17,
+        "orig_caused_SL": 244
+      }
+    },
+    "min_stop_atr1m": 0.3,
+    "note": "emparejado (rOrig vs rMultiple) solo con recvDate >= changeDate; compara contra by_tf_kind_side (todo el historico) para ver si el efecto se mantiene, se encoge (optimismo in-sample esperable) o se invierte en la ventana nueva. NO confundir con prediction_scoreboard. by_tf_kind_side_min_stop excluye stops estructurales <0.3 ATR(1m) y es NETO -- es el corte de confianza, by_tf_kind_side es solo referencia (inflado por artefactos de stop de 1-3 ticks, ver 2026-11-21/22)."
   }
 }
 ```
@@ -3022,76 +3686,76 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
   },
   "15/RETEST/SHORT": {
     "baseline": {
-      "n": 1064,
+      "n": 1065,
       "wrTP1": 55.5,
-      "nSL": 437,
+      "nSL": 438,
       "nTO": 36,
-      "expR": 0.206,
-      "pf": 1.49,
-      "expRnet": 0.159,
+      "expR": 0.205,
+      "pf": 1.48,
+      "expRnet": 0.157,
       "pfNet": 1.35,
       "mfe_p25": 37.0,
       "mfe_p50": 139.0,
-      "mfe_p75": 945.0,
+      "mfe_p75": 943.5,
       "winnerMAE_p75": 207.5,
       "winnerMAE_p90": 4394.0,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -191.0,
-      "revAfterSL_rate": 70.7,
+      "entryZoneTk_p50": -192.0,
+      "revAfterSL_rate": 70.8,
       "ci90": {
-        "expR": 0.206,
+        "expR": 0.205,
         "ci90": [
-          0.127,
-          0.303
+          0.126,
+          0.302
         ],
         "p_mean_le_0": 0.0,
-        "expRnet": 0.159,
+        "expRnet": 0.157,
         "ci90net": [
-          0.078,
-          0.259
+          0.076,
+          0.257
         ],
         "p_net_le_0": 0.0,
-        "n": 1029,
+        "n": 1030,
         "days": 27,
         "ci_method": "day-clustered bootstrap"
       }
     },
     "cuts": {
       "1.0": {
-        "n": 377,
-        "wrTP1": 41.1,
-        "nSL": 206,
+        "n": 378,
+        "wrTP1": 41.0,
+        "nSL": 207,
         "nTO": 16,
-        "expR": 0.362,
-        "pf": 1.64,
-        "expRnet": 0.305,
-        "pfNet": 1.51,
-        "mfe_p25": 52.25,
+        "expR": 0.358,
+        "pf": 1.63,
+        "expRnet": 0.302,
+        "pfNet": 1.5,
+        "mfe_p25": 52.5,
         "mfe_p50": 176.0,
-        "mfe_p75": 969.0,
+        "mfe_p75": 959.0,
         "winnerMAE_p75": 181.5,
         "winnerMAE_p90": 2769.3999999999996,
         "loserMFEbeforeSL_p50": 0.0,
         "bars_win_p50": 1.0,
         "bars_loss_p50": 1.0,
-        "entryZoneTk_p50": -229.0,
-        "revAfterSL_rate": 63.1,
+        "entryZoneTk_p50": -229.5,
+        "revAfterSL_rate": 63.3,
         "ci90": {
-          "expR": 0.362,
+          "expR": 0.358,
           "ci90": [
-            0.189,
-            0.58
+            0.186,
+            0.576
           ],
           "p_mean_le_0": 0.001,
-          "expRnet": 0.305,
+          "expRnet": 0.302,
           "ci90net": [
-            0.13,
-            0.528
+            0.126,
+            0.526
           ],
           "p_net_le_0": 0.002,
-          "n": 362,
+          "n": 363,
           "days": 26,
           "ci_method": "day-clustered bootstrap"
         }
@@ -4604,7 +5268,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
   },
   "5/RETEST/LONG": {
     "baseline": {
-      "n": 4747,
+      "n": 4748,
       "wrTP1": 52.9,
       "nSL": 2059,
       "nTO": 178,
@@ -4614,9 +5278,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "pfNet": 1.08,
       "mfe_p25": 20.0,
       "mfe_p50": 60.0,
-      "mfe_p75": 433.25,
-      "winnerMAE_p75": 82.5,
-      "winnerMAE_p90": 1677.3999999999978,
+      "mfe_p75": 434.0,
+      "winnerMAE_p75": 83.0,
+      "winnerMAE_p90": 1699.0,
       "loserMFEbeforeSL_p50": 1.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
@@ -4625,18 +5289,18 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "ci90": {
         "expR": 0.111,
         "ci90": [
-          0.075,
-          0.147
+          0.074,
+          0.146
         ],
         "p_mean_le_0": 0.0,
         "expRnet": 0.039,
         "ci90net": [
-          0.002,
-          0.076
+          0.0,
+          0.075
         ],
-        "p_net_le_0": 0.041,
-        "n": 4600,
-        "days": 72,
+        "p_net_le_0": 0.049,
+        "n": 4601,
+        "days": 73,
         "ci_method": "day-clustered bootstrap"
       }
     },
@@ -4830,7 +5494,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
   },
   "5/RETEST/SHORT": {
     "baseline": {
-      "n": 3883,
+      "n": 3884,
       "wrTP1": 53.5,
       "nSL": 1632,
       "nTO": 173,
@@ -4840,9 +5504,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "pfNet": 1.12,
       "mfe_p25": 24.0,
       "mfe_p50": 66.0,
-      "mfe_p75": 379.5,
+      "mfe_p75": 379.25,
       "winnerMAE_p75": 84.0,
-      "winnerMAE_p90": 1410.1999999999985,
+      "winnerMAE_p90": 1406.8000000000015,
       "loserMFEbeforeSL_p50": 2.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
@@ -4852,7 +5516,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
         "expR": 0.116,
         "ci90": [
           0.075,
-          0.157
+          0.158
         ],
         "p_mean_le_0": 0.0,
         "expRnet": 0.056,
@@ -4860,8 +5524,8 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
           0.013,
           0.1
         ],
-        "p_net_le_0": 0.019,
-        "n": 3731,
+        "p_net_le_0": 0.018,
+        "n": 3732,
         "days": 72,
         "ci_method": "day-clustered bootstrap"
       }
@@ -5633,13 +6297,13 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
   },
   "15/RETEST/SHORT": {
     "baseline": {
-      "n": 495,
-      "wrTP1": 57.2,
-      "nSL": 192,
+      "n": 496,
+      "wrTP1": 57.1,
+      "nSL": 193,
       "nTO": 20,
-      "expR": 0.204,
-      "pf": 1.51,
-      "expRnet": 0.147,
+      "expR": 0.202,
+      "pf": 1.5,
+      "expRnet": 0.145,
       "pfNet": 1.34,
       "mfe_p25": 30.0,
       "mfe_p50": 86.0,
@@ -5649,22 +6313,22 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 1.0,
-      "entryZoneTk_p50": -134.0,
-      "revAfterSL_rate": 69.3,
+      "entryZoneTk_p50": -135.0,
+      "revAfterSL_rate": 69.4,
       "ci90": {
-        "expR": 0.204,
+        "expR": 0.202,
         "ci90": [
-          0.094,
-          0.314
+          0.09,
+          0.311
         ],
         "p_mean_le_0": 0.001,
-        "expRnet": 0.147,
+        "expRnet": 0.145,
         "ci90net": [
-          0.032,
-          0.259
+          0.03,
+          0.256
         ],
-        "p_net_le_0": 0.018,
-        "n": 476,
+        "p_net_le_0": 0.021,
+        "n": 477,
         "days": 13,
         "ci_method": "day-clustered bootstrap"
       }
@@ -6956,39 +7620,39 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
   },
   "5/RETEST/LONG": {
     "baseline": {
-      "n": 1177,
+      "n": 1178,
       "wrTP1": 52.2,
       "nSL": 537,
       "nTO": 26,
       "expR": 0.133,
       "pf": 1.29,
-      "expRnet": 0.098,
-      "pfNet": 1.2,
-      "mfe_p25": 54.5,
-      "mfe_p50": 419.0,
-      "mfe_p75": 6834.0,
-      "winnerMAE_p75": 1003.0,
-      "winnerMAE_p90": 5735.100000000009,
+      "expRnet": 0.099,
+      "pfNet": 1.21,
+      "mfe_p25": 54.75,
+      "mfe_p50": 420.0,
+      "mfe_p75": 6817.0,
+      "winnerMAE_p75": 1015.0,
+      "winnerMAE_p90": 5818.200000000001,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
-      "entryZoneTk_p50": -869.0,
+      "entryZoneTk_p50": -869.5,
       "revAfterSL_rate": 54.9,
       "ci90": {
         "expR": 0.133,
         "ci90": [
-          0.056,
+          0.06,
           0.192
         ],
-        "p_mean_le_0": 0.005,
-        "expRnet": 0.098,
+        "p_mean_le_0": 0.003,
+        "expRnet": 0.099,
         "ci90net": [
-          0.02,
-          0.156
+          0.024,
+          0.157
         ],
-        "p_net_le_0": 0.021,
-        "n": 1159,
-        "days": 13,
+        "p_net_le_0": 0.018,
+        "n": 1160,
+        "days": 14,
         "ci_method": "day-clustered bootstrap"
       }
     },
@@ -7145,38 +7809,38 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
   },
   "5/RETEST/SHORT": {
     "baseline": {
-      "n": 1257,
+      "n": 1258,
       "wrTP1": 55.6,
       "nSL": 510,
       "nTO": 48,
       "expR": 0.124,
-      "pf": 1.29,
-      "expRnet": 0.086,
+      "pf": 1.3,
+      "expRnet": 0.087,
       "pfNet": 1.2,
       "mfe_p25": 41.0,
-      "mfe_p50": 215.0,
-      "mfe_p75": 1101.0,
-      "winnerMAE_p75": 214.5,
-      "winnerMAE_p90": 3426.600000000002,
+      "mfe_p50": 213.5,
+      "mfe_p75": 1094.5,
+      "winnerMAE_p75": 214.25,
+      "winnerMAE_p90": 3422.300000000001,
       "loserMFEbeforeSL_p50": 0.0,
       "bars_win_p50": 1.0,
       "bars_loss_p50": 2.0,
-      "entryZoneTk_p50": -305.0,
+      "entryZoneTk_p50": -306.0,
       "revAfterSL_rate": 61.8,
       "ci90": {
         "expR": 0.124,
         "ci90": [
           0.059,
-          0.188
+          0.189
         ],
-        "p_mean_le_0": 0.004,
-        "expRnet": 0.086,
+        "p_mean_le_0": 0.003,
+        "expRnet": 0.087,
         "ci90net": [
-          0.022,
-          0.149
+          0.023,
+          0.15
         ],
         "p_net_le_0": 0.015,
-        "n": 1213,
+        "n": 1214,
         "days": 14,
         "ci_method": "day-clustered bootstrap"
       }
@@ -7394,7 +8058,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     "expR": 0.094
   },
   "2026-W47": {
-    "n": 10044,
+    "n": 10047,
     "wrTP1": 47.9,
     "expR": 0.102
   }
@@ -8764,12 +9428,12 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "pfNet": 1.04
     },
     "15m/RETEST/SHORT": {
-      "n": 244,
-      "wrTP1": 59.4,
-      "expR": 0.387,
-      "pf": 2.12,
-      "expRnet": 0.335,
-      "pfNet": 1.92
+      "n": 245,
+      "wrTP1": 59.2,
+      "expR": 0.381,
+      "pf": 2.09,
+      "expRnet": 0.33,
+      "pfNet": 1.9
     },
     "1m/INV/LONG": {
       "n": 21,
@@ -8916,19 +9580,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "pfNet": 0.31
     },
     "5m/RETEST/LONG": {
-      "n": 411,
-      "wrTP1": 47.9,
-      "expR": 0.058,
+      "n": 412,
+      "wrTP1": 48.1,
+      "expR": 0.059,
       "pf": 1.12,
-      "expRnet": 0.041,
+      "expRnet": 0.042,
       "pfNet": 1.08
     },
     "5m/RETEST/SHORT": {
-      "n": 824,
+      "n": 825,
       "wrTP1": 54.9,
-      "expR": 0.207,
+      "expR": 0.208,
       "pf": 1.5,
-      "expRnet": 0.168,
+      "expRnet": 0.169,
       "pfNet": 1.39
     }
   }
@@ -8939,7 +9603,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
 ```json
 {
   "fitted": true,
-  "n": 71308,
+  "n": 71311,
   "brier": 0.2228,
   "bias": -0.067,
   "coefficients": [
@@ -8989,7 +9653,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     },
     {
       "feature": "emaStack",
-      "weight": 0.008
+      "weight": 0.009
     },
     {
       "feature": "structDir",
@@ -9001,12 +9665,12 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "bin": 0,
       "pred": 0.173,
       "actual": 0.184,
-      "n": 7130
+      "n": 7131
     },
     {
       "bin": 1,
       "pred": 0.372,
-      "actual": 0.326,
+      "actual": 0.325,
       "n": 7131
     },
     {
@@ -9018,7 +9682,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     {
       "bin": 3,
       "pred": 0.496,
-      "actual": 0.424,
+      "actual": 0.425,
       "n": 7131
     },
     {
@@ -9031,12 +9695,12 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "bin": 5,
       "pred": 0.563,
       "actual": 0.575,
-      "n": 7130
+      "n": 7131
     },
     {
       "bin": 6,
       "pred": 0.586,
-      "actual": 0.603,
+      "actual": 0.604,
       "n": 7131
     },
     {
@@ -9053,9 +9717,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     },
     {
       "bin": 9,
-      "pred": 0.653,
-      "actual": 0.752,
-      "n": 7131
+      "pred": 0.654,
+      "actual": 0.753,
+      "n": 7132
     }
   ],
   "note": "in-sample; interpretar signo/magnitud, no como verdad fuera de muestra hasta 200+"
@@ -9067,13 +9731,13 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
 {
   "ready": true,
   "trainN": 57852,
-  "testN": 18560,
+  "testN": 18563,
   "testWeeks": [
     "2026-W46",
     "2026-W47"
   ],
   "model_oos_brier": 0.2247,
-  "model_oos_n": 18560,
+  "model_oos_n": 18563,
   "best_scheme_in_sample": {
     "scheme": "fixed_2R",
     "trainExpR": 0.054
@@ -9124,19 +9788,19 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     "survives_fdr10_gross": true
   },
   "15m/RETEST/SHORT": {
-    "expR": 0.207,
+    "expR": 0.206,
     "ci90": [
-      0.125,
-      0.303
+      0.124,
+      0.301
     ],
     "p_mean_le_0": 0.0,
-    "expRnet": 0.16,
+    "expRnet": 0.159,
     "ci90net": [
-      0.076,
-      0.259
+      0.075,
+      0.257
     ],
     "p_net_le_0": 0.0,
-    "n": 1069,
+    "n": 1070,
     "days": 28,
     "ci_method": "day-clustered bootstrap",
     "survives_fdr10": true,
@@ -9449,18 +10113,18 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
   "5m/RETEST/LONG": {
     "expR": 0.104,
     "ci90": [
-      0.066,
-      0.142
+      0.065,
+      0.144
     ],
     "p_mean_le_0": 0.0,
     "expRnet": 0.033,
     "ci90net": [
-      -0.008,
-      0.073
+      -0.009,
+      0.074
     ],
-    "p_net_le_0": 0.09,
-    "n": 4738,
-    "days": 73,
+    "p_net_le_0": 0.086,
+    "n": 4739,
+    "days": 74,
     "ci_method": "day-clustered bootstrap",
     "survives_fdr10": false,
     "survives_fdr10_gross": true
@@ -9478,7 +10142,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       0.115
     ],
     "p_net_le_0": 0.022,
-    "n": 3916,
+    "n": 3917,
     "days": 72,
     "ci_method": "day-clustered bootstrap",
     "survives_fdr10": true,
@@ -9521,7 +10185,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     },
     {
       "id": 2,
-      "n": 22889,
+      "n": 22890,
       "wrTP1": 45.7,
       "expR": 0.067,
       "pf": 1.14,
@@ -9534,7 +10198,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     },
     {
       "id": 1,
-      "n": 33566,
+      "n": 33568,
       "wrTP1": 47.7,
       "expR": 0.054,
       "pf": 1.11,
@@ -9601,9 +10265,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
         "expR": 0.122
       },
       "ETHUSDT": {
-        "n": 196,
-        "wrTP1": 51.5,
-        "expR": 0.058
+        "n": 197,
+        "wrTP1": 51.3,
+        "expR": 0.052
       },
       "YM": {
         "n": 125,
@@ -9631,7 +10295,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
         "expR": 0.311
       }
     },
-    "expR_spread": 0.3,
+    "expR_spread": 0.306,
     "verdict": "universal"
   },
   "1m/INV/LONG": {
@@ -10198,7 +10862,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
         "expR": 0.07
       },
       "BTCUSDT": {
-        "n": 844,
+        "n": 845,
         "wrTP1": 53.0,
         "expR": 0.097
       },
@@ -10239,7 +10903,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
         "expR": 0.052
       },
       "ETHUSDT": {
-        "n": 670,
+        "n": 671,
         "wrTP1": 57.2,
         "expR": 0.185
       },
@@ -10281,9 +10945,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     "revAfterSL_rate": 44.1
   },
   "away_from_news": {
-    "n": 75512,
+    "n": 75515,
     "wrTP1": 47.1,
-    "nSL": 34939,
+    "nSL": 34940,
     "nTO": 5044,
     "expR": 0.061,
     "pf": 1.13,
@@ -10306,9 +10970,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
 ## Scoreboard de predicciones
 ```json
 {
-  "n": 7,
+  "n": 11,
   "scored": 6,
-  "mae_deltaER": 0.243,
+  "mae_deltaER": 0.242,
   "hit_direction_rate": 33.3
 }
 ```
@@ -10334,7 +10998,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
   {
     "id": "sl-retest-wick-2026-09-03",
     "status": "applied",
-    "hypothesis": "En RETEST, poner el SL en la mecha exacta de la vela del retest (crudo, sin piso ni techo) en vez del stop de 3 capas sube el E[R]. Baja el win rate (stop mas pegado, salta mas) pero los ganadores que sobreviven pagan mucha mas R, y el neto mejora. HASTA 2026-09-04 esto solo certificaba en SHORT (\"no aplica a largos\"); con la muestra de 2026-09-05 TAMBIEN certifica en 1m LONG, asi que se retira la exclusion dura de BUY RETEST y se deja como 'certifica por tf/side, no generalizar sin mirar la tabla'. 2026-09-06: mismas cifras exactas que 2026-09-05 (n identico) porque no llego dato nuevo. 2026-09-07 (lunes, primer dia con trades GENUINAMENTE nuevos post-restauracion, sin repeticion del bug de heal): retest_1m_long paso de n=1087 a n=1135 (+48 pares nuevos, no restaurados) y el delta se mantiene practicamente igual (0.181->0.183) con el CI90 todavia sin cruzar cero -- esta es la primera confirmacion independiente real que pedia el next_steps anterior. retest_1m_short tambien crecio con dato nuevo (n=219->229) y sigue certificando. 2026-09-08 (martes, primer dia habil COMPLETO post-feriado, salto grande de muestra real): retest_1m_long n=1135->1432 (delta 0.183->0.18, estable, segunda confirmacion independiente); retest_1m_short n=229->514 (delta 0.283->0.417, se hizo MAS fuerte); retest_2m_short CERTIFICA POR PRIMERA VEZ (n=129->260, CI90 dejo de cruzar cero); retest_5m_long CERTIFICA POR PRIMERA VEZ pero al filo (n=224->274, CI90=[0.005,0.36], limite inferior casi cero, vigilar que no se revierta con mas muestra); retest_2m_long sigue sin certificar y el delta bajo a casi cero (0.028->0.01, n=596->742). 2026-10-20: hito nuevo -- `since_change` certifica limpio ahora en los 6 de 6 segmentos RETEST del bus (el que faltaba, 5m SHORT, cruzo hoy su CI90 a positivo: [-0.005,0.299] -> [0.004,0.286], n=541->586, limite inferior apenas sobre cero pero real). Documentado en detalle en playbook/buy-retest.md y playbook/sell-retest.md (seccion Gestion). El verdict agregado formal de este experimento sigue en 'flat' por la limitacion de metrica ya conocida (mide con rMultiple, no con rOrig) -- no es evidencia de que el cambio no funcione, es la evidencia real viviendo fuera de ese campo. A evaluar en la revision semanal del domingo (2026-week-43): si corresponde subir la confianza documentada de 'aplicado, parcial' a 'aplicado, 6/6 certifican' y si shadow_rules deberia empezar a razonar sobre rOrig en el segmento del gate (5m LONG). No se decide hoy. 2026-10-31: muestra mucho mayor y delta estable -- retestBar (RETEST 2m/5m) E[R] 0.131 vs 0.036 de 3-capas, delta 0.095 CI90 [0.077,0.114] n=29603; retestBar2 (RETEST 1m SHORT) E[R] 0.063 vs 0.022, delta 0.041 CI90 [0.012,0.069] n=8744. Ambos CI90 siguen sin cruzar cero con n mucho mas grande que en octubre. candle1 (INVERSION) sigue sin certificar (CI90 cruza cero, n=936, bajo volumen). El verdict agregado formal sigue 'flat' por el mismo mismatch de metrica ya documentado (mide rMultiple, no rOrig); la evidencia real sigue viviendo en sl_origin_vs_layer. 2026-11-02: lunes, dato nuevo chico y parejo en todo el bus (+282 pares). retestBar (RETEST 2m/5m/15m/29m) sube a n=29983 (de 29603), E[R] 0.138 vs 0.037 de 3-capas, delta 0.101 CI90=[0.083,0.12] -- delta un poco mas fuerte que el 31-oct (0.095), CI90 sin cruzar cero con una confirmacion mas. retestBar2 (RETEST 1m SHORT) n=8758 (de 8744), E[R] 0.061 vs 0.021, delta 0.041 CI90=[0.012,0.07], practicamente igual a ayer. candle1 (INVERSION) sigue sin certificar (CI90 cruza cero, n=942). Nada cambia la conclusion: sigue siendo el candidato mas fuerte del bus, aun sin aplicarse en Pine. 2026-11-04: miercoles, dato nuevo chico y parejo en todo el bus. retestBar (RETEST 2m/3m/5m/15m/29m) sube a n=32083 (de 29983), E[R] 0.151 vs 0.043 de 3-capas, delta 0.109 CI90=[0.091,0.127] -- delta mas fuerte que el 11-02 (0.101), sigue sin cruzar cero con una confirmacion mas y la muestra mas grande hasta ahora. retestBar2 (RETEST 1m SHORT) n=9561 (de 8758), E[R] 0.059 vs 0.02, delta 0.04 CI90=[0.012,0.067], practicamente igual a antes. candle1 (INVERSION) hoy mostro una lectura ruidosa: orig_expR salta a 2.128 (de ordenes de magnitud mas chicos en lecturas previas) con CI90=[-0.073,6.075] n=995 -- es varianza de cola gorda por SL estructural muy ajustado (slOrigTk mediana=6 ticks) combinada con n todavia chico, no un cambio real ni un bug de pipeline (el filtro invalid_geometry de analyze.py ya excluye slOrigTk<=1; esto es ruido dentro del rango valido). Sigue sin certificar, no cambia el tratamiento de candle1 como no-propuesta. Conclusion sin cambio: retestBar/retestBar2 siguen siendo el candidato mas fuerte del bus, aun sin aplicarse en Pine -- con n=32083+9561=41644 ya se acerca al umbral n>=100 por overall varias veces sobre, listo para formalizarse como propuesta concreta en la revision semanal del domingo 2026-11-08. 2026-11-05: jueves, dato nuevo chico y parejo en todo el bus (+1512 pares). sl_origin_vs_layer.by_basis.retestBar (RETEST 2m/3m/5m/15m/29m) sube a n=33281 (de 32083), E[R] 0.158 vs 0.048 de 3-capas, delta 0.11 CI90=[0.091,0.129] -- estable, una confirmacion mas. retestBar2 (RETEST 1m SHORT) n=9714 (de 9561), E[R] 0.062 vs 0.021, delta 0.041 CI90=[0.014,0.068], practicamente igual. Hallazgo del dia en since_change (medicion desde que el cambio se aplico el 2026-09-26, distinta de by_basis que es paralela sin fecha): 1m/RETEST/LONG, el unico de los 6 segmentos RETEST que seguia al filo cruzando cero, vuelve a cruzar a positivo (delta 0.034 CI90=[0.003,0.065], n=7660->8003) -- con esto los 6 de 6 segmentos RETEST tienen delta_beats_zero=true en since_change de forma simultanea, algo que ya paso una vez (2026-10-20) y se revirtio en este mismo segmento. Dado ese historial de vaiven justo en el limite, se trata como una recuperacion a vigilar 2-3 lecturas mas, no como confirmacion definitiva del 6/6. Conclusion sin cambio de fondo: retestBar/retestBar2 siguen siendo el candidato mas fuerte del bus para la propuesta formal de la revision semanal del domingo 2026-11-08, aun sin aplicarse en Pine. 2026-11-06: viernes, dato nuevo chico y parejo en todo el bus (+1337 pares). sl_origin_vs_layer.by_basis.retestBar (RETEST 2m/3m/5m/15m/29m) sube a n=34155 (de 33281), E[R] 0.166 vs 0.052 de 3-capas, delta 0.115 CI90=[0.096,0.134] -- un poco mas fuerte que ayer (0.11), sigue sin cruzar cero con una confirmacion mas. retestBar2 (RETEST 1m SHORT) n=9972 (de 9714), E[R] 0.065 vs 0.023, delta 0.042 CI90=[0.015,0.07], practicamente igual. since_change (desde 2026-09-26): 1m/RETEST/LONG mantiene por segundo dia consecutivo delta_beats_zero=true tras el cruce de ayer (delta=0.034 CI90=[0.004,0.064], n=8003->8193, practicamente plano) -- los 6 de 6 segmentos RETEST siguen con delta_beats_zero=true de forma simultanea por segunda lectura seguida; se mantiene la cautela (ya se revirtio una vez el 2026-10-20 justo despues de certificar), vigilar 1-2 lecturas mas antes de llamarlo estable. Conclusion sin cambio de fondo: retestBar/retestBar2 siguen siendo el candidato mas fuerte del bus para la propuesta formal de la revision semanal del domingo 2026-11-08, aun sin aplicarse en Pine. 2026-11-08 (domingo, REVISION SEMANAL 2026-week-45): se formaliza el estado de este experimento -- sl_origin_vs_layer.since_change (n=31991) confirma los 6 segmentos clasicos (1m/2m/5m x LONG/SHORT) sin ninguna reversion en 44 dias (1m LONG, el mas fragil, delta=0.032 CI90=[0.003,0.061] n=8288; 5m SHORT el efecto mas grande, delta=0.407 CI90=[0.184,0.711] n=1784) y SUMA dos TF nuevos que certifican limpio por primera vez con muestra post-cambio ya grande: 3m LONG delta=0.242 CI90=[0.162,0.323] n=1536 y 15m LONG delta=0.724 CI90=[0.34,1.174] n=567 (ambos TF heredan el mismo SL del Pine desde que existen, no requieren un cambio nuevo). Quedan sin certificar por edad/muestra (ningun delta negativo, solo CI90 cruzando cero): 3m SHORT (0.079 [-0.013,0.178] n=1370), 15m SHORT (0.161 [-0.025,0.37] n=505), 29m LONG (0.378 [-0.012,0.864] n=257), 29m SHORT (0.037 [-0.104,0.207] n=296). DECISION FORMAL: se trata este experimento como confirmado en la practica para 8/12 segmentos RETEST, aunque el verdict mecanico de eval_experiments() (beforeN=18341, afterN=37917) siga en 'flat' por el mismatch de metrica ya documentado desde 2026-09-27 (mide rMultiple, la base que el propio cambio reemplazo, no rOrig). Esta limitacion se declara PERMANENTE desde hoy: no se recalcula ni se replantea cada corrida -- la medicion que manda para este experimento especifico es sl_origin_vs_layer.since_change, el verdict generico de eval_experiments() queda documentado como no aplicable a un experimento que redefine la base de medicion de si mismo. No se modifica eval_experiments() para crear un caso especial (riesgo de romper la evaluacion generica de otros experimentos). Ningun cambio de input nuevo en scalp_command.pine: el cambio real sigue aplicado desde 2026-09-26, sin ajustes. Detalle completo en reviews/2026-week-45.md. 2026-11-10: martes, dato nuevo chico y parejo en todo el bus (+942 pares LONG, +552 SHORT). sl_origin_vs_layer.by_basis.retestBar (RETEST 2m/3m/5m/15m/29m) sube a n=36470 (de 34155), E[R] 0.201 vs 0.058 de 3-capas, delta 0.143 CI90=[0.11,0.183] -- mas fuerte que el 11-06 (0.115), sigue sin cruzar cero con una confirmacion mas. retestBar2 (RETEST 1m SHORT) n=10470 (de 9972), E[R] 0.064 vs 0.027, delta 0.037 CI90=[0.011,0.065], practicamente igual. HALLAZGO DEL DIA en since_change: 29m/RETEST/LONG -- el segmento exacto del gate de ejecucion -- certifica por PRIMERA VEZ (delta=0.351 CI90=[0.009,0.783] n=291, ayer [-0.005,0.828] n=271 al filo negativo). Con esto 9/12 segmentos RETEST certifican de forma limpia (antes 8/12). El limite inferior (0.009) es muy ajustado y el n todavia chico (291) -- mismo patron de 'cruce justo en el filo' que ya se revirtio una vez en 1m/RETEST/LONG el 2026-10-20, asi que se trata como hallazgo a confirmar 2-3 lecturas mas, NO como slCauseMitigated=true del gate (ese campo depende del verdict formal de eval_experiments(), que sigue flat por el mismatch de metrica ya documentado como PERMANENTE desde 2026-11-08). Quedan sin certificar: 3m SHORT (0.072 [-0.012,0.167] n=1490), 15m SHORT (0.158 [-0.008,0.354] n=596, el mas cerca de certificar), 29m SHORT (0.08 [-0.052,0.236] n=329) -- ninguno con delta negativo, los tres mejoran su limite inferior frente a ayer. Ningun cambio de input nuevo en scalp_command.pine: el cambio real sigue aplicado desde 2026-09-26, sin ajustes. 2026-11-11: miercoles, dato nuevo moderado y parejo en todo el bus (+625 pares LONG, +695 SHORT). sl_origin_vs_layer.by_basis.retestBar (RETEST 2m/3m/5m/15m/29m) sube a n=37429 (de 36470), E[R] 0.203 vs 0.058 de 3-capas, delta 0.145 CI90=[0.114,0.186] -- mas fuerte que el 11-10 (0.143), sigue sin cruzar cero con una confirmacion mas. retestBar2 (RETEST 1m SHORT) n=10643 (de 10470), E[R] 0.064 vs 0.028, delta 0.036 CI90=[0.008,0.063], practicamente igual. HALLAZGO DEL DIA en since_change: dos cambios de estado simultaneos -- (1) 3m/RETEST/SHORT certifica por PRIMERA VEZ (delta=0.086 CI90=[0.012,0.174] n=1670, ayer [-0.012,0.167] n=1490, al filo negativo); (2) 29m/RETEST/LONG -- el segmento exacto del gate de ejecucion -- tiene su SEGUNDA lectura consecutiva confirmando (delta=0.36 CI90=[0.041,0.764] n=318, ayer [0.009,0.783] n=291) y el limite inferior mejora de 0.009 a 0.041, mas comodo que la primera lectura. Con esto 10/12 segmentos RETEST certifican de forma limpia (antes 9/12). Quedan sin certificar: 15m SHORT (0.135 [-0.013,0.311] n=647) y 29m SHORT (0.121 [-0.003,0.274] n=361, el mas cerca de certificar) -- ninguno con delta negativo. Politica sin cambio: 29m/RETEST/LONG necesita 2-3 lecturas seguidas antes de tratarse como estable (esta es la #2, criterio de reversion ya visto una vez en 1m/RETEST/LONG el 2026-10-20); no se marca slCauseMitigated=true del gate todavia (ese campo depende del verdict formal de eval_experiments(), que sigue flat por el mismatch de metrica ya documentado como PERMANENTE desde 2026-11-08). Ningun cambio de input nuevo en scalp_command.pine: el cambio real sigue aplicado desde 2026-09-26, sin ajustes. 2026-11-12: jueves, dato nuevo moderado (+1222 pares LONG, +520 SHORT). sl_origin_vs_layer.by_basis.retestBar n=38805 (de 37429), E[R] 0.208 vs 0.061, delta 0.147 CI90=[0.118,0.187], estable/ligeramente mas fuerte. retestBar2 (1m SHORT) n=10755, delta 0.035 CI90=[0.007,0.062] -- positivo pero limite inferior estrechandose lectura a lectura (0.012->0.008->0.007), vigilar. HALLAZGO DEL DIA en since_change: (1) 29m/RETEST/LONG -- segmento del gate -- TERCERA lectura consecutiva confirmando (delta=0.402 CI90=[0.106,0.771] n=344), limite inferior subiendo tres dias seguidos (0.009->0.041->0.106): cumple la politica de 2-3 lecturas, se trata como estable en la medicion paralela; (2) 29m/RETEST/SHORT certifica por PRIMERA VEZ (delta=0.134 CI90=[0.019,0.265] n=407). 11/12 segmentos RETEST certifican; solo falta 15m SHORT (0.114 [-0.023,0.277] n=697). slCauseMitigated del gate sigue false (verdict mecanico flat, mismatch permanente desde 2026-11-08). Ningun cambio de input nuevo en scalp_command.pine. 2026-11-13: viernes, +1653 pares en el bus. by_basis.retestBar n=40017, E[R] 0.226 vs 0.063, delta 0.163 CI90=[0.127,0.204] (mas fuerte que ayer 0.147). retestBar2 (1m SHORT) n=10926 delta 0.036 CI90=[0.009,0.063]. since_change: 29m/RETEST/LONG (gate) CUARTA lectura seguida certificando, delta=0.483 CI90=[0.182,0.834] n=375, limite inferior subiendo 4 dias seguidos. 29m SHORT segunda lectura (0.149 [0.034,0.276]). 11/12 certifican; 15m SHORT sigue sin (0.12 [-0.015,0.28] n=718). 1m SHORT limite inferior 0.006, vigilar. candle1 (INVERSION) aparece 'certificando' en by_basis pero lo produce un outlier en 5m/INV/SHORT (delta 68.7, n=29): ruido, no se propone. slCauseMitigated sigue false (mismatch permanente). Sin cambio de input en Pine. 2026-11-15 (domingo, REVISION SEMANAL 2026-week-46): QUINTA lectura consecutiva confirmando en 29m/RETEST/LONG (segmento del gate), delta=0.544 CI90=[0.226,0.834->0.918] n=403 (ayer 0.483 [0.182,0.834] n=375) -- limite inferior sube por quinto dia seguido (0.009->0.041->0.106->0.182->0.226). 29m/RETEST/SHORT confirma tambien (delta=0.146 CI90=[0.038,0.274] n=438). 11/12 segmentos RETEST certifican hoy en since_change; solo 15m/RETEST/SHORT sigue al filo (delta=0.119 CI90=[-0.009,0.269] n=768). Novedad metodologica de la semana (no de este experimento en si): ayer (2026-11-14) se agrego a analyze.py el E[R] NETO de costes (COST_TICKS) en toda tabla, incluida segment_significance (ahora survives_fdr10 mide neto). Aplicado a sl_origin_vs_layer esto no cambia nada (sl_origin_vs_layer mide rOrig vs rMultiple, ambos con el mismo signo de costes, se cancelan en el delta); la limitacion permanente del verdict mecanico de eval_experiments() (mide rMultiple, no rOrig) declarada el 2026-11-08 sigue sin cambios y sigue siendo la razon de que slCauseMitigated del gate siga false. Ningun cambio de input nuevo en scalp_command.pine: el cambio real sigue aplicado desde 2026-09-26, sin ajustes. Detalle completo de la revision semanal en reviews/2026-week-46.md (el hallazgo principal de hoy es sobre shadow_rules, no sobre este experimento).",
+    "hypothesis": "En RETEST, poner el SL en la mecha exacta de la vela del retest (crudo, sin piso ni techo) en vez del stop de 3 capas sube el E[R]. Baja el win rate (stop mas pegado, salta mas) pero los ganadores que sobreviven pagan mucha mas R, y el neto mejora. HASTA 2026-09-04 esto solo certificaba en SHORT (\"no aplica a largos\"); con la muestra de 2026-09-05 TAMBIEN certifica en 1m LONG, asi que se retira la exclusion dura de BUY RETEST y se deja como 'certifica por tf/side, no generalizar sin mirar la tabla'. 2026-09-06: mismas cifras exactas que 2026-09-05 (n identico) porque no llego dato nuevo. 2026-09-07 (lunes, primer dia con trades GENUINAMENTE nuevos post-restauracion, sin repeticion del bug de heal): retest_1m_long paso de n=1087 a n=1135 (+48 pares nuevos, no restaurados) y el delta se mantiene practicamente igual (0.181->0.183) con el CI90 todavia sin cruzar cero -- esta es la primera confirmacion independiente real que pedia el next_steps anterior. retest_1m_short tambien crecio con dato nuevo (n=219->229) y sigue certificando. 2026-09-08 (martes, primer dia habil COMPLETO post-feriado, salto grande de muestra real): retest_1m_long n=1135->1432 (delta 0.183->0.18, estable, segunda confirmacion independiente); retest_1m_short n=229->514 (delta 0.283->0.417, se hizo MAS fuerte); retest_2m_short CERTIFICA POR PRIMERA VEZ (n=129->260, CI90 dejo de cruzar cero); retest_5m_long CERTIFICA POR PRIMERA VEZ pero al filo (n=224->274, CI90=[0.005,0.36], limite inferior casi cero, vigilar que no se revierta con mas muestra); retest_2m_long sigue sin certificar y el delta bajo a casi cero (0.028->0.01, n=596->742). 2026-10-20: hito nuevo -- `since_change` certifica limpio ahora en los 6 de 6 segmentos RETEST del bus (el que faltaba, 5m SHORT, cruzo hoy su CI90 a positivo: [-0.005,0.299] -> [0.004,0.286], n=541->586, limite inferior apenas sobre cero pero real). Documentado en detalle en playbook/buy-retest.md y playbook/sell-retest.md (seccion Gestion). El verdict agregado formal de este experimento sigue en 'flat' por la limitacion de metrica ya conocida (mide con rMultiple, no con rOrig) -- no es evidencia de que el cambio no funcione, es la evidencia real viviendo fuera de ese campo. A evaluar en la revision semanal del domingo (2026-week-43): si corresponde subir la confianza documentada de 'aplicado, parcial' a 'aplicado, 6/6 certifican' y si shadow_rules deberia empezar a razonar sobre rOrig en el segmento del gate (5m LONG). No se decide hoy. 2026-10-31: muestra mucho mayor y delta estable -- retestBar (RETEST 2m/5m) E[R] 0.131 vs 0.036 de 3-capas, delta 0.095 CI90 [0.077,0.114] n=29603; retestBar2 (RETEST 1m SHORT) E[R] 0.063 vs 0.022, delta 0.041 CI90 [0.012,0.069] n=8744. Ambos CI90 siguen sin cruzar cero con n mucho mas grande que en octubre. candle1 (INVERSION) sigue sin certificar (CI90 cruza cero, n=936, bajo volumen). El verdict agregado formal sigue 'flat' por el mismo mismatch de metrica ya documentado (mide rMultiple, no rOrig); la evidencia real sigue viviendo en sl_origin_vs_layer. 2026-11-02: lunes, dato nuevo chico y parejo en todo el bus (+282 pares). retestBar (RETEST 2m/5m/15m/29m) sube a n=29983 (de 29603), E[R] 0.138 vs 0.037 de 3-capas, delta 0.101 CI90=[0.083,0.12] -- delta un poco mas fuerte que el 31-oct (0.095), CI90 sin cruzar cero con una confirmacion mas. retestBar2 (RETEST 1m SHORT) n=8758 (de 8744), E[R] 0.061 vs 0.021, delta 0.041 CI90=[0.012,0.07], practicamente igual a ayer. candle1 (INVERSION) sigue sin certificar (CI90 cruza cero, n=942). Nada cambia la conclusion: sigue siendo el candidato mas fuerte del bus, aun sin aplicarse en Pine. 2026-11-04: miercoles, dato nuevo chico y parejo en todo el bus. retestBar (RETEST 2m/3m/5m/15m/29m) sube a n=32083 (de 29983), E[R] 0.151 vs 0.043 de 3-capas, delta 0.109 CI90=[0.091,0.127] -- delta mas fuerte que el 11-02 (0.101), sigue sin cruzar cero con una confirmacion mas y la muestra mas grande hasta ahora. retestBar2 (RETEST 1m SHORT) n=9561 (de 8758), E[R] 0.059 vs 0.02, delta 0.04 CI90=[0.012,0.067], practicamente igual a antes. candle1 (INVERSION) hoy mostro una lectura ruidosa: orig_expR salta a 2.128 (de ordenes de magnitud mas chicos en lecturas previas) con CI90=[-0.073,6.075] n=995 -- es varianza de cola gorda por SL estructural muy ajustado (slOrigTk mediana=6 ticks) combinada con n todavia chico, no un cambio real ni un bug de pipeline (el filtro invalid_geometry de analyze.py ya excluye slOrigTk<=1; esto es ruido dentro del rango valido). Sigue sin certificar, no cambia el tratamiento de candle1 como no-propuesta. Conclusion sin cambio: retestBar/retestBar2 siguen siendo el candidato mas fuerte del bus, aun sin aplicarse en Pine -- con n=32083+9561=41644 ya se acerca al umbral n>=100 por overall varias veces sobre, listo para formalizarse como propuesta concreta en la revision semanal del domingo 2026-11-08. 2026-11-05: jueves, dato nuevo chico y parejo en todo el bus (+1512 pares). sl_origin_vs_layer.by_basis.retestBar (RETEST 2m/3m/5m/15m/29m) sube a n=33281 (de 32083), E[R] 0.158 vs 0.048 de 3-capas, delta 0.11 CI90=[0.091,0.129] -- estable, una confirmacion mas. retestBar2 (RETEST 1m SHORT) n=9714 (de 9561), E[R] 0.062 vs 0.021, delta 0.041 CI90=[0.014,0.068], practicamente igual. Hallazgo del dia en since_change (medicion desde que el cambio se aplico el 2026-09-26, distinta de by_basis que es paralela sin fecha): 1m/RETEST/LONG, el unico de los 6 segmentos RETEST que seguia al filo cruzando cero, vuelve a cruzar a positivo (delta 0.034 CI90=[0.003,0.065], n=7660->8003) -- con esto los 6 de 6 segmentos RETEST tienen delta_beats_zero=true en since_change de forma simultanea, algo que ya paso una vez (2026-10-20) y se revirtio en este mismo segmento. Dado ese historial de vaiven justo en el limite, se trata como una recuperacion a vigilar 2-3 lecturas mas, no como confirmacion definitiva del 6/6. Conclusion sin cambio de fondo: retestBar/retestBar2 siguen siendo el candidato mas fuerte del bus para la propuesta formal de la revision semanal del domingo 2026-11-08, aun sin aplicarse en Pine. 2026-11-06: viernes, dato nuevo chico y parejo en todo el bus (+1337 pares). sl_origin_vs_layer.by_basis.retestBar (RETEST 2m/3m/5m/15m/29m) sube a n=34155 (de 33281), E[R] 0.166 vs 0.052 de 3-capas, delta 0.115 CI90=[0.096,0.134] -- un poco mas fuerte que ayer (0.11), sigue sin cruzar cero con una confirmacion mas. retestBar2 (RETEST 1m SHORT) n=9972 (de 9714), E[R] 0.065 vs 0.023, delta 0.042 CI90=[0.015,0.07], practicamente igual. since_change (desde 2026-09-26): 1m/RETEST/LONG mantiene por segundo dia consecutivo delta_beats_zero=true tras el cruce de ayer (delta=0.034 CI90=[0.004,0.064], n=8003->8193, practicamente plano) -- los 6 de 6 segmentos RETEST siguen con delta_beats_zero=true de forma simultanea por segunda lectura seguida; se mantiene la cautela (ya se revirtio una vez el 2026-10-20 justo despues de certificar), vigilar 1-2 lecturas mas antes de llamarlo estable. Conclusion sin cambio de fondo: retestBar/retestBar2 siguen siendo el candidato mas fuerte del bus para la propuesta formal de la revision semanal del domingo 2026-11-08, aun sin aplicarse en Pine. 2026-11-08 (domingo, REVISION SEMANAL 2026-week-45): se formaliza el estado de este experimento -- sl_origin_vs_layer.since_change (n=31991) confirma los 6 segmentos clasicos (1m/2m/5m x LONG/SHORT) sin ninguna reversion en 44 dias (1m LONG, el mas fragil, delta=0.032 CI90=[0.003,0.061] n=8288; 5m SHORT el efecto mas grande, delta=0.407 CI90=[0.184,0.711] n=1784) y SUMA dos TF nuevos que certifican limpio por primera vez con muestra post-cambio ya grande: 3m LONG delta=0.242 CI90=[0.162,0.323] n=1536 y 15m LONG delta=0.724 CI90=[0.34,1.174] n=567 (ambos TF heredan el mismo SL del Pine desde que existen, no requieren un cambio nuevo). Quedan sin certificar por edad/muestra (ningun delta negativo, solo CI90 cruzando cero): 3m SHORT (0.079 [-0.013,0.178] n=1370), 15m SHORT (0.161 [-0.025,0.37] n=505), 29m LONG (0.378 [-0.012,0.864] n=257), 29m SHORT (0.037 [-0.104,0.207] n=296). DECISION FORMAL: se trata este experimento como confirmado en la practica para 8/12 segmentos RETEST, aunque el verdict mecanico de eval_experiments() (beforeN=18341, afterN=37917) siga en 'flat' por el mismatch de metrica ya documentado desde 2026-09-27 (mide rMultiple, la base que el propio cambio reemplazo, no rOrig). Esta limitacion se declara PERMANENTE desde hoy: no se recalcula ni se replantea cada corrida -- la medicion que manda para este experimento especifico es sl_origin_vs_layer.since_change, el verdict generico de eval_experiments() queda documentado como no aplicable a un experimento que redefine la base de medicion de si mismo. No se modifica eval_experiments() para crear un caso especial (riesgo de romper la evaluacion generica de otros experimentos). Ningun cambio de input nuevo en scalp_command.pine: el cambio real sigue aplicado desde 2026-09-26, sin ajustes. Detalle completo en reviews/2026-week-45.md. 2026-11-10: martes, dato nuevo chico y parejo en todo el bus (+942 pares LONG, +552 SHORT). sl_origin_vs_layer.by_basis.retestBar (RETEST 2m/3m/5m/15m/29m) sube a n=36470 (de 34155), E[R] 0.201 vs 0.058 de 3-capas, delta 0.143 CI90=[0.11,0.183] -- mas fuerte que el 11-06 (0.115), sigue sin cruzar cero con una confirmacion mas. retestBar2 (RETEST 1m SHORT) n=10470 (de 9972), E[R] 0.064 vs 0.027, delta 0.037 CI90=[0.011,0.065], practicamente igual. HALLAZGO DEL DIA en since_change: 29m/RETEST/LONG -- el segmento exacto del gate de ejecucion -- certifica por PRIMERA VEZ (delta=0.351 CI90=[0.009,0.783] n=291, ayer [-0.005,0.828] n=271 al filo negativo). Con esto 9/12 segmentos RETEST certifican de forma limpia (antes 8/12). El limite inferior (0.009) es muy ajustado y el n todavia chico (291) -- mismo patron de 'cruce justo en el filo' que ya se revirtio una vez en 1m/RETEST/LONG el 2026-10-20, asi que se trata como hallazgo a confirmar 2-3 lecturas mas, NO como slCauseMitigated=true del gate (ese campo depende del verdict formal de eval_experiments(), que sigue flat por el mismatch de metrica ya documentado como PERMANENTE desde 2026-11-08). Quedan sin certificar: 3m SHORT (0.072 [-0.012,0.167] n=1490), 15m SHORT (0.158 [-0.008,0.354] n=596, el mas cerca de certificar), 29m SHORT (0.08 [-0.052,0.236] n=329) -- ninguno con delta negativo, los tres mejoran su limite inferior frente a ayer. Ningun cambio de input nuevo en scalp_command.pine: el cambio real sigue aplicado desde 2026-09-26, sin ajustes. 2026-11-11: miercoles, dato nuevo moderado y parejo en todo el bus (+625 pares LONG, +695 SHORT). sl_origin_vs_layer.by_basis.retestBar (RETEST 2m/3m/5m/15m/29m) sube a n=37429 (de 36470), E[R] 0.203 vs 0.058 de 3-capas, delta 0.145 CI90=[0.114,0.186] -- mas fuerte que el 11-10 (0.143), sigue sin cruzar cero con una confirmacion mas. retestBar2 (RETEST 1m SHORT) n=10643 (de 10470), E[R] 0.064 vs 0.028, delta 0.036 CI90=[0.008,0.063], practicamente igual. HALLAZGO DEL DIA en since_change: dos cambios de estado simultaneos -- (1) 3m/RETEST/SHORT certifica por PRIMERA VEZ (delta=0.086 CI90=[0.012,0.174] n=1670, ayer [-0.012,0.167] n=1490, al filo negativo); (2) 29m/RETEST/LONG -- el segmento exacto del gate de ejecucion -- tiene su SEGUNDA lectura consecutiva confirmando (delta=0.36 CI90=[0.041,0.764] n=318, ayer [0.009,0.783] n=291) y el limite inferior mejora de 0.009 a 0.041, mas comodo que la primera lectura. Con esto 10/12 segmentos RETEST certifican de forma limpia (antes 9/12). Quedan sin certificar: 15m SHORT (0.135 [-0.013,0.311] n=647) y 29m SHORT (0.121 [-0.003,0.274] n=361, el mas cerca de certificar) -- ninguno con delta negativo. Politica sin cambio: 29m/RETEST/LONG necesita 2-3 lecturas seguidas antes de tratarse como estable (esta es la #2, criterio de reversion ya visto una vez en 1m/RETEST/LONG el 2026-10-20); no se marca slCauseMitigated=true del gate todavia (ese campo depende del verdict formal de eval_experiments(), que sigue flat por el mismatch de metrica ya documentado como PERMANENTE desde 2026-11-08). Ningun cambio de input nuevo en scalp_command.pine: el cambio real sigue aplicado desde 2026-09-26, sin ajustes. 2026-11-12: jueves, dato nuevo moderado (+1222 pares LONG, +520 SHORT). sl_origin_vs_layer.by_basis.retestBar n=38805 (de 37429), E[R] 0.208 vs 0.061, delta 0.147 CI90=[0.118,0.187], estable/ligeramente mas fuerte. retestBar2 (1m SHORT) n=10755, delta 0.035 CI90=[0.007,0.062] -- positivo pero limite inferior estrechandose lectura a lectura (0.012->0.008->0.007), vigilar. HALLAZGO DEL DIA en since_change: (1) 29m/RETEST/LONG -- segmento del gate -- TERCERA lectura consecutiva confirmando (delta=0.402 CI90=[0.106,0.771] n=344), limite inferior subiendo tres dias seguidos (0.009->0.041->0.106): cumple la politica de 2-3 lecturas, se trata como estable en la medicion paralela; (2) 29m/RETEST/SHORT certifica por PRIMERA VEZ (delta=0.134 CI90=[0.019,0.265] n=407). 11/12 segmentos RETEST certifican; solo falta 15m SHORT (0.114 [-0.023,0.277] n=697). slCauseMitigated del gate sigue false (verdict mecanico flat, mismatch permanente desde 2026-11-08). Ningun cambio de input nuevo en scalp_command.pine. 2026-11-13: viernes, +1653 pares en el bus. by_basis.retestBar n=40017, E[R] 0.226 vs 0.063, delta 0.163 CI90=[0.127,0.204] (mas fuerte que ayer 0.147). retestBar2 (1m SHORT) n=10926 delta 0.036 CI90=[0.009,0.063]. since_change: 29m/RETEST/LONG (gate) CUARTA lectura seguida certificando, delta=0.483 CI90=[0.182,0.834] n=375, limite inferior subiendo 4 dias seguidos. 29m SHORT segunda lectura (0.149 [0.034,0.276]). 11/12 certifican; 15m SHORT sigue sin (0.12 [-0.015,0.28] n=718). 1m SHORT limite inferior 0.006, vigilar. candle1 (INVERSION) aparece 'certificando' en by_basis pero lo produce un outlier en 5m/INV/SHORT (delta 68.7, n=29): ruido, no se propone. slCauseMitigated sigue false (mismatch permanente). Sin cambio de input en Pine. 2026-11-15 (domingo, REVISION SEMANAL 2026-week-46): QUINTA lectura consecutiva confirmando en 29m/RETEST/LONG (segmento del gate), delta=0.544 CI90=[0.226,0.834->0.918] n=403 (ayer 0.483 [0.182,0.834] n=375) -- limite inferior sube por quinto dia seguido (0.009->0.041->0.106->0.182->0.226). 29m/RETEST/SHORT confirma tambien (delta=0.146 CI90=[0.038,0.274] n=438). 11/12 segmentos RETEST certifican hoy en since_change; solo 15m/RETEST/SHORT sigue al filo (delta=0.119 CI90=[-0.009,0.269] n=768). Novedad metodologica de la semana (no de este experimento en si): ayer (2026-11-14) se agrego a analyze.py el E[R] NETO de costes (COST_TICKS) en toda tabla, incluida segment_significance (ahora survives_fdr10 mide neto). Aplicado a sl_origin_vs_layer esto no cambia nada (sl_origin_vs_layer mide rOrig vs rMultiple, ambos con el mismo signo de costes, se cancelan en el delta); la limitacion permanente del verdict mecanico de eval_experiments() (mide rMultiple, no rOrig) declarada el 2026-11-08 sigue sin cambios y sigue siendo la razon de que slCauseMitigated del gate siga false. Ningun cambio de input nuevo en scalp_command.pine: el cambio real sigue aplicado desde 2026-09-26, sin ajustes. Detalle completo de la revision semanal en reviews/2026-week-46.md (el hallazgo principal de hoy es sobre shadow_rules, no sobre este experimento). 2026-11-21/22: CORRECCION IMPORTANTE. La investigacion de sl-inv-fvg-candle1-2026-11-21 (reviews/2026-11-21-inv-candle1.md) encontro que el 'since_change certifica 11/12 segmentos' de este experimento esta inflado por el mismo artefacto que en INV: estirones de 1-3 ticks de stop que cobran decenas de R y dominan la media bruta. Se agrego by_basis_min_stop (stop estructural >=0.3 ATR 1m) a sl_origin_vs_layer y, 2026-11-22, un by_tf_kind_side_min_stop dentro de since_change para medir por segmento con el mismo filtro + neto de costes + IC90 por dias. Resultado (since_change, post-2026-09-26, filtrado): 1m/LONG delta_net=-0.145 CI90=[-0.18,-0.107] n=8541 (PIERDE); 1m/SHORT delta_net=-0.086 CI90=[-0.112,-0.061] n=9185 (PIERDE); 2m/LONG delta_net=-0.102 CI90=[-0.131,-0.073] n=4546 (PIERDE); 2m/SHORT delta_net=-0.09 CI90=[-0.123,-0.052] n=4460 (PIERDE); 3m/LONG delta_net=-0.03 CI90=[-0.057,-0.002] n=2802 (pierde, al filo); 3m/SHORT delta_net=-0.064 CI90=[-0.107,-0.023] n=2524 (PIERDE); 5m/LONG delta_net=+0.055 CI90=[0.022,0.09] n=3101 (GANA); 5m/SHORT delta_net=+0.055 CI90=[0.004,0.106] n=2781 (GANA); 15m/LONG delta_net=+0.124 CI90=[0.063,0.194] n=1095 (GANA); 15m/SHORT delta_net=-0.016 CI90=[-0.092,0.046] n=966 (sin evidencia, cruza cero); 29m/LONG (gate) delta_net=+0.066 CI90=[-0.037,0.166] n=482 (sin evidencia, cruza cero); 29m/SHORT delta_net=+0.047 CI90=[-0.05,0.133] n=528 (sin evidencia, cruza cero). CONCLUSION: el cambio aplicado (global, todos los TF RETEST) es una MEZCLA -- confirma que PIERDE en 1m/2m/3m (el volumen mas grande del bus, ~27500 pares) y confirma que GANA en 5m y 15m/LONG (~7000 pares); 15m/SHORT y 29m (ambos lados, incluido el segmento del gate) siguen sin evidencia en ninguna direccion. El bus-level agregado (retestBar, n=41318) sale negativo (delta_net=-0.066 CI90=[-0.084,-0.049]) porque el volumen de 1m/2m/3m domina el promedio. Las 6 predicciones originales de predictions.jsonl (W37/W39, todas con signo positivo esperado +0.14 a +0.57) tenian razon de direccion solo en 5m (2/6); 1m/2m LONG y SHORT se revierten respecto a lo predicho. Esto explica el prediction_scoreboard de hoy (hit_direction_rate=33.3%, peor que azar). Propuesta formal en reviews/2026-week-47.md: revertir el input a 3-capas en 1m/2m/3m, mantenerlo en 5m y 15m/LONG, dejar 15m/SHORT y 29m sin tocar hasta tener evidencia. status sigue 'applied' (el cambio global SIGUE activo en TradingView sin ajuste todavia) pero ya no se trata como 'confirma 11/12 limpio'; ver experimento nuevo sl-basis-retest-narrow-2026-11-22 para la propuesta de acotar el scope.",
     "param": "sl_basis_retest",
     "from": "3-capas (sc_slbuf x ATR1m + piso sc_floor_atr5 + techo sc_cap_atr5 / sc_cap_adr)",
     "to": "mecha de la vela del retest (lg_slOrig con slBasis=retestBar / retestBar2, crudo)",
@@ -10470,7 +11134,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     ],
     "appliedNote": "2026-09-26: aplicado en scalp_command.pine (input sc_sl_retest_basis, default 'Auto (como se midio)'): en RETEST el SL real pasa a la mecha de la vela del retest; 1m SHORT suma la vela previa (retestBar2), igual que la medicion paralela. Base: los 6 segmentos RETEST certifican con CI90 > 0 (n=11273, E[R] 0.238 vs 0.065). El tier se sigue calculando con el stop de 3 capas. El feed NO cambia: sigue registrando el 3 capas como rMultiple y la mecha como rOrig, asi que sl_origin_vs_layer sigue siendo la vigilancia. Rige en cada grafico desde que Jesus re-pega scalp_cc_FULL_for_tradingview.pine. Revertir = poner la base en '3 capas'.",
     "beforeN": 18341,
-    "afterN": 56408,
+    "afterN": 56411,
     "before": {
       "n": 18341,
       "wrTP1": 45.8,
@@ -10492,9 +11156,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "revAfterSL_rate": 32.8
     },
     "after": {
-      "n": 56408,
+      "n": 56411,
       "wrTP1": 47.4,
-      "nSL": 26244,
+      "nSL": 26245,
       "nTO": 3400,
       "expR": 0.064,
       "pf": 1.13,
@@ -10605,7 +11269,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
   },
   {
     "id": "sl-inv-fvg-candle1-2026-11-21",
-    "status": "proposed",
+    "status": "rejected",
     "hypothesis": "En INV (inversion de FVG), poner el SL en la vela 1 del FVG en vez del stop de 3 capas sube el E[R]: el stop baja de ~24 a ~7 ticks (p50), el WR a TP1 cae de 52% a 29%, pero cada ganador paga mucha mas R. Es la misma logica que ya se aplico en RETEST (sl-retest-wick-2026-09-03).",
     "param": "SL basis en INV (hoy 3 capas; input nuevo o extender sc_sl_retest_basis a INV)",
     "from": "3-capas (sc_slbuf x ATR1m + piso sc_floor_atr5 + techo sc_cap_atr5 / sc_cap_adr)",
@@ -10622,29 +11286,54 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       "2026-11-21: propuesto (no aplicado). Antes de tocar el Pine: (a) la revision semanal lo evalua NETO con day-clustered bootstrap por tf/side dentro de INV; (b) solo pasa a 'applied' si el CI90 neto no cruza cero en el segmento objetivo y lo aprueba Jesus; (c) al aplicarlo, poner changeDate y medir since_change con sl_origin_vs_layer (no con before/after de rMultiple, ver nota 2026-10-03 de sl-retest-wick)."
     ],
     "notes": [
-      "2026-11-21: alta por pedido de Jesus en la revision del bus (Claude). Sin cambio en scalp_command.pine."
+      "2026-11-21: alta por pedido de Jesus en la revision del bus (Claude). Sin cambio en scalp_command.pine.",
+      "2026-11-21 (mismo dia, cierre): investigado en reviews/2026-11-21-inv-candle1.md. Con stop minimo 0.3 ATR(1m), neto de costes, IC90 por dias: delta neto -0.273 [-0.378,-0.170] n=1136 (vela 1 PIERDE vs 3 capas). Sin filtro, el 1% de trades con mas R suma el 153% del total (stops de 1-2 ticks cobrando decenas de R); con 1 tick de deslizamiento la vela 1 pasa a negativa en todos los cortes con n>=30. Veredicto: 'Artefacto. No merece prueba en vivo.' Se agrega by_basis_min_stop a analyze.py.",
+      "2026-11-22: SEGUNDA lectura, mismo resultado con mas muestra (sl_origin_vs_layer.by_basis_min_stop.candle1): n=1099, E[R]neto 3capas=0.037 vs vela1=-0.183, delta_net=-0.22 CI90=[-0.322,-0.115] (confirma negativo, no cruza cero). Cierra como RECHAZADO, no proponer de nuevo sin evidencia nueva desde cero."
     ],
-    "beforeN": 1663,
+    "verdict": "rejected"
+  },
+  {
+    "id": "sl-basis-retest-narrow-2026-11-22",
+    "status": "proposed",
+    "hypothesis": "sl_basis_retest (aplicado globalmente a todo RETEST desde 2026-09-26) PIERDE neto en 1m/2m/3m y GANA neto en 5m/15m-LONG (ver nota 2026-11-22 de sl-retest-wick-2026-09-03). Acotar el input a solo 5m y 15m-LONG, y volver a 3 capas en 1m/2m/3m, deberia subir el E[R] neto agregado de RETEST sin perder la ganancia donde el SL estructural si funciona.",
+    "param": "sl_basis_retest (alcance por TF/lado, no el basis en si)",
+    "from": "aplicado a todos los TF y lados RETEST",
+    "to": "aplicado solo en 5m (LONG y SHORT) y 15m LONG; 3 capas en 1m, 2m, 3m, 15m SHORT y 29m (ambos lados)",
+    "changeDate": null,
+    "segment": {
+      "kind": "RETEST"
+    },
+    "targetMetric": "expR neto de costes",
+    "minAfterN": 40,
+    "evidence": "sl_origin_vs_layer.since_change.by_tf_kind_side_min_stop (2026-11-22, filtro stop>=0.3 ATR 1m, neto, IC90 por dias): 1m/LONG delta_net=-0.145 CI90=[-0.18,-0.107] n=8541; 1m/SHORT delta_net=-0.086 CI90=[-0.112,-0.061] n=9185; 2m/LONG delta_net=-0.102 CI90=[-0.131,-0.073] n=4546; 2m/SHORT delta_net=-0.09 CI90=[-0.123,-0.052] n=4460; 3m/LONG delta_net=-0.03 CI90=[-0.057,-0.002] n=2802; 3m/SHORT delta_net=-0.064 CI90=[-0.107,-0.023] n=2524; 5m/LONG delta_net=+0.055 CI90=[0.022,0.09] n=3101; 5m/SHORT delta_net=+0.055 CI90=[0.004,0.106] n=2781; 15m/LONG delta_net=+0.124 CI90=[0.063,0.194] n=1095; 15m/SHORT delta_net=-0.016 CI90=[-0.092,0.046] n=966 (sin evidencia); 29m/LONG delta_net=+0.066 CI90=[-0.037,0.166] n=482 (sin evidencia, es el segmento del gate); 29m/SHORT delta_net=+0.047 CI90=[-0.05,0.133] n=528 (sin evidencia).",
+    "risks": "1) No se sabe si el Pine actual permite activar sl_basis_retest por TF/lado o es un toggle global unico -- confirmar con Jesus antes de proponer el cambio en firme. 2) 15m/SHORT y 29m (ambos lados) quedan en 'mantener 3 capas' por falta de evidencia, no porque se haya confirmado que pierden -- revisar cuando acumulen muestra. 3) marcar experimental hasta 40+ muestras post-cambio en cada segmento tocado, por el historial de este parametro (ya tuvo un veredicto mecanico 'flat' permanente por mismatch de metrica).",
+    "next_steps": [
+      "2026-11-22: propuesto en reviews/2026-week-47.md. No aplicado. Si Jesus lo implementa, poner changeDate y medir con sl_origin_vs_layer.since_change (no con prediction_scoreboard antes/despues de rMultiple, que ya demostro acertar la direccion solo 2/6 veces en el cambio original)."
+    ],
+    "notes": [
+      "2026-11-22: alta tras cerrar que el experimento aplicado 2026-09-26 es una mezcla por TF, no un resultado uniforme. Ver sl-retest-wick-2026-09-03 para el detalle completo."
+    ],
+    "beforeN": 74752,
     "afterN": 0,
     "before": {
-      "n": 1663,
-      "wrTP1": 50.0,
-      "nSL": 640,
-      "nTO": 191,
-      "expR": 0.131,
-      "pf": 1.32,
-      "expRnet": 0.023,
-      "pfNet": 1.05,
-      "mfe_p25": 9.0,
-      "mfe_p50": 22.0,
-      "mfe_p75": 52.0,
+      "n": 74752,
+      "wrTP1": 47.0,
+      "nSL": 34681,
+      "nTO": 4913,
+      "expR": 0.061,
+      "pf": 1.13,
+      "expRnet": -0.062,
+      "pfNet": 0.89,
+      "mfe_p25": 10.0,
+      "mfe_p50": 23.0,
+      "mfe_p75": 58.0,
       "winnerMAE_p75": 17.0,
-      "winnerMAE_p90": 42.0,
-      "loserMFEbeforeSL_p50": 6.0,
-      "bars_win_p50": 3.0,
-      "bars_loss_p50": 6.0,
-      "entryZoneTk_p50": -14.0,
-      "revAfterSL_rate": 21.1
+      "winnerMAE_p90": 49.0,
+      "loserMFEbeforeSL_p50": 4.0,
+      "bars_win_p50": 2.0,
+      "bars_loss_p50": 3.0,
+      "entryZoneTk_p50": -19.0,
+      "revAfterSL_rate": 37.2
     },
     "after": {
       "n": 0
@@ -11408,67 +12097,61 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
 ```json
 {
   "rule": {
-    "version": 4,
-    "definedAt": "2026-11-01",
+    "version": 5,
+    "definedAt": "2026-11-22",
     "criteria": {
       "kind": [
         "RETEST"
       ],
       "tf_side": [
-        "1/LONG",
-        "1/SHORT",
-        "2/LONG",
-        "2/SHORT",
-        "3/LONG",
-        "3/SHORT",
-        "5/LONG",
-        "5/SHORT"
+        "5/SHORT",
+        "15/SHORT"
       ],
       "excludeSaVerdict": []
     },
-    "rationale": "REVISION SEMANAL 2026-11-01 (v3->v4): se agrega 3/LONG y 3/SHORT a tf_side. shadow_weekly venia marcando shadow_beats_raw=false de forma sostenida (W41-W44) porque desde que aparecieron TF nuevos en el bus (3m/15m/29m, ~2026-10-29) raw_indicator los incluye pero shadow (criterio v3) no, asi que shadow dejo de ser un subconjunto distinto de raw -- en las semanas donde el criterio v3 cubre todo el universo clasico (W36-W43, antes de que 3m/15m/29m tuvieran muestra) shadow_n era literalmente igual a raw_n (comparacion trivial, nunca puede batir a algo idéntico a si mismo); en W44 (con los TF nuevos ya con muestra) raw_expR=0.027 > shadow_expR=0.01 porque las senales nuevas que shadow excluye rinden bien y raw si las cuenta. De los tres TF nuevos, 3m/RETEST/LONG (n=764, survives_fdr10=true, CI90=[0.008,0.141]) y 3m/RETEST/SHORT (n=738, survives_fdr10=true, CI90=[0.04,0.177]) cumplen HOY el mismo estandar que uso la revision v1->v2 para sumar 2m LONG/5m SHORT (FDR 10% + cross_instrument verdict=universal, spread 0.323 y 0.327 respectivamente) -- se agregan. 15m (survives_fdr10=false en ambos lados) y 29m (survives_fdr10=true en SHORT pero cross_instrument=instrument-specific, spread 0.916, y sin una sola semana ISO cerrada de historial, todo su n vive en W44) NO cumplen el estandar todavia -- quedan fuera de v4, igual que 2m LONG/5m SHORT se quedaron fuera de v1 hasta madurar. Ver reviews/2026-week-44.md para el detalle. Historia v1/v2/v3 abajo. REVISION 2026-10-31 (v2->v3): se quita el filtro por veredicto Session Analyst. Con n=24k cruzados, AVOID rinde E[R] +0.022 (mejor que GO +0.005) y WAIT es el mejor (+0.043, CI90 limpio, estable desde 2026-09-11); excluir AVOID dejaba la sombra en +0.036 contra +0.038 del indicador crudo, o sea el filtro restaba. El veredicto SA es un plan de sesion para el trader, no un filtro de senales scalp: no volver a excluir por SA salvo que session_analyst_cross muestre AVOID con CI90 negativo durante 3 semanas. Historia v1/v2 abajo. kind=RETEST (prioridad 1; INV no tiene ningun segmento con survives_fdr10=true todavia). REVISION SEMANAL 2026-09-27 (v1->v2): v1 (2026-09-20) limitaba tf_side a 4 segmentos (1/LONG, 1/SHORT, 2/SHORT, 5/LONG) porque 2m LONG y 5m SHORT todavia cruzaban/rozaban cero en ese momento. Desde entonces segment_significance certifico ambos de forma sostenida durante varias corridas seguidas (2m LONG desde 2026-09-18, 5m SHORT desde antes) sin ninguna reversion, y hoy los 6 segmentos RETEST (1m/2m/5m x LONG/SHORT) tienen survives_fdr10=true con CI90 que no cruza cero -- ver segment_significance de hoy. Se amplia tf_side a los 6 segmentos certificados; la justificacion vieja de v1 (excluir 2m LONG/5m SHORT por CI90 rozando cero) ya no la sostiene el dato, quedaba pendiente de esta revision semanal desde 2026-09-24 (ver playbook buy-retest.md, historico). Se excluyen senales del dia/sesion en un instrumento con veredicto Session Analyst=AVOID: avoid_vs_rest_ci90.AVOID no es significativo (p_mean_le_0 alto) mientras GO y WAIT si lo son (session_analyst_cross). SL/objetivo = el mismo del indicador (3 capas); el SL estructural de experiments.json (sl-retest-wick) SE APLICO en TradingView el 2026-09-26 pero el feed sigue registrando el 3-capas como rMultiple (el SL real ya cambio, la medicion paralela sigue corriendo en sl_origin_vs_layer) -- no se incorpora a la sombra hasta que haya muestra post-cambio suficiente para decidir si usar rOrig en vez de rMultiple."
+    "rationale": "REVISION SEMANAL 2026-11-22 (v4->v5): se reemplaza el criterio completo. v4 (FDR10 bruto) incluia 1/2/3 LONG+SHORT; con significancia NETA de costes (agregada desde 2026-11-14) esos mismos segmentos resultaron PERDEDORES NETOS ciertos (1m/2m, p_net_le_0>=0.998) o inconcluyentes (3m) -- v4 nunca pudo batir al indicador crudo: shadow_weekly.shadow_beats_raw=false en las 8 semanas cerradas seguidas W40-W47. shadow_rules_net_candidate (mismo estandar FDR10+universal pero en NETO, viene calculandose desde 2026-11-14/15 sin sustituir v4, ver reviews/2026-week-46.md: 'se vigila 2-3 lecturas mas antes de promover') bate al crudo en 7 de esas 8 semanas (unica excepcion W46) -- tras mas de una semana de lecturas sin reversion, se promueve hoy. segment_significance NETO + cross_instrument=universal da hoy: 5m/SHORT (survives_fdr10=true neto, CI90net=[0.012,0.115] n=3916, universal) y 15m/SHORT (CI90net=[0.076,0.259] n=1069, universal) -- los unicos dos que cumplen ambos filtros. 29m/LONG y 29m/SHORT tambien sobreviven FDR10 neto pero son instrument-specific (dominados por YM), igual que en v1-v4 no se incluyen segmentos instrument-specific. 1m/2m/3m LONG+SHORT y 5m/15m LONG quedan fuera: no sobreviven FDR10 neto (ver segment_significance y playbook buy-retest.md/sell-retest.md de hoy). Detalle completo en reviews/2026-week-47.md. Historia v4 (pre-reemplazo, mantenida para trazabilidad): REVISION SEMANAL 2026-11-01 (v3->v4): se agrega 3/LONG y 3/SHORT a tf_side. shadow_weekly venia marcando shadow_beats_raw=false de forma sostenida (W41-W44) porque desde que aparecieron TF nuevos en el bus (3m/15m/29m, ~2026-10-29) raw_indicator los incluye pero shadow (criterio v3) no, asi que shadow dejo de ser un subconjunto distinto de raw -- en las semanas donde el criterio v3 cubre todo el universo clasico (W36-W43, antes de que 3m/15m/29m tuvieran muestra) shadow_n era literalmente igual a raw_n (comparacion trivial, nunca puede batir a algo idéntico a si mismo); en W44 (con los TF nuevos ya con muestra) raw_expR=0.027 > shadow_expR=0.01 porque las senales nuevas que shadow excluye rinden bien y raw si las cuenta. De los tres TF nuevos, 3m/RETEST/LONG (n=764, survives_fdr10=true, CI90=[0.008,0.141]) y 3m/RETEST/SHORT (n=738, survives_fdr10=true, CI90=[0.04,0.177]) cumplen HOY el mismo estandar que uso la revision v1->v2 para sumar 2m LONG/5m SHORT (FDR 10% + cross_instrument verdict=universal, spread 0.323 y 0.327 respectivamente) -- se agregan. 15m (survives_fdr10=false en ambos lados) y 29m (survives_fdr10=true en SHORT pero cross_instrument=instrument-specific, spread 0.916, y sin una sola semana ISO cerrada de historial, todo su n vive en W44) NO cumplen el estandar todavia -- quedan fuera de v4, igual que 2m LONG/5m SHORT se quedaron fuera de v1 hasta madurar. Ver reviews/2026-week-44.md para el detalle. Historia v1/v2/v3 abajo. REVISION 2026-10-31 (v2->v3): se quita el filtro por veredicto Session Analyst. Con n=24k cruzados, AVOID rinde E[R] +0.022 (mejor que GO +0.005) y WAIT es el mejor (+0.043, CI90 limpio, estable desde 2026-09-11); excluir AVOID dejaba la sombra en +0.036 contra +0.038 del indicador crudo, o sea el filtro restaba. El veredicto SA es un plan de sesion para el trader, no un filtro de senales scalp: no volver a excluir por SA salvo que session_analyst_cross muestre AVOID con CI90 negativo durante 3 semanas. Historia v1/v2 abajo. kind=RETEST (prioridad 1; INV no tiene ningun segmento con survives_fdr10=true todavia). REVISION SEMANAL 2026-09-27 (v1->v2): v1 (2026-09-20) limitaba tf_side a 4 segmentos (1/LONG, 1/SHORT, 2/SHORT, 5/LONG) porque 2m LONG y 5m SHORT todavia cruzaban/rozaban cero en ese momento. Desde entonces segment_significance certifico ambos de forma sostenida durante varias corridas seguidas (2m LONG desde 2026-09-18, 5m SHORT desde antes) sin ninguna reversion, y hoy los 6 segmentos RETEST (1m/2m/5m x LONG/SHORT) tienen survives_fdr10=true con CI90 que no cruza cero -- ver segment_significance de hoy. Se amplia tf_side a los 6 segmentos certificados; la justificacion vieja de v1 (excluir 2m LONG/5m SHORT por CI90 rozando cero) ya no la sostiene el dato, quedaba pendiente de esta revision semanal desde 2026-09-24 (ver playbook buy-retest.md, historico). Se excluyen senales del dia/sesion en un instrumento con veredicto Session Analyst=AVOID: avoid_vs_rest_ci90.AVOID no es significativo (p_mean_le_0 alto) mientras GO y WAIT si lo son (session_analyst_cross). SL/objetivo = el mismo del indicador (3 capas); el SL estructural de experiments.json (sl-retest-wick) SE APLICO en TradingView el 2026-09-26 pero el feed sigue registrando el 3-capas como rMultiple (el SL real ya cambio, la medicion paralela sigue corriendo en sl_origin_vs_layer) -- no se incorpora a la sombra hasta que haya muestra post-cambio suficiente para decidir si usar rOrig en vez de rMultiple."
   },
   "shadow": {
-    "n": 71222,
-    "wrTP1": 46.8,
-    "nSL": 33157,
-    "nTO": 4721,
-    "expR": 0.055,
-    "pf": 1.11,
-    "expRnet": -0.072,
-    "pfNet": 0.87,
-    "mfe_p25": 10.0,
-    "mfe_p50": 22.0,
-    "mfe_p75": 52.5,
-    "winnerMAE_p75": 16.0,
-    "winnerMAE_p90": 40.0,
-    "loserMFEbeforeSL_p50": 4.0,
-    "bars_win_p50": 2.0,
-    "bars_loss_p50": 3.0,
-    "entryZoneTk_p50": -18.0,
-    "revAfterSL_rate": 36.0
+    "n": 5207,
+    "wrTP1": 51.3,
+    "nSL": 2236,
+    "nTO": 301,
+    "expR": 0.139,
+    "pf": 1.31,
+    "expRnet": 0.083,
+    "pfNet": 1.17,
+    "mfe_p25": 26.0,
+    "mfe_p50": 78.0,
+    "mfe_p75": 464.5,
+    "winnerMAE_p75": 104.0,
+    "winnerMAE_p90": 1961.6999999999985,
+    "loserMFEbeforeSL_p50": 0.0,
+    "bars_win_p50": 1.0,
+    "bars_loss_p50": 2.0,
+    "entryZoneTk_p50": -85.5,
+    "revAfterSL_rate": 53.0
   },
   "shadow_ci90": {
-    "expR": 0.055,
+    "expR": 0.139,
     "ci90": [
-      0.036,
-      0.075
+      0.091,
+      0.189
     ],
     "p_mean_le_0": 0.0,
-    "expRnet": -0.072,
+    "expRnet": 0.083,
     "ci90net": [
-      -0.093,
-      -0.05
+      0.032,
+      0.136
     ],
-    "p_net_le_0": 1.0,
-    "n": 68811,
-    "days": 75,
+    "p_net_le_0": 0.005,
+    "n": 4987,
+    "days": 72,
     "ci_method": "day-clustered bootstrap"
   },
   "raw_indicator": {
-    "n": 74749,
+    "n": 74752,
     "wrTP1": 47.0,
-    "nSL": 34680,
+    "nSL": 34681,
     "nTO": 4913,
     "expR": 0.061,
     "pf": 1.13,
@@ -11498,14 +12181,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       -0.04
     ],
     "p_net_le_0": 1.0,
-    "n": 72167,
+    "n": 72170,
     "days": 75,
     "ci_method": "day-clustered bootstrap"
   },
   "tier_ap_b_only": {
-    "n": 36815,
+    "n": 36816,
     "wrTP1": 44.2,
-    "nSL": 17844,
+    "nSL": 17845,
     "nTO": 2699,
     "expR": 0.046,
     "pf": 1.09,
@@ -11535,7 +12218,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       -0.059
     ],
     "p_net_le_0": 1.0,
-    "n": 35537,
+    "n": 35538,
     "days": 74,
     "ci_method": "day-clustered bootstrap"
   },
@@ -11547,88 +12230,88 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
 ```json
 {
   "2026-W36": {
-    "shadow_n": 3136,
-    "shadow_expR": -0.027,
+    "shadow_n": 96,
+    "shadow_expR": -0.018,
     "raw_n": 3136,
     "raw_expR": -0.027,
-    "shadow_beats_raw": false
+    "shadow_beats_raw": true
   },
   "2026-W37": {
-    "shadow_n": 5248,
-    "shadow_expR": 0.07,
+    "shadow_n": 221,
+    "shadow_expR": 0.118,
     "raw_n": 5248,
     "raw_expR": 0.07,
-    "shadow_beats_raw": false
+    "shadow_beats_raw": true
   },
   "2026-W38": {
-    "shadow_n": 4807,
-    "shadow_expR": 0.091,
+    "shadow_n": 177,
+    "shadow_expR": 0.093,
     "raw_n": 4807,
     "raw_expR": 0.091,
-    "shadow_beats_raw": false
+    "shadow_beats_raw": true
   },
   "2026-W39": {
-    "shadow_n": 5227,
-    "shadow_expR": 0.051,
+    "shadow_n": 206,
+    "shadow_expR": 0.069,
     "raw_n": 5227,
     "raw_expR": 0.051,
-    "shadow_beats_raw": false
+    "shadow_beats_raw": true
   },
   "2026-W40": {
-    "shadow_n": 5223,
-    "shadow_expR": 0.016,
+    "shadow_n": 233,
+    "shadow_expR": 0.022,
     "raw_n": 5223,
     "raw_expR": 0.016,
-    "shadow_beats_raw": false
+    "shadow_beats_raw": true
   },
   "2026-W41": {
-    "shadow_n": 5084,
-    "shadow_expR": 0.057,
+    "shadow_n": 172,
+    "shadow_expR": 0.075,
     "raw_n": 5084,
     "raw_expR": 0.057,
-    "shadow_beats_raw": false
+    "shadow_beats_raw": true
   },
   "2026-W42": {
-    "shadow_n": 4993,
-    "shadow_expR": 0.05,
+    "shadow_n": 181,
+    "shadow_expR": 0.124,
     "raw_n": 4993,
     "raw_expR": 0.05,
-    "shadow_beats_raw": false
+    "shadow_beats_raw": true
   },
   "2026-W43": {
-    "shadow_n": 4609,
-    "shadow_expR": -0.005,
+    "shadow_n": 234,
+    "shadow_expR": -0.001,
     "raw_n": 4609,
     "raw_expR": -0.005,
-    "shadow_beats_raw": false
+    "shadow_beats_raw": true
   },
   "2026-W44": {
-    "shadow_n": 9423,
-    "shadow_expR": 0.023,
+    "shadow_n": 978,
+    "shadow_expR": 0.073,
     "raw_n": 10312,
     "raw_expR": 0.027,
-    "shadow_beats_raw": false
+    "shadow_beats_raw": true
   },
   "2026-W45": {
-    "shadow_n": 6959,
-    "shadow_expR": 0.099,
+    "shadow_n": 854,
+    "shadow_expR": 0.257,
     "raw_n": 7899,
     "raw_expR": 0.121,
-    "shadow_beats_raw": false
+    "shadow_beats_raw": true
   },
   "2026-W46": {
-    "shadow_n": 7448,
-    "shadow_expR": 0.079,
+    "shadow_n": 785,
+    "shadow_expR": 0.092,
     "raw_n": 8345,
     "raw_expR": 0.092,
     "shadow_beats_raw": false
   },
   "2026-W47": {
-    "shadow_n": 9065,
-    "shadow_expR": 0.092,
-    "raw_n": 9866,
+    "shadow_n": 1070,
+    "shadow_expR": 0.246,
+    "raw_n": 9869,
     "raw_expR": 0.1,
-    "shadow_beats_raw": false
+    "shadow_beats_raw": true
   }
 }
 ```
@@ -11652,30 +12335,30 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     "rationale": "Candidato NO activo (no sustituye SHADOW_RULES_V1): mismo estandar FDR10 + cross_instrument=universal que v1-v4, pero sobre significancia NETA de costes en vez de bruta. Se añade para decidir informado en revision semanal si se promueve. Ver reviews/2026-week-46.md."
   },
   "shadow": {
-    "n": 5205,
+    "n": 5207,
     "wrTP1": 51.3,
-    "nSL": 2235,
+    "nSL": 2236,
     "nTO": 301,
-    "expR": 0.14,
+    "expR": 0.139,
     "pf": 1.31,
     "expRnet": 0.083,
     "pfNet": 1.17,
     "mfe_p25": 26.0,
     "mfe_p50": 78.0,
-    "mfe_p75": 464.0,
+    "mfe_p75": 464.5,
     "winnerMAE_p75": 104.0,
-    "winnerMAE_p90": 1963.4000000000046,
+    "winnerMAE_p90": 1961.6999999999985,
     "loserMFEbeforeSL_p50": 0.0,
     "bars_win_p50": 1.0,
     "bars_loss_p50": 2.0,
-    "entryZoneTk_p50": -85.0,
+    "entryZoneTk_p50": -85.5,
     "revAfterSL_rate": 53.0
   },
   "shadow_ci90": {
-    "expR": 0.14,
+    "expR": 0.139,
     "ci90": [
       0.091,
-      0.19
+      0.189
     ],
     "p_mean_le_0": 0.0,
     "expRnet": 0.083,
@@ -11683,15 +12366,15 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       0.032,
       0.136
     ],
-    "p_net_le_0": 0.004,
-    "n": 4985,
+    "p_net_le_0": 0.005,
+    "n": 4987,
     "days": 72,
     "ci_method": "day-clustered bootstrap"
   },
   "raw_indicator": {
-    "n": 74749,
+    "n": 74752,
     "wrTP1": 47.0,
-    "nSL": 34680,
+    "nSL": 34681,
     "nTO": 4913,
     "expR": 0.061,
     "pf": 1.13,
@@ -11721,14 +12404,14 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       -0.04
     ],
     "p_net_le_0": 1.0,
-    "n": 72167,
+    "n": 72170,
     "days": 75,
     "ci_method": "day-clustered bootstrap"
   },
   "tier_ap_b_only": {
-    "n": 36815,
+    "n": 36816,
     "wrTP1": 44.2,
-    "nSL": 17844,
+    "nSL": 17845,
     "nTO": 2699,
     "expR": 0.046,
     "pf": 1.09,
@@ -11758,7 +12441,7 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
       -0.059
     ],
     "p_net_le_0": 1.0,
-    "n": 35537,
+    "n": 35538,
     "days": 74,
     "ci_method": "day-clustered bootstrap"
   },
@@ -11847,9 +12530,9 @@ ejemplos por causa: {"stop-en-el-minimo": ["GC-2-22086-S", "GC-1-23532-S", "ES-1
     "shadow_beats_raw": false
   },
   "2026-W47": {
-    "shadow_n": 1068,
-    "shadow_expR": 0.247,
-    "raw_n": 9866,
+    "shadow_n": 1070,
+    "shadow_expR": 0.246,
+    "raw_n": 9869,
     "raw_expR": 0.1,
     "shadow_beats_raw": true
   }

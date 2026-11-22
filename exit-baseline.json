@@ -1,10 +1,10 @@
 {
   "schema": "exit-baseline-1",
-  "generatedAt": "2026-11-22T02:18:47.043855+00:00",
+  "generatedAt": "2026-11-22T02:51:47.494041+00:00",
   "source": "scalp-cc-bus outcomes, all kinds and TFs",
   "bySymbol": {
     "ALL": {
-      "n": 76412,
+      "n": 76415,
       "hit1R": 0.338,
       "stoppedOut": 0.462,
       "slWasGreenHalfRFirst": 0.299,
@@ -12,9 +12,9 @@
       "reachedTP2": 0.063
     },
     "BTCUSDT": {
-      "n": 2185,
+      "n": 2186,
       "hit1R": 0.357,
-      "stoppedOut": 0.443,
+      "stoppedOut": 0.442,
       "slWasGreenHalfRFirst": 0.17,
       "slWasGreen1RFirst": 0.077,
       "reachedTP2": 0.19
@@ -36,10 +36,10 @@
       "reachedTP2": 0.049
     },
     "ETHUSDT": {
-      "n": 2069,
+      "n": 2071,
       "hit1R": 0.36,
       "stoppedOut": 0.431,
-      "slWasGreenHalfRFirst": 0.18,
+      "slWasGreenHalfRFirst": 0.179,
       "slWasGreen1RFirst": 0.071,
       "reachedTP2": 0.188
     },
