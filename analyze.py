@@ -1253,11 +1253,25 @@ def sl_origin_vs_layer(pairs):
             for r in rows_since:
                 gS[f"{r['tf']}m/{r['kind']}/{r['side']}"].append(r)
             by_seg = {k: blk(rs) for k, rs in sorted(gS.items()) if len(rs) >= 5}
+            # 2026-11-22: igual que by_basis_min_stop, pero por segmento y solo ventana
+            # since_change. by_tf_kind_side (arriba) no filtra stops <0.3 ATR y por eso
+            # certificaba 11/12 segmentos con el metodo viejo (ver reviews/2026-11-21-
+            # inv-candle1.md); este corte es el que hay que leer para decidir por segmento.
+            rows_since_big = [r for r in rows_since if (_stop_atr(r) or 0) >= MIN_STOP_ATR1M]
+            gSb = defaultdict(list)
+            for r in rows_since_big:
+                gSb[f"{r['tf']}m/{r['kind']}/{r['side']}"].append(r)
+            by_seg_min_stop = {k: blk(rs) for k, rs in sorted(gSb.items()) if len(rs) >= 5}
             since = {"changeDate": cd, "n": len(rows_since), "by_tf_kind_side": by_seg,
+                     "by_tf_kind_side_min_stop": by_seg_min_stop,
+                     "min_stop_atr1m": MIN_STOP_ATR1M,
                      "note": "emparejado (rOrig vs rMultiple) solo con recvDate >= changeDate; "
                              "compara contra by_tf_kind_side (todo el historico) para ver si el "
                              "efecto se mantiene, se encoge (optimismo in-sample esperable) o se "
-                             "invierte en la ventana nueva. NO confundir con prediction_scoreboard."}
+                             "invierte en la ventana nueva. NO confundir con prediction_scoreboard. "
+                             "by_tf_kind_side_min_stop excluye stops estructurales <0.3 ATR(1m) y "
+                             "es NETO -- es el corte de confianza, by_tf_kind_side es solo referencia "
+                             "(inflado por artefactos de stop de 1-3 ticks, ver 2026-11-21/22)."}
             break
     out["since_change"] = since
     return out
