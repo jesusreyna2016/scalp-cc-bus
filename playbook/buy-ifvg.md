@@ -3,7 +3,21 @@
 Señal: un FVG bajista que se invierte al alza (`kind=INV`, `side=LONG`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-15 · n: 841)
+## Sección viva  (última revisión: 2026-11-22 · n: 76412 bus / ver n propio abajo)
+
+### Nota 2026-11-22 (domingo, REVISIÓN SEMANAL 2026-week-47)
+**Cierra la pregunta sobre SL=vela-1 del FVG en INV.** La alerta del
+2026-11-21 ("vela 1 BATE al de 3 capas, E[R] 1.879 vs 0.117") era un
+artefacto: investigado en `reviews/2026-11-21-inv-candle1.md`, el 1%
+de trades con más R (estirones de SL de 1-2 ticks) sumaba el 153% del
+total. Con stop mínimo 0.3 ATR(1m) + neto de costes + IC90 por días
+(`sl_origin_vs_layer.by_basis_min_stop.candle1`), **segunda lectura
+hoy confirma que PIERDE**: n=1099, E[R]neto 3capas=**0.037** vs vela
+1=**-0.183**, delta_net=**-0.22** CI90=[-0.322,-0.115] (no cruza
+cero). `experiments.json→sl-inv-fvg-candle1-2026-11-21` cierra como
+**rechazado**. No tocar el SL en INV. Sin cambio en el resto del
+veredicto de este playbook (1m sigue siendo el único TF con edge
+propio).
 
 ### Nota 2026-11-15 (domingo, REVISIÓN SEMANAL 2026-week-46)
 Dato nuevo mínimo (+1). Sin cambio material. `candle1` (SL vela 1 del
@@ -267,32 +281,34 @@ revisión semanal (confianza de `sl_basis_retest`, alerta de racha del
 modo sombra) son específicas de `kind=RETEST` y no aplican aquí.
 
 ### Veredicto global
-1m n=484 WR 46.3% E[R]=**0.118** PF=1.27; 2m n=174 WR 52.9%
-E[R]=**0.038** PF=1.09; 5m n=57 WR 66.7% E[R]=**0.096** PF=1.35; 3m
-n=19 WR 47.4% E[R]=**-0.161** PF=0.66 (sólo TF en rojo); 15m n=4, 29m
-n=4 — siguen testimoniales, sin veredicto. `segment_significance`: 1m
-CI90=[0.022,0.216] n=465 **`survives_fdr10=true`** (sigue
-certificando, único segmento de este playbook); 2m CI90=[-0.101,0.176]
-n=169 sigue sin certificar; 5m CI90=[-0.084,0.273] n=54 sigue sin
-certificar; 3m CI90=[-0.477,0.152] n=19 — muy chico para leer.
-`sl_origin_vs_layer` (`candle1`, agregado INV, n=1062): delta=+1.884
-pero CI90=[-0.081,5.624] sigue cruzando cero (`delta_beats_zero=false`)
-— sin confirmar, a diferencia de RETEST donde `retestBar` certifica
-hoy con fuerza (E[R] 0.194 vs 0.053, delta 0.14 CI90=[0.108,0.179],
-n=35007, ya formalizado en la revisión semanal) — sigue correcto que
-`sl-retest-wick` se limite a `kind=RETEST`, no extender a INV.
+**Razonado en NETO — corrige la nota vieja.** `segment_significance`
+neto: 1m n=537 E[R]neto=**-0.014** CI90net=[-0.115,0.085]
+`survives_fdr10=false` (gross sí certificaba, **neto NO — ya no es
+"el único segmento con edge confirmado"**); 2m n=201 E[R]neto=-0.088
+CI90net=[-0.207,0.034] sin certificar; 3m n=41 E[R]neto=-0.077
+CI90net=[-0.216,0.06] sin certificar; 5m n=70 E[R]neto=0.053
+CI90net=[-0.125,0.239] sin certificar. **Ningún TF de BUY INV tiene
+edge neto confirmado tras FDR hoy** — este playbook sigue en
+prioridad 2 sin segmento fuerte propio; gross de referencia: 1m WR
+46.3% E[R]=0.118 PF=1.27; 2m WR52.9% E[R]=0.038 PF=1.09; 5m WR66.7%
+E[R]=0.096 PF=1.35; 3m WR47.4% E[R]=-0.161 PF=0.66. **SL=vela-1 del
+FVG (`candle1`) — CERRADO 2026-11-22**: la alerta de ayer de que
+"BATE al de 3 capas" era un artefacto de stops de 1-3 ticks (ver Nota
+de hoy); con el filtro correcto, PIERDE (delta_net=-0.22
+CI90=[-0.322,-0.115] n=1099, agregado INV). `experiments.json→
+sl-inv-fvg-candle1-2026-11-21` rechazado. No tocar el SL en INV.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 Sin n suficiente todavía para certificar en más de una rama con
 confianza:
 
-| # | SI | ENTONCES (hipótesis, sin confirmar salvo 1m) | n | efecto | confianza |
+| # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` | certifica FDR de forma sostenida — tomar con cautela | 465 | E[R]=**0.118** CI90=[0.022,0.216] | moderada — varias lecturas seguidas |
-| 2 | `tf=2m` | sin edge confirmado (CI90 cruza cero) | 169 | E[R]=**0.038** CI90=[-0.101,0.176] | baja — no proponer cambio con este n |
-| 3 | `tf=5m` | sigue sin edge confirmado | 54 | E[R]=**0.096** CI90=[-0.084,0.273] | baja — n chico, no proponer |
-| 4 | mover SL a vela 1 del FVG (`candle1`) | **NO proponer** — CI90 sigue cruzando cero en agregado INV, contraste claro con `sl_basis_retest` que ya se formalizó en RETEST (ver revisión semanal) | 1062 (INV agregado) | delta=+1.884 CI90=[-0.081,5.624] | baja |
-| 5 | `sa_verdict=GO` (Session Analyst, INV/LONG) | **certifica positivo con CI90 propio hoy** — al revés del hallazgo de hoy en RETEST (ver Nota 2026-11-08) | 67 | E[R]=**0.247** CI90=[0.02,0.48] | moderada — certifica pero n todavía chico |
+| 1 | `tf=1m` | sin edge neto confirmado (gross certificaba, neto cruza cero) — no proponer cambio todavía | 537 | E[R]neto=**-0.014** CI90net=[-0.115,0.085] | baja |
+| 2 | `tf=2m` | sin edge confirmado | 201 | E[R]neto=**-0.088** CI90net=[-0.207,0.034] | baja |
+| 3 | `tf=5m` | sigue sin edge confirmado | 70 | E[R]neto=**0.053** CI90net=[-0.125,0.239] | baja |
+| 4 | mover SL a vela 1 del FVG (`candle1`) | **RECHAZADO 2026-11-22** — artefacto de stops de 1-3 ticks, pierde neto confirmado | 1099 (INV agregado) | delta_net=**-0.22** CI90=[-0.322,-0.115] | alta (confirmado negativo) |
+| 5 | `sa_verdict=GO` (Session Analyst, INV/LONG) | **certifica positivo con CI90 propio hoy** — al revés del hallazgo en RETEST (ver Nota 2026-11-08) | 67 | E[R]=**0.247** CI90=[0.02,0.48] | moderada — certifica pero n todavía chico |
 
 ### Entrada
 - Óptima: _pendiente_ (mercado al cierre vs límite en `zBot`/`zCE`).
@@ -301,8 +317,9 @@ confianza:
 - **Escalera + parciales (`managed_vs_naive`)**: 1m n=465
   delta=**+0.144**; 2m n=146 delta=**+0.098**; 5m n=50
   delta=**-0.022**; 3m n=19 delta=**-0.037**. Sin cambio de regla.
-- **SL de 3 capas vs SL = vela 1 del FVG**: sin confirmación en ningún
-  TF — mixto, no proponer cambio (ver Veredicto global).
+- **SL de 3 capas vs SL = vela 1 del FVG**: RECHAZADO 2026-11-22
+  (artefacto, confirmado negativo neto — ver Veredicto global). No
+  tocar.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar

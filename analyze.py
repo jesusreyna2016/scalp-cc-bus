@@ -896,14 +896,32 @@ def session_analyst_cross(pairs, sa_base):
 # agente cambie el criterio en una revision semanal, actualiza esta
 # constante (no la recalcules a mano fuera de aqui).
 SHADOW_RULES_V1 = {
-    "version": 4,
-    "definedAt": "2026-11-01",
+    "version": 5,
+    "definedAt": "2026-11-22",
     "criteria": {
         "kind": ["RETEST"],
-        "tf_side": ["1/LONG", "1/SHORT", "2/LONG", "2/SHORT", "3/LONG", "3/SHORT", "5/LONG", "5/SHORT"],
+        "tf_side": ["5/SHORT", "15/SHORT"],
         "excludeSaVerdict": [],
     },
     "rationale": (
+        "REVISION SEMANAL 2026-11-22 (v4->v5): se reemplaza el criterio completo. v4 (FDR10 "
+        "bruto) incluia 1/2/3 LONG+SHORT; con significancia NETA de costes (agregada desde "
+        "2026-11-14) esos mismos segmentos resultaron PERDEDORES NETOS ciertos (1m/2m, "
+        "p_net_le_0>=0.998) o inconcluyentes (3m) -- v4 nunca pudo batir al indicador crudo: "
+        "shadow_weekly.shadow_beats_raw=false en las 8 semanas cerradas seguidas W40-W47. "
+        "shadow_rules_net_candidate (mismo estandar FDR10+universal pero en NETO, viene "
+        "calculandose desde 2026-11-14/15 sin sustituir v4, ver reviews/2026-week-46.md: "
+        "'se vigila 2-3 lecturas mas antes de promover') bate al crudo en 7 de esas 8 semanas "
+        "(unica excepcion W46) -- tras mas de una semana de lecturas sin reversion, se "
+        "promueve hoy. segment_significance NETO + cross_instrument=universal da hoy: "
+        "5m/SHORT (survives_fdr10=true neto, CI90net=[0.012,0.115] n=3916, universal) y "
+        "15m/SHORT (CI90net=[0.076,0.259] n=1069, universal) -- los unicos dos que cumplen "
+        "ambos filtros. 29m/LONG y 29m/SHORT tambien sobreviven FDR10 neto pero son "
+        "instrument-specific (dominados por YM), igual que en v1-v4 no se incluyen "
+        "segmentos instrument-specific. 1m/2m/3m LONG+SHORT y 5m/15m LONG quedan fuera: "
+        "no sobreviven FDR10 neto (ver segment_significance y playbook buy-retest.md/"
+        "sell-retest.md de hoy). Detalle completo en reviews/2026-week-47.md. "
+        "Historia v4 (pre-reemplazo, mantenida para trazabilidad): "
         "REVISION SEMANAL 2026-11-01 (v3->v4): se agrega 3/LONG y 3/SHORT a tf_side. "
         "shadow_weekly venia marcando shadow_beats_raw=false de forma sostenida (W41-W44) "
         "porque desde que aparecieron TF nuevos en el bus (3m/15m/29m, ~2026-10-29) "

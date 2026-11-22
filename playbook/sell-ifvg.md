@@ -3,7 +3,20 @@
 Señal: un FVG alcista que se invierte a la baja (`kind=INV`, `side=SHORT`).
 Prioridad 2 (monitoreo). Lo reescribe el agente cada corrida; el histórico se acumula abajo.
 
-## Sección viva  (última revisión: 2026-11-15 · n: 635)
+## Sección viva  (última revisión: 2026-11-22 · n: 76412 bus / ver n propio abajo)
+
+### Nota 2026-11-22 (domingo, REVISIÓN SEMANAL 2026-week-47)
+**Cierra la pregunta sobre SL=vela-1 del FVG en INV** (ver detalle en
+`buy-ifvg.md`, la medición es agregada INV, no separada por side).
+Segunda lectura hoy confirma que PIERDE neto: delta_net=**-0.22**
+CI90=[-0.322,-0.115] n=1099. `experiments.json→sl-inv-fvg-
+candle1-2026-11-21` cierra como **rechazado**. No tocar el SL en INV.
+Además, con `segment_significance` en NETO (no gross), **1m/INV/SHORT
+ya no certifica** (gross sí, neto E[R]=0.054 CI90net=[-0.042,0.142]
+cruza cero) — este playbook se queda sin TF con edge neto confirmado
+con muestra decente; `3m/INV/SHORT` certifica NETO (E[R]neto=0.234
+CI90=[0.06,0.381]) pero con n=31, apenas sobre el mínimo para
+proponer — marcar experimental, vigilar que no sea ruido.
 
 ### Nota 2026-11-15 (domingo, REVISIÓN SEMANAL 2026-week-46)
 Dato nuevo mínimo (+2). Sin cambio material respecto a ayer. `candle1`
@@ -252,32 +265,35 @@ sombra) son específicas de `kind=RETEST` y no aplican a este playbook.
 Ningún candidato con n≥20 para proponer cambio de input.
 
 ### Veredicto global
-**1m n=353 WR 46.7% E[R]=**0.131** PF=1.31 — certifica FDR (ver
-abajo), el único TF de este playbook con edge estadístico real**; 2m
-n=136 WR 48.5% E[R]=**0.097** PF=1.23; 5m n=41 WR 48.8% E[R]=**0.127**
-PF=1.29; 3m n=16 WR 81.2% E[R]=**0.187** PF=2.0 (WR alto con n chico,
-no leer como real); 15m n=1, 29m n=2 — testimoniales. `segment_
-significance`: **1m CI90=[0.027,0.228] n=353 `survives_fdr10=true`**
-(certifica con margen estable, quinto día consecutivo — ver Nota de
-hoy); 2m CI90=[-0.08,0.274] n=132 (sin certificar); 5m
-CI90=[-0.175,0.448] n=39 (sin certificar); 3m CI90=[-0.074,0.417]
-n=16 (muy chico). `sl_origin_vs_layer.since_change` (ventana
-post-2026-09-26 del experimento `sl_basis_retest`, medición paralela,
-NO aplicado en INV): `1m/INV/SHORT` sigue sin certificar en ninguna
-dirección (delta=**-0.067** CI90=[-0.352,0.245] n=182, cruza cero) —
-sin evidencia de que el SL-mecha ayude en INV, la recomendación de no
-extender `sl-retest-wick` a `kind=INV` no cambia (ver revisión
-semanal `reviews/2026-week-45.md`, donde sí se formaliza para RETEST).
+**Razonado en NETO — corrige la nota vieja.** `segment_significance`
+neto: 1m n=467 E[R]neto=**0.054** CI90net=[-0.042,0.142]
+`survives_fdr10=false` (gross certificaba, **neto ya NO** — deja de
+ser "el único segmento con edge estadístico real" de este playbook);
+2m n=169 E[R]neto=0.11 CI90net=[-0.057,0.272] sin certificar; **3m
+n=31 E[R]neto=**0.234** CI90net=[0.06,0.381] `survives_fdr10=true`**
+— certifica NETO, pero n apenas sobre el mínimo para proponer, tratar
+como experimental; 5m n=54 E[R]neto=0.015 CI90net=[-0.306,0.334] sin
+certificar. Gross de referencia: 1m WR46.7% E[R]=0.131 PF=1.31; 2m
+WR48.5% E[R]=0.097 PF=1.23; 3m WR81.2% E[R]=0.187 PF=2.0 (WR alto con
+n chico); 5m WR48.8% E[R]=0.127 PF=1.29. **SL=vela-1 del FVG
+(`candle1`) — CERRADO 2026-11-22**: PIERDE neto confirmado
+(delta_net=-0.22 CI90=[-0.322,-0.115] n=1099, agregado INV, ver Nota
+de hoy); `sl_basis_retest` (mecha del retest, medición paralela) en
+`1m/INV/SHORT` sigue sin certificar en ninguna dirección
+(delta=-0.067 CI90=[-0.352,0.245] n=182) — no extender ningún SL
+estructural a `kind=INV`.
 
 ### Reglas condicionales (IF contexto ENTONCES acción)
 
 | # | SI | ENTONCES | n | efecto | confianza |
 |---|----|----------|---|--------|-----------|
-| 1 | `tf=1m` (`survives_fdr10=true`) | **TOMAR con cautela — único segmento de este playbook con edge estadístico real** | 353 | E[R]=**0.131** CI90=[0.027,0.228] | moderada — quinto día consecutivo certificando |
-| 2 | `tf=2m`/`5m`/`3m` | ninguno certifica FDR hoy | 132/39/16 | E[R] 0.097/0.127/0.187, todos CI90 cruzan cero | baja |
+| 1 | `tf=1m` | sin edge neto confirmado (gross certificaba, neto cruza cero) — no proponer cambio todavía | 467 | E[R]neto=**0.054** CI90net=[-0.042,0.142] | baja |
+| 2 | `tf=2m`/`5m` | ninguno certifica FDR neto | 169/54 | E[R]neto 0.11/0.015, CI90 cruzan cero | baja |
+| 2b | `tf=3m` (`survives_fdr10=true` NETO) | certifica, pero n chico (31) — marcar experimental, vigilar que no sea ruido antes de proponer cambio | 31 | E[R]neto=**0.234** CI90net=[0.06,0.381] | moderada (certifica, n al mínimo) |
 | 3 | símbolo (`cross_instrument`) | sin revisión fina hoy | — | sin veredicto único | baja |
-| 4 | mover SL a mecha del retest en INV (`sl_basis_retest`, medición paralela) | **NO proponer** — sigue sin certificar en ninguna dirección | 182 (1m) | delta -0.067 CI90=[-0.352,0.245] (cruza cero) | baja |
-| 5 | `sa_verdict=WAIT` (Session Analyst, INV/SHORT) | **certifica positivo con CI90 propio hoy** — `GO`/`AVOID` siguen sin certificar por n chico (ver Nota 2026-11-08) | 307 | E[R]=**0.142** CI90=[0.033,0.258] | moderada |
+| 4 | mover SL a vela 1 del FVG (`candle1`, INV) | **RECHAZADO 2026-11-22** — artefacto de stops de 1-3 ticks, pierde neto confirmado | 1099 (INV agregado) | delta_net=**-0.22** CI90=[-0.322,-0.115] | alta (confirmado negativo) |
+| 5 | mover SL a mecha del retest en INV (`sl_basis_retest`, medición paralela) | **NO proponer** — sigue sin certificar en ninguna dirección | 182 (1m) | delta -0.067 CI90=[-0.352,0.245] (cruza cero) | baja |
+| 6 | `sa_verdict=WAIT` (Session Analyst, INV/SHORT) | **certifica positivo con CI90 propio hoy** — `GO`/`AVOID` siguen sin certificar por n chico (ver Nota 2026-11-08) | 307 | E[R]=**0.142** CI90=[0.033,0.258] | moderada |
 
 ### Entrada
 - Óptima: _pendiente_ — `entryZoneTk` insuficiente todavía.
@@ -288,8 +304,9 @@ semanal `reviews/2026-week-45.md`, donde sí se formaliza para RETEST).
   cualquier otro segmento del bus, sobre E[R] base cercano a cero); 2m
   n=132 delta=**+0.146**; 5m n=39 delta=**+0.064**; 3m n=16
   delta=+0.031 (muestra chica, no pesa mucho). Sin cambio de regla.
-- **SL de 3 capas vs SL = vela 1 del FVG**: ver Veredicto global — sigue
-  sin certificar en ninguna dirección en 1m, no proponer.
+- **SL de 3 capas vs SL = vela 1 del FVG**: RECHAZADO 2026-11-22
+  (artefacto, confirmado negativo neto — ver Veredicto global). No
+  tocar.
 - Objetivo / Parcial 1 / trailing: _pendiente_.
 
 ### Contextos a evitar
