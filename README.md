@@ -29,3 +29,6 @@ atr1m atr5m adr kz inAsia inLon inNy pdh pdl poc vah val do vwap ema20 ema50 ema
 exit ambiguous`
 
 `result` ∈ `TP1 | TP2 | SL | TIMEOUT`.
+
+
+Desde el build del 2026-11-27 (`trading_plan_agent.pine`): `sigId` usa la hora de la vela en ms (`NQ-2-1764251400000-L`) en vez de `bar_index`, así que ya no choca entre semanas; las colisiones viejas siguen en el histórico. Campo nuevo `ltfNeg=1` en señales RETEST de 1m / 2m (marcadas en el gráfico como sin ventaja; se siguen registrando).
