@@ -1833,6 +1833,96 @@ def exit_baseline(pairs):
             "source": "scalp-cc-bus outcomes, all kinds and TFs", "bySymbol": out}
 
 
+# ============================================================ PLAN AGENT · OR / IB
+# Señales de ruptura del Opening Range (or_*) y fade del Initial Balance (ib_*) del
+# TDL Plan Agent, copiadas por Netlify a plan/<dia>.jsonl. Se miden aparte de RETEST /
+# INV. Una señal con stop o TP del lado equivocado de la entrada es un fallo del
+# indicador (corregido en tdl-indicators, rama plan-agent-stops): se cuenta y se excluye.
+PLAN_TICK = {"NQ": 0.25, "MNQ": 0.25, "ES": 0.25, "MES": 0.25, "GC": 0.1, "MGC": 0.1, "CL": 0.01, "MCL": 0.01,
+             "ETHUSDT": 0.01, "BTCUSDT": 0.1, "ETHUSDT.P": 0.01, "BTCUSDT.P": 0.1}
+
+def _plan_uid(r):
+    if r.get("uid"):
+        return r["uid"]
+    sym, sig = str(r.get("sym", "")).upper(), str(r.get("sigId", ""))
+    return sig if sig.upper().startswith(sym) else f"{sym}-{r.get('tf')}-{sig}"
+
+def _plan_sym(sym):
+    s = re.sub(r"[0-9!]+$", "", str(sym).upper().split(":")[-1])
+    return s
+
+def plan_orib():
+    rows = load_events("plan")
+    sig, out = {}, {}
+    for r in rows:
+        ev = r.get("evt", "")
+        if ev in ("or_signal", "ib_signal"):
+            sig[_plan_uid(r)] = r
+        elif ev in ("or_outcome", "ib_outcome"):
+            out[_plan_uid(r)] = r
+    trades, broken = [], Counter()
+    for uid, s_ in sig.items():
+        o = out.get(uid)
+        if not o:
+            continue
+        rs, ro = s_.get("raw") or {}, o.get("raw") or {}
+        en, sl, tp, R = _f(rs, "entry"), _f(rs, "sl"), _f(rs, "tp"), _f(ro, "rMultiple")
+        if None in (en, sl, R):
+            continue
+        d = 1 if rs.get("side") == "LONG" else -1
+        fam = s_["evt"][:2].upper()
+        if (en - sl) * d <= 0 or (tp is not None and (tp - en) * d <= 0):
+            broken[fam] += 1
+            continue
+        sym = _plan_sym(s_.get("sym"))
+        tick = PLAN_TICK.get(sym)
+        cost = (COST_TICKS.get(sym, COST_TICKS["default"]) * tick / abs(en - sl)) if tick else 0.0
+        side_bias = rs.get("dir")
+        trades.append({"fam": fam, "inst": rs.get("inst") or ro.get("inst"), "tier": rs.get("tier") or ro.get("tier"),
+                       "fade": rs.get("fade", "-"), "tf": s_.get("tf"), "sym": sym, "side": rs.get("side"),
+                       "withBias": ("si" if side_bias == rs.get("side") else "no" if side_bias in ("LONG", "SHORT") else "neutral"),
+                       "chop": rs.get("chop", "-"), "day": str(s_.get("receivedAt", ""))[:10],
+                       "R": R, "Rnet": R - cost, "rr": abs((tp - en) / (en - sl)) if tp is not None else None})
+
+    def m(xs):
+        n = len(xs)
+        if not n:
+            return {"n": 0}
+        rn = [x["Rnet"] for x in xs]
+        mean = sum(rn) / n
+        byd = defaultdict(float)
+        for x in xs:
+            byd[x["day"]] += x["Rnet"] - mean
+        G = len(byd)
+        se = math.sqrt(G / (G - 1) * sum(v * v for v in byd.values())) / n if G > 1 else None
+        return {"n": n, "days": G, "win": round(100 * sum(x["R"] > 0 for x in xs) / n, 1),
+                "expR": round(sum(x["R"] for x in xs) / n, 3), "expRnet": round(mean, 3),
+                "se": round(se, 3) if se else None, "lb": round(mean - se, 3) if se else None}
+
+    def seg(keyf, xs=None):
+        g = defaultdict(list)
+        for t in (trades if xs is None else xs):
+            g[keyf(t)].append(t)
+        return {k: m(v) for k, v in sorted(g.items(), key=lambda kv: -len(kv[1]))}
+
+    days = sorted({t["day"] for t in trades})
+    wf = None
+    if len(days) >= 10:
+        cut = days[int(len(days) * 0.6)]
+        ins = [t for t in trades if t["day"] < cut]
+        oos = [t for t in trades if t["day"] >= cut]
+        key = lambda t: f"{t['fam']}|{t['inst']}|{t['tier']}|fade={t['fade']}"
+        si, so = seg(key, ins), seg(key, oos)
+        wf = {"splitAt": cut, "rows": [{"seg": k, "in": v, "out": so.get(k, {"n": 0})}
+                                        for k, v in si.items() if v["n"] >= 20]}
+    return {"n": len(trades), "brokenExcluded": dict(broken), "overall": seg(lambda t: t["fam"]),
+            "byInst": seg(lambda t: f"{t['fam']}|{t['inst']}"), "byTier": seg(lambda t: f"{t['fam']}|{t['tier']}"),
+            "byFade": seg(lambda t: f"{t['fam']}|fade={t['fade']}"), "byTf": seg(lambda t: f"{t['fam']}|{t['tf']}m"),
+            "bySym": seg(lambda t: f"{t['fam']}|{t['sym']}"), "byBias": seg(lambda t: f"{t['fam']}|bias={t['withBias']}"),
+            "byChop": seg(lambda t: f"{t['fam']}|chop={t['chop']}"), "walkForward": wf,
+            "note": "R del indicador (TP/SL fijos); neto = menos COST_TICKS. Misma señal en varios tf o simbolos cuenta una vez por grafico."}
+
+
 def main():
     pairs, orphan_out, n_sig, n_out = build_pairs()
     resolved = [r for r in pairs if r["resolved"] and r["result"]]
@@ -1865,6 +1955,7 @@ def main():
         "regime_clusters": regime_clusters(pairs),
         "cross_instrument": cross_instrument(pairs),
         "prediction_scoreboard": prediction_scoreboard(pairs),
+        "plan_orib": plan_orib(),
         "expR_ci_overall": bootstrap_er_ci(pairs),
         "expR_ci_by_symbol": {s_: bootstrap_er_ci([r for r in pairs if r["sigId"].split("-")[0] == s_])
                               for s_ in sorted({r["sigId"].split("-")[0] for r in pairs})},
@@ -1996,6 +2087,21 @@ def main():
                  f"vela 1 invalida {_rc['invalid_geometry']}/{_rc['n_new_build']} ({_rc['invalid_pct']}%)\n")
     else:
         L.append("- RETEST stops: sin outcomes del build con SL vela 1 todavia\n")
+    _po = report.get("plan_orib") or {}
+    L.append("\n## Plan Agent · señales OR / IB\n")
+    if not _po.get("n"):
+        L.append("- sin pares OR/IB todavia (plan/*.jsonl)\n")
+    else:
+        L.append(f"- n={_po['n']} · excluidas por stop/TP del lado equivocado: {_po['brokenExcluded']} · {_po['note']}\n")
+        L.append("| seg | n | dias | win% | E[R] | E[R] neto | lb |\n|---|--|--|--|--|--|--|\n")
+        for _blk in ("overall", "byInst", "byTier", "byFade", "byBias", "byChop", "byTf", "bySym"):
+            for _k, _v in (_po.get(_blk) or {}).items():
+                if _v.get("n", 0) >= 5:
+                    L.append(f"| {_k} | {_v['n']} | {_v.get('days','')} | {_v.get('win','')} | {_v.get('expR','')} | {_v.get('expRnet','')} | {_v.get('lb','')} |\n")
+        _wf = _po.get("walkForward")
+        if _wf:
+            L.append(f"\nWalk-forward (corte {_wf['splitAt']}): " + "; ".join(
+                f"{r['seg']} in {r['in'].get('expRnet')} (n{r['in']['n']}) -> out {r['out'].get('expRnet')} (n{r['out'].get('n')})" for r in _wf["rows"]) + "\n")
     L.append("\n## Integridad de sigId (colisiones, posible causa de alertas MUESTRA)\n```json\n"
              + json.dumps(report["sigid_integrity"], indent=2, ensure_ascii=False) + "\n```\n")
     def tbl(title, d):
