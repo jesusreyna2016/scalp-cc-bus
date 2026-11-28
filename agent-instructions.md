@@ -56,6 +56,15 @@ Si hay < 5 pares resueltos (excl. `TEST-`): sólo corre `analyze.py`, commitea
 `kind` × `side`: **BUY RETEST** / **SELL RETEST** (prioridad 1) · BUY INV / SELL INV
 (prioridad 2). Segmenta siempre por `tf` (1/2/5) y símbolo (NQ/ES/GC/YM).
 
+### Plan Agent · OR / IB (desde 2026-11-28)
+`plan/<día>.jsonl` trae las señales de ruptura del Opening Range (`or_*`, instancias Asia / Globex / NY) y de
+fade del Initial Balance (`ib_*`) del TDL Plan Agent con su resultado. `report.md` → "Plan Agent · señales OR /
+IB" las mide aparte (`report.json` → `plan_orib`). Las señales anteriores al arreglo de `plan-agent-stops`
+(tdl-indicators) traían stop o TP del lado equivocado (todos los fades de OR, A+ pasados del nivel): salen en
+`brokenExcluded` y no cuentan; si siguen apareciendo después de que Jesús pegue la versión nueva, avísalo.
+En la revisión semanal: qué instancia / tier / tf aguanta en el walk-forward y qué conviene apagar o atenuar en
+el gráfico (con n ≥ 40 y lb del mismo signo en las dos mitades). Mismo criterio de no proponer con n < 20.
+
 ## Rutina diaria (tras cierre NY)
 
 1. pull + `analyze.py` + leer `report.md`.
